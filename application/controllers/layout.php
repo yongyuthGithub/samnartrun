@@ -27,10 +27,13 @@ class layout extends CI_Controller {
     public function index() {
         $this->load->view('master/index');
     }
-    public function index2(){
+
+    public function index2() {
         $this->load->view('3334444');
     }
-	public function index3(){
-		
-	}
+
+    public function index3() {
+        
+    }
+
 }
