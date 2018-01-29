@@ -27,5 +27,7 @@ class layout extends CI_Controller {
     public function index() {
         $this->load->view('master/index');
     }
-
+    public function index2(){
+        
+    }
 }
