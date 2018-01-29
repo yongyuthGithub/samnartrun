@@ -23,6 +23,6 @@ class Home extends CI_Controller {
 	}
 	public function index()
 	{
-		$this->load->view('master/index');
+		$this->load->view('master/test');
 	}
 }
