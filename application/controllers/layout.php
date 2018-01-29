@@ -30,4 +30,7 @@ class layout extends CI_Controller {
     public function index2(){
         $this->load->view('3334444');
     }
+	public function index3(){
+		
+	}
 }
