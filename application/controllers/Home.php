@@ -1,6 +1,7 @@
 <?php
 
-require_once __DIR__ . '\..\models\PCenter.php';
+//require_once __DIR__ . '\..\models\PCenter.php';
+require __DIR__.'/../models/PCenter.php';
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends PCenter {
@@ -29,7 +30,7 @@ class Home extends PCenter {
     public function index() {
         $data['page'] = 'master/index';
         $data['txtemail'] = 'yongyuth@gmail.com';
-        $data['ttt'] = $this->testmy($_SERVER['HTTP_HOST'] . ', ' . $_SERVER['REQUEST_URI'].', '.$_SERVER['REMOTE_ADDR'].', '.$_SERVER['SCRIPT_FILENAME']);
+        $data['ttt'] = $this->testmy('HTTP_HOST : '.$_SERVER['HTTP_HOST'] . '<br>REQUEST_URI : ' . $_SERVER['REQUEST_URI'].'<br>REMOTE_ADDR : '.$_SERVER['REMOTE_ADDR'].'<br>SCRIPT_FILENAME : '.$_SERVER['SCRIPT_FILENAME']);
         $this->load->view('layout/nav', $data);
     }
 
