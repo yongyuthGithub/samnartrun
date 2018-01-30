@@ -63,7 +63,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#myPage">HOME</a></li>
+          <li><a href="<?php echo PCenter::getMyHost('home') ?>">HOME</a></li>
         <li><a href="#band">ข้อมูลพนักงาน</a></li>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">ข้อมูลรภ
@@ -91,7 +91,7 @@
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">เพิ่มข้อมูลน้ำมัน</a></li>
-            <li><a href="#">ข้อมูลน้ำมัน</a></li>
+            <li><a href="<?php echo PCenter::getMyHost('fule/index'); ?>">ข้อมูลน้ำมัน</a></li>
             
           </ul>
         
@@ -99,7 +99,7 @@
   </div>
 </nav>
   <!-- Page content -->
-        <div class="container">
+  <div class="container" style="margin-top: 50px;">
             <div class="row">
                 <?php $this->load->view($page);?>
             </div>
