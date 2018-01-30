@@ -15,7 +15,15 @@ echo uri_string().'<br/>';
 echo anchor().'<br/>';
 echo prep_url($_SERVER['HTTP_HOST']).'<br/>';
 echo prep_url($_SERVER['REQUEST_URI']).'<br/>';
+echo PCenter::GUID();
+echo PCenter::GUID_EMPTY();
 
-echo PCenter::getMyHost('');
+$dt = new DateTime();
+echo $dt->format('Y-m-d H:i:s');
+//echo base_url('public/js/jCommon.js').'<br/>';
+//$assign_to_config['base_url']='http://localhost:90/samnartrun';
+//echo js_asset('jCommon.js');
+
+//echo asset('js/jCommon.js');
 ?>
 

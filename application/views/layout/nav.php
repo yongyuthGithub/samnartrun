@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <?php echo js_asset('master/jCommon.js'); ?>
   <style>
   
   
@@ -63,7 +64,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-          <li><a href="<?php echo PCenter::getMyHost('home') ?>">HOME</a></li>
+          <li><a href="<?php echo base_url('home') ?>">HOME</a></li>
         <li><a href="#band">ข้อมูลพนักงาน</a></li>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">ข้อมูลรภ
@@ -91,7 +92,7 @@
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">เพิ่มข้อมูลน้ำมัน</a></li>
-            <li><a href="<?php echo PCenter::getMyHost('fule/index'); ?>">ข้อมูลน้ำมัน</a></li>
+            <li><a href="<?php echo base_url('fule/index'); ?>">ข้อมูลน้ำมัน</a></li>
             
           </ul>
         

@@ -10,6 +10,10 @@ class Fule extends PCenter {
     
     public function index(){
         $data['page'] = 'master/Fule/fule_main';
+        
+        $this->load->model('fule_model');
+        $this->fule_model->insert_into_fule();
+        
         $this->load->view('layout/nav', $data);
     }
 }
