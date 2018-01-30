@@ -36,9 +36,4 @@ class Home extends PCenter {
     public function showlayoutB4() {
         $this->load->view('layout/_layout_B4');
     }
-
-    public function showlayoutB5() {
-        $this->load->view('layout/_layout_B4');
-    }
-
 }
