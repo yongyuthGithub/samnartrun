@@ -32,8 +32,8 @@
                     <button class="w3-padding-large w3-button" title="More">MORE <i class="fa fa-caret-down"></i></button>     
                     <div class="w3-dropdown-content w3-bar-block w3-card-4">
                         <a href="#" class="w3-bar-item w3-button">Merchandise</a>
-                        <a href="#" class="w3-bar-item w3-button">Extras</a>
-                        <a href="#" class="w3-bar-item w3-button"><?php echo site_url('')?> Media</a>
+                        <a href="#" class="w3-bar-item w3-button"><?php echo $ttt; ?> Extras</a>
+                        <a href="<?php echo site_url()?>" class="w3-bar-item w3-button"><?php echo site_url($_SERVER['HTTP_HOST']) ?></a>
                     </div>
                 </div>
                 <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"><i class="fa fa-search"></i></a>
