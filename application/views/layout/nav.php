@@ -64,19 +64,37 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#myPage">HOME</a></li>
-        <li><a href="#band">BAND</a></li>
-        <li><a href="#tour">TOUR</a></li>
-        <li><a href="#contact">CONTACT</a></li>
+        <li><a href="#band">ข้อมูลพนักงาน</a></li>
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">MORE
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">ข้อมูลรภ
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Merchandise</a></li>
-            <li><a href="#">Extras</a></li>
-            <li><a href="#">Media</a></li> 
+            <li><a href="#">ข้อมูลรถ</a></li>
+            <li><a href="#">ประกันรถ</a></li>
+            
           </ul>
         </li>
-         
+        <li><a href="#tour">Admin</a></li>
+        <li><a href="#contact">ข้อมูลลูกค้า</a></li>
+        
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">รายรับ/รายจ่าย
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">รายรับ</a></li>
+            <li><a href="#">รายจ่าย</a></li>
+            
+          </ul>
+        <li><a href="#contact">ใบงาน</a></li>
+         <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">น้ำมัน
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">เพิ่มข้อมูลน้ำมัน</a></li>
+            <li><a href="#">ข้อมูลน้ำมัน</a></li>
+            
+          </ul>
+        
     </div>
   </div>
 </nav>
