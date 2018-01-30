@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
+   
   <title>Bootstrap Theme The Band</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -80,7 +80,12 @@
     </div>
   </div>
 </nav>
- 
+  <!-- Page content -->
+        <div class="container">
+            <div class="row">
+                <?php $this->load->view($page);?>
+            </div>
+        </div>
 
 <script>
 $(document).ready(function(){
