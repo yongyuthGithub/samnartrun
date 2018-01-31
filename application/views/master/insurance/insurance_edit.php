@@ -41,14 +41,30 @@ and open the template in the editor.
                         <option>บริษัทที่ 2</option>
                     </select> 
                 </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-6 text-center">
+                    <label for="exampleInputEmail1"><h5>ประกันชั้นที่</h5></label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> ชั้นที่1
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> ชั้นที่2
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> ชั้นที่3
+                    </label>
+                </div>
 
             </div>
+
         </div>
     </div>
 </div>
 <br>
 
 <div class="panel-footer">
-   ....
+    ....
 </div>
 </div>
