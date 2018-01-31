@@ -46,7 +46,10 @@ and open the template in the editor.
             <br>
             <br>
             <br>
-            <div class="panel-footer">
-                ......
-            </div>
         </div>
+    </div>
+</div>
+<div class="panel-footer">
+    ......
+</div>
+</div>
