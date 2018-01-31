@@ -9,7 +9,7 @@ and open the template in the editor.
 </div>
 <div class="col-12">
     <ol class="breadcrumb">
-        <li><a href="<?php echo base_url('insurance/insurance_index'); ?> ">Home</a></li>
+        <li><a href="<?php echo base_url('insurance/index'); ?> ">Home</a></li>
         <li class="active">เพิ่มข้อมูลประกัน</li>
     </ol>
     <div class="panel panel-default">
