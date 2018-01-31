@@ -48,10 +48,6 @@ and open the template in the editor.
         <br>
 
         <div class="panel-footer">
-            <div class="row">
-                <div class="col-xs-12 text-center">
-                    <button type="button" class="btn btn-success">เพิ่มข้อมูล</button>
-                </div>
-            </div>
+            ....
         </div>
     </div>
