@@ -10,7 +10,7 @@ and open the template in the editor.
 <div class="col-12">
     <ol class="breadcrumb">
         <li><a href="<?php echo base_url('insurance/insurance_index'); ?> ">Home</a></li>
-        <li class="active">New Car</li>
+        <li class="active">เพิ่มข้อมูลประกัน</li>
     </ol>
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -30,15 +30,15 @@ and open the template in the editor.
         <div class="panel-body">            
             <div class="row">
                 <div class="col-xs-6 ">
-                    <label for="exampleInputEmail1"><h5>ทะเบียนรถ</h5></label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="ทะเบียนรถ">
+                    <label for="exampleInputEmail1"><h5>เลขที่กรรมธรรม์</h5></label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="เลขที่กรรมธรรม์">
                 </div>
                 <div class="col-xs-6 text-left">
-                    <label for="country"><h5>ประเภทรถ</h5></label>
+                    <label for="country"><h5>บริษัทประกัน</h5></label>
                     <select class="form-control">
                         <option>กรุณาเลือก..</option>
-                        <option>2 เพลา</option>
-                        <option>3 เพลา</option>
+                        <option>บริษัทที่ 1</option>
+                        <option>บริษัทที่ 2</option>
                     </select> 
                 </div>
 
@@ -49,10 +49,6 @@ and open the template in the editor.
 <br>
 
 <div class="panel-footer">
-    <div class="row">
-        <div class="col-xs-12 text-center">
-            <button type="button" class="btn btn-success">เพิ่มข้อมูล</button>
-        </div>
-    </div>
+   ....
 </div>
 </div>
