@@ -22,7 +22,7 @@ and open the template in the editor.
     })
 </script>
 <div class="page-header">
-    <h1>ข้อมูลรถขนส่ง</h1><h4><small>ข้อมูลรถขนส่งภายในบริษัท (ส่วนหัว/ส่วนหาง)</small></h4>
+    <h1>ข้อมูลรถขนส่ง <small>ข้อมูลรถขนส่งภายในบริษัท (ส่วนหัว/ส่วนหาง)</small></h1>
 </div>
 <div class="col-12">
     <div class="panel panel-default">
@@ -47,9 +47,9 @@ and open the template in the editor.
             <br>
             <br>
         </div>
-        <div class="panel-footer">
-            ......
-        </div>
     </div>
+</div>
+<div class="panel-footer">
+    ......
 </div>
 </div>
