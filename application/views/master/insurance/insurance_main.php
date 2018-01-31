@@ -10,7 +10,7 @@ and open the template in the editor.
 
         $('#btnEdit').on({
             click: function () {
-                form_sumbit.prop('action', $('#hidUrl').val() + 'Car/edit').submit();
+                form_sumbit.prop('action', $('#hidUrl').val() + 'insurance/edit').submit();
             }
         });
         $('#btnDelete').on({
