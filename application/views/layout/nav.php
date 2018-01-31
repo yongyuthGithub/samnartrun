@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <?php echo js_asset('master/jCommon.js'); ?>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
   
   
@@ -64,43 +64,30 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-          <li><a href="<?php echo base_url('home') ?>">HOME</a></li>
-        <li><a href="#band">ข้อมูลพนักงาน</a></li>
+        <li><a href="#myPage"><i class="fa fa-home" style="font-size:24px"></i>HOME</a></li>
+       <li><a href="#tour"><i class="fa fa-newspaper-o" style="font-size:24px"></i>ใบงาน</a></li>
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">ข้อมูลรภ
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user-circle" style="font-size:24px"></i>Admin
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">ข้อมูลรถ</a></li>
-            <li><a href="#">ประกันรถ</a></li>
+              <li><a href="#"><i class="fa fa-users" style="font-size:24px"></i>ข้อมูลพนักงาน</a></li>
+              <li><a href="#"><i class="fa fa-car" style="font-size:24px"></i>ข้อมูลรถ</a></li>
+            <li><a href="#"><i class="fa fa-paste" style="font-size:24px"></i>ประกันรถ</a></li>
+            <li><a href="#"><i class="fa fa-user-circle" style="font-size:24px"></i>Admin</a></li>
+              <li><a href="#"><i class="fa fa-user-o" style="font-size:24px"></i>ข้อมูลูกค้า</a></li>
+                <li><a href="#"><i class="fa fa-list-alt" style="font-size:24px"></i>รายรับ</a></li>
+                  <li><a href="#"><i class="fa fa-list-alt" style="font-size:24px;color:red"></i>รายจ่าย</a></li>
+                  <li><a href="#"><i class="fa fa-tint" style="font-size:24px"></i>เพิ่มน้ำมัน</a></li>
+                  <li><a href="#"><i class="fa fa-tint" style="font-size:24px;color:greenyellow"></i>ข้อมูลน้ำมัน</a></li>
+                  
             
           </ul>
         </li>
-        <li><a href="#tour">Admin</a></li>
-        <li><a href="#contact">ข้อมูลลูกค้า</a></li>
         
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">รายรับ/รายจ่าย
-          <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">รายรับ</a></li>
-            <li><a href="#">รายจ่าย</a></li>
-            
-          </ul>
-        <li><a href="#contact">ใบงาน</a></li>
-         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">น้ำมัน
-          <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">เพิ่มข้อมูลน้ำมัน</a></li>
-            <li><a href="<?php echo base_url('fule/index'); ?>">ข้อมูลน้ำมัน</a></li>
-            
-          </ul>
-        
-    </div>
   </div>
 </nav>
   <!-- Page content -->
-  <div class="container" style="margin-top: 50px;">
+        <div class="container">
             <div class="row">
                 <?php $this->load->view($page);?>
             </div>
