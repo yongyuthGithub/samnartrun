@@ -74,7 +74,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="#"><i class="fa fa-users" style="font-size:24px"></i>ข้อมูลพนักงาน</a></li>
                                 <li><a href="<?php echo base_url('car/index') ?>"><i class="fa fa-car" style="font-size:24px"></i>ข้อมูลรถ</a></li>
-                                <li><a href="#"><i class="fa fa-paste" style="font-size:24px"></i>ประกันรถ</a></li>
+                                <li><a href="<?php echo base_url('insurance/index') ?>"><i class="fa fa-paste" style="font-size:24px"></i>ประกันรถ</a></li>
                                 <li><a href="#"><i class="fa fa-user-circle" style="font-size:24px"></i>Admin</a></li>
                                 <li><a href="#"><i class="fa fa-user-o" style="font-size:24px"></i>ข้อมูลูกค้า</a></li>
                                 <li><a href="#"><i class="fa fa-list-alt" style="font-size:24px"></i>รายรับ</a></li>
