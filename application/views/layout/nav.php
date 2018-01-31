@@ -64,21 +64,21 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#myPage"><i class="fa fa-home" style="font-size:24px"></i>HOME</a></li>
+        <li><a href="<?php echo base_url('home/index') ?>"><i class="fa fa-home" style="font-size:24px"></i>HOME</a></li>
        <li><a href="#tour"><i class="fa fa-newspaper-o" style="font-size:24px"></i>ใบงาน</a></li>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user-circle" style="font-size:24px"></i>Admin
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
               <li><a href="#"><i class="fa fa-users" style="font-size:24px"></i>ข้อมูลพนักงาน</a></li>
-              <li><a href="#"><i class="fa fa-car" style="font-size:24px"></i>ข้อมูลรถ</a></li>
+              <li><a href="<?php echo base_url('car/index') ?>"><i class="fa fa-car" style="font-size:24px"></i>ข้อมูลรถ</a></li>
             <li><a href="#"><i class="fa fa-paste" style="font-size:24px"></i>ประกันรถ</a></li>
             <li><a href="#"><i class="fa fa-user-circle" style="font-size:24px"></i>Admin</a></li>
               <li><a href="#"><i class="fa fa-user-o" style="font-size:24px"></i>ข้อมูลูกค้า</a></li>
                 <li><a href="#"><i class="fa fa-list-alt" style="font-size:24px"></i>รายรับ</a></li>
                   <li><a href="#"><i class="fa fa-list-alt" style="font-size:24px;color:red"></i>รายจ่าย</a></li>
                   <li><a href="#"><i class="fa fa-tint" style="font-size:24px"></i>เพิ่มน้ำมัน</a></li>
-                  <li><a href="#"><i class="fa fa-tint" style="font-size:24px;color:greenyellow"></i>ข้อมูลน้ำมัน</a></li>
+                  <li><a href="<?php echo base_url('Fule/index') ?>"><i class="fa fa-tint" style="font-size:24px;color:greenyellow"></i>ข้อมูลน้ำมัน</a></li>
                   
             
           </ul>
@@ -87,7 +87,7 @@
   </div>
 </nav>
   <!-- Page content -->
-        <div class="container">
+        <div class="container" style="margin-top: 80px;">
             <div class="row">
                 <?php $this->load->view($page);?>
             </div>
