@@ -10,7 +10,7 @@ const empPictureType = ["jpg", "gif", "png"];
 $("[data-header-left='true']").parent().addClass("pmd-navbar-left");
 
 function mvcPatch(v) {
-    return $('.mvcpath').val() + v;
+    return $('#hidUrl').val() + v;
 }
 function mvcWSLogin() {
     return $('.mvcwslogin').val();
@@ -26,11 +26,11 @@ function newGuid() {
 function NewGuid() {
     function s4() {
         return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
+                .toString(16)
+                .substring(1);
     }
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
+            s4() + '-' + s4() + s4() + s4();
 }
 
 function numberWithCommas(x) {
@@ -49,7 +49,8 @@ function userPopup() {
     } else {
         return vindex + 1;
     }
-};
+}
+;
 
 function addCommas(nStr, point) {
     nStr = parseFloat(nStr).toFixed(point);
@@ -100,20 +101,20 @@ function DeliveryChargeTypeStr(v) {
 
 function htmlEscape(str) {
     return str
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
 }
 
 function htmlUnescape(str) {
     return str
-        .replace(/&quot;/g, '"')
-        .replace(/&#39;/g, "'")
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
-        .replace(/&amp;/g, '&');
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&');
 }
 
 function html_br(str) {
@@ -282,6 +283,41 @@ function ShowDateToJavaDate(v) {//---จาก ShowDate --> javascript datetime
     return setDateJson(v).toJSON();
 }
 //-------------------------------------------------------------
+//-------------PHP DateTime
+function PHP_DateTime_To_JSON(v) {//---จาก DateTime --> yyyy-MM-dd HH:mm:ss
+    var today = v === undefined ? new Date() : v;
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var tHH = today.getHours();
+    var tMM = today.getMinutes();
+    var tSS = today.getSeconds();
+
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+    if (tHH < 10) {
+        tHH = '0' + tHH;
+    }
+    if (tMM < 10) {
+        tMM = '0' + tMM;
+    }
+    if (tSS < 10) {
+        tSS = '0' + tSS;
+    }
+    return yyyy + '-' + mm + '-' + dd + ' ' + tHH + ':' + tMM + ':' + tSS;
+}
+function PHP_JSON_To_DateTime(v) {//---จาก yyyy-MM-dd HH:mm:ss --> DateTime
+    var _dt = v.split(' ');
+    var _d = _dt[0].split('-');
+    var _t = _dt[1].split(':');
+//    alert(JSON.stringify(_d) + ', ' + JSON.stringify(_t));
+    return new Date(parseInt(_d[0]), parseInt(_d[1] - 1), parseInt(_d[1]), parseInt(_t[0]), parseInt(_t[1]), parseInt(_t[2]));
+}
+//-------------
 function checkNullAndReturn(v) {
     return v === null || v === 'null' || v === '' ? -1 : v;
 }
@@ -312,7 +348,7 @@ function ChkNumber(v) {
         if (v === undefined)
             v = 'show';
 
-        $('#bodySYS').ShowLoading({ action: v });
+        $('#bodySYS').ShowLoading({action: v});
     }
 
     $.fn.ShowLoading = function (option) {
@@ -446,14 +482,15 @@ function ChkNumber(v) {
             maxnumber: -1
         }, option);
         return this.each(function () {
-            if ($(this).val() === '') $(this).val((0).toFixed(setting.decimalpoint));
+            if ($(this).val() === '')
+                $(this).val((0).toFixed(setting.decimalpoint));
             $(this).off('keypress').on({
                 keypress: function (evt, element) {
                     var charCode = (evt.which) ? evt.which : event.keyCode
                     if (
-                        (charCode != 45 || $(element).val().indexOf('-') != -1) &&      // “-” CHECK MINUS, AND ONLY ONE.
-                        (charCode != 46 || $(element).val().indexOf('.') != -1) &&      // “.” CHECK DOT, AND ONLY ONE.
-                        (charCode < 48 || charCode > 57))
+                            (charCode != 45 || $(element).val().indexOf('-') != -1) && // “-” CHECK MINUS, AND ONLY ONE.
+                            (charCode != 46 || $(element).val().indexOf('.') != -1) && // “.” CHECK DOT, AND ONLY ONE.
+                            (charCode < 48 || charCode > 57))
                         return false;
 
                     return true;
@@ -585,7 +622,7 @@ function ChkNumber(v) {
 
         $.reqData({
             url: mvcPatch('home/getNameString'),
-            data: { _name: JSON.stringify(setting.data) },
+            data: {_name: JSON.stringify(setting.data)},
             loanding: false,
             loandingclose: false,
             callback: function (vdata) {

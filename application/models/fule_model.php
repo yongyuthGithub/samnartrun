@@ -13,14 +13,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class fule_model extends CI_Model {
     public function insert_into_fule(){
-        $data = array(
-            'RowKey'=>PCenter::GUID(),
-            'Fuel'=>'ทดสอบเชื้อเพลิง',
-            'CreateBy'=>PCenter::GUID_EMPTY(),
-            'CreateDate'=> PCenter::DATATIME_DB(new DateTime()),
-            'UpdateBy'=>PCenter::GUID_EMPTY(),
-            'UpdateDate'=> PCenter::DATATIME_DB(new DateTime(),false)
-            );
-        $this->db->insert('MSTFuel',$data);
+//        $data = array(
+//            'RowKey'=>PCenter::GUID(),
+//            'Fuel'=>'ทดสอบเชื้อเพลิง',
+//            'CreateBy'=>PCenter::GUID_EMPTY(),
+//            'CreateDate'=> PCenter::DATATIME_DB(new DateTime()),
+//            'UpdateBy'=>PCenter::GUID_EMPTY(),
+//            'UpdateDate'=> PCenter::DATATIME_DB(new DateTime(),false)
+//            );
+//        $this->db->insert('MSTFuel',$data);
     }
 }

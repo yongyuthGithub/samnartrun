@@ -10,12 +10,26 @@ and open the template in the editor.
 
         $('#btnEdit').on({
             click: function () {
-                form_sumbit.prop('action', $('#hidUrl').val() + 'Car/edit').submit();
+                form_sumbit.prop('action', mvcPatch('Car/edit')).submit();
             }
         });
         $('#btnDelete').on({
             click: function () {
-                alert('ลบแล้ว');
+                var _data = new Object();
+                _data.objID = newGuid();
+                _data.objName = 'นาย ยงยุทธ จันทร์ลอย'
+                _data.objStatus = true;
+                _data.objDate = PHP_DateTime_To_JSON(new Date());
+//                _data.objData_2 = PHP_JSON_To_DateTime(PHP_DateTime_To_JSON(new Date()));
+//                _data.objData_3 = PHP_JSON_To_DateTime(PHP_DateTime_To_JSON(new Date()));
+
+                $.reqData({
+                    url: mvcPatch('Car/getTestjson'),
+                    data: {v: JSON.stringify(_data)},
+                    callback: function (data) {
+//                        alert(JSON.stringify(data));
+                    }
+                });
 //                form_sumbit.prop('action',$('#hidUrl').val()+'Car/edit').submit();
             }
         });
