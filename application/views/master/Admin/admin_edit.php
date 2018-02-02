@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div class="page-header">
+    <h1>ข้อมูลAdmin <small>ข้อมูลAdmin</small></h1>
+</div>
+<div class="col-12">
+    <ol class="breadcrumb">
+        <li><a href="<?php echo base_url('Admin/index'); ?> ">Home</a></li>
+        <li class="active">เพิ่มข้อAdmin</li>
+    </ol>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-6 ">
+                    <h4>
+                        <?php
+                        echo 'ข้อมูลประกัน';
+                        ?>
+                    </h4>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <button type="button" class="btn btn-success"><i class="fa fa-newspaper-o" style="padding-right: 5px;"></i>Save</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">            
+            <div class="row">
+                <div class="col-xs-6 ">
+                    <label for="exampleInputEmail1"><h5>Email:</h5></label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="เลขที่กรรมธรรม์">
+                </div>
+                <div class="col-xs-6 text-left">
+                    <label for="exampleInputEmail1"><h5>ชื่อ-นามสกุล:</h5></label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="เลขที่กรรมธรรม์">
+
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">            
+            <div class="row">
+                <div class="col-xs-6 ">
+                    <label for="exampleInputEmail1"><h5>รหัสผ่าน</h5></label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="เลขที่กรรมธรรม์">
+                </div>
+                <div class="col-xs-6 text-left">
+                    <label for="exampleInputEmail1"><h5>ยืนยันรหัสผ่าน</h5></label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="เลขที่กรรมธรรม์">
+
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-6 text-center">
+                    
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="panel-footer">
+    ....
+</div>
+</div>
