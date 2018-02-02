@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
 
-        <title>Bootstrap Theme The Band</title>
+        <title>บริษัท พราว</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -62,7 +62,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>                        
                     </button>
-                    <a class="navbar-brand" href="#myPage">Logo</a>
+                    <a class="navbar-brand" href="<?php echo base_url('home/index') ?>">Logo</a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
@@ -72,16 +72,15 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user-circle" style="font-size:24px"></i>Admin
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#"><i class="fa fa-users" style="font-size:24px"></i>ข้อมูลพนักงาน</a></li>
+                                <li><a href="<?php echo base_url('register/index') ?>"><i class="fa fa-users" style="font-size:24px"></i>ข้อมูลพนักงาน</a></li>
                                 <li><a href="<?php echo base_url('car/index') ?>"><i class="fa fa-car" style="font-size:24px"></i>ข้อมูลรถ</a></li>
                                 <li><a href="<?php echo base_url('insurance/index') ?>"><i class="fa fa-paste" style="font-size:24px"></i>ประกันรถ</a></li>
                                 <li><a href="#"><i class="fa fa-user-circle" style="font-size:24px"></i>Admin</a></li>
-                                <li><a href="#"><i class="fa fa-user-o" style="font-size:24px"></i>ข้อมูลูกค้า</a></li>
+                                <li><a href="<?php echo base_url('customer/index') ?>"><i class="fa fa-user-o" style="font-size:24px"></i>ข้อมูลูกค้า</a></li>
                                 <li><a href="#"><i class="fa fa-list-alt" style="font-size:24px"></i>รายรับ</a></li>
                                 <li><a href="#"><i class="fa fa-list-alt" style="font-size:24px;color:red"></i>รายจ่าย</a></li>
-                                <li><a href="#"><i class="fa fa-tint" style="font-size:24px"></i>เพิ่มน้ำมัน</a></li>
-                                <li><a href="<?php echo base_url('Fule/index') ?>"><i class="fa fa-tint" style="font-size:24px;color:greenyellow"></i>ข้อมูลน้ำมัน</a></li>
-
+                                <li><a href="#<?php echo base_url('Fule/index') ?>><i class="fa fa-tint" style="font-size:24px"></i>เพิ่มน้ำมัน</a></li>
+                             
 
                             </ul>
                         </li>
