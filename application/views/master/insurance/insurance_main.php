@@ -22,7 +22,7 @@ and open the template in the editor.
     })
 </script>
 <div class="page-header">
-    <h1>ข้อมูลประกัน <small>ข้อมูลประกันรถยนต์</small></h1>
+     <h1>ข้อมูลประกัน</h1><h4><small>ข้อมูลประกัน</small></h4>
 </div>
 <div class="col-12">   
     <div class="panel panel-default">

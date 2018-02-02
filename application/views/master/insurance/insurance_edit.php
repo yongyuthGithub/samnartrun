@@ -5,12 +5,12 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <div class="page-header">
-    <h1>ข้อมูลประกัน <small>ข้อมูลประกันรถยนต์</small></h1>
+    <h1>ข้อมูลประกัน</h1><h4><small>ข้อมูลประกันรถยนต์</small></h4>
 </div>
 <div class="col-12">
     <ol class="breadcrumb">
         <li><a href="<?php echo base_url('insurance/index'); ?> ">Home</a></li>
-        <li class="active">เพิ่มข้อมูลประกัน</li>
+        <li class="active">New Insurance</li>
     </ol>
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -30,8 +30,8 @@ and open the template in the editor.
         <div class="panel-body">            
             <div class="row">
                 <div class="col-xs-6 ">
-                    <label for="exampleInputEmail1"><h5>เลขที่กรรมธรรม์</h5></label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="เลขที่กรรมธรรม์">
+                    <label for="exampleInputEmail1"><h5>เลขที่กรมธรรม์</h5></label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="เลขที่กรมธรรม์..">
                 </div>
                 <div class="col-xs-6 text-left">
                     <label for="country"><h5>บริษัทประกัน</h5></label>
@@ -41,30 +41,36 @@ and open the template in the editor.
                         <option>บริษัทที่ 2</option>
                     </select> 
                 </div>
-            </div>
-            <br>
-            <div class="row">
+                
                 <div class="col-xs-6 text-center">
-                    <label for="exampleInputEmail1"><h5>ประกันชั้นที่</h5></label>
+                    <label for="exampleInputEmail1"><h5>ประเภทประกัน</h5></label>
                     <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> ชั้นที่1
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> ประกันชั้นที่ 1
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> ชั้นที่2
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> ประกันชั้นที่ 2
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> ชั้นที่3
-                    </label>
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> ประกันชั้นที่ 3
+                    </label>  
                 </div>
-
+                <div class="col-xs-6 text-left ">
+                     <label for="exampleInputEmail1"><h5>วันที่คุ้มครอง</h5></label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="วันที่คุ้มครอง..">
+                </div>
+                <div class="col-xs-6 text-left ">
+                     <label for="exampleInputEmail1"><h5>อื่นๆ</h5></label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="อื่นๆ..">
+                </div>
+                 <div class="col-xs-6 text-left ">
+                     <label for="exampleInputEmail1"><h5>วันที่หมดอายุคุ้มครอง</h5></label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="วันที่หมดอายุคุ้มครอง..">
+                </div>
             </div>
-
         </div>
     </div>
-</div>
-<br>
 
-<div class="panel-footer">
-    ....
-</div>
+    <!--        <div class="panel-footer">
+                ....
+            </div>-->
 </div>
