@@ -79,7 +79,6 @@
                                 <li><a href="<?php echo base_url('customer/index') ?>"><i class="fa fa-user-o" style="font-size:24px"></i>ข้อมูลูกค้า</a></li>
                                 <li><a href="#"><i class="fa fa-list-alt" style="font-size:24px"></i>รายรับ</a></li>
                                 <li><a href="#"><i class="fa fa-list-alt" style="font-size:24px;color:red"></i>รายจ่าย</a></li>
-                                <li><a href="<?php echo base_url('Fule/index') ?>"><i class="fa fa-tint" style="font-size:24px"></i>เพิ่มน้ำมัน</a></li>
                                  <li><a href="<?php echo base_url('Fule/index') ?>"><i class="fa fa-tint" style="font-size:24px"></i>เพิ่มน้ำมัน</a></li>
                                
 
