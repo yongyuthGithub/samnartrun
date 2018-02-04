@@ -150,7 +150,6 @@
             type: setting.type,
             closable: setting.closable,
             onshown: function (k) {
-                $.pmdRF(k.getModal());
             },
             buttons: [{
                     icon: 'fa fa-check',

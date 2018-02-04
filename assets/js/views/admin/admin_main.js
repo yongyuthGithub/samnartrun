@@ -8,7 +8,7 @@ $(function () {
         btnEdit: true,
         btnPreview: true,
         headerString: '',
-//        UrlDataJson: mvcPatch('Sales/FindProduct'),
+        UrlDataJson: mvcPatch('admin/findAccount'),
         DataJson: function () {
             return new Array(
                     {
@@ -38,7 +38,36 @@ $(function () {
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
                     k.getModal().data({
-
+                        data: new Object({key: Guid}),
+                        fun: function (_f) {
+                            var obj = new Object();
+                            obj.RowKey = Guid;
+                            obj.User = _f.find('#txtUser').val();
+                            obj.Password = _f.find('#txtPassword').val();
+                            obj.TitleKey = _f.find('#cmdTitle').val();
+                            obj.FName = _f.find('#txtFirstName').val();
+                            obj.LName = _f.find('#txtLastName').val();
+                            $.bConfirm({
+                                buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('admin/editAccouss'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                f.find('.xref').click();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
                     });
                 },
                 buttons: [

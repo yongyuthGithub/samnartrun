@@ -14,7 +14,10 @@ and open the template in the editor.
             <div class="col-xs-12">
                 <div class="form-group">
                     <label for="txtUser">User Name :</label>
-                    <input type="text" class="form-control" id="txtUser" name="txtUser" placeholder="Input User Name">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-user-circle" style="min-width: 20px;"></i></div>
+                        <input type="text" class="form-control" id="txtUser" name="txtUser" placeholder="Input User Name">
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12">
@@ -41,25 +44,37 @@ and open the template in the editor.
             <div class="col-xs-12">
                 <div class="form-group">
                     <label for="txtFirstName">First Name :</label>
-                    <input type="text" class="form-control" id="txtFirstName" name="txtFirstName" placeholder="Input First Name">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-vcard" style="min-width: 20px;"></i></div>
+                        <input type="text" class="form-control" id="txtFirstName" name="txtFirstName" placeholder="Input First Name">
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
                     <label for="txtLastName">Last Name :</label>
-                    <input type="text" class="form-control" id="txtLastName" name="txtLastName" placeholder="Input Last Name">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-vcard" style="min-width: 20px;"></i></div>
+                        <input type="text" class="form-control" id="txtLastName" name="txtLastName" placeholder="Input Last Name">
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
                     <label for="txtPassword">Password :</label>
-                    <input type="password" class="form-control" id="txtPassword" name="txtPassword" placeholder="Input Password">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-ellipsis-h" style="min-width: 20px;"></i></div>
+                        <input type="password" class="form-control" id="txtPassword" name="txtPassword" placeholder="Input Password">
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
                     <label for="txtConfirmPassword">Confirm Password :</label>
-                    <input type="password" class="form-control" id="txtConfirmPassword" name="txtConfirmPassword" placeholder="Input Confirm Password">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-ellipsis-h" style="min-width: 20px;"></i></div>
+                        <input type="password" class="form-control" id="txtConfirmPassword" name="txtConfirmPassword" placeholder="Input Confirm Password">
+                    </div>
                 </div>
             </div>
         </div>
