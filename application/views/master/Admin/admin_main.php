@@ -26,8 +26,8 @@ and open the template in the editor.
     <h1>ข้อมูล Admin <small>จัดการข้อมูลผู้ใช้ระบบ</small></h1>
 </div>
 <div class="col-12">   
-    <div class="panel panel-default">
-        <div class="panel-heading">
+<!--    <div class="panel panel-default">-->
+<!--        <div class="panel-heading">
             <div class="row">
                 <div class="col-xs-6 ">
                     <h4>
@@ -39,18 +39,18 @@ and open the template in the editor.
                 <div class="col-xs-6 text-right">
                     <div class="input-group">                        
                         <span class="input-group-btn">
-                            <!--                            <div class="btn-group">-->
+                                                        <div class="btn-group">
                             <button type="button" class="btn btn-success" id="btnEdit"><i class="fa fa-plus" style="padding-right: 5px;"></i> New</button>
                             <button type="button" class="btn btn-danger" id="btnDelete"><i class="fa fa-close" style="padding-right: 5px;"></i> Delete</button>
-                            <!--                            </div>-->
+                                                        </div>
                         </span>
                         <input id="email" type="text" class="form-control" name="txtSearch" id="txtSearch" placeholder="Search...">
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="panel-body">            
+        </div>-->
+<!--        <div class="panel-body">            -->
             <div id="form_adminlist"></div>
-        </div>
-    </div>
+<!--        </div>
+    </div>-->
 </div>

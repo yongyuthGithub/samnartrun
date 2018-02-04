@@ -12,6 +12,18 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <?php echo css_asset('master/_site.css')?>
+        <?php echo css_asset('master/jquery.dataTables.min.css')?>
+        <?php echo css_asset('master/responsive.dataTables.min.css')?>
+        
+        <?php echo js_asset('master/jquery.cookie.js')?>
+        <?php echo js_asset('master/linq.min.js')?>
+        <?php echo js_asset('master/formValidation.min.js')?>
+        <?php echo js_asset('master/bootstrap_validation.js')?>
+        <?php echo js_asset('master/jquery.dataTables.min.js')?>
+        <?php echo js_asset('master/dataTables.responsive.min.js')?>
+        <?php echo js_asset('master/jquery.cookie.js')?>
+        <?php echo js_asset('master/loadingoverlay.min.js')?>
+        <?php echo js_asset('master/loadingoverlay_progress.min.js')?>
         <?php echo js_asset('master/jCustomPageMain.js')?>
         <?php echo js_asset('master/jCommon.js')?>
         <style>

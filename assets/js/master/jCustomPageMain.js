@@ -17,23 +17,23 @@
             btnSearch: true,
             btnNew: false,
             btnNewFun: function () { },
-            btnNewText: 'BtnNew',
+            btnNewText: 'New',
             btnNewIcon: 'fa fa-plus',
             btnNewStyle: 'btn-primary',
             btnDelete: false,
             btnDeleteFun: function () { },
-            btnDeleteText: 'BtnDelete',
+            btnDeleteText: 'Delete',
             btnDeleteIcon: 'fa fa-remove',
             btnDeleteStyle: 'btn-danger',
             btnDeleteAll: false,
             btnEdit: false,
             btnEditFun: function () { },
-            btnEditText: 'BtnEdit',
+            btnEditText: 'Edit',
             btnEditIcon: 'fa fa-pencil',
             btnEditStyle: 'btn-warning',
             btnPreview: false,
             btnPreviewFun: function () { },
-            btnPreviewText: 'BtnView',
+            btnPreviewText: 'View',
             btnPreviewIcon: 'fa fa-list-ul',
             btnPreviewStyle: 'btn-info',
             headerString: '',
@@ -66,294 +66,426 @@
             var _html = '';
             //_html = '<div class="">';
 
-            $.getNameStr({
-                data: {
-                    PreviewText: setting.btnPreviewText,
-                    NewText: setting.btnNewText,
-                    DeleteText: setting.btnDeleteText,
-                    EditText: setting.btnEditText,
-                    TextSearch: 'TextSearch',
-                },
-                callback: function (_langName) {
-                    _html = '<div">';
-                    _html += '<div>';
-                    if ($.trim(setting.headerString).length > 0)
-                        _html += '<div class="page-header col-lg-12"><h3>' + setting.headerString + '</h3></div>';
+//            $.getNameStr({
+//                data: {
+//                    PreviewText: setting.btnPreviewText,
+//                    NewText: setting.btnNewText,
+//                    DeleteText: setting.btnDeleteText,
+//                    EditText: setting.btnEditText,
+//                    TextSearch: 'TextSearch',
+//                },
+//                callback: function (_langName) {
+            _html = '<div">';
+            _html += '<div>';
+            if ($.trim(setting.headerString).length > 0)
+                _html += '<div class="page-header col-lg-12"><h3>' + setting.headerString + '</h3></div>';
 
-                    _html += '<div class="col-xs-6" style="padding-left: 0px;">';
-                    //_html += '<div class="form-group " style="padding-left: 12px;">';
-                    _html += '<div class="btn-group" style="margin-top: 0px;">';
+            _html += '<div class="col-xs-6" style="padding-left: 0px;">';
+            //_html += '<div class="form-group " style="padding-left: 12px;">';
+            _html += '<div class="btn-group" style="margin-top: 0px;">';
 
-                    if (setting.btnNew)
-                        _html += '<div class="btn pmd-btn-raised pmd-ripple-effect ' + setting.btnNewStyle + ' ' + btnAdd + '"><i class="' + setting.btnNewIcon + '"></i><spen class="hidden-xs hidden-sm" > ' + _langName.NewText + '</spen></div>';
+            if (setting.btnNew)
+                _html += '<div class="btn ' + setting.btnNewStyle + ' ' + btnAdd + '"><i class="' + setting.btnNewIcon + '"></i><spen class="hidden-xs hidden-sm" > ' + setting.btnNewText + '</spen></div>';
 
-                    //if (setting.btnEdit) {
-                    //    if (setting.btnDelete && setting.btnDeleteAll === false) {
-                    //        _html += '<div class="btn pmd-btn-raised pmd-ripple-effect btn-danger ' + btnEdit + '"><i class="fa fa-pencil"></i><spen class="hidden-xs hidden-sm"> Edit</spen></div>';
-                    //    }
-                    //}
+            //if (setting.btnEdit) {
+            //    if (setting.btnDelete && setting.btnDeleteAll === false) {
+            //        _html += '<div class="btn pmd-btn-raised pmd-ripple-effect btn-danger ' + btnEdit + '"><i class="fa fa-pencil"></i><spen class="hidden-xs hidden-sm"> Edit</spen></div>';
+            //    }
+            //}
 
-                    if (setting.btnDeleteAll) {
-                        _html += '<div class="btn pmd-btn-raised pmd-ripple-effect ' + setting.btnDeleteStyle + ' ' + btnRemove + '"><i class="' + setting.btnDeleteIcon + '"></i><spen class="hidden-xs hidden-sm"> ' + _langName.DeleteText + '</spen></div>';
-                        _html += '<div class="btn pmd-btn-raised pmd-ripple-effect ' + setting.btnDeleteStyle + ' dropdown-toggle ' + btnRemoveMenu + '" data-toggle="dropdown" style="min-width: auto!important;">';
-                        _html += '<span class="caret"></span>';
-                        _html += '</div>';
-                        _html += '<ul class="dropdown-menu dropdown-menu-right">';
-                        _html += '<li><a href="#" class="danger ' + btnChecked + ' pmd-ripple-effect"><i class="fa fa-check-square" style="min-width:20px;">&nbsp;</i>Select</a></li>';
-                        _html += '<li><a href="#" class="danger ' + btnUnChecked + ' pmd-ripple-effect"><i class="fa fa-square-o" style="min-width:20px;">&nbsp;</i>Unselect</a></li>';
-                        _html += '</ul>';
-                    }
-                    //else if (setting.btnDelete) {
-                    //    _html += '<div class="btn btn-danger btn-raised ' + btnRemove + '"><i class="fa fa-remove"></i><spen class="hidden-xs hidden-sm"> Delete</spen></div>';
-                    //}
-                    _html += '</div>';
-                    _html += '</div>';
-                    //_html += '</div>';
+            if (setting.btnDeleteAll) {
+                _html += '<div class="btn ' + setting.btnDeleteStyle + ' ' + btnRemove + '"><i class="' + setting.btnDeleteIcon + '"></i><spen class="hidden-xs hidden-sm"> ' + setting.btnDeleteText + '</spen></div>';
+                _html += '<div class="btn ' + setting.btnDeleteStyle + ' dropdown-toggle ' + btnRemoveMenu + '" data-toggle="dropdown" style="min-width: auto!important;">';
+                _html += '<span class="caret"></span>';
+                _html += '</div>';
+                _html += '<ul class="dropdown-menu dropdown-menu-right">';
+                _html += '<li><a href="#" class="danger ' + btnChecked + '"><i class="fa fa-check-square" style="min-width:20px;">&nbsp;</i>Select</a></li>';
+                _html += '<li><a href="#" class="danger ' + btnUnChecked + '"><i class="fa fa-square-o" style="min-width:20px;">&nbsp;</i>Unselect</a></li>';
+                _html += '</ul>';
+            }
+            //else if (setting.btnDelete) {
+            //    _html += '<div class="btn btn-danger btn-raised ' + btnRemove + '"><i class="fa fa-remove"></i><spen class="hidden-xs hidden-sm"> Delete</spen></div>';
+            //}
+            _html += '</div>';
+            _html += '</div>';
+            //_html += '</div>';
 
-                    //alert(setting.FunLoadData());
-                    _html += '<div class="col-xs-6 text-right" style="padding-right: 0px;">';
-                    if (setting.btnSearch) {
-                        _html += '<div class="form-group pmd-textfield pmd-textfield-floating-label">';
-                        _html += '<div class="input-group">';
-                        //_html += '<span class="input-group-addon hidden-xs hidden-sm" ><i class="fa fa-search"></i></span>';
-                        //_html += '<label class="control-label pmd-input-group-label" for="' + txtSearch + '">Specify the text to search.</label>';
-                        _html += '<input type="text" name="' + txtSearch + '" id="' + txtSearch + '" class="form-control xSearch" style="min-height: 36px;" placeholder="' + _langName.TextSearch + '" />';
-                        _html += '<span class="pmd-textfield-focused"></span>';
-                        _html += '<div class="input-group-btn" style="padding-left: 15px;">';
-                        _html += '<div class="btn pmd-btn-raised pmd-ripple-effect btn-primary ' + btnRef + ' xref"><i class="fa fa-refresh"></i></div>';
-                        _html += '<div class="btn pmd-btn-raised pmd-ripple-effect btn-primary btnList dropdown-toggle" data-toggle="dropdown" style="min-width: auto!important;padding-right: 8px;padding-left: 8px;">';
-                        _html += '<span class="caret"></span>';
-                        _html += '</div>';
-                        _html += '<ul class="dropdown-menu dropdown-menu-right ulPages" style="right: 12px;margin-top: -6px;border-radius: 0px 0px 2px 2px;">';
-                        $.each(setting.rowNum[0], function (key, val) {
-                            if (val === -1) {
-                                _html += '<li role="separator" class="divider"></li>';
-                                _html += '<li value="' + val + '"><a href="#" class="pmd-ripple-effect"><i class="fa fa-chevron-circle-right" style="min-width:20px;"></i>  ' + setting.rowNum[1][key] + '</a></li>';
-                            } else {
-                                _html += '<li value="' + val + '"><a href="#" class="pmd-ripple-effect"><i class="fa fa-chevron-circle-right" style="min-width:20px;"></i>  ' + setting.rowNum[1][key] + '</a></li>';
-                            }
-                        });
-                        _html += '</ul>';
-                        _html += '</div>';
+            //alert(setting.FunLoadData());
+            _html += '<div class="col-xs-6 text-right" style="padding-right: 0px;">';
+            if (setting.btnSearch) {
+                _html += '<div class="form-group">';
+                _html += '<div class="input-group">';
+                //_html += '<span class="input-group-addon hidden-xs hidden-sm" ><i class="fa fa-search"></i></span>';
+                //_html += '<label class="control-label pmd-input-group-label" for="' + txtSearch + '">Specify the text to search.</label>';
+                _html += '<input type="text" name="' + txtSearch + '" id="' + txtSearch + '" class="form-control xSearch" placeholder="Search..." />';
+                _html += '<div class="input-group-btn">';
+//                _html += '<div class="input-group">';
+                _html += '<div class="btn btn-primary ' + btnRef + ' xref"><i class="fa fa-refresh"></i></div>';
+                _html += '<div class="btn btn-primary btnList dropdown-toggle" data-toggle="dropdown" style="min-width: auto!important;padding-right: 8px;padding-left: 8px;">';
+                _html += '<span class="caret"></span>';
+                _html += '</div>';
+                _html += '<ul class="dropdown-menu dropdown-menu-right ulPages" style="right: 12px;margin-top: -6px;border-radius: 0px 0px 2px 2px;">';
+                $.each(setting.rowNum[0], function (key, val) {
+                    if (val === -1) {
+                        _html += '<li role="separator" class="divider"></li>';
+                        _html += '<li value="' + val + '"><a href="#" class=""><i class="fa fa-chevron-circle-right" style="min-width:20px;"></i>  ' + setting.rowNum[1][key] + '</a></li>';
                     } else {
-                        _html += '<div class="input-group" style="display:inline-block;">';
+                        _html += '<li value="' + val + '"><a href="#" class=""><i class="fa fa-chevron-circle-right" style="min-width:20px;"></i>  ' + setting.rowNum[1][key] + '</a></li>';
                     }
+                });
+                _html += '</ul>';
+//                _html += '</div>';
+                _html += '</div>';
+            } else {
+                _html += '<div class="input-group" style="display:inline-block;">';
+            }
 
-                    _html += '</div>';
+            _html += '</div>';
 
-                    _html += '</div>';
-                    _html += '</div>';
-                    //_html += '</div>';
+            _html += '</div>';
+            _html += '</div>';
+            //_html += '</div>';
 
 
-                    //_html += '<div class="col-lg-12 col-xs-12">';
-                    _html += '<table id="' + tblName + '" class="display nowrap responsive xmain" cellspacing="0" style="width:100%;">';
-                    _html += '<thead>';
-                    _html += '<tr>';
-                    $.each(setting.DataColumns, function (key, val) {
-                        _html += '<th>' + val.header + '</th>';
-                    });
-                    if ((!setting.btnDeleteAll && setting.btnDelete) || setting.btnEdit || setting.btnPreview) {
-                        _html += '<th><div class="btnAction"></div></th>';
+            //_html += '<div class="col-lg-12 col-xs-12">';
+            _html += '<table id="' + tblName + '" class="display nowrap responsive xmain" cellspacing="0" style="width:100%;">';
+            _html += '<thead>';
+            _html += '<tr>';
+            $.each(setting.DataColumns, function (key, val) {
+                _html += '<th>' + val.header + '</th>';
+            });
+            if ((!setting.btnDeleteAll && setting.btnDelete) || setting.btnEdit || setting.btnPreview) {
+                _html += '<th><div class="btnAction"></div></th>';
+            }
+            _html += '</tr>';
+            _html += '</thead>';
+            _html += '</table>';
+            _html += '</div>';
+            _html += '</div>';
+            _html += '</div>';
+
+            formId.empty().append(_html).find('#' + tblName).each(function (key, val) {
+
+                //var _textSearch = '';
+                var _pageSelect = 0;
+                var _url = document.URL;
+                var _temp = new Array();
+                if (setting.useTempData) {
+                    try {
+                        var _temp = Enumerable.From(JSON.parse(localStorage.dataTable)).ToArray();
+                    } catch (e) {
                     }
-                    _html += '</tr>';
-                    _html += '</thead>';
-                    _html += '</table>';
-                    _html += '</div>';
-                    _html += '</div>';
-                    _html += '</div>';
+                    var _txtkey = '';
+                    if ($('#txtkey').length === 1) {
+                        _txtkey = $('#txtkey').val();
+                    } else if ($('#txtkey').length > 1) {
+                        _txtkey = $('#txtkey')[0].val();
+                    }
+                    if (_temp.length > 0) {
+                        var _notclear = Enumerable.From(JSON.parse(localStorage.dataTable)).Where(x => $.trim(x.url).concat($.trim(x.formid), $.trim(x.txtkey)) === $.trim(_url).concat($.trim(formId.attr('id')), $.trim(_txtkey))).ToArray();
+                        if (_notclear.length > 0) {
+                            setting.valSearch = _notclear[0].textsearch;
+                            _pageSelect = _notclear[0].page;
+                        }
+                    }
+                }
 
-                    formId.empty().append(_html).find('#' + tblName).each(function (key, val) {
+                //alert('s'); 
 
-                        //var _textSearch = '';
-                        var _pageSelect = 0;
-                        var _url = document.URL;
-                        var _temp = new Array();
-                        if (setting.useTempData) {
+                //alert(setting.btnDeleteAll + ', ' + setting.btnDelete + ', ' + setting.btnEdit);
+                var _colDefs = new Array();
+                if (setting.btnDeleteAll) {
+                    _colDefs.push({
+                        render: function (row, type, val2, meta) {
+                            //_html = '<div class="checkbox-none-text checkbox-primary ">';
+                            //_html += '<input id="' + (chk + val2.key) + '" type="checkbox" class="' + chk + '" xData="' + val2.key + '">';
+                            //_html += '<label for="' + (chk + val2.key) + '" style="padding-left: 5px!important;font-size:100%!important;font-weight:100!important;color:#000!important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                            //_html += row;
+                            //_html += '</label>';
+                            //_html += '</div>';
+                            var _dele = '';
                             try {
-                                var _temp = Enumerable.From(JSON.parse(localStorage.dataTable)).ToArray();
+                                _dele = val2._Delete === false ? 'disabled' : '';
+                            } catch (ek) {
+                            }
+
+                            _html = '<div class="checkbox pmd-primary">';
+                            _html += '<label class="">';// style="position: relative;top: 5px;"
+                            _html += '<input type="checkbox" id="' + (chk + val2.key) + '" class="' + chk + ' "' + _dele + ' xData="' + val2.key + '">';
+                            _html += '<span class="">&nbsp;</span>';
+                            _html += '<span>' + row + '</span></label>';
+                            //_html += '<span class="pmd-switch-label"></span> </label><span style="padding-left: 10px;">'+ row+'</span>';
+                            _html += '</div>';
+                            return _html;
+                        },
+                        orderable: true,
+                        targets: 0
+                    });
+                }
+                if ((!setting.btnDeleteAll && setting.btnDelete) || setting.btnEdit || setting.btnPreview) {
+
+                    _colDefs.push({
+                        render: function (row, type, val2, meta) {
+                            _html = '<div class="btn-group btnAction">';
+                            if (setting.btnPreview) {
+                                var _preview = '';
+                                try {
+                                    _preview = val2._PreView === false ? 'disabled' : '';
+                                } catch (ek) {
+                                }
+                                _html += '<div class="btn ' + setting.btnPreviewStyle + ' btn-sm ' + btnPreview + '" ' + _preview + '><i class="' + setting.btnPreviewIcon + '"></i><spen class="hidden-xs hidden-sm"> ' + setting.btnPreviewText + '</spen></div>';
+                            }
+                            if (setting.btnEdit) {
+                                var _edit = '';
+                                try {
+                                    _edit = val2._Edit === false ? 'disabled' : '';
+                                } catch (ek) {
+                                }
+                                _html += '<div class="btn ' + setting.btnEditStyle + ' btn-sm ' + btnEdit + '" ' + _edit + '><i class="' + setting.btnEditIcon + '"></i><spen class="hidden-xs hidden-sm"> ' + setting.btnEditText + '</spen></div>';
+                            }
+                            if (!setting.btnDeleteAll && setting.btnDelete) {
+                                var _dele = '';
+                                try {
+                                    _dele = val2._Delete === false ? 'disabled' : '';
+                                } catch (ek) {
+                                }
+                                _html += '<div class="btn ' + setting.btnDeleteStyle + ' btn-sm ' + btnRemoveLine + '" ' + _dele + '><i class="' + setting.btnDeleteIcon + '"></i><spen class="hidden-xs hidden-sm"> ' + setting.btnDeleteText + '</spen></div>';
+                            }
+                            _html += '</div>';
+                            return _html;
+                        },
+                        orderable: false,
+                        targets: -1
+                    });
+                    setting.DataColumns.push({data: 'key', header: '', });
+                }
+
+                //if ((!setting.btnDeleteAll && setting.btnDelete) && setting.btnEdit) {
+                //    _colDefs.push({
+                //        render: function (row, type, val2, meta) {
+                //            _html = '<div class="btn-group btnAction">';
+                //            _html += '<div class="btn pmd-btn-raised pmd-ripple-effect btn-warning btn-sm ' + btnEdit + '"><i class="fa fa-pencil"></i><spen class="hidden-xs hidden-sm"> Edit</spen></div>';
+                //            _html += '<div class="btn pmd-btn-raised pmd-ripple-effect btn-danger btn-sm ' + btnRemoveLine + '"><i class="fa fa-remove"></i><spen class="hidden-xs hidden-sm"> Delete</spen></div>';
+                //            _html += '</div>';
+                //            return _html;
+                //        },
+                //        orderable: false,
+                //        targets: -1
+                //    });
+                //    setting.DataColumns.push({ data: 'key', header: '', });
+                //} else if ((!setting.btnDeleteAll && setting.btnDelete)) {
+                //    _colDefs.push({
+                //        render: function (row, type, val2, meta) {
+                //            _html = '<div class="btn-group btnAction">';
+                //            _html += '<div class="btn pmd-btn-raised pmd-ripple-effect btn-danger btn-sm ' + btnRemoveLine + '"><i class="fa fa-remove"></i><spen class="hidden-xs hidden-sm"> Delete</spen></div>';
+                //            _html += '</div>';
+                //            return _html;
+                //        },
+                //        orderable: false,
+                //        targets: -1
+                //    });
+                //    setting.DataColumns.push({ data: 'key', header: '', });
+                //} else if (setting.btnEdit) {
+                //    _colDefs.push({
+                //        render: function (row, type, val2, meta) {
+                //            _html = '<div class="btn-group btnAction">';
+                //            _html += '<div class="btn pmd-btn-raised pmd-ripple-effect btn-warning btn-sm ' + btnEdit + '"><i class="fa fa-pencil"></i><spen class="hidden-xs hidden-sm"> Edit</spen></div>';
+                //            _html += '</div>';
+                //            return _html;
+                //        },
+                //        orderable: false,
+                //        targets: -1
+                //    });
+                //    setting.DataColumns.push({ data: 'key', header: '', });
+                //}
+
+
+                //var _newCol = new Array();
+                //_newCol.push(new Object({ data: 'key', header: '' }));
+                //$.each(setting.DataColumns, function (kc, vc) {
+                //    _newCol.push(vc);
+                //});
+                //setting.DataColumns = _newCol;
+
+                $.each(setting.DataColumnsDefs, function (k, v) {
+                    _colDefs.push(v);
+                });
+
+                var tblEmp = $(val).DataTable({
+                    processing: true,
+                    responsive: true,
+                    order: setting.DataColumnsOrder,
+                    columns: setting.DataColumns,
+                    columnDefs: _colDefs,
+                    initComplete: function (settings) {
+
+                    },
+                    rowCallback: function (row, data, index) {
+                        if (index === 0)
+                            tblEmp.responsive.recalc();
+                    },
+                    fnDrawCallback: function (settings) {
+                        setbtnAction();
+
+                    },
+                    pageLength: -1
+                });
+
+                tblEmp.on('page.dt', function () {
+                    //var info = tblEmp.page.info();
+                    //$('#pageInfo').html('Showing page test: ' + info.page + ' of ' + info.pages);
+                    //alert(info.page);
+                    //setDataTableTemp(formId.attr('id'), tblEmp, formId.find('#' + txtSearch).val());
+                    //$.pmdRF(formId);
+                });
+
+                tblEmp.on('draw', function () {
+                    //alert('ddd');
+                    //setDataTableTempDF(formId, tblEmp);
+                    //$.pmdRF(formId);
+                    //var oTable = $('#' + $('table.xmain').attr('id')).dataTable();
+                    //oTable.fnPageChange('last');
+
+                });
+
+                //tblEmp.page(1).draw('page');
+
+                //setting.FunLoadData(tblEmp, formId);
+
+                var oTbl = $('#' + tblName).dataTable();
+                if (setting.UrlDataJson.length > 0) {
+                    $.reqData({
+                        url: setting.UrlDataJson,
+                        data: setting.UrlDataSend,
+                        loanding: setting.UrlLoanding,
+                        loandingclose: setting.UrlLoandingclose,
+                        callback: function (vdata) {
+                            try {
+                                tblEmp.clear();
                             } catch (e) {
                             }
-                            var _txtkey = '';
-                            if ($('#txtkey').length === 1) {
-                                _txtkey = $('#txtkey').val();
-                            } else if ($('#txtkey').length > 1) {
-                                _txtkey = $('#txtkey')[0].val();
-                            }
-                            if (_temp.length > 0) {
-                                var _notclear = Enumerable.From(JSON.parse(localStorage.dataTable)).Where(x => $.trim(x.url).concat($.trim(x.formid), $.trim(x.txtkey)) === $.trim(_url).concat($.trim(formId.attr('id')), $.trim(_txtkey))).ToArray();
-                                if (_notclear.length > 0) {
-                                    setting.valSearch = _notclear[0].textsearch;
-                                    _pageSelect = _notclear[0].page;
-                                }
-                            }
+                            tblEmp.rows.add(vdata).draw();
+                            if (setting.useTempData)
+                                oTbl.fnPageChange(_pageSelect);
+                            setting.AfterLoadData(formId, vdata, tblEmp);
                         }
+                    });
+                } else {
+                    //if (setting.DataJson.length > 0) {
+                    try {
+                        tblEmp.clear();
+                    } catch (e) {
+                    }
+                    tblEmp.rows.add(setting.DataJson()).draw();
+                    if (setting.useTempData)
+                        oTbl.fnPageChange(_pageSelect);
+                    setting.AfterLoadData(formId, setting.DataJson(), tblEmp);
+                }
 
-                        //alert('s'); 
 
-                        //alert(setting.btnDeleteAll + ', ' + setting.btnDelete + ', ' + setting.btnEdit);
-                        var _colDefs = new Array();
-                        if (setting.btnDeleteAll) {
-                            _colDefs.push({
-                                render: function (row, type, val2, meta) {
-                                    //_html = '<div class="checkbox-none-text checkbox-primary ">';
-                                    //_html += '<input id="' + (chk + val2.key) + '" type="checkbox" class="' + chk + '" xData="' + val2.key + '">';
-                                    //_html += '<label for="' + (chk + val2.key) + '" style="padding-left: 5px!important;font-size:100%!important;font-weight:100!important;color:#000!important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-                                    //_html += row;
-                                    //_html += '</label>';
-                                    //_html += '</div>';
-                                    var _dele = '';
-                                    try {
-                                        _dele = val2._Delete === false ? 'disabled' : '';
-                                    } catch (ek) {
-                                    }
+                tblEmp.on('responsive-display', function (e, datatable, row, showHide, update) {
 
-                                    _html = '<div class="checkbox pmd-primary">';
-                                    _html += '<label class="pmd-checkbox pmd-checkbox-ripple-effect">';// style="position: relative;top: 5px;"
-                                    _html += '<input type="checkbox" id="' + (chk + val2.key) + '" class="' + chk + ' "' + _dele + ' xData="' + val2.key + '">';
-                                    _html += '<span class="pmd-checkbox-label">&nbsp;</span>';
-                                    _html += '<span>' + row + '</span></label>';
-                                    //_html += '<span class="pmd-switch-label"></span> </label><span style="padding-left: 10px;">'+ row+'</span>';
-                                    _html += '</div>';
-                                    return _html;
-                                },
-                                orderable: true,
-                                targets: 0
-                            });
+                });
+
+                //tblEmp.on('draw.dt', function () {
+                //    alert('ddd');
+                //    $.pmdRF(formId);
+                //});
+
+                //formId.on('click', '*', function (e) {
+                //    return false;
+                //});
+                //formId.on('click', 'div.tblform_userbtnAdd', function () {
+                //    return false;
+                //});
+                //tblEmp.on('draw', function () {
+                //    //alert('dd');
+                //    $.pmdRF();
+                //});
+
+                setbtnAction();
+                function setbtnAction() {
+                    var _btnAc = (55 * formId.find('tbody > tr > td > .btnAction').eq(0).find('.btn').length);
+                    formId.find('.btnAction').parent('td,th').css({'text-align': 'right', 'width': _btnAc + 'px', 'max-width': _btnAc + 'px', 'min-width': _btnAc + 'px'});
+                }
+
+                formId.find('.ulPages > li:not(.divider)').off('click').on({
+                    click: function (e) {
+                        //e.preventDefault();
+                        var rowCount = parseInt($(this).val());
+                        if (rowCount > -1) {
+                            formId.find('.dataTables_paginate').show();
+                            tblEmp.page.len(rowCount).draw();
+                        } else {
+                            formId.find('.dataTables_paginate').hide();
+                            tblEmp.page.len(rowCount).draw();
                         }
-                        if ((!setting.btnDeleteAll && setting.btnDelete) || setting.btnEdit || setting.btnPreview) {
+                        return false;
+                    }
+                }).eq(0).click();
 
-                            _colDefs.push({
-                                render: function (row, type, val2, meta) {
-                                    _html = '<div class="btn-group btnAction">';
-                                    if (setting.btnPreview) {
-                                        var _preview = '';
-                                        try {
-                                            _preview = val2._PreView === false ? 'disabled' : '';
-                                        } catch (ek) {
-                                        }
-                                        _html += '<div class="btn pmd-btn-raised pmd-ripple-effect ' + setting.btnPreviewStyle + ' btn-sm ' + btnPreview + '" ' + _preview + '><i class="' + setting.btnPreviewIcon + '"></i><spen class="hidden-xs hidden-sm"> ' + _langName.PreviewText + '</spen></div>';
-                                    }
-                                    if (setting.btnEdit) {
-                                        var _edit = '';
-                                        try {
-                                            _edit = val2._Edit === false ? 'disabled' : '';
-                                        } catch (ek) {
-                                        }
-                                        _html += '<div class="btn pmd-btn-raised pmd-ripple-effect ' + setting.btnEditStyle + ' btn-sm ' + btnEdit + '" ' + _edit + '><i class="' + setting.btnEditIcon + '"></i><spen class="hidden-xs hidden-sm"> ' + _langName.EditText + '</spen></div>';
-                                    }
-                                    if (!setting.btnDeleteAll && setting.btnDelete) {
-                                        var _dele = '';
-                                        try {
-                                            _dele = val2._Delete === false ? 'disabled' : '';
-                                        } catch (ek) {
-                                        }
-                                        _html += '<div class="btn pmd-btn-raised pmd-ripple-effect ' + setting.btnDeleteStyle + ' btn-sm ' + btnRemoveLine + '" ' + _dele + '><i class="' + setting.btnDeleteIcon + '"></i><spen class="hidden-xs hidden-sm"> ' + _langName.DeleteText + '</spen></div>';
-                                    }
-                                    _html += '</div>';
-                                    return _html;
-                                },
-                                orderable: false,
-                                targets: -1
-                            });
-                            setting.DataColumns.push({data: 'key', header: '', });
-                        }
+                //if (setting.btnDelete === true && setting.btnDeleteAll === false) {
+                //    formId.find('#' + tblName + ' tbody').on('click', 'tr > td:not(:first-child)', function () {
+                //        var vTR = $(this).parent('tr');
+                //        if (vTR.hasClass('selected')) {
+                //            vTR.removeClass('selected');
+                //        } else {
+                //            tblEmp.$('tr.selected').removeClass('selected');
+                //            vTR.addClass('selected');
+                //        }
+                //    });
+                //} else if ((setting.btnEdit && setting.btnDeleteAll) || (setting.btnEdit && setting.btnDeleteAll == false)) {
+                //    formId.find('#' + tblName + ' tbody').on('click', 'tr > td:not(:first-child)', function () {
+                //        var vdata = tblEmp.row($(this).parent('tr')).data();
+                //        setting.btnEditFun(formId, vdata);
+                //    });
+                //}
 
-                        //if ((!setting.btnDeleteAll && setting.btnDelete) && setting.btnEdit) {
-                        //    _colDefs.push({
-                        //        render: function (row, type, val2, meta) {
-                        //            _html = '<div class="btn-group btnAction">';
-                        //            _html += '<div class="btn pmd-btn-raised pmd-ripple-effect btn-warning btn-sm ' + btnEdit + '"><i class="fa fa-pencil"></i><spen class="hidden-xs hidden-sm"> Edit</spen></div>';
-                        //            _html += '<div class="btn pmd-btn-raised pmd-ripple-effect btn-danger btn-sm ' + btnRemoveLine + '"><i class="fa fa-remove"></i><spen class="hidden-xs hidden-sm"> Delete</spen></div>';
-                        //            _html += '</div>';
-                        //            return _html;
-                        //        },
-                        //        orderable: false,
-                        //        targets: -1
-                        //    });
-                        //    setting.DataColumns.push({ data: 'key', header: '', });
-                        //} else if ((!setting.btnDeleteAll && setting.btnDelete)) {
-                        //    _colDefs.push({
-                        //        render: function (row, type, val2, meta) {
-                        //            _html = '<div class="btn-group btnAction">';
-                        //            _html += '<div class="btn pmd-btn-raised pmd-ripple-effect btn-danger btn-sm ' + btnRemoveLine + '"><i class="fa fa-remove"></i><spen class="hidden-xs hidden-sm"> Delete</spen></div>';
-                        //            _html += '</div>';
-                        //            return _html;
-                        //        },
-                        //        orderable: false,
-                        //        targets: -1
-                        //    });
-                        //    setting.DataColumns.push({ data: 'key', header: '', });
-                        //} else if (setting.btnEdit) {
-                        //    _colDefs.push({
-                        //        render: function (row, type, val2, meta) {
-                        //            _html = '<div class="btn-group btnAction">';
-                        //            _html += '<div class="btn pmd-btn-raised pmd-ripple-effect btn-warning btn-sm ' + btnEdit + '"><i class="fa fa-pencil"></i><spen class="hidden-xs hidden-sm"> Edit</spen></div>';
-                        //            _html += '</div>';
-                        //            return _html;
-                        //        },
-                        //        orderable: false,
-                        //        targets: -1
-                        //    });
-                        //    setting.DataColumns.push({ data: 'key', header: '', });
-                        //}
+                formId.find('#' + tblName + ' tbody').on('click', 'tr .' + btnEdit + ':not([disabled])', function () {
+                    var vdata = new Object();
+                    if ($(this).parents('tr').hasClass('child')) {
+                        vdata = $(this).parents('tr').prev();
+                    } else {
+                        vdata = $(this).parents('tr');
+                    }
+                    var vdata = tblEmp.row(vdata).data();
+                    setting.btnEditFun(formId, vdata);
+                });
 
+                formId.find('#' + tblName + ' tbody').on('click', 'tr .' + btnRemoveLine + ':not([disabled])', function () {
+                    var vdata = new Object();
+                    if ($(this).parents('tr').hasClass('child')) {
+                        vdata = $(this).parents('tr').prev();
+                    } else {
+                        vdata = $(this).parents('tr');
+                    }
+                    var vdata = new Array(tblEmp.row(vdata).data());
+                    setting.btnDeleteFun(formId, vdata);
+                });
 
-                        //var _newCol = new Array();
-                        //_newCol.push(new Object({ data: 'key', header: '' }));
-                        //$.each(setting.DataColumns, function (kc, vc) {
-                        //    _newCol.push(vc);
-                        //});
-                        //setting.DataColumns = _newCol;
+                formId.find('#' + tblName + ' tbody').on('click', 'tr .' + btnPreview + ':not([disabled])', function () {
+                    var vdata = new Object();
+                    if ($(this).parents('tr').hasClass('child')) {
+                        vdata = $(this).parents('tr').prev();
+                    } else {
+                        vdata = $(this).parents('tr');
+                    }
+                    var vdata = tblEmp.row(vdata).data();
+                    setting.btnPreviewFun(formId, vdata);
+                });
 
-                        $.each(setting.DataColumnsDefs, function (k, v) {
-                            _colDefs.push(v);
-                        });
+                formId.on('input propertychange paste', '#' + txtSearch, function () {
+                    tblEmp.search($(this).val()).draw();
+                    //setDataTableTemp(formId.attr('id'), tblEmp, $(this).val());
+                });
 
-                        var tblEmp = $(val).DataTable({
-                            processing: true,
-                            responsive: true,
-                            order: setting.DataColumnsOrder,
-                            columns: setting.DataColumns,
-                            columnDefs: _colDefs,
-                            initComplete: function (settings) {
+                var fsearch = $('#' + txtSearch).prop('value', setting.valSearch);
+                tblEmp.search(fsearch.val()).draw();
 
-                            },
-                            rowCallback: function (row, data, index) {
-                                if (index === 0)
-                                    tblEmp.responsive.recalc();
-                            },
-                            fnDrawCallback: function (settings) {
-                                $.pmdRF(formId);
-                                setbtnAction();
-
-                            },
-                            pageLength: -1
-                        });
-
-                        tblEmp.on('page.dt', function () {
-                            //var info = tblEmp.page.info();
-                            //$('#pageInfo').html('Showing page test: ' + info.page + ' of ' + info.pages);
-                            //alert(info.page);
-                            //setDataTableTemp(formId.attr('id'), tblEmp, formId.find('#' + txtSearch).val());
-                            //$.pmdRF(formId);
-                            setDataTableTemp(formId, tblEmp);
-                        });
-
-                        tblEmp.on('draw', function () {
-                            //alert('ddd');
-                            //setDataTableTempDF(formId, tblEmp);
-                            //$.pmdRF(formId);
-                            //var oTable = $('#' + $('table.xmain').attr('id')).dataTable();
-                            //oTable.fnPageChange('last');
-
-                        });
-
-                        //tblEmp.page(1).draw('page');
-
+                formId.find('.' + btnRef).off('click').on({
+                    click: function () {
+                        //tblEmp.clear().rows.add(setting.FunLoadData());
                         //setting.FunLoadData(tblEmp, formId);
-
-                        var oTbl = $('#' + tblName).dataTable();
                         if (setting.UrlDataJson.length > 0) {
                             $.reqData({
                                 url: setting.UrlDataJson,
@@ -382,202 +514,66 @@
                                 oTbl.fnPageChange(_pageSelect);
                             setting.AfterLoadData(formId, setting.DataJson(), tblEmp);
                         }
+                    }
+                });
 
+                formId.find('.' + btnChecked).off('click').on({
+                    click: function (e) {
+                        e.preventDefault();
+                        formId.find('.' + chk + ':enabled').prop('checked', true);
+                    }
+                });
 
-                        tblEmp.on('responsive-display', function (e, datatable, row, showHide, update) {
-                            $.pmdRF(formId);
+                formId.find('.' + btnUnChecked).off('click').on({
+                    click: function (e) {
+                        e.preventDefault();
+                        formId.find('.' + chk + ':enabled').prop('checked', false);
+                    }
+                });
+
+                formId.find('.' + btnAdd).off('click').on({
+                    click: function () {
+                        setting.btnNewFun(formId);
+                    }
+                })
+
+                formId.find('.' + btnRemove).off('click').on({
+                    click: function () {
+                        //if ($(this).hasClass('disabled'))
+                        //    return false;
+                        //if (setting.btnDeleteAll) {
+                        var vdata = new Array();
+                        formId.find('#' + tblName + ' tbody .' + chk + ':checked').each(function (key, val) {
+                            vdata.push(tblEmp.row($(val).parents('tr')).data());
                         });
-
-                        //tblEmp.on('draw.dt', function () {
-                        //    alert('ddd');
-                        //    $.pmdRF(formId);
-                        //});
-
-                        //formId.on('click', '*', function (e) {
-                        //    return false;
-                        //});
-                        //formId.on('click', 'div.tblform_userbtnAdd', function () {
-                        //    return false;
-                        //});
-                        //tblEmp.on('draw', function () {
-                        //    //alert('dd');
-                        //    $.pmdRF();
-                        //});
-
-                        setbtnAction();
-                        function setbtnAction() {
-                            var _btnAc = (55 * formId.find('tbody > tr > td > .btnAction').eq(0).find('.btn').length);
-                            formId.find('.btnAction').parent('td,th').css({'text-align': 'right', 'width': _btnAc + 'px', 'max-width': _btnAc + 'px', 'min-width': _btnAc + 'px'});
-                        }
-
-                        formId.find('.ulPages > li:not(.divider)').off('click').on({
-                            click: function (e) {
-                                //e.preventDefault();
-                                var rowCount = parseInt($(this).val());
-                                if (rowCount > -1) {
-                                    formId.find('.dataTables_paginate').show();
-                                    tblEmp.page.len(rowCount).draw();
-                                } else {
-                                    formId.find('.dataTables_paginate').hide();
-                                    tblEmp.page.len(rowCount).draw();
-                                }
-                                return false;
-                            }
-                        }).eq(0).click();
-
-                        //if (setting.btnDelete === true && setting.btnDeleteAll === false) {
-                        //    formId.find('#' + tblName + ' tbody').on('click', 'tr > td:not(:first-child)', function () {
-                        //        var vTR = $(this).parent('tr');
-                        //        if (vTR.hasClass('selected')) {
-                        //            vTR.removeClass('selected');
-                        //        } else {
-                        //            tblEmp.$('tr.selected').removeClass('selected');
-                        //            vTR.addClass('selected');
-                        //        }
-                        //    });
-                        //} else if ((setting.btnEdit && setting.btnDeleteAll) || (setting.btnEdit && setting.btnDeleteAll == false)) {
-                        //    formId.find('#' + tblName + ' tbody').on('click', 'tr > td:not(:first-child)', function () {
-                        //        var vdata = tblEmp.row($(this).parent('tr')).data();
-                        //        setting.btnEditFun(formId, vdata);
-                        //    });
+                        setting.btnDeleteFun(formId, vdata);
+                        //} else {
+                        //    var vdata = tblEmp.row(formId.find('#' + tblName + ' tbody tr[role=row].selected')).data().key;
+                        //    setting.btnDeleteFun(formId, vdata);
                         //}
 
-                        formId.find('#' + tblName + ' tbody').on('click', 'tr .' + btnEdit + ':not([disabled])', function () {
-                            var vdata = new Object();
-                            if ($(this).parents('tr').hasClass('child')) {
-                                vdata = $(this).parents('tr').prev();
-                            } else {
-                                vdata = $(this).parents('tr');
-                            }
-                            var vdata = tblEmp.row(vdata).data();
-                            setting.btnEditFun(formId, vdata);
-                        });
+                    }
+                });
 
-                        formId.find('#' + tblName + ' tbody').on('click', 'tr .' + btnRemoveLine + ':not([disabled])', function () {
-                            var vdata = new Object();
-                            if ($(this).parents('tr').hasClass('child')) {
-                                vdata = $(this).parents('tr').prev();
-                            } else {
-                                vdata = $(this).parents('tr');
-                            }
-                            var vdata = new Array(tblEmp.row(vdata).data());
-                            setting.btnDeleteFun(formId, vdata);
-                        });
+                //formId.find('.' + btnEdit).off('click').on({
+                //    click: function () {
+                //        var vdata = tblEmp.row(formId.find('#' + tblName + ' tbody tr[role=row].selected')).data();
+                //        setting.btnEditFun(formId, vdata);
+                //    }
+                //});
 
-                        formId.find('#' + tblName + ' tbody').on('click', 'tr .' + btnPreview + ':not([disabled])', function () {
-                            var vdata = new Object();
-                            if ($(this).parents('tr').hasClass('child')) {
-                                vdata = $(this).parents('tr').prev();
-                            } else {
-                                vdata = $(this).parents('tr');
-                            }
-                            var vdata = tblEmp.row(vdata).data();
-                            setting.btnPreviewFun(formId, vdata);
-                        });
-
-                        formId.on('input propertychange paste', '#' + txtSearch, function () {
-                            tblEmp.search($(this).val()).draw();
-                            //setDataTableTemp(formId.attr('id'), tblEmp, $(this).val());
-                            setDataTableTemp(formId, tblEmp);
-                        });
-
-                        var fsearch = $('#' + txtSearch).prop('value', setting.valSearch);
-                        tblEmp.search(fsearch.val()).draw();
-
-                        formId.find('.' + btnRef).off('click').on({
-                            click: function () {
-                                //tblEmp.clear().rows.add(setting.FunLoadData());
-                                //setting.FunLoadData(tblEmp, formId);
-                                if (setting.UrlDataJson.length > 0) {
-                                    $.reqData({
-                                        url: setting.UrlDataJson,
-                                        data: setting.UrlDataSend,
-                                        loanding: setting.UrlLoanding,
-                                        loandingclose: setting.UrlLoandingclose,
-                                        callback: function (vdata) {
-                                            try {
-                                                tblEmp.clear();
-                                            } catch (e) {
-                                            }
-                                            tblEmp.rows.add(vdata).draw();
-                                            if (setting.useTempData)
-                                                oTbl.fnPageChange(_pageSelect);
-                                            setting.AfterLoadData(formId, vdata, tblEmp);
-                                        }
-                                    });
-                                } else {
-                                    //if (setting.DataJson.length > 0) {
-                                    try {
-                                        tblEmp.clear();
-                                    } catch (e) {
-                                    }
-                                    tblEmp.rows.add(setting.DataJson()).draw();
-                                    if (setting.useTempData)
-                                        oTbl.fnPageChange(_pageSelect);
-                                    setting.AfterLoadData(formId, setting.DataJson(), tblEmp);
-                                }
-                            }
-                        });
-
-                        formId.find('.' + btnChecked).off('click').on({
-                            click: function (e) {
-                                e.preventDefault();
-                                formId.find('.' + chk + ':enabled').prop('checked', true);
-                            }
-                        });
-
-                        formId.find('.' + btnUnChecked).off('click').on({
-                            click: function (e) {
-                                e.preventDefault();
-                                formId.find('.' + chk + ':enabled').prop('checked', false);
-                            }
-                        });
-
-                        formId.find('.' + btnAdd).off('click').on({
-                            click: function () {
-                                setting.btnNewFun(formId);
-                            }
-                        })
-
-                        formId.find('.' + btnRemove).off('click').on({
-                            click: function () {
-                                //if ($(this).hasClass('disabled'))
-                                //    return false;
-                                //if (setting.btnDeleteAll) {
-                                var vdata = new Array();
-                                formId.find('#' + tblName + ' tbody .' + chk + ':checked').each(function (key, val) {
-                                    vdata.push(tblEmp.row($(val).parents('tr')).data());
-                                });
-                                setting.btnDeleteFun(formId, vdata);
-                                //} else {
-                                //    var vdata = tblEmp.row(formId.find('#' + tblName + ' tbody tr[role=row].selected')).data().key;
-                                //    setting.btnDeleteFun(formId, vdata);
-                                //}
-
-                            }
-                        });
-
-                        //formId.find('.' + btnEdit).off('click').on({
-                        //    click: function () {
-                        //        var vdata = tblEmp.row(formId.find('#' + tblName + ' tbody tr[role=row].selected')).data();
-                        //        setting.btnEditFun(formId, vdata);
-                        //    }
-                        //});
-
-                        setting.FundCallback(formId, tblEmp);
-                        //var oTbl = $('#' + tblName).dataTable();
-                        //oTbl.fnPageChange(_pageSelect);
-                        //var _divaction = formId.attr('id') + 'divaction';
-                        //formId.append('<div id="' + _divaction + '" style="display:none;" data-xform="' + formId.attr('id') + '"></div>').on('click', function () {
-                        //    var _formid = $('#' + $(this).find('#' + _divaction).data('xform'));
-                        //    alert(_formid.attr('id'));
-                        //    var oTable = $('#' + _formid.find('table.xmain').attr('id')).dataTable();
-                        //    oTable.fnPageChange('last');
-                        //});
-                        //$('#' + $.cookie('n2n_focusMenu')).parent('li').click();
-                    });
-                }
-            })
+                setting.FundCallback(formId, tblEmp);
+                //var oTbl = $('#' + tblName).dataTable();
+                //oTbl.fnPageChange(_pageSelect);
+                //var _divaction = formId.attr('id') + 'divaction';
+                //formId.append('<div id="' + _divaction + '" style="display:none;" data-xform="' + formId.attr('id') + '"></div>').on('click', function () {
+                //    var _formid = $('#' + $(this).find('#' + _divaction).data('xform'));
+                //    alert(_formid.attr('id'));
+                //    var oTable = $('#' + _formid.find('table.xmain').attr('id')).dataTable();
+                //    oTable.fnPageChange('last');
+                //});
+                //$('#' + $.cookie('n2n_focusMenu')).parent('li').click();
+            });
         })
     };
 

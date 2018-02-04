@@ -3,3 +3,28 @@
     margin: 0px;
     padding-top: 0px;
 }
+.dataTables_length, .dataTables_filter {
+    display: none;
+}
+
+.dataTables_paginate.paging_simple_numbers > a:first-child {
+    margin-right: 1px;
+}
+
+.dataTables_paginate.paging_simple_numbers > a:last-child {
+    margin-left: 1px;
+}
+
+.dataTables_paginate.paging_simple_numbers > span > a {
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+table.dataTable thead th {
+    border-bottom: 1px solid #ddd !important;
+    color: #4d575d !important;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px solid #ddd !important;
+}

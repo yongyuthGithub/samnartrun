@@ -348,7 +348,7 @@ function ChkNumber(v) {
         if (v === undefined)
             v = 'show';
 
-        $('#bodySYS').ShowLoading({action: v});
+        $('#myPage').ShowLoading({action: v});
     }
 
     $.fn.ShowLoading = function (option) {
@@ -376,12 +376,12 @@ function ChkNumber(v) {
             url: '',
             callback: function () { },
             data: {},
-            //loanding: true,
-            //loandingclose: true,
+            loanding: true,
+            loandingclose: true,
         }, option);
 
-        //if (setting.loanding)
-        //    $('#bodySystem').ShowLoading();
+        if (setting.loanding)
+            $('#myPage').ShowLoading();
 
         $.ajax({
             url: setting.url,
@@ -390,8 +390,8 @@ function ChkNumber(v) {
             data: setting.data,
             success: function (data) {
                 setting.callback(data);
-                //if (setting.loandingclose)
-                //    $('#bodySystem').ShowLoading({ action: "hide" });
+                if (setting.loandingclose)
+                    $('#myPage').ShowLoading({ action: "hide" });
             }
         });
     }
