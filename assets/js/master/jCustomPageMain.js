@@ -7,11 +7,13 @@
             //DataColumnsOrder: [],
             //FunLoadData: function () { },
             UrlDataJson: '', //url ajax
-            UrlDataSend: new Object(),//data sent ajax
+            UrlDataSend: new Object(), //data sent ajax
             UrlLoanding: false,
             UrlLoandingclose: false,
-            DataJson: function () { return new Array() },// function return data to table
-            AfterLoadData: function (form, data, table) { },//function after set rows
+            DataJson: function () {
+                return new Array()
+            }, // function return data to table
+            AfterLoadData: function (form, data, table) { }, //function after set rows
             btnSearch: true,
             btnNew: false,
             btnNewFun: function () { },
@@ -170,7 +172,8 @@
                         if (setting.useTempData) {
                             try {
                                 var _temp = Enumerable.From(JSON.parse(localStorage.dataTable)).ToArray();
-                            } catch (e) { }
+                            } catch (e) {
+                            }
                             var _txtkey = '';
                             if ($('#txtkey').length === 1) {
                                 _txtkey = $('#txtkey').val();
@@ -202,7 +205,8 @@
                                     var _dele = '';
                                     try {
                                         _dele = val2._Delete === false ? 'disabled' : '';
-                                    } catch (ek) { }
+                                    } catch (ek) {
+                                    }
 
                                     _html = '<div class="checkbox pmd-primary">';
                                     _html += '<label class="pmd-checkbox pmd-checkbox-ripple-effect">';// style="position: relative;top: 5px;"
@@ -226,21 +230,24 @@
                                         var _preview = '';
                                         try {
                                             _preview = val2._PreView === false ? 'disabled' : '';
-                                        } catch (ek) { }
+                                        } catch (ek) {
+                                        }
                                         _html += '<div class="btn pmd-btn-raised pmd-ripple-effect ' + setting.btnPreviewStyle + ' btn-sm ' + btnPreview + '" ' + _preview + '><i class="' + setting.btnPreviewIcon + '"></i><spen class="hidden-xs hidden-sm"> ' + _langName.PreviewText + '</spen></div>';
                                     }
                                     if (setting.btnEdit) {
                                         var _edit = '';
                                         try {
                                             _edit = val2._Edit === false ? 'disabled' : '';
-                                        } catch (ek) { }
+                                        } catch (ek) {
+                                        }
                                         _html += '<div class="btn pmd-btn-raised pmd-ripple-effect ' + setting.btnEditStyle + ' btn-sm ' + btnEdit + '" ' + _edit + '><i class="' + setting.btnEditIcon + '"></i><spen class="hidden-xs hidden-sm"> ' + _langName.EditText + '</spen></div>';
                                     }
                                     if (!setting.btnDeleteAll && setting.btnDelete) {
                                         var _dele = '';
                                         try {
                                             _dele = val2._Delete === false ? 'disabled' : '';
-                                        } catch (ek) { }
+                                        } catch (ek) {
+                                        }
                                         _html += '<div class="btn pmd-btn-raised pmd-ripple-effect ' + setting.btnDeleteStyle + ' btn-sm ' + btnRemoveLine + '" ' + _dele + '><i class="' + setting.btnDeleteIcon + '"></i><spen class="hidden-xs hidden-sm"> ' + _langName.DeleteText + '</spen></div>';
                                     }
                                     _html += '</div>';
@@ -249,7 +256,7 @@
                                 orderable: false,
                                 targets: -1
                             });
-                            setting.DataColumns.push({ data: 'key', header: '', });
+                            setting.DataColumns.push({data: 'key', header: '', });
                         }
 
                         //if ((!setting.btnDeleteAll && setting.btnDelete) && setting.btnEdit) {
@@ -356,7 +363,8 @@
                                 callback: function (vdata) {
                                     try {
                                         tblEmp.clear();
-                                    } catch (e) { }
+                                    } catch (e) {
+                                    }
                                     tblEmp.rows.add(vdata).draw();
                                     if (setting.useTempData)
                                         oTbl.fnPageChange(_pageSelect);
@@ -367,7 +375,8 @@
                             //if (setting.DataJson.length > 0) {
                             try {
                                 tblEmp.clear();
-                            } catch (e) { }
+                            } catch (e) {
+                            }
                             tblEmp.rows.add(setting.DataJson()).draw();
                             if (setting.useTempData)
                                 oTbl.fnPageChange(_pageSelect);
@@ -398,7 +407,7 @@
                         setbtnAction();
                         function setbtnAction() {
                             var _btnAc = (55 * formId.find('tbody > tr > td > .btnAction').eq(0).find('.btn').length);
-                            formId.find('.btnAction').parent('td,th').css({ 'text-align': 'right', 'width': _btnAc + 'px', 'max-width': _btnAc + 'px', 'min-width': _btnAc + 'px' });
+                            formId.find('.btnAction').parent('td,th').css({'text-align': 'right', 'width': _btnAc + 'px', 'max-width': _btnAc + 'px', 'min-width': _btnAc + 'px'});
                         }
 
                         formId.find('.ulPages > li:not(.divider)').off('click').on({
@@ -488,7 +497,8 @@
                                         callback: function (vdata) {
                                             try {
                                                 tblEmp.clear();
-                                            } catch (e) { }
+                                            } catch (e) {
+                                            }
                                             tblEmp.rows.add(vdata).draw();
                                             if (setting.useTempData)
                                                 oTbl.fnPageChange(_pageSelect);
@@ -499,7 +509,8 @@
                                     //if (setting.DataJson.length > 0) {
                                     try {
                                         tblEmp.clear();
-                                    } catch (e) { }
+                                    } catch (e) {
+                                    }
                                     tblEmp.rows.add(setting.DataJson()).draw();
                                     if (setting.useTempData)
                                         oTbl.fnPageChange(_pageSelect);
@@ -902,7 +913,7 @@
                 //autoFocus:true,
                 err: {
                     container: _this.find('#messages')
-                    //container: 'tooltip'
+                            //container: 'tooltip'
                 },
                 //row: {
                 //    selector: 'td'
@@ -933,160 +944,5 @@ function chkForms(v) {
         return false;
     } else {
         return true;
-    }
-}
-
-//---SetDef
-function setDataTableTemp(_formid, _tbl) {
-    //var _status = true;
-    var _info = _tbl.page.info();
-    var _formName = _formid.attr('id');
-    var _txtSearch = _formid.find('.xSearch').val();
-    var _url = document.URL;
-    var _temp = new Array();
-    try {
-        var _temp = Enumerable.From(JSON.parse(localStorage.dataTable)).ToArray();
-    } catch (e) { }
-    //try {
-    //_temp = Enumerable.From(localStorage.dataTable).Where(x => x.url === _url && x.formid === _tableid).ToArray();
-    //} catch (e) {
-    //    _status = false;
-    //}
-    var _txtkey = '';
-    if ($('#txtkey').length === 1) {
-        _txtkey = $('#txtkey').val();
-    } else if ($('#txtkey').length > 1) {
-        _txtkey = $('#txtkey')[0].val();
-    }
-    if (_temp.length > 0) {
-        //alert(localStorage.dataTable + ', ' + _url + ', ' + _formName + ', ' + _txtkey);
-        var _notclear = Enumerable.From(JSON.parse(localStorage.dataTable)).Where(x => $.trim(x.url).concat($.trim(x.formid), $.trim(x.txtkey)) !== $.trim(_url).concat($.trim(_formName), $.trim(_txtkey))).ToArray();
-        //alert(JSON.stringify(_notclear));
-        _notclear.push({
-            url: _url,
-            formid: _formName,
-            textsearch: _txtSearch,
-            page: _info.page,
-            txtkey: _txtkey
-        });
-        localStorage.dataTable = JSON.stringify(_notclear);
-    } else {
-        localStorage.dataTable = JSON.stringify(new Array({
-            url: _url,
-            formid: _formName,
-            textsearch: _txtSearch,
-            page: _info.page,
-            txtkey: _txtkey
-        }));
-    }
-}
-
-//function setDataTableTempDF(_formid, _tbl) {
-//    var _formName = _formid.attr('id');
-//    var _url = document.URL;
-//    var _temp = new Array();
-//    try {
-//        var _temp = Enumerable.From(JSON.parse(localStorage.dataTable)).ToArray();
-//    } catch (e) { }
-//    var _txtkey = '';
-//    if ($('#txtkey').length === 1) {
-//        _txtkey = $('#txtkey').val();
-//    } else if ($('#txtkey').length > 1) {
-//        _txtkey = $('#txtkey')[0].val();
-//    }
-//    if (_temp.length > 0) {
-//        var _notclear = Enumerable.From(JSON.parse(localStorage.dataTable)).Where(x => $.trim(x.url).concat($.trim(x.formid), $.trim(x.txtkey)) === $.trim(_url).concat($.trim(_formName), $.trim(_txtkey))).ToArray();
-//        if (_notclear.length > 0) {
-//            _formid.find('.xSearch').val(_notclear[0].textsearch);
-//            _tbl.search(_formid.find('.xSearch').val()).draw();
-//        }
-//    }
-//}
-
-function setDataTableTempDF(_formid, _tbl) {
-    if (parseInt(_formid.data('temp')) === 0)
-        return false;
-    var _info = _tbl.page.info();
-    var _formName = _formid.attr('id');
-    var _url = document.URL;
-    var _temp = new Array();
-    try {
-        var _temp = Enumerable.From(JSON.parse(localStorage.dataTable)).ToArray();
-    } catch (e) { }
-    var _txtkey = '';
-    if ($('#txtkey').length === 1) {
-        _txtkey = $('#txtkey').val();
-    } else if ($('#txtkey').length > 1) {
-        _txtkey = $('#txtkey')[0].val();
-    }
-    if (_temp.length > 0) {
-        var _notclear = Enumerable.From(JSON.parse(localStorage.dataTable)).Where(x => $.trim(x.url).concat($.trim(x.formid), $.trim(x.txtkey)) === $.trim(_url).concat($.trim(_formName), $.trim(_txtkey))).ToArray();
-        if (_notclear.length > 0) {
-            _formid.find('.xSearch').val(_notclear[0].textsearch);
-            _tbl.search(_formid.find('.xSearch').val()).draw();
-
-            var oTable = $('#' + _formid.find('table.xmain').attr('id')).dataTable();
-            if ((_info.page.length - 1) > _notclear[0].page) {
-                oTable.fnPageChange('last');
-            } else {
-                oTable.fnPageChange(_notclear[0].page);
-            }
-        }
-    }
-}
-
-$('#bodySYS').on('shown.bs.tab', 'a[data-toggle="tab"]', function () {
-    var _this = $(this);
-    //if (!_this.hasClass('xshow')) {
-    //    _this.addClass('xshow');
-    //    //$('div[role="tabpanel"].active').find('.xref').click();
-    //}
-
-    var _url = document.URL;
-    var _temp = new Array();
-
-    try {
-        var _temp = Enumerable.From(JSON.parse(localStorage.tab)).ToArray();
-    } catch (e) { }
-    var _txtkey = '';
-    if ($('#txtkey').length === 1) {
-        _txtkey = $('#txtkey').val();
-    } else if ($('#txtkey').length > 1) {
-        _txtkey = $('#txtkey')[0].val();
-    }
-    if (_temp.length > 0) {
-        var _notclear = Enumerable.From(JSON.parse(localStorage.tab)).Where(x => $.trim(x.url).concat($.trim(x.txtkey)) !== $.trim(_url).concat($.trim(_txtkey))).ToArray();
-        _notclear.push({
-            url: _url,
-            txtkey: _txtkey,
-            index: _this.parent('[role="presentation"]').index()
-        });
-        localStorage.tab = JSON.stringify(_notclear);
-    } else {
-        localStorage.tab = JSON.stringify(new Array({
-            url: _url,
-            txtkey: _txtkey,
-            index: _this.parent('[role="presentation"]').index()
-        }));
-    }
-});
-
-function setTabTempDF() {
-    var _url = document.URL;
-    var _tabtemp = new Array();
-    try {
-        var _tabtemp = Enumerable.From(JSON.parse(localStorage.tab)).ToArray();
-    } catch (e) { }
-    var _txtkey = '';
-    if ($('#txtkey').length === 1) {
-        _txtkey = $('#txtkey').val();
-    } else if ($('#txtkey').length > 1) {
-        _txtkey = $('#txtkey')[0].val();
-    }
-    if (_tabtemp.length > 0) {
-        var _tabSelect = Enumerable.From(JSON.parse(localStorage.tab)).Where(x => $.trim(x.url).concat($.trim(x.txtkey)) === $.trim(_url).concat($.trim(_txtkey))).ToArray();
-        if (_tabSelect.length > 0) {
-            $('[role="presentation"]').eq(_tabSelect[0].index).children('a[data-toggle="tab"]').click();
-        }
     }
 }

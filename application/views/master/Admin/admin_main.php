@@ -4,7 +4,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<script type="text/javascript">
+<!--<script type="text/javascript">
     $(function () {
         var form_sumbit = $('#form_sumbit');
 
@@ -20,7 +20,8 @@ and open the template in the editor.
             }
         });
     })
-</script>
+</script>-->
+<?php echo js_asset('views/admin/admin_main.js')?>
 <div class="page-header">
     <h1>ข้อมูล Admin <small>จัดการข้อมูลผู้ใช้ระบบ</small></h1>
 </div>
@@ -36,18 +37,20 @@ and open the template in the editor.
                     </h4>
                 </div>
                 <div class="col-xs-6 text-right">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-success" id="btnEdit"><i class="fa fa-plus" style="padding-right: 5px;"></i> New</button>
-                        <button type="button" class="btn btn-danger" id="btnDelete"><i class="fa fa-close" style="padding-right: 5px;"></i> Delete</button>
+                    <div class="input-group">                        
+                        <span class="input-group-btn">
+                            <!--                            <div class="btn-group">-->
+                            <button type="button" class="btn btn-success" id="btnEdit"><i class="fa fa-plus" style="padding-right: 5px;"></i> New</button>
+                            <button type="button" class="btn btn-danger" id="btnDelete"><i class="fa fa-close" style="padding-right: 5px;"></i> Delete</button>
+                            <!--                            </div>-->
+                        </span>
+                        <input id="email" type="text" class="form-control" name="txtSearch" id="txtSearch" placeholder="Search...">
                     </div>
                 </div>
             </div>
         </div>
         <div class="panel-body">            
-            <br>
-            <br>
-            <br>
-            <br>
+            <div id="form_adminlist"></div>
         </div>
     </div>
 </div>
