@@ -4,73 +4,64 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<div class="page-header">
+<!--<div class="page-header">
     <h1>ข้อมูลAdmin</h1><h4><small>เพิ่มข้อมูลAdmin</small></h4>
-</div>
-<div class="col-12">
-    <ol class="breadcrumb">
-        <li><a href="<?php echo base_url('Admin/index'); ?> ">Home</a></li>
-        <li class="active">New Admin</li>
-    </ol>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="row">
-                <div class="col-xs-6 ">
-                    <h4>
-                        <?php
-                        echo 'เพิ่มข้อมูล Admin';
-                        ?>
-                    </h4>
+</div>-->
+<?php echo js_asset('views/admin/admin_edit.js') ?>
+<div class="row">
+    <form id="form_adminedit">
+        <div class="form-group">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="txtUser">User Name :</label>
+                    <input type="text" class="form-control" id="txtUser" name="txtUser" placeholder="Input User Name">
                 </div>
-                <div class="col-xs-6 text-right">
-                    <button type="button" class="btn btn-success"><i class="fa fa-newspaper-o" style="padding-right: 5px;"></i>Save</button>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="cmdTitle">Title :</label>
+                    <select id="cmdTitle" name="cmdTitle" class="form-control selectpicker show-menu-arrow"
+                            data-width="100%"
+                            data-show-Tick="true"
+                            data-tick-Icon="fa fa-check"
+                            data-size="5"
+                            data-header="false"
+                            data-live-Search="false"
+                            data-live-Search-Placeholder="key word"
+                            data-multiple-Separator=",&nbsp;&nbsp;"
+                            data-actions-Box="false"
+                            data-selectAll-Text="Select All"
+                            data-deselectAll-Text="Deselect All"
+                            data-selected-Text-Format="count > 3">
+                        <option value="1">บริษัท</option>
+                        <option value="2">บุคคลธรรมดา</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="txtFirstName">First Name :</label>
+                    <input type="text" class="form-control" id="txtFirstName" name="txtFirstName" placeholder="Input First Name">
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="txtLastName">Last Name :</label>
+                    <input type="text" class="form-control" id="txtLastName" name="txtLastName" placeholder="Input Last Name">
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="txtPassword">Password :</label>
+                    <input type="password" class="form-control" id="txtPassword" name="txtPassword" placeholder="Input Password">
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="txtConfirmPassword">Confirm Password :</label>
+                    <input type="password" class="form-control" id="txtConfirmPassword" name="txtConfirmPassword" placeholder="Input Confirm Password">
                 </div>
             </div>
         </div>
-        <div class="panel-body">            
-            <div class="row">
-                <div class="col-xs-6 ">
-                    <label for="exampleInputEmail1"><h5>Email</h5></label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email..">
-                </div>
-                <div class="col-xs-6 text-left">
-                    <label for="exampleInputEmail1"><h5>ชื่อ-นามสกุล</h5></label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="ชื่อ-นามสกุล..">
-
-                </div>
-            </div>
-        </div>
-        <div class="panel-body">            
-            <div class="row">
-                <div class="col-xs-6 ">
-                    <label for="exampleInputEmail1"><h5>รหัสผ่าน</h5></label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="รหัสผ่าน..">
-                </div>
-                <div class="col-xs-6 text-left">
-                    <label for="exampleInputEmail1"><h5>ยืนยันรหัสผ่าน</h5></label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="ยืนยันรหัสผ่าน..">
-
-                </div>
-
-                <div class="col-xs-6 text-left">
-                    <label for="exampleInputEmail1"><h5>ตำแหน่ง</h5></label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="ตำแหน่ง..">
-                </div>
-                 <div class="col-xs-6 text-left">
-                    <label for="country"><h5>สิทธิการเข้าใช้งาน</h5></label>
-                    <select class="form-control">
-                        <option>กรุณาเลือก..</option>
-                        <option>ผุ้ดูแล</option>
-                        <option>สมาชิก</option>
-                    </select> 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
-
-<div class="panel-footer">
-    ....
-</div>
+    </form>
 </div>

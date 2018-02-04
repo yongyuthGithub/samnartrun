@@ -14,6 +14,7 @@
         <?php echo css_asset('master/_site.css')?>
         <?php echo css_asset('master/jquery.dataTables.min.css')?>
         <?php echo css_asset('master/responsive.dataTables.min.css')?>
+        <?php echo css_asset('master/bootstrap-select.min.css')?>
         
         <?php echo js_asset('master/jquery.cookie.js')?>
         <?php echo js_asset('master/linq.min.js')?>
@@ -21,6 +22,9 @@
         <?php echo js_asset('master/bootstrap_validation.js')?>
         <?php echo js_asset('master/jquery.dataTables.min.js')?>
         <?php echo js_asset('master/dataTables.responsive.min.js')?>
+        <?php echo js_asset('master/bootstrap-dialog.min.js')?>
+        <?php echo js_asset('master/bootstrap-select.min.js')?>
+        <?php echo js_asset('master/jBootstrap-dialog.js')?>
         <?php echo js_asset('master/jquery.cookie.js')?>
         <?php echo js_asset('master/loadingoverlay.min.js')?>
         <?php echo js_asset('master/loadingoverlay_progress.min.js')?>

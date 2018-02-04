@@ -15,8 +15,7 @@ class admin extends PCenter {
     }
 
     public function edit() {
-          $data['page'] = 'master/Admin/admin_edit';
-          $this->load->view('layout/nav', $data);
+          $this->load->view('master/Admin/admin_edit');
     }
 
 }

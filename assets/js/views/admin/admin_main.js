@@ -31,6 +31,27 @@ $(function () {
             {data: 'RowStatus', header: 'Active'}
         ],
         btnNewFun: function (f) {
+            $.bPopup({
+                url: mvcPatch('admin/edit'),
+                title: 'New Accouss',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;ok',
+                        action: function (k) {
+
+                        }
+                    }
+                ]
+            });
         },
         btnEditFun: function (f, d) {
         },

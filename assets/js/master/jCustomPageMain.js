@@ -892,15 +892,15 @@
             fields: {},
             //message: new Object(),
             btnactive: [],
-            positionY: 'top',
-            positionX: 'right',
-            type: 'error'
+//            positionY: 'top',
+//            positionX: 'right',
+//            type: 'error'
         }, option);
 
         return this.each(function () {
             var _this = $(this);
-            _this.prepend('<div id="messages" class="has-error" style="display:none;"></div>');
-            _this.prepend('<button type="button" id="btn-error" data-positionX="' + setting.positionX + '" data-positionY="' + setting.positionY + '" data-effect="fadeInUp" data-message="Oh snap! Change a few things up and try submitting again." data-type="' + setting.type + '" class="pmd-z-depth pmd-alert-toggle" style="display:none;">Alert Error</button>');
+//            _this.prepend('<div id="messages" class="has-error" style="display:none;"></div>');
+//            _this.prepend('<button type="button" id="btn-error" data-positionX="' + setting.positionX + '" data-positionY="' + setting.positionY + '" data-effect="fadeInUp" data-message="Oh snap! Change a few things up and try submitting again." data-type="' + setting.type + '" class="pmd-z-depth pmd-alert-toggle" style="display:none;">Alert Error</button>');
 
             _this.formValidation({
                 framework: 'bootstrap',
@@ -908,7 +908,7 @@
                 excluded: [':disabled'],
                 //autoFocus:true,
                 err: {
-                    container: _this.find('#messages')
+//                    container: _this.find('#messages')
                             //container: 'tooltip'
                 },
                 //row: {
@@ -925,8 +925,8 @@
             }).on('success.form.fv', function (e) {
                 setting.funsuccess(e)
             }).on('err.field.fv', function (e, data) {
-                var _mk = _this.find('.help-block[data-fv-for="' + data.field + '"]');
-                _this.find('#btn-error').attr('data-message', 'Error :' + _mk.text()).click();
+//                var _mk = _this.find('.help-block[data-fv-for="' + data.field + '"]');
+//                _this.find('#btn-error').attr('data-message', 'Error :' + _mk.text()).click();
             }).setEvenValidator({
                 btnActive: setting.btnactive
             });
