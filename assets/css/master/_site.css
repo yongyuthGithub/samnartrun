@@ -28,3 +28,15 @@ table.dataTable thead th {
 table.dataTable.no-footer {
     border-bottom: 1px solid #ddd !important;
 }
+
+table.dataTable > tbody td{
+    padding-top:  2px !important;
+    padding-bottom:  2px !important;
+    /*margin: 0px !important;*/
+}
+
+table.dataTable > tbody tr[role=row] > td::before{
+    top: 0px !important;
+    bottom: 0px !important;
+    margin: auto !important;
+}

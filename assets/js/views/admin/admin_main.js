@@ -6,9 +6,23 @@ $(function () {
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
-        btnPreview: false,
+        btnPreview: true,
         headerString: '',
 //        UrlDataJson: mvcPatch('Sales/FindProduct'),
+        DataJson: function () {
+            return new Array(
+                    {
+                        User: 'yongyuth@gmail.com',
+                        Name: 'Yongyuth Janloy',
+                        RowStatus: 1,
+                    },
+                    {
+                        User: 'yongyuth@hotmail.com',
+                        Name: 'Yongyuth Janloy',
+                        RowStatus: 0,
+                    }
+            );
+        },
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
