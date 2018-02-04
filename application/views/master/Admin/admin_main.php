@@ -22,7 +22,7 @@ and open the template in the editor.
     })
 </script>
 <div class="page-header">
-    <h1>ข้อมูลAdmin <small>ข้อมูลAdmin</small></h1>
+    <h1>ข้อมูล Admin <small>จัดการข้อมูลผู้ใช้ระบบ</small></h1>
 </div>
 <div class="col-12">   
     <div class="panel panel-default">
@@ -36,8 +36,10 @@ and open the template in the editor.
                     </h4>
                 </div>
                 <div class="col-xs-6 text-right">
-                    <button type="button" class="btn btn-success" id="btnEdit"><i class="fa fa-newspaper-o" style="padding-right: 5px;"></i> New</button>
-                    <button type="button" class="btn btn-primary" id="btnDelete"><i class="fa fa-android" style="padding-right: 5px;"></i> Delete</button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success" id="btnEdit"><i class="fa fa-plus" style="padding-right: 5px;"></i> New</button>
+                        <button type="button" class="btn btn-danger" id="btnDelete"><i class="fa fa-close" style="padding-right: 5px;"></i> Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,8 +50,4 @@ and open the template in the editor.
             <br>
         </div>
     </div>
-</div>
-<div class="panel-footer">
-    ......
-</div>
 </div>
