@@ -39,20 +39,16 @@ class admin extends PCenter {
         echo json_encode($_array);
     }
 
-    public function editAccouss() {
+    public function editAccount() {
         $_data = json_decode($_POST['data']);
-        $vReturn = array(
-            'success' => false,
-            'message' => ''
-        );
+        $vReturn = (object) [];
 
         $queryChk = $this->db->where('User', $_data->User)->from('USRAccount')->count_all_results();
         $this->db->trans_begin();
 
-//if (count($queryChk->result()) > 0) {
         if ($queryChk > 0) {
-            $vReturn['success'] = false;
-            $vReturn['message'] = 'This information is already in the system.';
+            $vReturn->success = false;
+            $vReturn->message = 'This information is already in the system.';
         } else {
 
             $_data->RowKey = PCenter::GUID();
@@ -78,14 +74,32 @@ class admin extends PCenter {
             $this->db->insert('USRAccount', $_data);
             if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
-                $vReturn['success'] = false;
-                $vReturn['message'] = $this->db->_error_message();
+                $vReturn->success = false;
+                $vReturn->message = $this->db->_error_message();
             } else {
                 $this->db->trans_commit();
-                $vReturn['success'] = true;
+                $vReturn->success = true;
             }
         }
 
+        echo json_encode($vReturn);
+    }
+
+    public function removeAccount() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+        $this->db->trans_begin();
+        
+        $this->db->where_in('RowKey', $_data)->delete('USRAccount');
+        
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
+        }
         echo json_encode($vReturn);
     }
 

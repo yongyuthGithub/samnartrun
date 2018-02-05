@@ -7,6 +7,7 @@ $(function () {
         btnDelete: true,
         btnEdit: true,
         btnPreview: true,
+        btnPreviewText:'Repass',
         headerString: '',
         UrlDataJson: mvcPatch('admin/findAccount'),
         UrlLoanding: true,
@@ -21,7 +22,7 @@ $(function () {
                 url: mvcPatch('admin/edit'),
                 title: 'New Account',
                 closable: false,
-                size: BootstrapDialog.SIZE_NORMAL ,
+                size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
                     k.getModal().data({
                         data: new Object({key: Guid}),
@@ -37,7 +38,7 @@ $(function () {
                                 buttonOK: function (k) {
                                     k.close();
                                     $.reqData({
-                                        url: mvcPatch('admin/editAccouss'),
+                                        url: mvcPatch('admin/editAccount'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -72,6 +73,30 @@ $(function () {
             alert(d.Name);
         },
         btnDeleteFun: function (f, d) {
+            $.bConfirm({
+                message: 'Do you want to delete the data?',
+                type: BootstrapDialog.TYPE_DANGER,
+                buttonOK: function (k) {
+                    k.close();
+                    var vdata = $.ToLinq(d)
+                            .Select(function (x) {
+                                return x.key;
+                            }).ToArray();
+                    $.reqData({
+                        url: mvcPatch('admin/removeAccount'),
+                        data: {data: JSON.stringify(vdata)},
+                        callback: function (vdata) {
+                            if (vdata.success) {
+                                f.find('.xref').click();
+                            } else {
+                                $.bAlert({
+                                    message: vdata.message
+                                });
+                            }
+                        }
+                    });
+                }
+            });
         },
         btnPreviewFun: function (f, d) {
 
