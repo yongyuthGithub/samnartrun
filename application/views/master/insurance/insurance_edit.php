@@ -4,73 +4,20 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<div class="page-header">
-    <h1>ข้อมูลประกัน</h1><h4><small>ข้อมูลประกันรถยนต์</small></h4>
-</div>
-<div class="col-12">
-    <ol class="breadcrumb">
-        <li><a href="<?php echo base_url('insurance/index'); ?> ">Home</a></li>
-        <li class="active">New Insurance</li>
-    </ol>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="row">
-                <div class="col-xs-6 ">
-                    <h4>
-                        <?php
-                        echo 'ข้อมูลประกัน';
-                        ?>
-                    </h4>
-                </div>
-                <div class="col-xs-6 text-right">
-                    <button type="button" class="btn btn-success"><i class="fa fa-newspaper-o" style="padding-right: 5px;"></i>Save</button>
+<!--<div class="page-header">
+    <h1>ข้อมูลAdmin</h1><h4><small>เพิ่มข้อมูลAdmin</small></h4>
+</div>-->
+<?php echo js_asset('views/insurance/insurance_edit.js') ?>
+<div class="row">
+    <form id="form_insuranceedit">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label for="txtUser">ชื่อบริษัทประกัน :</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-user-circle" style="min-width: 20px;"></i></div>
+                    <input type="text" class="form-control" id="txtinsurance" name="txtinsurance" placeholder="ชื่อบริษัทประกัน">
                 </div>
             </div>
         </div>
-        <div class="panel-body">            
-            <div class="row">
-                <div class="col-xs-6 ">
-                    <label for="exampleInputEmail1"><h5>เลขที่กรมธรรม์</h5></label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="เลขที่กรมธรรม์..">
-                </div>
-                <div class="col-xs-6 text-left">
-                    <label for="country"><h5>บริษัทประกัน</h5></label>
-                    <select class="form-control">
-                        <option>กรุณาเลือก..</option>
-                        <option>บริษัทที่ 1</option>
-                        <option>บริษัทที่ 2</option>
-                    </select> 
-                </div>
-                
-                <div class="col-xs-6 text-center">
-                    <label for="exampleInputEmail1"><h5>ประเภทประกัน</h5></label>
-                    <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> ประกันชั้นที่ 1
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> ประกันชั้นที่ 2
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> ประกันชั้นที่ 3
-                    </label>  
-                </div>
-                <div class="col-xs-6 text-left ">
-                     <label for="exampleInputEmail1"><h5>วันที่คุ้มครอง</h5></label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="วันที่คุ้มครอง..">
-                </div>
-                <div class="col-xs-6 text-left ">
-                     <label for="exampleInputEmail1"><h5>อื่นๆ</h5></label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="อื่นๆ..">
-                </div>
-                 <div class="col-xs-6 text-left ">
-                     <label for="exampleInputEmail1"><h5>วันที่หมดอายุคุ้มครอง</h5></label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="วันที่หมดอายุคุ้มครอง..">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--        <div class="panel-footer">
-                ....
-            </div>-->
+    </form>
 </div>
