@@ -140,7 +140,7 @@
                 });
             })
         </script>
-        <form id="form_sumbit" style="display: none;"></form>
+        <form id="form_sumbit" style="display: none;" method="post"></form>
         <input type="hidden" id="hidUrl" value="<?php echo base_url(); ?>"/>
     </body>
 </html>
