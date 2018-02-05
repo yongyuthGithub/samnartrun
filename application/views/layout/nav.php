@@ -15,6 +15,7 @@
         <?php echo css_asset('master/jquery.dataTables.min.css')?>
         <?php echo css_asset('master/responsive.dataTables.min.css')?>
         <?php echo css_asset('master/bootstrap-select.min.css')?>
+        <?php echo css_asset('master/checkbox_radiobox.css')?>
         
         <?php echo js_asset('master/jquery.cookie.js')?>
         <?php echo js_asset('master/linq.min.js')?>

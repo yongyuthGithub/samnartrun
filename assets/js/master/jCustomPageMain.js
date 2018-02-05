@@ -209,11 +209,11 @@
                             } catch (ek) {
                             }
 
-                            _html = '<div class="checkbox pmd-primary">';
-                            _html += '<label class="">';// style="position: relative;top: 5px;"
+                            _html = '<div class="checkbox checkbox-danger">';
+                            _html += '';// style="position: relative;top: 5px;"
                             _html += '<input type="checkbox" id="' + (chk + val2.key) + '" class="' + chk + ' "' + _dele + ' xData="' + val2.key + '">';
-                            _html += '<span class="">&nbsp;</span>';
-                            _html += '<span>' + row + '</span></label>';
+                            _html += '<label for="' + (chk + val2.key) + '">' + row + '</label>';
+                            _html += '';
                             //_html += '<span class="pmd-switch-label"></span> </label><span style="padding-left: 10px;">'+ row+'</span>';
                             _html += '</div>';
                             return _html;
@@ -909,7 +909,7 @@
                 //autoFocus:true,
                 err: {
 //                    container: _this.find('#messages')
-                            //container: 'tooltip'
+                    //container: 'tooltip'
                 },
                 //row: {
                 //    selector: 'td'
