@@ -56,7 +56,7 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-        <div class="col-xs-12">
+        <div class="col-xs-12 showinadd">
             <div class="form-group">
                 <label for="txtPassword">Password :</label>
                 <div class="input-group">
@@ -65,7 +65,7 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-        <div class="col-xs-12">
+        <div class="col-xs-12 showinadd">
             <div class="form-group">
                 <label for="txtConfirmPassword">Confirm Password :</label>
                 <div class="input-group">

@@ -61,7 +61,7 @@ $(function () {
                     {
                         id: 'btn-ok',
                         icon: 'fa fa-check',
-                        label: '&nbsp;ตกลง',
+                        label: '&nbsp;Save',
                         action: function (k) {
 
                         }
@@ -70,7 +70,56 @@ $(function () {
             });
         },
         btnEditFun: function (f, d) {
-            alert(d.Name);
+            $.bPopup({
+                url: mvcPatch('admin/edit'),
+                title: 'Edit Account',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        fun: function (_f) {
+                            var obj = new Object();
+                            obj.RowKey = d.key;
+                            obj.User = _f.find('#txtUser').val();
+                            obj.Password = _f.find('#txtPassword').val();
+                            obj.TitleKey = _f.find('#cmdTitle').val();
+                            obj.FName = _f.find('#txtFirstName').val();
+                            obj.LName = _f.find('#txtLastName').val();
+                            $.bConfirm({
+                                buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('admin/editAccount'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                f.find('.xref').click();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+
+                        }
+                    }
+                ]
+            });
         },
         btnDeleteFun: function (f, d) {
             $.bConfirm({

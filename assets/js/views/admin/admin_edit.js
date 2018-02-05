@@ -6,7 +6,11 @@ $(function () {
     if (_formdata.key === Guid) {
         setTitle(Guid);
     } else {
-
+        form_adminedit.find('#txtUser').val(_formdata.User);
+        form_adminedit.find('#txtFirstName').val(_formdata.FName);
+        form_adminedit.find('#txtLastName').val(_formdata.LName);
+        form_adminedit.find('.showinadd').remove();
+        setTitle(_formdata.TitleKey);
     }
 
     form_adminedit.find('#cmdTitle').selectpicker({

@@ -32,6 +32,8 @@ class admin extends PCenter {
                 'User' => $row->User,
                 'TitleKey' => $row->TitleKey,
                 'Name' => $row->FName . ' ' . $row->LName,
+                'FName' => $row->FName,
+                'LName' => $row->LName,
                 'RowStatus' => $row->RowStatus
             );
             array_push($_array, $_ar);
@@ -43,42 +45,52 @@ class admin extends PCenter {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
 
-        $queryChk = $this->db->where('User', $_data->User)->from('USRAccount')->count_all_results();
         $this->db->trans_begin();
 
-        if ($queryChk > 0) {
-            $vReturn->success = false;
-            $vReturn->message = 'This information is already in the system.';
-        } else {
-
-            $_data->RowKey = PCenter::GUID();
-            $_data->RowStatus = true;
-            $_data->CreateBy = PCenter::GUID_EMPTY();
-            $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
-            $_data->UpdateBy = PCenter::GUID_EMPTY();
-            $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
-
-//        $dataInsert = array(
-//            'RowKey' => PCenter::GUID(),
-//            'User' => $_data->User,
-//            'Password' => $_data->Password,
-//            'TitleKey' => $_data->TitleKey,
-//            'FName' => $_data->FName,
-//            'LName' => $_data->LName,
-//            'RowStatus' => true,
-//            'CreateBy' => PCenter::GUID_EMPTY(),
-//            'CreateDate' => PCenter::DATATIME_DB(new DateTime()),
-//            'UpdateBy' => PCenter::GUID_EMPTY(),
-//            'UpdateDate' => PCenter::DATATIME_DB(new DateTime())
-//        );
-            $this->db->insert('USRAccount', $_data);
-            if ($this->db->trans_status() === FALSE) {
-                $this->db->trans_rollback();
+        if ($_data->RowKey === PCenter::GUID_EMPTY()) {
+            $queryChk = $this->db->where('User', $_data->User)->from('USRAccount')->count_all_results();
+            if ($queryChk > 0) {
                 $vReturn->success = false;
-                $vReturn->message = $this->db->_error_message();
+                $vReturn->message = 'This information is already in the system.';
             } else {
-                $this->db->trans_commit();
-                $vReturn->success = true;
+                $_data->RowKey = PCenter::GUID();
+                $_data->RowStatus = true;
+                $_data->CreateBy = PCenter::GUID_EMPTY();
+                $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                $_data->UpdateBy = PCenter::GUID_EMPTY();
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->insert('USRAccount', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                }
+            }
+        } else {
+            $queryChk = $this->db->where('User', $_data->User)->where('RowKey !=', $_data->RowKey)->from('USRAccount')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                $update = (object) [];
+                $update->User = $_data->User;
+                $update->TitleKey = $_data->TitleKey;
+                $update->FName = $_data->FName;
+                $update->LName = $_data->LName;
+                $update->UpdateBy = PCenter::GUID_EMPTY();
+                $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->where('RowKey', $_data->RowKey)->update('USRAccount', $update);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                }
             }
         }
 
@@ -89,9 +101,9 @@ class admin extends PCenter {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
         $this->db->trans_begin();
-        
+
         $this->db->where_in('RowKey', $_data)->delete('USRAccount');
-        
+
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
             $vReturn->success = false;
