@@ -3,10 +3,10 @@ $(function () {
     var form_adminedit_C = $.modelDialog(form_adminedit);
 
     var _formdata = form_adminedit_C.data('data');
-    if(_formdata.key===Guid){
+    if (_formdata.key === Guid) {
         setTitle(Guid);
-    }else{
-        
+    } else {
+
     }
 
     form_adminedit.find('#cmdTitle').selectpicker({
@@ -14,7 +14,7 @@ $(function () {
         change: function () {
         }
     });
-    
+
     function setTitle(v) {
         $.reqData({
             url: mvcPatch('admin/findTitle'),

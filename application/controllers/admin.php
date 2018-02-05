@@ -31,7 +31,7 @@ class admin extends PCenter {
                 'key' => $row->RowKey,
                 'User' => $row->User,
                 'TitleKey' => $row->TitleKey,
-                'Name' => $row->FName.' '.$row->LName,
+                'Name' => $row->FName . ' ' . $row->LName,
                 'RowStatus' => $row->RowStatus
             );
             array_push($_array, $_ar);
@@ -45,14 +45,22 @@ class admin extends PCenter {
             'success' => false,
             'message' => ''
         );
+        
+//        $queryChk = $this->where('User', $_data->User)->get('USRAccount')->num_rows();
         $this->db->trans_begin();
 
-        $_data->RowKey = PCenter::GUID();
-        $_data->RowStatus = true;
-        $_data->CreateBy = PCenter::GUID_EMPTY();
-        $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
-        $_data->UpdateBy = PCenter::GUID_EMPTY();
-        $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+        
+//        if ($queryChk > 0) {
+//            $vReturn['success'] = false;
+//            $vReturn['message'] = 'This information is already in the system.';
+//        } else {
+
+            $_data->RowKey = PCenter::GUID();
+            $_data->RowStatus = true;
+            $_data->CreateBy = PCenter::GUID_EMPTY();
+            $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+            $_data->UpdateBy = PCenter::GUID_EMPTY();
+            $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
 
 //        $dataInsert = array(
 //            'RowKey' => PCenter::GUID(),
@@ -67,14 +75,15 @@ class admin extends PCenter {
 //            'UpdateBy' => PCenter::GUID_EMPTY(),
 //            'UpdateDate' => PCenter::DATATIME_DB(new DateTime())
 //        );
-        $this->db->insert('USRAccount', $_data);
-        if ($this->db->trans_status() === FALSE) {
-            $this->db->trans_rollback();
-            $vReturn['success'] = false;
-        } else {
-            $this->db->trans_commit();
-            $vReturn['success'] = true;
-        }
+            $this->db->insert('USRAccount', $_data);
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $vReturn['success'] = false;
+            } else {
+                $this->db->trans_commit();
+                $vReturn['success'] = true;
+            }
+//        }
 
         echo json_encode($vReturn);
     }

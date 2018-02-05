@@ -9,20 +9,6 @@ $(function () {
         btnPreview: true,
         headerString: '',
         UrlDataJson: mvcPatch('admin/findAccount'),
-        DataJson: function () {
-            return new Array(
-                    {
-                        User: 'yongyuth@gmail.com',
-                        Name: 'Yongyuth Janloy',
-                        RowStatus: 1,
-                    },
-                    {
-                        User: 'yongyuth@hotmail.com',
-                        Name: 'Yongyuth Janloy',
-                        RowStatus: 0,
-                    }
-            );
-        },
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
@@ -33,9 +19,9 @@ $(function () {
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('admin/edit'),
-                title: 'New Accouss',
+                title: 'New Account',
                 closable: false,
-                size: BootstrapDialog.SIZE_NORMAL,
+                size: BootstrapDialog.SIZE_NORMAL ,
                 onshow: function (k) {
                     k.getModal().data({
                         data: new Object({key: Guid}),
@@ -74,7 +60,7 @@ $(function () {
                     {
                         id: 'btn-ok',
                         icon: 'fa fa-check',
-                        label: '&nbsp;ok',
+                        label: '&nbsp;ตกลง',
                         action: function (k) {
 
                         }
@@ -83,6 +69,7 @@ $(function () {
             });
         },
         btnEditFun: function (f, d) {
+            alert(d.Name);
         },
         btnDeleteFun: function (f, d) {
         },
