@@ -89,9 +89,39 @@ $(function () {
                 validators: {
                     notEmpty: {
                         message: '* Please specify Password.'
+                    },
+                    callback: {//***Custom Validation
+                        message: '* Re-enter the code.',
+                        callback: function (value, validator, $field) {
+                            form_adminedit.formValidation('revalidateField', form_adminedit.find('#txtConfirmPassword'));
+                            return true;
+                        }
+                    }
+                }
+            },
+            txtConfirmPassword: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* Please specify Confirm Password.'
+                    },
+                    callback: {//***Custom Validation
+                        message: '* Re-enter the code.',
+                        callback: function (value, validator, $field) {
+//                            form_adminedit.formValidation('revalidateField', form_adminedit.find('#txtPassword'));
+                            return checkPass();
+                        }
                     }
                 }
             }
         }
     });
+
+    function checkPass() {
+        if (form_adminedit.find('#txtPassword').val() === form_adminedit.find('#txtConfirmPassword').val()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 });

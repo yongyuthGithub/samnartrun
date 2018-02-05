@@ -7,7 +7,7 @@ $(function () {
         btnDelete: true,
         btnEdit: true,
         btnPreview: true,
-        btnPreviewText:'Repass',
+        btnPreviewText: 'Repass',
         headerString: '',
         UrlDataJson: mvcPatch('admin/findAccount'),
         UrlLoanding: true,
@@ -122,6 +122,8 @@ $(function () {
             });
         },
         btnDeleteFun: function (f, d) {
+            if (d.length === 0)
+                return false;
             $.bConfirm({
                 message: 'Do you want to delete the data?',
                 type: BootstrapDialog.TYPE_DANGER,
