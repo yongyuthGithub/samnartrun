@@ -111,11 +111,12 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="line-height: 26px;font-size: 140%;"><i class="fa fa-cogs" style="font-size:100%;min-width: 30px;"></i>Setting
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#"><i class="fa fa-tasks" style="font-size:100%;min-width: 30px;"></i>Menu</a></li>
+                                <li><a href="<?php echo base_url('menu/index') ?>"><i class="fa fa-tasks" style="font-size:100%;min-width: 30px;"></i>Menu</a></li>
                                 <li><a href="#"><i class="fa fa-unlock-alt" style="font-size:100%;min-width: 30px;"></i>Pemission</a></li>
-                                <li><a href="<?php echo base_url('Admin/index') ?>"><i class="fa fa-user-circle" style="font-size:100%;min-width: 30px;"></i>Account</a></li>                                
+                                <li><a href="<?php echo base_url('Admin/index') ?>"><i class="fa fa-users" style="font-size:100%;min-width: 30px;"></i>Account</a></li>                                
                             </ul>
                         </li>
+                        <li><a href="<?php echo base_url('home/index') ?>" style="line-height: 26px;font-size: 140%;"><i class="fa fa-user-circle" style="font-size:100%;min-width: 30px;"></i>Login</a></li>
                 </div>
         </nav>
         <!-- Page content -->

@@ -61,3 +61,11 @@ table.dataTable > tbody tr[role=row] > td::before{
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.dataTables_empty{
+    line-height: 35px;
+}
+
+textarea{
+    min-height: 150px;
+}

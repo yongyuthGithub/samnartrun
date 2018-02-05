@@ -1,75 +1,71 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+//require_once __DIR__ . '\..\models\PCenter.php';
 require __DIR__ . '/../core/PCenter.php';
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-class admin extends PCenter {
+class Menu extends PCenter {
 
+    /**
+     * Index Page for this controller.
+     *
+     * Maps to the following URL
+     * 		http://example.com/index.php/welcome
+     * 	- or -
+     * 		http://example.com/index.php/welcome/index
+     * 	- or -
+     * Since this controller is set as the default controller in
+     * config/routes.php, it's displayed at http://example.com/
+     *
+     * So any other public methods not prefixed with an underscore will
+     * map to /index.php/welcome/<method_name>
+     * @see https://codeigniter.com/user_guide/general/urls.html
+     */
     public function __construct() {
         parent::__construct();
+//        $this->load->helper('url');
+        //$this->load-model('dbconnect');
     }
 
     public function index() {
-        $data['page'] = 'master/Admin/admin_main';
+        $data['page'] = 'setting/menu/menu_main';
         $this->load->view('layout/nav', $data);
     }
 
-    public function edit() {
-        $this->load->view('master/Admin/admin_edit');
+    public function editMenuPage() {
+        $this->load->view('setting/menu/menu_edit');
     }
 
-    public function findTitle() {
-        $query = $this->db->select('RowKey, Title')->from('MSTTitle')->order_by('Title', 'DESC')->get();
-        echo json_encode($query->result_array());
+    public function findMenu() {
+        $qryMenu = $this->db->select('RowKey AS key,'
+                        . ' Menu,'
+                        . ' Description')
+                ->get('USRMenu');
+        echo json_encode($qryMenu->result());
     }
 
-    public function findAccount() {
-        $query = $this->db->select(''
-                        . 'USRAccount.RowKey AS key,'
-                        . ' USRAccount.User,'
-                        . ' USRAccount.TitleKey,'
-                        . ' CONCAT(MSTTitle.Title," ", USRAccount.FName," ",USRAccount.LName) AS Name,'
-                        . ' USRAccount.FName,'
-                        . ' USRAccount.LName,'
-                        . ' USRAccount.RowStatus')
-                ->from('USRAccount')
-                ->join('MSTTitle', 'MSTTitle.RowKey = USRAccount.TitleKey', 'left')
-                ->get();
-//        $_array = array();
-//        foreach ($query->result() as $row) {
-//            $_ar = array(
-//                'key' => $row->RowKey,
-//                'User' => $row->User,
-//                'TitleKey' => $row->TitleKey,
-//                'Name' => $row->FName . ' ' . $row->LName,
-//                'FName' => $row->FName,
-//                'LName' => $row->LName,
-//                'RowStatus' => $row->RowStatus
-//            );
-//            array_push($_array, $_ar);
-//        }
-        echo json_encode($query->result());
-    }
-
-    public function editAccount() {
+    public function editMenu() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
 
         $this->db->trans_begin();
-
         if ($_data->RowKey === PCenter::GUID_EMPTY()) {
-            $queryChk = $this->db->where('User', $_data->User)->from('USRAccount')->count_all_results();
+            $queryChk = $this->db->where('Menu', $_data->Menu)->from('USRMenu')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
+                $quySeq = $this->db->select_max('Seq')->get('USRMenu');
+                $Seq = $quySeq->row();
+
                 $_data->RowKey = PCenter::GUID();
+                $_data->Seq = $Seq->Seq + 1;
                 $_data->RowStatus = true;
                 $_data->CreateBy = PCenter::GUID_EMPTY();
                 $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
                 $_data->UpdateBy = PCenter::GUID_EMPTY();
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
-                $this->db->insert('USRAccount', $_data);
+                $this->db->insert('USRMenu', $_data);
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;
@@ -80,19 +76,17 @@ class admin extends PCenter {
                 }
             }
         } else {
-            $queryChk = $this->db->where('User', $_data->User)->where('RowKey !=', $_data->RowKey)->from('USRAccount')->count_all_results();
+            $queryChk = $this->db->where('Menu', $_data->Menu)->where('RowKey !=', $_data->RowKey)->from('USRMenu')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
                 $update = (object) [];
-                $update->User = $_data->User;
-                $update->TitleKey = $_data->TitleKey;
-                $update->FName = $_data->FName;
-                $update->LName = $_data->LName;
+                $update->Menu = $_data->Menu;
+                $update->Description = $_data->Description;
                 $update->UpdateBy = PCenter::GUID_EMPTY();
                 $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
-                $this->db->where('RowKey', $_data->RowKey)->update('USRAccount', $update);
+                $this->db->where('RowKey', $_data->RowKey)->update('USRMenu', $update);
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;
@@ -103,16 +97,15 @@ class admin extends PCenter {
                 }
             }
         }
-
         echo json_encode($vReturn);
     }
-
-    public function removeAccount() {
+    
+    public function removeMenu() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
         $this->db->trans_begin();
 
-        $this->db->where_in('RowKey', $_data)->delete('USRAccount');
+        $this->db->where_in('RowKey', $_data)->delete('USRMenu');
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -123,6 +116,20 @@ class admin extends PCenter {
             $vReturn->success = true;
         }
         echo json_encode($vReturn);
+    }
+
+    public function findSubMenu() {
+        $qryMenu = $this->db->select('RowKey, Menu, Description')->get('USRSubMenu');
+        $arMenu = array();
+        foreach ($qryMenu->result() as $row) {
+            $_ar = array(
+                'key' => $row->RowKey,
+                'Menu' => $row->Menu,
+                'Description' => $row->Description
+            );
+            array_push($arMenu, $_ar);
+        }
+        echo json_encode($arMenu);
     }
 
 }

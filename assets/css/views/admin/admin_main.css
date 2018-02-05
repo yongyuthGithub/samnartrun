@@ -14,7 +14,7 @@
   max-width: 60px !important;
   min-width: 60px !important;
   width: 60px !important;
-  text-align: left;
+  text-align: center;
 }
 #form_adminlist #tblform_adminlist thead tr th:nth-child(4) {
   max-width: 120px !important;
@@ -44,7 +44,7 @@
   width: 60px !important;
   text-overflow: ellipsis !important;
   overflow: hidden !important;
-  text-align: left;
+  text-align: center;
 }
 #form_adminlist #tblform_adminlist tbody tr[role=row] td:nth-child(4) {
   min-width: 120px !important;

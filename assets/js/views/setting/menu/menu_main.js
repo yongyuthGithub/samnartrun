@@ -1,35 +1,26 @@
 $(function () {
-    var form_adminlist = $('#form_adminlist');
+    var form_menu = $('#form_menu');
+    var form_submenu = $('#form_submenu');
 
-    form_adminlist.setMainPage({
+    form_menu.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
         btnPreview: true,
-        btnPreviewText: 'Re pass',
+        btnPreviewText: 'Order',
         headerString: '',
-        UrlDataJson: mvcPatch('admin/findAccount'),
-        UrlLoanding: true,
-        UrlLoandingclose: true,
+        UrlDataJson: mvcPatch('menu/findMenu'),
+        UrlLoanding: false,
+        UrlLoandingclose: false,
         DataColumns: [
-            {data: 'User', header: 'User'},
-            {data: 'Name', header: 'Name'},
-            {data: 'RowStatus', header: 'Status'}
-        ],
-        DataColumnsDefs: [
-            {
-                render: function (row, type, val2, meta) {
-                    return val2.RowStatus === '1' ? 'Action' : 'Inaction';
-                },
-                orderable: true,
-                targets: 2
-            }
+            {data: 'Menu', header: 'Menu'},
+            {data: 'Description', header: 'Description'}
         ],
         btnNewFun: function (f) {
             $.bPopup({
-                url: mvcPatch('admin/edit'),
-                title: 'New Account',
+                url: mvcPatch('menu/editMenuPage'),
+                title: 'New Menu',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -38,16 +29,13 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = Guid;
-                            obj.User = _f.find('#txtUser').val();
-                            obj.Password = _f.find('#txtPassword').val();
-                            obj.TitleKey = _f.find('#cmdTitle').val();
-                            obj.FName = _f.find('#txtFirstName').val();
-                            obj.LName = _f.find('#txtLastName').val();
+                            obj.Menu = _f.find('#txtMenu').val();
+                            obj.Description = _f.find('#txtDescription').val();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
                                     $.reqData({
-                                        url: mvcPatch('admin/editAccount'),
+                                        url: mvcPatch('menu/editMenu'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -80,8 +68,8 @@ $(function () {
         },
         btnEditFun: function (f, d) {
             $.bPopup({
-                url: mvcPatch('admin/edit'),
-                title: 'Edit Account',
+                url: mvcPatch('menu/editMenuPage'),
+                title: 'Edit Menu',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -90,16 +78,13 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = d.key;
-                            obj.User = _f.find('#txtUser').val();
-                            obj.Password = _f.find('#txtPassword').val();
-                            obj.TitleKey = _f.find('#cmdTitle').val();
-                            obj.FName = _f.find('#txtFirstName').val();
-                            obj.LName = _f.find('#txtLastName').val();
+                            obj.Menu = _f.find('#txtMenu').val();
+                            obj.Description = _f.find('#txtDescription').val();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
                                     $.reqData({
-                                        url: mvcPatch('admin/editAccount'),
+                                        url: mvcPatch('menu/editMenu'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -143,7 +128,7 @@ $(function () {
                                 return x.key;
                             }).ToArray();
                     $.reqData({
-                        url: mvcPatch('admin/removeAccount'),
+                        url: mvcPatch('menu/removeMenu'),
                         data: {data: JSON.stringify(vdata)},
                         callback: function (vdata) {
                             if (vdata.success) {
@@ -162,5 +147,34 @@ $(function () {
 
         }
     });
-});
 
+    form_submenu.setMainPage({
+        btnNew: true,
+        btnDeleteAll: true,
+        btnDelete: true,
+        btnEdit: true,
+        btnPreview: true,
+        btnPreviewText: 'Re pass',
+        headerString: '',
+//        UrlDataJson: mvcPatch('admin/findAccount'),
+        UrlLoanding: true,
+        UrlLoandingclose: true,
+        DataColumns: [
+            {data: 'User', header: 'User'},
+            {data: 'Name', header: 'Name'},
+            {data: 'RowStatus', header: 'Active'}
+        ],
+        btnNewFun: function (f) {
+
+        },
+        btnEditFun: function (f, d) {
+
+        },
+        btnDeleteFun: function (f, d) {
+
+        },
+        btnPreviewFun: function (f, d) {
+
+        }
+    });
+});
