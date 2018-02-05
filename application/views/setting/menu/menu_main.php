@@ -1,4 +1,4 @@
-<?php echo css_asset('views/setting/menu/menu_mani.css'); ?>
+<?php echo css_asset('views/setting/menu/menu_main.css'); ?>
 <?php echo js_asset('views/setting/menu/menu_main.js'); ?>
 <div class="page-header">
     <h1>Menu Manage</h1><h4><small>Manage menu data in the system.</small></h4>
