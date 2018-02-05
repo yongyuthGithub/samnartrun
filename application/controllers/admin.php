@@ -19,12 +19,12 @@ class admin extends PCenter {
     }
 
     public function findTitle() {
-        $query = $this->db->select('RowKey, Title')->from('MSTTitle')->get();
+        $query = $this->db->select('RowKey, Title')->from('MSTTitle')->order_by('Title', 'DESC')->get();
         echo json_encode($query->result_array());
     }
 
     public function findAccount() {
-        $query = $this->db->select('RowKey, User, TitleKey, FName, LName, RowStatus')->from('USRAccount')->get();
+        $query = $this->db->select('RowKey, User, TitleKey, FName, LName, RowStatus')->get('USRAccount');
         $_array = array();
         foreach ($query->result() as $row) {
             $_ar = array(
@@ -45,15 +45,15 @@ class admin extends PCenter {
             'success' => false,
             'message' => ''
         );
-        
-//        $queryChk = $this->where('User', $_data->User)->get('USRAccount')->num_rows();
+
+        $queryChk = $this->db->where('User', $_data->User)->from('USRAccount')->count_all_results();
         $this->db->trans_begin();
 
-        
-//        if ($queryChk > 0) {
-//            $vReturn['success'] = false;
-//            $vReturn['message'] = 'This information is already in the system.';
-//        } else {
+//if (count($queryChk->result()) > 0) {
+        if ($queryChk > 0) {
+            $vReturn['success'] = false;
+            $vReturn['message'] = 'This information is already in the system.';
+        } else {
 
             $_data->RowKey = PCenter::GUID();
             $_data->RowStatus = true;
@@ -79,11 +79,12 @@ class admin extends PCenter {
             if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
                 $vReturn['success'] = false;
+                $vReturn['message'] = $this->db->_error_message();
             } else {
                 $this->db->trans_commit();
                 $vReturn['success'] = true;
             }
-//        }
+        }
 
         echo json_encode($vReturn);
     }

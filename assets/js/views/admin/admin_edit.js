@@ -34,7 +34,7 @@ $(function () {
         click: function () {
             form_adminedit.submit();
         }
-    })
+    });
 
     form_adminedit.myValidation({
         funsuccess: function () {
@@ -49,6 +49,10 @@ $(function () {
                 validators: {
                     notEmpty: {
                         message: '* Please specify User Name.'
+                    },
+                    regexp: {
+                        regexp: regexpMail,
+                        message: '* Please specify as email only.'
                     }
                 }
             },
