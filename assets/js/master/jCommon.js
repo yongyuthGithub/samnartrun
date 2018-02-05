@@ -365,7 +365,7 @@ function ChkNumber(v) {
                 //size: "10%",
                 image: "",
                 //custom: "<div class='Cube panelLoad'><div class='cube-face cube-face-front'>N</div><div class='cube-face cube-face-back'>2</div><div class='cube-face cube-face-left'>N</div><div class='cube-face cube-face-right'>N</div><div class='cube-face cube-face-bottom'>2</div><div class='cube-face cube-face-top'>N</div></div>",
-                custom: '<div class="loader loader-5"></div>',
+                custom: '<div class="loader"></div>',
                 color: 'rgba(44, 62, 80, 0.8)'
             });
         });

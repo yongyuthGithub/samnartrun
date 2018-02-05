@@ -11,26 +11,26 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <?php echo css_asset('master/_site.css')?>
-        <?php echo css_asset('master/jquery.dataTables.min.css')?>
-        <?php echo css_asset('master/responsive.dataTables.min.css')?>
-        <?php echo css_asset('master/bootstrap-select.min.css')?>
-        <?php echo css_asset('master/checkbox_radiobox.css')?>
-        
-        <?php echo js_asset('master/jquery.cookie.js')?>
-        <?php echo js_asset('master/linq.min.js')?>
-        <?php echo js_asset('master/formValidation.min.js')?>
-        <?php echo js_asset('master/bootstrap_validation.js')?>
-        <?php echo js_asset('master/jquery.dataTables.min.js')?>
-        <?php echo js_asset('master/dataTables.responsive.min.js')?>
-        <?php echo js_asset('master/bootstrap-dialog.min.js')?>
-        <?php echo js_asset('master/bootstrap-select.min.js')?>
-        <?php echo js_asset('master/jBootstrap-dialog.js')?>
-        <?php echo js_asset('master/jquery.cookie.js')?>
-        <?php echo js_asset('master/loadingoverlay.min.js')?>
-        <?php echo js_asset('master/loadingoverlay_progress.min.js')?>
-        <?php echo js_asset('master/jCustomPageMain.js')?>
-        <?php echo js_asset('master/jCommon.js')?>
+        <?php echo css_asset('master/_site.css') ?>
+        <?php echo css_asset('master/jquery.dataTables.min.css') ?>
+        <?php echo css_asset('master/responsive.dataTables.min.css') ?>
+        <?php echo css_asset('master/bootstrap-select.min.css') ?>
+        <?php echo css_asset('master/checkbox_radiobox.css') ?>
+
+        <?php echo js_asset('master/jquery.cookie.js') ?>
+        <?php echo js_asset('master/linq.min.js') ?>
+        <?php echo js_asset('master/formValidation.min.js') ?>
+        <?php echo js_asset('master/bootstrap_validation.js') ?>
+        <?php echo js_asset('master/jquery.dataTables.min.js') ?>
+        <?php echo js_asset('master/dataTables.responsive.min.js') ?>
+        <?php echo js_asset('master/bootstrap-dialog.min.js') ?>
+        <?php echo js_asset('master/bootstrap-select.min.js') ?>
+        <?php echo js_asset('master/jBootstrap-dialog.js') ?>
+        <?php echo js_asset('master/jquery.cookie.js') ?>
+        <?php echo js_asset('master/loadingoverlay.min.js') ?>
+        <?php echo js_asset('master/loadingoverlay_progress.min.js') ?>
+        <?php echo js_asset('master/jCustomPageMain.js') ?>
+        <?php echo js_asset('master/jCommon.js') ?>
         <style>
 
 
@@ -84,26 +84,38 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="<?php echo base_url('home/index') ?>"><i class="fa fa-home" style="font-size:24px"></i>HOME</a></li>
-                        <li><a href="#tour"><i class="fa fa-newspaper-o" style="font-size:24px"></i>ใบงาน</a></li>
+<!--                        <li><a href="<?php echo base_url('home/index') ?>"><i class="fa fa-home" style="font-size:24px"></i>HOME</a></li>-->
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user-circle" style="font-size:24px"></i>Admin
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="line-height: 26px;font-size: 140%;"><i class="fa fa-desktop" style="font-size:100%;min-width: 30px;"></i>Transition
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?php echo base_url('register/index') ?>"><i class="fa fa-users" style="font-size:24px"></i>ข้อมูลพนักงาน</a></li>
-                                <li><a href="<?php echo base_url('car/index') ?>"><i class="fa fa-car" style="font-size:24px"></i>ข้อมูลรถ</a></li>
-                                <li><a href="<?php echo base_url('insurance/index') ?>"><i class="fa fa-paste" style="font-size:24px"></i>ประกันรถ</a></li>
-                                <li><a href="<?php echo base_url('Admin/index') ?>"><i class="fa fa-user-circle" style="font-size:24px"></i>Admin</a></li>
-                                <li><a href="<?php echo base_url('customer/index') ?>"><i class="fa fa-user-o" style="font-size:24px"></i>ข้อมูลูกค้า</a></li>
-                                <li><a href="#"><i class="fa fa-list-alt" style="font-size:24px"></i>รายรับ</a></li>
-                                <li><a href="#"><i class="fa fa-list-alt" style="font-size:24px;color:red"></i>รายจ่าย</a></li>
-                                 <li><a href="<?php echo base_url('Fule/index') ?>"><i class="fa fa-tint" style="font-size:24px"></i>เพิ่มน้ำมัน</a></li>
-                               
-
-
+                                <li><a href="#"><i class="fa fa-file-word-o" style="font-size:100%;min-width: 30px;"></i>Recordings</a></li>
+                                <li><a href="#"><i class="fa fa-flask" style="font-size:100%;min-width: 30px;"></i>Add fuel to the pump.</a></li>
+                                <li><a href="#"><i class="fa fa-line-chart" style="font-size:100%;min-width: 30px;"></i>Other income</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="line-height: 26px;font-size: 140%;"><i class="fa fa-puzzle-piece" style="font-size:100%;min-width: 30px;"></i>Master
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo base_url('register/index') ?>"><i class="fa fa-users" style="font-size:100%;min-width: 30px;"></i>Employee Information</a></li>
+                                <li><a href="<?php echo base_url('car/index') ?>"><i class="fa fa-car" style="font-size:100%;min-width: 30px;"></i>Car information</a></li>
+                                <li><a href="<?php echo base_url('insurance/index') ?>"><i class="fa fa-paste" style="font-size:100%;min-width: 30px;"></i>Insurance company information</a></li>                                
+                                <li><a href="<?php echo base_url('customer/index') ?>"><i class="fa fa-user-o" style="font-size:100%;min-width: 30px;"></i>Company Profile</a></li>
+                                <li><a href="<?php echo base_url('Fule/index') ?>"><i class="fa fa-tint" style="font-size:100%;min-width: 30px;"></i>Oil pump information</a></li>
+                                <li><a href="#"><i class="fa fa-dashboard" style="font-size:100%;min-width: 30px;"></i>Prefix information</a></li>
                             </ul>
                         </li>
 
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="line-height: 26px;font-size: 140%;"><i class="fa fa-cogs" style="font-size:100%;min-width: 30px;"></i>Setting
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><i class="fa fa-tasks" style="font-size:100%;min-width: 30px;"></i>Menu</a></li>
+                                <li><a href="#"><i class="fa fa-unlock-alt" style="font-size:100%;min-width: 30px;"></i>Pemission</a></li>
+                                <li><a href="<?php echo base_url('Admin/index') ?>"><i class="fa fa-user-circle" style="font-size:100%;min-width: 30px;"></i>Account</a></li>                                
+                            </ul>
+                        </li>
                 </div>
         </nav>
         <!-- Page content -->
