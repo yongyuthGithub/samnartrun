@@ -99,7 +99,8 @@
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo base_url('register/index') ?>"><i class="fa fa-users" style="font-size:100%;min-width: 30px;"></i>Employee Information</a></li>
-                                <li><a href="<?php echo base_url('car/index') ?>"><i class="fa fa-car" style="font-size:100%;min-width: 30px;"></i>Car information</a></li>
+                                <li><a href="<?php echo base_url('car/index') ?>"><i class="fa fa-car" style="font-size:100%;min-width: 30px;"></i>Car Brand</a></li>
+                                <li><a href="#"><i class="fa fa-car" style="font-size:100%;min-width: 30px;"></i>Car Information</a></li>
                                 <li><a href="<?php echo base_url('insurance/index') ?>"><i class="fa fa-paste" style="font-size:100%;min-width: 30px;"></i>Insurance company information</a></li>                                
                                 <li><a href="<?php echo base_url('customer/index') ?>"><i class="fa fa-user-o" style="font-size:100%;min-width: 30px;"></i>Company Profile</a></li>
                                 <li><a href="<?php echo base_url('Fule/index') ?>"><i class="fa fa-tint" style="font-size:100%;min-width: 30px;"></i>Oil pump information</a></li>
@@ -112,7 +113,7 @@
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo base_url('menu/index') ?>"><i class="fa fa-tasks" style="font-size:100%;min-width: 30px;"></i>Menu</a></li>
-                                <li><a href="#"><i class="fa fa-unlock-alt" style="font-size:100%;min-width: 30px;"></i>Pemission</a></li>
+                                <li><a href="<?php echo base_url('pemission/index') ?>"><i class="fa fa-unlock-alt" style="font-size:100%;min-width: 30px;"></i>Pemission</a></li>
                                 <li><a href="<?php echo base_url('Admin/index') ?>"><i class="fa fa-users" style="font-size:100%;min-width: 30px;"></i>Account</a></li>                                
                             </ul>
                         </li>
