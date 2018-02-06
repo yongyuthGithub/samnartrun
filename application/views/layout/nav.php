@@ -70,7 +70,7 @@
 
         </style>
     </head>
-    <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+    <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50" style="background-color: #F2F2F2;">
 
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
