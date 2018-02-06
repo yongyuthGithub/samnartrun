@@ -126,7 +126,7 @@ $(function () {
                                         callback: function (vdata) {
                                             if (vdata.success) {
                                                 _f.find('#btn-close').click();
-                                                f.find('.xref').click();
+                                                $('.xref').click();
                                             } else {
                                                 $.bAlert({
                                                     message: vdata.message
@@ -168,7 +168,7 @@ $(function () {
                         data: {data: JSON.stringify(vdata)},
                         callback: function (vdata) {
                             if (vdata.success) {
-                                f.find('.xref').click();
+                                $('.xref').click();
                             } else {
                                 $.bAlert({
                                     message: vdata.message
@@ -180,7 +180,54 @@ $(function () {
             });
         },
         btnPreviewFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('menu/orderSubMenuPage'),
+                title: 'Order Sub Menu (' + d.Menu + ')',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d.key,
+                        fun: function (_f) {
+                            var obj = new Object();
+                            obj.RowKey = d.key;
+                            obj.Menu = _f.find('#txtMenu').val();
+                            obj.Description = _f.find('#txtDescription').val();
+                            obj.Icon = _f.find('#txtIcon').val();
+                            $.bConfirm({
+                                buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('menu/editMenu'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                $('.xref').click();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
 
+                        }
+                    }
+                ]
+            });
         }
     });
 
@@ -201,6 +248,15 @@ $(function () {
             {data: 'Icon', header: 'Icon'},
             {data: 'Url', header: 'Url'}
         ],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    return '<i class="' + val2.Icon + '"></i>';
+                },
+                orderable: true,
+                targets: 3
+            }
+        ],
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('menu/editSubMenuPage'),
@@ -213,14 +269,16 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = Guid;
-                            obj.Menu = _f.find('#txtMenu').val();
+                            obj.SubMenu = _f.find('#txtSubMenu').val();
+                            obj.MenuKey = _f.find('#cmdMenu').val();
+                            obj.Url = _f.find('#txtUrl').val();
                             obj.Description = _f.find('#txtDescription').val();
                             obj.Icon = _f.find('#txtIcon').val();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
                                     $.reqData({
-                                        url: mvcPatch('menu/editMenu'),
+                                        url: mvcPatch('menu/editSubMenu'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -252,10 +310,84 @@ $(function () {
             });
         },
         btnEditFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('menu/editSubMenuPage'),
+                title: 'Edit Sub Menu',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        fun: function (_f) {
+                            var obj = new Object();
+                            obj.RowKey = d.key;
+                            obj.SubMenu = _f.find('#txtSubMenu').val();
+                            obj.MenuKey = _f.find('#cmdMenu').val();
+                            obj.Url = _f.find('#txtUrl').val();
+                            obj.Description = _f.find('#txtDescription').val();
+                            obj.Icon = _f.find('#txtIcon').val();
+                            $.bConfirm({
+                                buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('menu/editSubMenu'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                f.find('.xref').click();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
 
+                        }
+                    }
+                ]
+            });
         },
         btnDeleteFun: function (f, d) {
-
+            if (d.length === 0)
+                return false;
+            $.bConfirm({
+                message: 'Do you want to delete the data?',
+                type: BootstrapDialog.TYPE_DANGER,
+                buttonOK: function (k) {
+                    k.close();
+                    var vdata = $.ToLinq(d)
+                            .Select(function (x) {
+                                return x.key;
+                            }).ToArray();
+                    $.reqData({
+                        url: mvcPatch('menu/removeSubMenu'),
+                        data: {data: JSON.stringify(vdata)},
+                        callback: function (vdata) {
+                            if (vdata.success) {
+                                f.find('.xref').click();
+                            } else {
+                                $.bAlert({
+                                    message: vdata.message
+                                });
+                            }
+                        }
+                    });
+                }
+            });
         },
         btnPreviewFun: function (f, d) {
 
