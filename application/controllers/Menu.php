@@ -39,7 +39,8 @@ class Menu extends PCenter {
     public function findMenu() {
         $qryMenu = $this->db->select('RowKey AS key,'
                         . ' Menu,'
-                        . ' Description')
+                        . ' Description,'
+                        . ' Icon')
                 ->get('USRMenu');
         echo json_encode($qryMenu->result());
     }
@@ -84,6 +85,7 @@ class Menu extends PCenter {
                 $update = (object) [];
                 $update->Menu = $_data->Menu;
                 $update->Description = $_data->Description;
+                $update->Icon = $_data->Icon;
                 $update->UpdateBy = PCenter::GUID_EMPTY();
                 $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('USRMenu', $update);
@@ -99,7 +101,7 @@ class Menu extends PCenter {
         }
         echo json_encode($vReturn);
     }
-    
+
     public function removeMenu() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];

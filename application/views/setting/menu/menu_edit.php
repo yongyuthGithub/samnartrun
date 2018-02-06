@@ -14,6 +14,15 @@
                 </div>
                 <div class="col-xs-12">
                     <div class="form-group">
+                        <label for="txtIcon">Icon :</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-barcode" style="min-width: 20px;"></i></div>
+                            <input type="text" class="form-control" id="txtIcon" name="txtIcon" placeholder="Input Menu Icon">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
                         <label for="txtDescription">Description :</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="fa fa-paint-brush" style="min-width: 20px;"></i></div>

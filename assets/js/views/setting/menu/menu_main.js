@@ -15,7 +15,17 @@ $(function () {
         UrlLoandingclose: false,
         DataColumns: [
             {data: 'Menu', header: 'Menu'},
-            {data: 'Description', header: 'Description'}
+            {data: 'Description', header: 'Description'},
+            {data: 'Icon', header: 'Icon'},
+        ],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    return '<i class="' + val2.Icon + '"></i>';
+                },
+                orderable: true,
+                targets: 2
+            }
         ],
         btnNewFun: function (f) {
             $.bPopup({
@@ -31,6 +41,7 @@ $(function () {
                             obj.RowKey = Guid;
                             obj.Menu = _f.find('#txtMenu').val();
                             obj.Description = _f.find('#txtDescription').val();
+                            obj.Icon = _f.find('#txtIcon').val();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -80,6 +91,7 @@ $(function () {
                             obj.RowKey = d.key;
                             obj.Menu = _f.find('#txtMenu').val();
                             obj.Description = _f.find('#txtDescription').val();
+                            obj.Icon = _f.find('#txtIcon').val();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();

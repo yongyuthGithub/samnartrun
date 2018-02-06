@@ -6,6 +6,7 @@ $(function () {
     if (_formdata.key !== Guid) {
         form_menuedit.find('#txtMenu').val(_formdata.Menu);
         form_menuedit.find('#txtDescription').val(_formdata.Description);
+        form_menuedit.find('#txtIcon').val(_formdata.Icon);
     }
 
     form_menuedit_C.find('#btn-ok').on({
