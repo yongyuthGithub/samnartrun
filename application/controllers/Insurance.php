@@ -3,7 +3,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 require __DIR__ . '/../core/PCenter.php';
 
-class  Insurance extends PCenter {
+class Insurance extends PCenter {
 
     public function __construct() {
         parent::__construct();
@@ -15,12 +15,8 @@ class  Insurance extends PCenter {
     }
 
     public function edit() {
-        
-          $this->load->view('master/insurance/insurance_edit');
-    }
-  public function findTitle() {
-        $query = $this->db->select('RowKey, Title')->from('MSTTitle')->order_by('Title', 'DESC')->get();
-        echo json_encode($query->result_array());
+
+        $this->load->view('master/insurance/insurance_edit');
     }
 
     public function findInsurance() {
@@ -36,7 +32,7 @@ class  Insurance extends PCenter {
         echo json_encode($_array);
     }
 
-     public function editinsurance() {
+    public function editinsurance() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
 
