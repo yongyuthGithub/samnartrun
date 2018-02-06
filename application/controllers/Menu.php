@@ -36,11 +36,20 @@ class Menu extends PCenter {
         $this->load->view('setting/menu/menu_edit');
     }
 
+    public function orderMenuPage() {
+        $this->load->view('setting/menu/menu_order');
+    }
+    
+    public function editSubMenuPage() {
+        $this->load->view('setting/menu/menu_subedit');
+    }
+
     public function findMenu() {
         $qryMenu = $this->db->select('RowKey AS key,'
                         . ' Menu,'
                         . ' Description,'
-                        . ' Icon')
+                        . ' Icon,'
+                        . ' Seq')
                 ->get('USRMenu');
         echo json_encode($qryMenu->result());
     }
@@ -120,18 +129,42 @@ class Menu extends PCenter {
         echo json_encode($vReturn);
     }
 
-    public function findSubMenu() {
-        $qryMenu = $this->db->select('RowKey, Menu, Description')->get('USRSubMenu');
-        $arMenu = array();
-        foreach ($qryMenu->result() as $row) {
-            $_ar = array(
-                'key' => $row->RowKey,
-                'Menu' => $row->Menu,
-                'Description' => $row->Description
-            );
-            array_push($arMenu, $_ar);
+    public function editMenuOrder() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+        $this->db->trans_begin();
+
+        foreach ($_data as $row) {
+            $row->UpdateBy = PCenter::GUID_EMPTY();
+            $row->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+            $this->db->where('RowKey', $row->RowKey)
+                    ->update('USRMenu', $row);
         }
-        echo json_encode($arMenu);
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
+        }
+        echo json_encode($vReturn);
+    }
+
+    public function findSubMenu() {
+        $qryMenu = $this->db->select('USRSubMenu.RowKey as key,'
+                        . ' USRSubMenu.SubMenu,'
+                        . ' USRSubMenu.Description,'
+                        . ' USRSubMenu.MenuKey,'
+                        . ' USRMenu.Menu,'
+                        . ' USRSubMenu.Icon,'
+                        . ' USRSubMenu.Url')
+                ->from('USRSubMenu')
+                ->join('USRMenu', 'USRSubMenu.MenuKey=USRMenu.RowKey', 'left')
+                ->get();
+
+        echo json_encode($qryMenu->result());
     }
 
 }

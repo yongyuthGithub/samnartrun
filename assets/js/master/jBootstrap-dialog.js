@@ -115,7 +115,7 @@
         }, option);
         BootstrapDialog.show({
             title: '<h3 style="margin: 0px;" class="' + textType(setting.type) + '">' + setting.title + '</h3>',
-            message: '<spen class="' + textType(setting.type) + '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + setting.message + '</spen>',
+            message: '<div style="padding:0px 0px 30px 0px;" class="' + textType(setting.type) + '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + setting.message + '</div>',
             type: setting.type,
             closable: setting.closable,
             onshown: function (k) {
@@ -146,7 +146,7 @@
 
         BootstrapDialog.show({
             title: '<h3 style="margin: 0px;" class="' + textType(setting.type) + '">' + setting.title + '</h3>',
-            message: '<spen class="' + textType(setting.type) + '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + setting.message + '</spen>',
+            message: '<div style="padding:0px 0px 30px 0px;" class="' + textType(setting.type) + '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + setting.message + '</div>',
             type: setting.type,
             closable: setting.closable,
             onshown: function (k) {

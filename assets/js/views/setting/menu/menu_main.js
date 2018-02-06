@@ -2,6 +2,30 @@ $(function () {
     var form_menu = $('#form_menu');
     var form_submenu = $('#form_submenu');
 
+    $('#btnOrderMenu').on({
+        click: function () {
+            $.bPopup({
+                url: mvcPatch('menu/orderMenuPage'),
+                title: 'Order Menu',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+
+                        }
+                    }
+                ]
+            });
+        }
+    });
+
     form_menu.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
@@ -165,19 +189,67 @@ $(function () {
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
-        btnPreview: true,
-        btnPreviewText: 'Re pass',
+        btnPreview: false,
         headerString: '',
-//        UrlDataJson: mvcPatch('admin/findAccount'),
+        UrlDataJson: mvcPatch('menu/findSubMenu'),
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
-            {data: 'User', header: 'User'},
-            {data: 'Name', header: 'Name'},
-            {data: 'RowStatus', header: 'Active'}
+            {data: 'SubMenu', header: 'Sub Menu'},
+            {data: 'Description', header: 'Description'},
+            {data: 'Menu', header: 'Menu'},
+            {data: 'Icon', header: 'Icon'},
+            {data: 'Url', header: 'Url'}
         ],
         btnNewFun: function (f) {
+            $.bPopup({
+                url: mvcPatch('menu/editSubMenuPage'),
+                title: 'New Sub Menu',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: new Object({key: Guid}),
+                        fun: function (_f) {
+                            var obj = new Object();
+                            obj.RowKey = Guid;
+                            obj.Menu = _f.find('#txtMenu').val();
+                            obj.Description = _f.find('#txtDescription').val();
+                            obj.Icon = _f.find('#txtIcon').val();
+                            $.bConfirm({
+                                buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('menu/editMenu'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                f.find('.xref').click();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
 
+                        }
+                    }
+                ]
+            });
         },
         btnEditFun: function (f, d) {
 

@@ -16,7 +16,7 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Order Menu</a></li>
+                        <li><a href="#" id="btnOrderMenu">Order Menu</a></li>
                     </ul>
                 </li>
                 <li><a data-toggle="tab" href="#SubMenu">Sub Menu</a></li>
