@@ -391,7 +391,7 @@ function ChkNumber(v) {
             success: function (data) {
                 setting.callback(data);
                 if (setting.loandingclose)
-                    $('#myPage').ShowLoading({ action: "hide" });
+                    $('#myPage').ShowLoading({action: "hide"});
             }
         });
     }
@@ -632,3 +632,11 @@ function ChkNumber(v) {
     }
 
 }(jQuery));
+
+$(function () {
+    $('#myPage').on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+        $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust()
+                .responsive.recalc();
+    });
+});
