@@ -1,3 +1,4 @@
+<?php echo css_asset('views/setting/pemission/pemission_main.css'); ?>
 <?php echo js_asset('views/setting/pemission/pemission_main.js'); ?>
 <div class="col-12">   
     <div class="panel panel-default">
