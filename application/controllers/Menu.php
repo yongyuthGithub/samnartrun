@@ -57,7 +57,7 @@ class Menu extends PCenter {
                 ->get('USRMenu');
         echo json_encode($qryMenu->result());
     }
-
+    
     public function editMenu() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
