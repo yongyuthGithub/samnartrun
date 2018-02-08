@@ -12,8 +12,8 @@ var _formdata = form_Customeredit_C.data('data');
     if (_formdata.key === Guid) {
 //        setTitle(Guid);
     } else {
-        form_Customeredit.find('#txtUser').val(_formdata.Pump);
-        form_Customeredit.find('#cmdTitle').val(_formdata.PumpType).selectpicker('render');
+        form_Customeredit.find('#txtUser').val(_formdata.Customer);
+       
         
         form_Customeredit.find('.showinadd').remove();
         
@@ -26,7 +26,7 @@ var _formdata = form_Customeredit_C.data('data');
 
 
 
-    form_Customeredit_C.find('#btn-ok').on({
+   form_Customeredit_C.find('#btn-ok').on({
         click: function () {
             form_Customeredit.submit();
         }

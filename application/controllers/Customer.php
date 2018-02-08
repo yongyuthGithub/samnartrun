@@ -71,7 +71,7 @@ class customer extends PCenter {
                 $vReturn->message = 'This information is already in the system.';
             } else {
                 $update = (object) [];
-                $update->customer = $_data->customer;
+                $update->Customer = $_data->Customer;
                  
                 $update->UpdateBy = PCenter::GUID_EMPTY();
                 $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());

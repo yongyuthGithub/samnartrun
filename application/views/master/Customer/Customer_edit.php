@@ -7,7 +7,7 @@ and open the template in the editor.
 <?php echo js_asset('views/Customer/Customer_edit.js') ?>
 <div class="panel panel-default">
     <div class="panel-body">
-        <form id="form_fuleedit">
+        <form id="form_Customeredit">
             <div class="col-xs-12">
                 <div class="form-group">
                     <label for="txtUser">Name customer:</label>

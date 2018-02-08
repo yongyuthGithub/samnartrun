@@ -15,15 +15,16 @@ $(function () {
         DataColumns: [
             {data: 'key', header: 'key'},
             {data: 'Customer', header: 'Customer'},
+           
         ],
-        DataColumnsDefs: [{
-                render: function (row, type, val2, meta) {
-                    var _val = val2.PumpType === 1 ? 'ปั้มใน' : 'ปั้นนอก';
-                    return _val;
-                },
-                orderable: true,
-                targets: 1
-            }],
+//        DataColumnsDefs: [{
+//                render: function (row, type, val2, meta) {
+//                    var _val = val2.PumpType === 1 ? 'ปั้มใน' : 'ปั้นนอก';
+//                    return _val;
+//                },
+//                orderable: true,
+//                targets: 1
+//            }],
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Customer/edit'),
@@ -37,8 +38,7 @@ $(function () {
                             var obj = new Object();
                             obj.RowKey = Guid;
                             obj.Customer = _f.find('#txtUser').val();
-                             
-
+                            
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -156,7 +156,7 @@ $(function () {
             alert(JSON.stringify(d));
             form_sumbit.SetDataPost({
                 data: {textId: d.key}
-            }).prop('action', mvcPatch('Cutomer/branchMain')).submit();
+            }).prop('action', mvcPatch('Customer/branchMain')).submit();
         }
     });
 });
