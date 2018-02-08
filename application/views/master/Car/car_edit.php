@@ -16,7 +16,7 @@ and open the template in the editor.
                     <label for="txtbrandcar">ยี่ห้อรถ :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-user-circle" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control" id="txtbrandcar" name="txtbrandcar" placeholder="ชื่อยี่ห้อรถ">
+                        <input type="text" class="form-control" id="txtbrandcar" name="txtbrandcar" placeholder="กรุณาใส่ยี่ห้อรถ">
                     </div>
                 </div>
             </div>
