@@ -44,10 +44,11 @@ class Home extends PCenter {
         $this->load->view('layout/nav', $data);
     }
 
-    public function main(){
+    public function main() {
         $data['page'] = 'setting/home/main_page';
         $this->load->view('layout/nav', $data);
     }
+
     public function popupLogin() {
         $this->load->view('setting/home/login_page');
     }
@@ -92,13 +93,27 @@ class Home extends PCenter {
 
         echo json_encode($vReturn);
     }
-    
-    public function chkLoginCookie(){
-        if(!isset(setcookie('samnartrun_login'))){
-            $this->popupLogin();
-        }else{
-            $this->main();
+
+    public function chkLoginCookie() {
+        $vReturn = (object) [];
+        if (!isset($_COOKIE['samnartrun_login'])) {
+            $vReturn->success = false;
+        } else {
+            $login = $_COOKIE['samnartrun_login'];
+            $token = $_COOKIE['samnartrun_token'];
+
+            $chkAcc = $this->db->where('RowKey', $login)->from('USRAccount')->count_all_results();
+            $chkTmp = $this->db->where('AccountKey', $login)->where('Token', $token)->from('TMPLogin')->count_all_results();
+
+            if ($chkAcc === 0 || $chkTmp === 0) {
+                setcookie('samnartrun_login', '', time() - 86400);
+                setcookie('samnartrun_token', '', time() - 86400);
+                $vReturn->success = false;
+            } else {
+                $vReturn->success = true;
+            }
         }
+        echo json_encode($vReturn);
     }
 
 }

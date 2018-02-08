@@ -31,6 +31,7 @@
         <?php echo js_asset('master/loadingoverlay_progress.min.js') ?>
         <?php echo js_asset('master/jCustomPageMain.js') ?>
         <?php echo js_asset('master/jCommon.js') ?>
+        <?php echo js_asset('views/layout/nav.js') ?>
         <style>
 
 

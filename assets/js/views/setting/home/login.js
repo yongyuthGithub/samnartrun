@@ -60,14 +60,26 @@ $(function () {
         );
     }
 
-    $.bPopup({
-        url: mvcPatch(_pageurl),
-        title: _title,
-        closable: false,
-        btnCancel: false,
-        size: BootstrapDialog.SIZE_NORMAL,
-        onshow: function (k) {
-        },
-        buttons: _btn
+    $.reqData({
+        url: mvcPatch('home/chkLoginCookie'),
+        loanding: false,
+        callback: function (vdata) {
+            if (vdata.success) {
+               form_sumbit.prop('action', mvcPatch('home/main')).submit();
+            } else {
+                $.bPopup({
+                    url: mvcPatch(_pageurl),
+                    title: _title,
+                    closable: false,
+                    btnCancel: false,
+                    size: BootstrapDialog.SIZE_NORMAL,
+                    onshow: function (k) {
+                    },
+                    buttons: _btn
+                });
+            }
+        }
     });
+
+
 });

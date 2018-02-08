@@ -1,13 +1,14 @@
 $(function () {
     var form_login = $('#form_login');
     var form_login_C = $.modelDialog(form_login);
-    
+    var form_sumbit = $('#form_sumbit');
+
     form_login_C.find('#btn-login').on({
         click: function () {
             form_login.submit();
         }
     });
-    
+
     form_login.myValidation({
         funsuccess: function () {
             $.reqData({
@@ -19,7 +20,7 @@ $(function () {
                 loanding: false,
                 callback: function (vdata) {
                     if (vdata.success) {
-                        //javascript code
+                        form_sumbit.prop('action', mvcPatch('home/main')).submit();
                     } else {
                         $.bAlert({
                             message: vdata.message

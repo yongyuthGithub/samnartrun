@@ -159,7 +159,53 @@ $(function () {
             });
         },
         btnPreviewFun: function (f, d) {
-
+            $.bPopup({
+                url: mvcPatch('pemission/editPassword'),
+                title: 'Edit Password',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        fun: function (_f) {
+                            $.bConfirm({
+                                buttonOK: function (k2) {
+                                    k2.close();
+                                    var _obj = new Object();
+                                    _obj.RowKey = d.key;
+                                    _obj.User = d.User;
+                                    _obj.Pass = _f.find('#txtPass').val();
+                                    $.reqData({
+                                        url: mvcPatch('pemission/changPassword'),
+                                        data: {data: JSON.stringify(_obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-refresh',
+                        label: '&nbsp;Edit Password',
+                        cssClass: BootstrapDialog.TYPE_WARNING,
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         }
     });
 });
