@@ -22,14 +22,14 @@ $(function () {
         DataColumnsDefs: [
             {
                 render: function (row, type, val2, meta) {
-                    return numberWithCommas(val2.USRGroupSubMenu.length) +' Menu';
+                    return numberWithCommas(val2.USRGroupSubMenu.length) + ' Menu';
                 },
                 orderable: true,
                 targets: 2
             },
             {
                 render: function (row, type, val2, meta) {
-                    return numberWithCommas(val2.USRGroupAccount.length) +' User';
+                    return numberWithCommas(val2.USRGroupAccount.length) + ' User';
                 },
                 orderable: true,
                 targets: 3
@@ -160,6 +160,32 @@ $(function () {
             });
         },
         btnDeleteFun: function (f, d) {
+            if (d.length === 0)
+                return false;
+            $.bConfirm({
+                message: 'Do you want to delete the data?',
+                type: BootstrapDialog.TYPE_DANGER,
+                buttonOK: function (k) {
+                    k.close();
+                    var vdata = $.ToLinq(d)
+                            .Select(function (x) {
+                                return x.key;
+                            }).ToArray();
+                    $.reqData({
+                        url: mvcPatch('pemission/removePemission'),
+                        data: {data: JSON.stringify(vdata)},
+                        callback: function (vdata) {
+                            if (vdata.success) {
+                                f.find('.xref').click();
+                            } else {
+                                $.bAlert({
+                                    message: vdata.message
+                                });
+                            }
+                        }
+                    });
+                }
+            });
         },
         btnPreviewFun: function (f, d) {
         }
