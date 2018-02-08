@@ -37,8 +37,27 @@ class Pemission extends PCenter {
                 'key' => $row->key,
                 'UserGroup' => $row->UserGroup,
                 'Description' => $row->Description,
-                'CountFunction' => $this->db->where('GroupKey', $row->key)->from('USRGroupSubMenu')->count_all_results(),
-                'CountAccount' => $this->db->where('GroupKey', $row->key)->from('USRGroupAccount')->count_all_results()
+//                'CountFunction' => $this->db->where('GroupKey', $row->key)->from('USRGroupSubMenu')->count_all_results(),
+//                'CountAccount' => $this->db->where('GroupKey', $row->key)->from('USRGroupAccount')->count_all_results(),
+                'USRGroupAccount' => $this->db
+                        ->where('USRGroupAccount.GroupKey', $row->key)
+                        ->from('USRGroupAccount')
+                        ->join('USRAccount', 'USRGroupAccount.AccountKey=USRAccount.RowKey', 'left')
+                        ->join('MSTTitle', 'USRAccount.TitleKey=MSTTitle.RowKey', 'left')
+                        ->select('USRAccount.RowKey AS key, '
+                                . 'USRAccount.User, '
+                                . 'CONCAT(MSTTitle.Title,USRAccount.FName," ",USRAccount.LName) AS Name')
+                        ->get()->result(),
+                'USRGroupSubMenu' => $this->db
+                        ->where('USRGroupSubMenu.GroupKey', $row->key)
+                        ->from('USRGroupSubMenu')
+                        ->join('USRSubMenu', 'USRGroupSubMenu.SubMenuKey=USRSubMenu.RowKey', 'left')
+                        ->join('USRMenu', 'USRSubMenu.MenuKey=USRMenu.RowKey', 'left')
+                        ->select('USRSubMenu.RowKey AS key, '
+                                . 'USRMenu.Menu, '
+                                . 'USRSubMenu.SubMenu, '
+                                . 'USRSubMenu.Description')
+                        ->get()->result()
             );
 
             array_push($arData, $_ar);
@@ -145,9 +164,25 @@ class Pemission extends PCenter {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
+
                 $_data->UpdateBy = PCenter::GUID_EMPTY();
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
-                $this->db->where('RowKey', $_data->RowKey)->update('USRGroup', ${_data});
+                $this->db->where('RowKey', $_data->RowKey)->update('USRGroup', $_data);
+
+                $this->db->where('GroupKey', $_data->RowKey)->delete('USRGroupAccount');
+                foreach ($_data->USRGroupAccount as $row) {
+                    $row->RowKey = PCenter::GUID();
+                    $row->GroupKey = $_data->RowKey;
+                    $this->db->insert('USRGroupAccount', $row);
+                }
+
+                $this->db->where('GroupKey', $_data->RowKey)->delete('USRGroupSubMenu');
+                foreach ($_data->USRGroupSubMenu as $row) {
+                    $row->RowKey = PCenter::GUID();
+                    $row->GroupKey = $_data->RowKey;
+                    $this->db->insert('USRGroupSubMenu', $row);
+                }
+
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;

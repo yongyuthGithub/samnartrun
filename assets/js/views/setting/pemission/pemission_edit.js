@@ -6,7 +6,11 @@ $(function () {
 
     var _formdata = form_Detail_C.data('data');
     if (_formdata.key !== Guid) {
-
+        form_Detail.find('#txtDetail').val(_formdata.UserGroup);
+        form_Detail.find('#txtDescription').val(_formdata.Description);
+        form_Account.data('data', _formdata.USRGroupAccount);
+        form_Function.data('data', _formdata.USRGroupSubMenu);
+        setAccount_Function();
     } else {
         form_Account.data('data', new Array());
         form_Function.data('data', new Array());
