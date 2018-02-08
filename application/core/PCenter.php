@@ -37,6 +37,10 @@ class PCenter extends CI_Controller {
         return $user_time ? $datatime->format('Y-m-d H:i:s') : $datatime->format('Y-m-d');
     }
 
+    protected function GEN_PASSWORD_MD5($user, $pass) {
+        return md5(strtolower($user) . $pass);
+    }
+
 //    public static function getMyHost($url = null) {
 //        if ($url == null) {
 //            return prep_url($_SERVER['HTTP_HOST']) . '/samnartrun/';

@@ -1,7 +1,7 @@
 <?php
+
 require __DIR__ . '/../core/PCenter.php';
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 
 class Admin extends PCenter {
 
@@ -63,6 +63,9 @@ class Admin extends PCenter {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
+                $_EnPass = $this->GEN_PASSWORD_MD5($_data->User, $_data->Password);
+
+                $_data->Password = $_EnPass;
                 $_data->RowKey = PCenter::GUID();
                 $_data->RowStatus = true;
                 $_data->CreateBy = PCenter::GUID_EMPTY();
