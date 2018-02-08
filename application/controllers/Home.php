@@ -1,7 +1,7 @@
 <?php
 
 //require_once __DIR__ . '\..\models\PCenter.php';
-require __DIR__.'/../core/PCenter.php';
+require __DIR__ . '/../core/PCenter.php';
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends PCenter {
@@ -27,15 +27,78 @@ class Home extends PCenter {
         //$this->load-model('dbconnect');
     }
 
-    public function index() {
-        $data['page'] = 'master/index';
-        $data['txtemail'] = 'yongyuth@gmail.com';
-        $data['ttt'] = $this->testmy('HTTP_HOST : '.$_SERVER['HTTP_HOST'] . '<br>REQUEST_URI : ' . $_SERVER['REQUEST_URI'].'<br>REMOTE_ADDR : '.$_SERVER['REMOTE_ADDR'].'<br>SCRIPT_FILENAME : '.$_SERVER['SCRIPT_FILENAME']);
-        $this->load->view('layout/nav', $data);
-    }
+//    public function index() {
+//        $data['page'] = 'master/index';
+//        $data['txtemail'] = 'yongyuth@gmail.com';
+//        $data['ttt'] = $this->testmy('HTTP_HOST : '.$_SERVER['HTTP_HOST'] . '<br>REQUEST_URI : ' . $_SERVER['REQUEST_URI'].'<br>REMOTE_ADDR : '.$_SERVER['REMOTE_ADDR'].'<br>SCRIPT_FILENAME : '.$_SERVER['SCRIPT_FILENAME']);
+//        $this->load->view('layout/nav', $data);
+//    }
 
     public function showlayoutB4() {
         $this->load->view('layout/_layout_B4');
     }
-   
+
+    public function index() {
+        $data['page'] = 'setting/home/login';
+        $data['seturl'] = !isset($_POST['loginUrl']) ? 0 : $_POST['loginUrl'];
+        $this->load->view('layout/nav', $data);
+    }
+
+    public function main(){
+        $data['page'] = 'setting/home/main_page';
+        $this->load->view('layout/nav', $data);
+    }
+    public function popupLogin() {
+        $this->load->view('setting/home/login_page');
+    }
+
+    public function popupForget() {
+        $this->load->view('setting/home/forget_page');
+    }
+
+    public function chkLogin() {
+        $_user = $_POST['user'];
+        $_pass = $_POST['pass'];
+        $_md5Pass = $this->GEN_PASSWORD_MD5($_user, $_pass);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+        $queryChk = $this->db->where('Password', $_md5Pass)->from('USRAccount')->count_all_results();
+        if ($queryChk === 0) {
+            $vReturn->success = false;
+            $vReturn->message = 'No user in the system..';
+        } else {
+            $data = $this->db->where('Password', $_md5Pass)->from('USRAccount')->get()->row();
+            $arDelete = Array($data->RowKey);
+            $this->db->where_in('AccountKey', $arDelete)->delete('TMPLogin');
+
+            $obj = (object) [];
+            $obj->RowKey = PCenter::GUID();
+            $obj->AccountKey = $data->RowKey;
+            $obj->Token = md5(PCenter::GUID());
+            $this->db->insert('TMPLogin', $obj);
+
+            setcookie('samnartrun_login', $data->RowKey, time() + (86400 * 7), '/');
+            setcookie('samnartrun_token', $obj->Token, time() + (86400 * 7), '/');
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $vReturn->success = false;
+                $vReturn->message = $this->db->_error_message();
+            } else {
+                $this->db->trans_commit();
+                $vReturn->success = true;
+            }
+        }
+
+        echo json_encode($vReturn);
+    }
+    
+    public function chkLoginCookie(){
+        if(!isset(setcookie('samnartrun_login'))){
+            $this->popupLogin();
+        }else{
+            $this->main();
+        }
+    }
+
 }
