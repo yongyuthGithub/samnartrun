@@ -1,7 +1,7 @@
 $(function () {
-    var form_car = $('#form_car');
+    var form_brandcar = $('#form_brandcar');
 
-    form_car.setMainPage({
+    form_brandcar.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
@@ -12,12 +12,12 @@ $(function () {
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
-            {data: 'Brand', header: 'Brand Car'}
+            {data: 'Brand', header: 'ยี่ห้อรถ'}
         ],
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('car/edit'),
-                title: 'NewBrandCar',
+                title: 'เพิ่มยี่ห้อรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -26,8 +26,7 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = Guid;
-                            obj.Brand = _f.find('#txtbrandcar').val();
-                           
+                            obj.Brand = _f.find('#txtbrandcar').val();  
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -66,7 +65,7 @@ $(function () {
          btnEditFun: function (f, d) {
             $.bPopup({
                 url: mvcPatch('car/edit'),
-                title: 'Edit Brand Car',
+                title: 'แก้ไขยี่ห้อรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {

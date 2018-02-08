@@ -61,7 +61,7 @@ class Insurance extends PCenter {
                 }
             }
         } else {
-            $queryChk = $this->db->where('InsuranceName', $_data->InsuranceName)->where('InsuranceName !=', $_data->InsuranceName)->from('MSTInsurance')->count_all_results();
+            $queryChk = $this->db->where('InsuranceName', $_data->InsuranceName)->where('RowKey !=', $_data->RowKey)->from('MSTInsurance')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';

@@ -18,7 +18,7 @@ class Car extends PCenter {
         $this->load->view('master/Car/car_edit');
     }
 
-    public function findcar() {
+    public function findCar() {
         $query = $this->db->select('RowKey, Brand,')->get('MSTBrand');
         $_array = array();
         foreach ($query->result() as $row) {
@@ -31,7 +31,7 @@ class Car extends PCenter {
         echo json_encode($_array);
     }
 
-    public function editicar() {
+    public function editcar() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
 
@@ -60,7 +60,7 @@ class Car extends PCenter {
                 }
             }
         } else {
-            $queryChk = $this->db->where('Brand', $_data->Brand)->where('Brand !=', $_data->Brand)->from('MSTBrand')->count_all_results();
+            $queryChk = $this->db->where('Brand', $_data->Brand)->where('RowKey !=', $_data->RowKey)->from('MSTBrand')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
@@ -80,6 +80,7 @@ class Car extends PCenter {
                 }
             }
         }
+
 
         echo json_encode($vReturn);
     }
@@ -103,6 +104,7 @@ class Car extends PCenter {
     }
 
 }
+
 
 //----------------------------------------------------------------------------
 //    public function getTestjson() {

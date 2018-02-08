@@ -1,29 +1,24 @@
 $(function () {
-    var form_carbrand = $('#form_carbrand');
-    var form_carbrand_C = $.modelDialog(form_carbrand);
+    var form_brandcaredit = $('#form_brandcaredit');
+    var form_brandcaredit_C = $.modelDialog(form_brandcaredit);
 
-    var _formdata = form_carbrand_C.data('data');
+    var _formdata = form_brandcaredit_C.data('data');
     if (_formdata.key === Guid) {
         setTitle(Guid);
     } else {
-        form_carbrand.find('#txtbrandcar').val(_formdata.Brand);
-        form_carbrand.find('.showinadd').remove();
+        form_brandcaredit.find('#txtbrandcar').val(_formdata.Brand);
+        form_brandcaredit.find('.showinadd').remove();
         setTitle(_formdata.TitleKey);
 
     }
 
-    form_carbrand.find('#cmdTitle').selectpicker({
-    }).on({
-        change: function () {
-        }
-    });
 
     function setTitle(v) {
         $.reqData({
-            url: mvcPatch('car/findcar'),
+            url: mvcPatch('car/'),
             loanding: false,
             callback: function (vdata) {
-                var _sel = form_carbrand.find('#cmdTitle').empty();
+             
                 var _html = '';
                 $.each(vdata, function (k, v) {
                     _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.Title + '">&nbsp;&nbsp;' + v.Title + '</option>';
@@ -33,18 +28,18 @@ $(function () {
         });
     }
 
-    form_carbrand_C.find('#btn-ok').on({
+    form_brandcaredit_C.find('#btn-ok').on({
         click: function () {
-            form_carbrand.submit();
+            form_brandcaredit.submit();
         }
     })
 
-    form_carbrand.myValidation({
+    form_brandcaredit.myValidation({
         funsuccess: function () {
-            form_carbrand_C.data('fun')(form_carbrand_C);
+            form_brandcaredit_C.data('fun')(form_brandcaredit_C);
         },
         btnactive: [
-            form_carbrand_C.find('#btn-ok')
+            form_brandcaredit_C.find('#btn-ok')
         ],
         fields: {
             txtbrandcar: {

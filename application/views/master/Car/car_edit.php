@@ -10,13 +10,13 @@ and open the template in the editor.
 <?php echo js_asset('views/car/car_edit.js') ?>
 <div class="panel panel-default">
     <div class="panel-body">
-        <form id="form_carbrand">
+        <form id="form_brandcaredit">
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="txtcar">Brand Car :</label>
+                    <label for="txtbrandcar">ยี่ห้อรถ :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-user-circle" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control" id="txtbrandcar" name="txtbrandcar" placeholder="กรุณาใส่ยี่ห้อรถ">
+                        <input type="text" class="form-control" id="txtbrandcar" name="txtbrandcar" placeholder="ชื่อยี่ห้อรถ">
                     </div>
                 </div>
             </div>

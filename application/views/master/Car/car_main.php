@@ -9,14 +9,14 @@ and open the template in the editor.
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1>New Brand</h1><h4><small>New Brand Car</small></h4>
+            <h1>ข้อมูลยี่ห้อรถ</h1><h4><small>ยี่ห้อรถ</small></h4>
         </div>
     </div>
 </div>
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <div id="form_car"></div>
+            <div id="form_brandcar"></div>
         </div>
     </div>
 </div>
