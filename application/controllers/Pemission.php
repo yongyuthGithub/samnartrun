@@ -135,9 +135,9 @@ class Pemission extends PCenter {
                 $vReturn->message = 'This information is already in the system.';
             } else {
                 $_data->RowKey = PCenter::GUID();
-                $_data->CreateBy = PCenter::GUID_EMPTY();
+                $_data->CreateBy = $this->USER_LOGIN()->RowKey;
                 $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
-                $_data->UpdateBy = PCenter::GUID_EMPTY();
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->insert('USRGroup', $_data);
 
@@ -169,7 +169,7 @@ class Pemission extends PCenter {
                 $vReturn->message = 'This information is already in the system.';
             } else {
 
-                $_data->UpdateBy = PCenter::GUID_EMPTY();
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('USRGroup', $_data);
 
@@ -225,6 +225,8 @@ class Pemission extends PCenter {
 
         $_dataUp = (object) [];
         $_dataUp->RowKey = $_data->RowKey;
+        $_dataUp->UpdateBy = $this->USER_LOGIN()->RowKey;
+        $_dataUp->UpdateDate = PCenter::DATATIME_DB(new DateTime());
         $_dataUp->Password = $this->GEN_PASSWORD_MD5($_data->User, $_data->Pass);
         $this->db->where('RowKey', $_dataUp->RowKey)
                 ->update('USRAccount', $_dataUp);

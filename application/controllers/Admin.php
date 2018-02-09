@@ -68,9 +68,9 @@ class Admin extends PCenter {
                 $_data->Password = $_EnPass;
                 $_data->RowKey = PCenter::GUID();
                 $_data->RowStatus = true;
-                $_data->CreateBy = PCenter::GUID_EMPTY();
+                $_data->CreateBy = $this->USER_LOGIN()->RowKey;
                 $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
-                $_data->UpdateBy = PCenter::GUID_EMPTY();
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->insert('USRAccount', $_data);
                 if ($this->db->trans_status() === FALSE) {
@@ -93,7 +93,7 @@ class Admin extends PCenter {
                 $update->TitleKey = $_data->TitleKey;
                 $update->FName = $_data->FName;
                 $update->LName = $_data->LName;
-                $update->UpdateBy = PCenter::GUID_EMPTY();
+                $update->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('USRAccount', $update);
                 if ($this->db->trans_status() === FALSE) {

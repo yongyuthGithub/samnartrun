@@ -18,7 +18,7 @@ class PCenter extends CI_Controller {
         $this->load->helper('url');
         $this->load->helper('asset');
         $this->load->helper('form');
-        
+
         //$this->load-model('dbconnect');
     }
 
@@ -40,6 +40,35 @@ class PCenter extends CI_Controller {
 
     protected function GEN_PASSWORD_MD5($user, $pass) {
         return md5(strtolower($user) . $pass);
+    }
+
+    protected function USER_LOGIN() {
+        if (isset($_COOKIE['samnartrun_login'])) {
+            $_Data = (object) [];
+            $queryCout = $this->db->where('USRAccount.RowKey', $_COOKIE['samnartrun_login'])->from('USRAccount')->count_all_results();
+            $query = $this->db->select('USRAccount.RowKey, '
+                            . 'USRAccount.User, '
+                            . 'CONCAT(MSTTitle.Title,USRAccount.FName," ",USRAccount.LName)AS FullName')
+                    ->where('USRAccount.RowKey', $_COOKIE['samnartrun_login'])
+                    ->from('USRAccount')
+                    ->join('MSTTitle', 'USRAccount.TitleKey=MSTTitle.RowKey', 'left')
+                    ->get();
+            if ($queryCout > 0) {
+                $_row = $query->row();
+                $_Data->RowKey = $_row->RowKey;
+                $_Data->User = $_row->User;
+                $_Data->FullName = $_row->FullName;
+            } else {
+                $_Data->RowKey = $this->GUID_EMPTY();
+                $_Data->User = '';
+                $_Data->FullName = '';
+            }
+        } else {
+            $_Data->RowKey = $this->GUID_EMPTY();
+            $_Data->User = '';
+            $_Data->FullName = '';
+        }
+        return $_Data;
     }
 
 //    public static function getMyHost($url = null) {

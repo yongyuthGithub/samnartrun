@@ -57,7 +57,7 @@ class Menu extends PCenter {
                 ->get('USRMenu');
         echo json_encode($qryMenu->result());
     }
-    
+
     public function editMenu() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
@@ -75,9 +75,9 @@ class Menu extends PCenter {
                 $_data->RowKey = PCenter::GUID();
                 $_data->Seq = $Seq->Seq + 1;
                 $_data->RowStatus = true;
-                $_data->CreateBy = PCenter::GUID_EMPTY();
+                $_data->CreateBy = $this->USER_LOGIN()->RowKey;
                 $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
-                $_data->UpdateBy = PCenter::GUID_EMPTY();
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->insert('USRMenu', $_data);
                 if ($this->db->trans_status() === FALSE) {
@@ -95,7 +95,7 @@ class Menu extends PCenter {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
-                $_data->UpdateBy = PCenter::GUID_EMPTY();
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('USRMenu', $_data);
                 if ($this->db->trans_status() === FALSE) {
@@ -135,7 +135,7 @@ class Menu extends PCenter {
         $this->db->trans_begin();
 
         foreach ($_data as $row) {
-            $row->UpdateBy = PCenter::GUID_EMPTY();
+            $row->UpdateBy = $this->USER_LOGIN()->RowKey;
             $row->UpdateDate = PCenter::DATATIME_DB(new DateTime());
             $this->db->where('RowKey', $row->RowKey)
                     ->update('USRMenu', $row);
@@ -183,9 +183,9 @@ class Menu extends PCenter {
                 $_data->RowKey = PCenter::GUID();
                 $_data->Seq = $Seq->Seq + 1;
                 $_data->RowStatus = true;
-                $_data->CreateBy = PCenter::GUID_EMPTY();
+                $_data->CreateBy = $this->USER_LOGIN()->RowKey;
                 $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
-                $_data->UpdateBy = PCenter::GUID_EMPTY();
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->insert('USRSubMenu', $_data);
                 if ($this->db->trans_status() === FALSE) {
@@ -203,7 +203,7 @@ class Menu extends PCenter {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
-                $_data->UpdateBy = PCenter::GUID_EMPTY();
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('USRSubMenu', $_data);
                 if ($this->db->trans_status() === FALSE) {
