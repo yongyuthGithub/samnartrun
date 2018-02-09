@@ -86,38 +86,48 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
 <!--                        <li><a href="<?php echo base_url('home/index') ?>"><i class="fa fa-home" style="font-size:24px"></i>HOME</a></li>-->
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="line-height: 26px;font-size: 140%;"><i class="fa fa-desktop" style="font-size:100%;min-width: 30px;"></i>Transition
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#"><i class="fa fa-file-word-o" style="font-size:100%;min-width: 30px;"></i>Recordings</a></li>
-                                <li><a href="#"><i class="fa fa-flask" style="font-size:100%;min-width: 30px;"></i>Add fuel to the pump.</a></li>
-                                <li><a href="#"><i class="fa fa-line-chart" style="font-size:100%;min-width: 30px;"></i>Other income</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="line-height: 26px;font-size: 140%;"><i class="fa fa-puzzle-piece" style="font-size:100%;min-width: 30px;"></i>Master
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="<?php echo base_url('register/index') ?>"><i class="fa fa-users" style="font-size:100%;min-width: 30px;"></i>Employee Information</a></li>
-                                <li><a href="<?php echo base_url('car/index') ?>"><i class="fa fa-car" style="font-size:100%;min-width: 30px;"></i>Car Brand</a></li>
-                                <li><a href="#"><i class="fa fa-car" style="font-size:100%;min-width: 30px;"></i>Car Information</a></li>
-                                <li><a href="<?php echo base_url('insurance/index') ?>"><i class="fa fa-paste" style="font-size:100%;min-width: 30px;"></i>Insurance company information</a></li>                                
-                                <li><a href="<?php echo base_url('customer/index') ?>"><i class="fa fa-user-o" style="font-size:100%;min-width: 30px;"></i>Company Profile</a></li>
-                                <li><a href="<?php echo base_url('Fule/index') ?>"><i class="fa fa-tint" style="font-size:100%;min-width: 30px;"></i>Oil pump information</a></li>
-                                <li><a href="#"><i class="fa fa-dashboard" style="font-size:100%;min-width: 30px;"></i>Prefix information</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="line-height: 26px;font-size: 140%;"><i class="fa fa-cogs" style="font-size:100%;min-width: 30px;"></i>Setting
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="<?php echo base_url('menu/index') ?>"><i class="fa fa-tasks" style="font-size:100%;min-width: 30px;"></i>Menu</a></li>
-                                <li><a href="<?php echo base_url('pemission/index') ?>"><i class="fa fa-unlock-alt" style="font-size:100%;min-width: 30px;"></i>Pemission</a></li>
-                                <li><a href="<?php echo base_url('Admin/index') ?>"><i class="fa fa-users" style="font-size:100%;min-width: 30px;"></i>Account</a></li>                                
-                            </ul>
-                        </li>
+                        <?php
+                        if (isset($_COOKIE['samnartrun_login'])) {
+                            $UserKey = $_COOKIE['samnartrun_login'];
+                            $query = $this->db
+                                    ->where('USRGroupAccount.AccountKey', $UserKey)
+                                    ->from('USRGroupAccount')
+                                    ->join('USRGroupSubMenu', 'USRGroupAccount.GroupKey=USRGroupSubMenu.GroupKey', 'inner')
+                                    ->join('USRSubMenu', 'USRGroupSubMenu.SubMenuKey=USRSubMenu.RowKey', 'inner')
+                                    ->join('USRMenu', 'USRSubMenu.MenuKey=USRMenu.RowKey', 'inner')
+                                    ->group_by('USRMenu.RowKey, USRMenu.Menu, USRMenu.Seq, USRMenu.Icon')
+                                    ->order_by('USRMenu.Seq', 'asc')
+                                    ->select('USRMenu.RowKey, USRMenu.Menu, USRMenu.Seq, USRMenu.Icon')
+                                    ->get();
+                            foreach ($query->result() as $row) {
+                                ?>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="line-height: 26px;font-size: 140%;"><i class="<?php echo $row->Icon; ?>" style="font-size:100%;min-width: 30px;"></i><?php echo $row->Menu; ?>
+                                        <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <?php
+                                        $queryS = $this->db
+                                                ->where('USRGroupAccount.AccountKey', $UserKey)
+                                                ->where('USRSubMenu.MenuKey', $row->RowKey)
+                                                ->from('USRGroupAccount')
+                                                ->join('USRGroupSubMenu', 'USRGroupAccount.GroupKey=USRGroupSubMenu.GroupKey', 'inner')
+                                                ->join('USRSubMenu', 'USRGroupSubMenu.SubMenuKey=USRSubMenu.RowKey', 'inner')
+                                                ->group_by('USRSubMenu.RowKey, USRSubMenu.SubMenu, USRSubMenu.Seq, USRSubMenu.Icon, USRSubMenu.Url')
+                                                ->order_by('USRSubMenu.Seq', 'asc')
+                                                ->select('USRSubMenu.RowKey, USRSubMenu.SubMenu, USRSubMenu.Seq, USRSubMenu.Icon, USRSubMenu.Url')
+                                                ->get();
+                                        foreach ($queryS->result() as $row2) {
+                                            ?>                                        
+                                            <li><a href="<?php echo base_url($row2->Url); ?>"><i class="<?php echo $row2->Icon; ?>" style="font-size:100%;min-width: 30px;"></i><?php echo $row2->SubMenu; ?></a></li>
+                                            <?php
+                                        }
+                                        ?>
+                                    </ul>
+                                </li>
+                                <?php
+                            }
+                        }
+                        ?>
                         <li><a href="<?php echo base_url('home/index') ?>" style="line-height: 26px;font-size: 140%;"><i class="fa fa-user-circle" style="font-size:100%;min-width: 30px;"></i>Login</a></li>
                 </div>
         </nav>
