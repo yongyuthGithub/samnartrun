@@ -14,5 +14,13 @@ $(function () {
             }
         });
     }
+
+    $('#btn-logout').off().on({
+        click: function () {
+            $.cookie('samnartrun_login', '', {path: '/', expires: -1});
+            $.cookie('samnartrun_token', '', {path: '/', expires: -1});
+            form_sumbit.prop('action', mvcPatch('home/index')).submit();
+        }
+    });
 });
 

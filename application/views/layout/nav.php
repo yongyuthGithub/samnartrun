@@ -128,7 +128,15 @@
                             }
                         }
                         ?>
-                        <li><a href="<?php echo base_url('home/index') ?>" style="line-height: 26px;font-size: 140%;"><i class="fa fa-user-circle" style="font-size:100%;min-width: 30px;"></i>Login</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="line-height: 26px;font-size: 140%;"><i class="fa fa-exclamation-circle" style="font-size:100%;min-width: 30px;"></i>About
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a id="btn-profile" href="#" style="font-size:100%;min-width: 30px;"><i class="fa fa-drivers-license" style="font-size:100%;min-width: 30px;"></i>Profile</a></li>
+                                <li><a id="btn-logout" href="#" style="font-size:100%;min-width: 30px;"><i class="fa fa-user-circle" style="font-size:100%;min-width: 30px;"></i>Logout</a></li>
+                            </ul>
+                        </li>
+
                 </div>
         </nav>
         <!-- Page content -->

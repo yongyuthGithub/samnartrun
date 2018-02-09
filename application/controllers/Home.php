@@ -77,6 +77,7 @@ class Home extends PCenter {
             $obj->RowKey = PCenter::GUID();
             $obj->AccountKey = $data->RowKey;
             $obj->Token = md5(PCenter::GUID());
+            $obj->UpdateDate= PCenter::DATATIME_DB(new DateTime());
             $this->db->insert('TMPLogin', $obj);
 
             setcookie('samnartrun_login', $data->RowKey, time() + (86400 * 7), '/');
