@@ -43,6 +43,7 @@ $(function () {
                             obj.TitleKey = _f.find('#cmdTitle').val();
                             obj.FName = _f.find('#txtFirstName').val();
                             obj.LName = _f.find('#txtLastName').val();
+                            obj.Pemission = _f.find('#cmdPemission').val();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -95,6 +96,7 @@ $(function () {
                             obj.TitleKey = _f.find('#cmdTitle').val();
                             obj.FName = _f.find('#txtFirstName').val();
                             obj.LName = _f.find('#txtLastName').val();
+                            obj.Pemission = _f.find('#cmdPemission').val();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();

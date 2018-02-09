@@ -242,4 +242,13 @@ class Pemission extends PCenter {
         echo json_encode($vReturn);
     }
 
+    public function findPemissionByAccount() {
+        $qryMenu = $this->db->select('USRGroup.RowKey, '
+                        . 'USRGroup.UserGroup,')
+                ->from('USRGroup')
+                ->order_by('USRGroup.UserGroup', 'asc')
+                ->get();
+        echo json_encode($qryMenu->result());
+    }
+
 }

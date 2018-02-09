@@ -14,7 +14,7 @@ $(function () {
             }
         });
     }
-
+    
     $('#btn-logout').off().on({
         click: function () {
             $.cookie('samnartrun_login', '', {path: '/', expires: -1});
@@ -22,5 +22,18 @@ $(function () {
             form_sumbit.prop('action', mvcPatch('home/index')).submit();
         }
     });
+
+    $('#btn-profile').off().on({
+        click: function () {
+            $.bPopup({
+                url: mvcPatch('home/profile'),
+                title: 'Login Profile',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                }
+            });
+        }
+    });    
 });
 

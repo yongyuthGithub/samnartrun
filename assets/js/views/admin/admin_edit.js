@@ -5,12 +5,20 @@ $(function () {
     var _formdata = form_adminedit_C.data('data');
     if (_formdata.key === Guid) {
         setTitle(Guid);
+        setPemission(Guid);
     } else {
         form_adminedit.find('#txtUser').val(_formdata.User);
         form_adminedit.find('#txtFirstName').val(_formdata.FName);
         form_adminedit.find('#txtLastName').val(_formdata.LName);
         form_adminedit.find('.showinadd').remove();
         setTitle(_formdata.TitleKey);
+        setPemission(function () {
+            return $.ToLinq(_formdata.Pemission)
+                    .Select(function (x) {
+                        return x.GroupKey;
+                    }).ToArray();
+        });
+
     }
 
     form_adminedit.find('#cmdTitle').selectpicker({
@@ -28,6 +36,27 @@ $(function () {
                 var _html = '';
                 $.each(vdata, function (k, v) {
                     _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.Title + '">&nbsp;&nbsp;' + v.Title + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
+            }
+        });
+    }
+
+    form_adminedit.find('#cmdPemission').selectpicker({
+    }).on({
+        change: function () {
+        }
+    });
+
+    function setPemission(v) {
+        $.reqData({
+            url: mvcPatch('pemission/findPemissionByAccount'),
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_adminedit.find('#cmdPemission').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    _html += '<option data-icon="fa fa-unlock-alt" value="' + v.RowKey + '" data-display="' + v.UserGroup + '">&nbsp;&nbsp;' + v.UserGroup + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
             }

@@ -56,6 +56,10 @@ class Home extends PCenter {
     public function popupForget() {
         $this->load->view('setting/home/forget_page');
     }
+    
+    public function profile(){
+        $this->load->view('setting/home/profile_page');
+    }
 
     public function chkLogin() {
         $_user = $_POST['user'];
@@ -117,4 +121,28 @@ class Home extends PCenter {
         echo json_encode($vReturn);
     }
 
+    public function findProfile(){
+        $query = $this->db
+                ->where('USRAccount.RowKey',$this->USER_LOGIN()->RowKey)
+                ->from('USRAccount')
+                ->join('MSTTitle', 'MSTTitle.RowKey = USRAccount.TitleKey', 'left')
+                ->select('USRAccount.RowKey AS key,'
+                        . ' USRAccount.User,'
+                        . ' USRAccount.TitleKey,'
+                        . ' CONCAT(MSTTitle.Title, USRAccount.FName," ",USRAccount.LName) AS Name,'
+                        . ' USRAccount.FName,'
+                        . ' USRAccount.LName,'
+                        . ' USRAccount.RowStatus')                
+                ->get();
+        $queryP = $this->db
+                ->where('USRGroupAccount.AccountKey',$this->USER_LOGIN()->RowKey)
+                ->from('USRGroupAccount')
+                ->join('USRGroup','USRGroupAccount.GroupKey=USRGroup.RowKey','inner')
+                ->select('USRGroup.UserGroup')
+                ->get();
+        $vReturn = (object)[];
+        $vReturn->User=$query->row();
+        $vReturn->Pemission=$queryP->result_array();
+        echo json_encode($vReturn);
+    }
 }
