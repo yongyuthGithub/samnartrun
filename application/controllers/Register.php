@@ -15,8 +15,7 @@ class  Register extends PCenter {
     }
 
     public function edit() {
-          $data['page'] = 'master/register/register_edit';
-          $this->load->view('layout/nav', $data);
+          $this->load->view('master/register/register_edit');
     }
     
  public function findRegister() {
