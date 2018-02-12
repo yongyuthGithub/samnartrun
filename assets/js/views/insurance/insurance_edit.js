@@ -33,6 +33,23 @@ $(function () {
         });
     }
 
+    form_insuranceedit.find('#cmdprovince').selectpicker({
+    }).on({
+        change: function () {
+        }
+    });
+    form_insuranceedit.find('#cmddistrict1').selectpicker({
+    }).on({
+        change: function () {
+        }
+    });
+    form_insuranceedit.find('#cmddistrict').selectpicker({
+    }).on({
+        change: function () {
+        }
+    });
+
+
     form_insuranceedit_C.find('#btn-ok').on({
         click: function () {
             form_insuranceedit.submit();
@@ -47,14 +64,57 @@ $(function () {
             form_insuranceedit_C.find('#btn-ok')
         ],
         fields: {
-            txtUser: {
+            txtinsurance: {
                 icon: false,
                 validators: {
                     notEmpty: {
                         message: '* กรุณาใส่ บริษัท.'
                     }
                 }
+            },
+            cmdprovince: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาใส่ จังหวัด.'
+                    }
+                }
+            },
+            cmddistrict1: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาใส่ อำเภอ.'
+                    }
+                }
+            },
+            cmddistrict: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาใส่ ตำบล.'
+                    }
+                }
+            },
+            txtzipcode: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาใส่ รหัสไปรษณีย์.'
+                    }
+                }
+            },
+            txttel: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาใส่ เบอร์โทร.'
+                    }
+                }
             }
         }
+
+
+
     });
 });

@@ -26,6 +26,7 @@ class Insurance extends PCenter {
             $_ar = array(
                 'key' => $row->RowKey,
                 'InsuranceName' => $row->InsuranceName,
+                
             );
             array_push($_array, $_ar);
         }
