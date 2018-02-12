@@ -71,6 +71,14 @@ class PCenter extends CI_Controller {
         return $_Data;
     }
 
+    protected function GET_FOLDER_UPLOAD() {
+        $dirFolderMain = dirname(dirname(dirname(__DIR__)));
+        $dirFolder = $dirFolderMain . '/File_Upload';
+        if (!file_exists($dirFolder))
+            mkdir($dirFolder);
+        return $dirFolder;
+    }
+
 //    public static function getMyHost($url = null) {
 //        if ($url == null) {
 //            return prep_url($_SERVER['HTTP_HOST']) . '/samnartrun/';
