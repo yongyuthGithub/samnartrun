@@ -19,17 +19,33 @@ class  Register extends PCenter {
     }
     
  public function findRegister() {
-        $query = $this->db->select('RowKey, IDCard,  ')->from('MSTEmployee')->get();
-        $_array = array();
-        foreach ($query->result() as $row) {
-            $_ar = array(
-                'key' => $row->RowKey,
-                'IDCard' => $row->IDCard,
-                
-            );
-            array_push($_array, $_ar);
-        }
-        echo json_encode($_array);
+        $query = $this->db->select('E.RowKey as key, '
+                . 'E.IDCard, '
+                . 'E.TitleKey, '
+                . 'E.FName, '
+                . 'E.LName,'
+                . 'T.Title,'
+                . 'E.SubDistrict as SubDistrictKey,'
+                . 'D.RowKey as DistrictKey,'
+                . 'D.ProvinceKey')
+                ->from('MSTEmployee E')
+                ->join('MSTTitle T','E.TitleKey=T.RowKey','left')
+                ->join('MSTSubDistrict SD','E.SubDistrict=SD.RowKey','left')
+                ->join('MSTDistrict D','SD.DistrictKey=D.RowKey','left')
+                ->get();
+//        $_array = array();
+//        foreach ($query->result() as $row) {
+//            $_ar = array(
+//                'key' => $row->RowKey,
+//                'IDCard' => $row->IDCard,
+//                'TitleKey' => $row->TitleKey,
+//                'FName' => $row->FName,
+//                'LName' => $row->LName,
+//                
+//            );
+//            array_push($_array, $_ar);
+//        }
+        echo json_encode($query->result());
     
  }
     public function editRegister() {
@@ -61,7 +77,7 @@ class  Register extends PCenter {
                 }
             }
         } else {
-            $queryChk = $this->db->where('IDCard', $_data->Customer)->where('RowKey !=', $_data->RowKey)->from('MSTEmployee')->count_all_results();
+            $queryChk = $this->db->where('IDCard', $_data->IDCard)->where('RowKey !=', $_data->RowKey)->from('MSTEmployee')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';

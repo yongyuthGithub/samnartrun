@@ -13,8 +13,11 @@ $(function () {
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
-            {data: 'key', header: 'key'},
-            {data: 'IDCard', header: 'Customer'},
+            
+            {data: 'IDCard', header: 'รหัสบัตรประชาชน'},
+            {data: 'Title', header: 'คำขึ้นต้น'},
+            {data: 'FName', header: 'ชื่อ'},
+            {data: 'LName', header: 'นามสกุล'},
         ],
 //        DataColumnsDefs: [{
 //                render: function (row, type, val2, meta) {
@@ -36,13 +39,13 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = Guid;
-                            obj.IDCard = _f.find('#txtUser').val();
+                            obj.IDCard = _f.find('#txtUser1').val();
                             obj.TitleKey = _f.find('#cmdTitle').val();
                             obj.FName = _f.find('#txtUser2').val();
                             obj.LName = _f.find('#txtUser6').val();
                             obj.Address = _f.find('#txtUser3').val();
-                            obj.SubDistrict = _f.find('#cmd3').val();
-                            obj.ZipCode = _f.find('#txtUser4').val();
+                            obj.SubDistrict = _f.find('#cmdSubDistrict').val();
+                            obj.ZipCode = _f.find('#txtZipCode').val();
                             obj.Tel = _f.find('#txtUser7').val();
                             obj.SDate = _f.find('#txtUser5').val();
 
