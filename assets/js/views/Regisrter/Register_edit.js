@@ -2,12 +2,6 @@ $(function () {
     var form_Registeredit = $('#form_Registeredit');
     var form_Registeredit_C = $.modelDialog(form_Registeredit);
 
-//    var _formdata = form_fule_C.data('data');
-//    if (_formdata.key === Guid) {
-//        setTitle(Guid);
-//    } else {
-//
-//    }
     var _formdata = form_Registeredit_C.data('data');
     if (_formdata.key === Guid) {
         setTitle(Guid);
@@ -38,11 +32,12 @@ $(function () {
             }
         });
     }
-    
-    
-    
+
+
+
     form_Registeredit.find('#cmdProvince').selectpicker().on({
         change: function () {
+            setDistrict(Guid);
         }
     });
     function setProvince(v) {
@@ -64,6 +59,22 @@ $(function () {
         change: function () {
         }
     });
+    function setDistrict(v) {
+        $.reqData({
+            url: mvcPatch('Province/findDistrict'),
+            data: {key: form_Registeredit.find('#cmdProvince').val()},
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_Registeredit.find('#cmdDistrict').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.District + '">&nbsp;&nbsp;' + v.District + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
+            }
+        });
+    }
+
     form_Registeredit.find('#cmdSubDistrict').selectpicker().on({
         change: function () {
         }
