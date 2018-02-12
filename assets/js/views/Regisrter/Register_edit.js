@@ -8,25 +8,57 @@ $(function () {
 //    } else {
 //
 //    }
-var _formdata = form_Registeredit_C.data('data');
+    var _formdata = form_Registeredit_C.data('data');
     if (_formdata.key === Guid) {
-//        setTitle(Guid);
+        setTitle(Guid);
     } else {
         form_Registeredit.find('#txtUser').val(_formdata.Customer);
-       
-        
+
+
         form_Registeredit.find('.showinadd').remove();
-        
-//        setTitle(_formdata.TitleKey);
+
+        setTitle(_formdata.TitleKey);
     }
     form_Registeredit.find('#cmdTitle').selectpicker().on({
         change: function () {
         }
     });
+    function setTitle(v) {
+        $.reqData({
+            url: mvcPatch('admin/findTitle'),
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_Registeredit.find('#cmdTitle').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.Title + '">&nbsp;&nbsp;' + v.Title + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
+            }
+        });
+    }
+    
+    
+    
+    form_Registeredit.find('#cmd1').selectpicker().on({
+        change: function () {
+        }
+    });
 
+    form_Registeredit.find('#cmd2').selectpicker().on({
+        change: function () {
+        }
+    });
+    form_Registeredit.find('#cmd3').selectpicker().on({
+        change: function () {
+        }
+    });
+    form_Registeredit.find('#cmd4').selectpicker().on({
+        change: function () {
+        }
+    });
 
-
-   form_Registeredit_C.find('#btn-ok').on({
+    form_Registeredit_C.find('#btn-ok').on({
         click: function () {
             form_Registeredit.submit();
         }

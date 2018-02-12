@@ -15,7 +15,6 @@ $(function () {
         DataColumns: [
             {data: 'key', header: 'key'},
             {data: 'IDCard', header: 'Customer'},
-           
         ],
 //        DataColumnsDefs: [{
 //                render: function (row, type, val2, meta) {
@@ -38,7 +37,15 @@ $(function () {
                             var obj = new Object();
                             obj.RowKey = Guid;
                             obj.IDCard = _f.find('#txtUser').val();
-                            
+                            obj.TitleKey = _f.find('#cmdTitle').val();
+                            obj.FName = _f.find('#txtUser2').val();
+                            obj.LName = _f.find('#txtUser6').val();
+                            obj.Address = _f.find('#txtUser3').val();
+                            obj.SubDistrict = _f.find('#cmd3').val();
+                            obj.ZipCode = _f.find('#txtUser4').val();
+                            obj.Tel = _f.find('#txtUser7').val();
+                            obj.SDate = _f.find('#txtUser5').val();
+
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -88,7 +95,7 @@ $(function () {
                             var obj = new Object();
                             obj.RowKey = d.key;
                             obj.Customer = _f.find('#txtUser').val();
-                             
+
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
