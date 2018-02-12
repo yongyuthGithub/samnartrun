@@ -11,6 +11,7 @@ $(function () {
     var _formdata = form_Registeredit_C.data('data');
     if (_formdata.key === Guid) {
         setTitle(Guid);
+        setProvince(Guid);
     } else {
         form_Registeredit.find('#txtUser').val(_formdata.Customer);
 
@@ -40,20 +41,30 @@ $(function () {
     
     
     
-    form_Registeredit.find('#cmd1').selectpicker().on({
+    form_Registeredit.find('#cmdProvince').selectpicker().on({
         change: function () {
         }
     });
+    function setProvince(v) {
+        $.reqData({
+            url: mvcPatch('Province/findProvince'),
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_Registeredit.find('#cmdProvince').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.Province + '">&nbsp;&nbsp;' + v.Province + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
+            }
+        });
+    }
 
-    form_Registeredit.find('#cmd2').selectpicker().on({
+    form_Registeredit.find('#cmdDistrict').selectpicker().on({
         change: function () {
         }
     });
-    form_Registeredit.find('#cmd3').selectpicker().on({
-        change: function () {
-        }
-    });
-    form_Registeredit.find('#cmd4').selectpicker().on({
+    form_Registeredit.find('#cmdSubDistrict').selectpicker().on({
         change: function () {
         }
     });
