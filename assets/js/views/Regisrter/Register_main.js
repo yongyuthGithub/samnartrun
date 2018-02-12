@@ -13,20 +13,29 @@ $(function () {
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
-            
+
             {data: 'IDCard', header: 'รหัสบัตรประชาชน'},
-            {data: 'Title', header: 'คำขึ้นต้น'},
-            {data: 'FName', header: 'ชื่อ'},
-            {data: 'LName', header: 'นามสกุล'},
+            {data: 'FName', header: 'ชื่อ-นามสกุล'},
+            {data: 'SDate', header: 'วันที่เริ่มงาน'},
         ],
-//        DataColumnsDefs: [{
-//                render: function (row, type, val2, meta) {
-//                    var _val = val2.PumpType === 1 ? 'ปั้มใน' : 'ปั้นนอก';
-//                    return _val;
-//                },
-//                orderable: true,
-//                targets: 1
-//            }],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    var _val = val2.Title + val2.FName + ' ' + val2.LName;
+                    return _val;
+                },
+                orderable: true,
+                targets: 1
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    var _val = PHP_JSON_To_ShowDate(val2.SDate);
+                    return _val;
+                },
+                orderable: true,
+                targets: 2
+            }
+        ],
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Register/edit'),
@@ -47,7 +56,7 @@ $(function () {
                             obj.SubDistrict = _f.find('#cmdSubDistrict').val();
                             obj.ZipCode = _f.find('#txtZipCode').val();
                             obj.Tel = _f.find('#txtUser7').val();
-                            obj.SDate = _f.find('#txtUser5').val();
+                            obj.SDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate'));
 
                             $.bConfirm({
                                 buttonOK: function (k) {

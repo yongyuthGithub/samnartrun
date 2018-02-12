@@ -14,6 +14,14 @@ $(function () {
 
         setTitle(_formdata.TitleKey);
     }
+
+    form_Registeredit.find('#txtSDate').dateTime().on('dp.change', function (e) {
+        form_Registeredit.formValidation('revalidateField', form_Registeredit.find('#txtUser5'));
+    });
+
+//    funDateTime(form_Registeredit.find('#txtSDate')).date('14/02/2018');
+//    alert(PHP_DateTimeShow_To_JSON(form_Registeredit.find('#txtSDate')));
+
     form_Registeredit.find('#cmdTitle').selectpicker().on({
         change: function () {
         }
@@ -78,8 +86,9 @@ $(function () {
 
     form_Registeredit.find('#cmdSubDistrict').selectpicker().on({
         change: function () {
-            var _v= $(this).find('option[value="'+$(this).val()+'"]').data('zipcode');
+            var _v = $(this).find('option[value="' + $(this).val() + '"]').data('zipcode');
             form_Registeredit.find('#txtZipCode').val(_v);
+            form_Registeredit.formValidation('revalidateField', form_Registeredit.find('#txtZipCode'));
         }
     });
     function setSubDistrict(v) {
@@ -184,7 +193,7 @@ $(function () {
                     }
                 }
             },
-             txtUser7: {
+            txtUser7: {
                 icon: false,
                 validators: {
                     notEmpty: {
@@ -192,7 +201,7 @@ $(function () {
                     }
                 }
             },
-             txtUser5: {
+            txtUser5: {
                 icon: false,
                 validators: {
                     notEmpty: {
@@ -200,10 +209,9 @@ $(function () {
                     }
                 }
             },
-            
-            
+
         }
-        
-            
+
+
     });
 });

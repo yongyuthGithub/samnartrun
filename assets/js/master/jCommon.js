@@ -310,12 +310,63 @@ function PHP_DateTime_To_JSON(v) {//---จาก DateTime --> yyyy-MM-dd HH:mm:s
     }
     return yyyy + '-' + mm + '-' + dd + ' ' + tHH + ':' + tMM + ':' + tSS;
 }
+
+function PHP_DateTimeShow_To_JSON(v) {//---จาก ShowDate --> yyyy-MM-dd HH:mm:ss
+    return PHP_DateTime_To_JSON(new Date(funDateTime(v).date()));
+}
+
 function PHP_JSON_To_DateTime(v) {//---จาก yyyy-MM-dd HH:mm:ss --> DateTime
     var _dt = v.split(' ');
     var _d = _dt[0].split('-');
     var _t = _dt[1].split(':');
 //    alert(JSON.stringify(_d) + ', ' + JSON.stringify(_t));
     return new Date(parseInt(_d[0]), parseInt(_d[1] - 1), parseInt(_d[1]), parseInt(_t[0]), parseInt(_t[1]), parseInt(_t[2]));
+}
+
+function PHP_JSON_To_ShowDateTime(v) {//---จาก yyyy-MM-dd HH:mm:ss --> dd/MM/yyyy HH:mm:ss
+    var _dt = v.split(' ');
+    var _d = _dt[0].split('-');
+    var _t = _dt[1].split(':');
+    var dd = parseInt(_d[2]);
+    if (dd < 10)
+        dd = '0' + dd;
+    var MM = parseInt(_d[1]);
+    if (MM < 10)
+        MM = '0' + MM;
+    var HH = parseInt(_t[0]);
+    if (HH < 10)
+        HH = '0' + HH;
+    var mm = parseInt(_t[1]);
+    if (mm < 10)
+        mm = '0' + mm;
+    var ss = parseInt(_t[2]);
+    if (ss < 10)
+        ss = '0' + ss;
+
+    return dd + '/' + MM + '/' + _d[0] + ' ' + HH + '/' + mm + '/' + ss;
+}
+
+function PHP_JSON_To_ShowDate(v) {//---จาก yyyy-MM-dd HH:mm:ss --> dd/MM/yyyy
+    var _dt = v.split(' ');
+    var _d = _dt[0].split('-');
+    var _t = _dt[1].split(':');
+    var dd = parseInt(_d[2]);
+    if (dd < 10)
+        dd = '0' + dd;
+    var MM = parseInt(_d[1]);
+    if (MM < 10)
+        MM = '0' + MM;
+    var HH = parseInt(_t[0]);
+    if (HH < 10)
+        HH = '0' + HH;
+    var mm = parseInt(_t[1]);
+    if (mm < 10)
+        mm = '0' + mm;
+    var ss = parseInt(_t[2]);
+    if (ss < 10)
+        ss = '0' + ss;
+
+    return dd + '/' + MM + '/' + _d[0];
 }
 //-------------
 function checkNullAndReturn(v) {
@@ -631,7 +682,35 @@ function ChkNumber(v) {
         });
     }
 
+    $.fn.dateTime = function (option) {
+        var setting = $.extend({
+            format: 'DD/MM/YYYY',
+            locale: 'th',
+            showTodayButton: true,
+            showClear: false
+        }, option);
+
+        return this.each(function () {
+            $(this).datetimepicker({
+                format: setting.format,
+                locale: setting.locale,
+                showTodayButton: setting.showTodayButton,
+                showClear: setting.showClear,
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                }
+            });
+        });
+    }
+
 }(jQuery));
+
+function funDateTime(v) {
+    return v.data('DateTimePicker');
+}
 
 $(function () {
     $('#myPage').on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {

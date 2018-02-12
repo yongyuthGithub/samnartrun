@@ -16,6 +16,7 @@
         <?php echo css_asset('master/responsive.dataTables.min.css') ?>
         <?php echo css_asset('master/bootstrap-select.min.css') ?>
         <?php echo css_asset('master/checkbox_radiobox.css') ?>
+        <?php echo css_asset('master/bootstrap-datetimepicker.min.css') ?>
 
         <?php echo js_asset('master/jquery.cookie.js') ?>
         <?php echo js_asset('master/linq.min.js') ?>
@@ -29,6 +30,9 @@
         <?php echo js_asset('master/jquery.cookie.js') ?>
         <?php echo js_asset('master/loadingoverlay.min.js') ?>
         <?php echo js_asset('master/loadingoverlay_progress.min.js') ?>
+        <?php echo js_asset('master/moment.min.js') ?>
+        <?php echo js_asset('master/locales.min.js') ?>
+        <?php echo js_asset('master/bootstrap-datetimepicker.min.js') ?>
         <?php echo js_asset('master/jCustomPageMain.js') ?>
         <?php echo js_asset('master/jCommon.js') ?>
         <?php echo js_asset('views/layout/nav.js') ?>

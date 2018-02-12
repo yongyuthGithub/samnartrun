@@ -151,9 +151,11 @@ and open the template in the editor.
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <label for="txtUser">วันที่เริ่มงาน:</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon"><i class="fa fa-child" style="min-width: 20px;"></i></div>
-                                            <input type="text" class="form-control" id="txtUser5" name="txtUser5" placeholder="วันที่เริ่มงาน">
+                                        <div class="input-group date" id="txtSDate">
+                                            <input type='text' class="form-control text-center" id="txtUser5" name="txtUser5" placeholder="วันที่เริ่มงาน" onkeypress="return false;" />
+                                            <span class="input-group-addon">
+                                                <span class="fa fa-calendar"></span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

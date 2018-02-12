@@ -24,6 +24,7 @@ class  Register extends PCenter {
                 . 'E.TitleKey, '
                 . 'E.FName, '
                 . 'E.LName,'
+                . 'E.SDate,'
                 . 'T.Title,'
                 . 'E.SubDistrict as SubDistrictKey,'
                 . 'D.RowKey as DistrictKey,'
