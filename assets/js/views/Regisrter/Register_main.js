@@ -30,7 +30,7 @@ $(function () {
                 url: mvcPatch('Register/edit'),
                 title: 'New Register',
                 closable: false,
-                size: BootstrapDialog.SIZE_NORMAL,
+                size: BootstrapDialog.SIZE_WIDE,
                 onshow: function (k) {
                     k.getModal().data({
                         data: new Object({key: Guid}),
