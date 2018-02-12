@@ -15,7 +15,6 @@ $(function () {
             {data: 'InsuranceName', header: 'ชื่อบริษัท'},
             {data: 'SubDistrict', header: 'ที่อยู่บริษัท'},
             {data: 'Tel', header: 'เบอร์โทรศัพท์'}
-
         ],
         btnNewFun: function (f) {
             $.bPopup({
@@ -31,7 +30,7 @@ $(function () {
                             obj.RowKey = Guid;
                             obj.InsuranceName = _f.find('#txtinsurance').val();
                             obj.Address = _f.find('#txtaddress').val();
-                            obj.SubDistrict = _f.find('#txtsubdistrict').val();
+                            obj.SubDistrict = _f.find('#cmdSubDistrict').val();
                             obj.ZipCode = _f.find('#txtzipcode').val();
                             obj.Tel = _f.find('#txttel').val();
                             $.bConfirm({
@@ -82,6 +81,10 @@ $(function () {
                             var obj = new Object();
                             obj.RowKey = d.key;
                             obj.InsuranceName = _f.find('#txtinsurance').val();
+                            obj.Address = _f.find('#txtaddress').val();
+                            obj.SubDistrict = _f.find('#cmdSubDistrict').val();
+                            obj.ZipCode = _f.find('#txtzipcode').val();
+                            obj.Tel = _f.find('#txttel').val();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();

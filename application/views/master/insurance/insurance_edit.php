@@ -20,10 +20,19 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
+              <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="txtaddress">ที่อยู่ :</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class=" fa fa-home" style="min-width: 20px;"></i></div>
+                        <input type="text" class="form-control" id="txtaddress" name="txtaddress" placeholder="ที่อยู่">
+                    </div>
+                </div>
+            </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="cmdprovince">จังหวัด :</label>
-                    <select id="cmdprovince" name="cmdprovince" class="form-control selectpicker show-menu-arrow"
+                    <label for="cmdProvince">จังหวัด :</label>
+                    <select id="cmdProvince" name="cmdProvince" class="form-control selectpicker show-menu-arrow"
                             data-width="100%"
                             data-show-Tick="true"
                             data-tick-Icon="fa fa-check"
@@ -36,15 +45,13 @@ and open the template in the editor.
                             data-selectAll-Text="Select All"
                             data-deselectAll-Text="Deselect All"
                             data-selected-Text-Format="count > 3">
-                        <option data-icon="fa fa-clone" value="1">&nbsp;&nbsp;ปั้มใน</option>
-                        <option data-icon="fa fa-clone" value="2">&nbsp;&nbsp;ปั้มนอก</option>
                     </select>
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="cmddistrict1">อำเภอ :</label>
-                    <select id="cmddistrict1" name="cmddistrict1" class="form-control selectpicker show-menu-arrow"
+                    <label for="cmdDistrict">อำเภอ :</label>
+                    <select id="cmdDistrict" name="cmdDistrict" class="form-control selectpicker show-menu-arrow"
                             data-width="100%"
                             data-show-Tick="true"
                             data-tick-Icon="fa fa-check"
@@ -56,16 +63,14 @@ and open the template in the editor.
                             data-actions-Box="false"
                             data-selectAll-Text="Select All"
                             data-deselectAll-Text="Deselect All"
-                            data-selected-Text-Format="count > 3">
-                        <option data-icon="fa fa-clone" value="1">&nbsp;&nbsp;ปั้มใน</option>
-                        <option data-icon="fa fa-clone" value="2">&nbsp;&nbsp;ปั้มนอก</option>
+                            data-selected-Text-Format="count > 3">                     
                     </select>
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="cmddistrict">ตำบล :</label>
-                    <select id="cmddistrict" name="cmddistrict" class="form-control selectpicker show-menu-arrow"
+                    <label for="cmdSubDistrict">ตำบล :</label>
+                    <select id="cmdSubDistrict" name="cmdSubDistrict" class="form-control selectpicker show-menu-arrow"
                             data-width="100%"
                             data-show-Tick="true"
                             data-tick-Icon="fa fa-check"
@@ -78,8 +83,6 @@ and open the template in the editor.
                             data-selectAll-Text="Select All"
                             data-deselectAll-Text="Deselect All"
                             data-selected-Text-Format="count > 3">
-                        <option data-icon="fa fa-clone" value="1">&nbsp;&nbsp;ปั้มใน</option>
-                        <option data-icon="fa fa-clone" value="2">&nbsp;&nbsp;ปั้มนอก</option>
                     </select>
                 </div>
             </div>
