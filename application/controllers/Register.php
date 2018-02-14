@@ -30,7 +30,8 @@ class  Register extends PCenter {
                 . 'T.Title,'
                 . 'E.SubDistrict as SubDistrictKey,'
                 . 'D.RowKey as DistrictKey,'
-                . 'D.ProvinceKey')
+                . 'D.ProvinceKey,'
+                . 'E.ZipCode')
                 ->from('MSTEmployee E')
                 ->join('MSTTitle T','E.TitleKey=T.RowKey','left')
                 ->join('MSTSubDistrict SD','E.SubDistrict=SD.RowKey','left')

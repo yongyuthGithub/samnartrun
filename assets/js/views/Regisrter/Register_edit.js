@@ -5,7 +5,18 @@ $(function () {
     var _formdata = form_Registeredit_C.data('data');
     if (_formdata.key === Guid) {
         setTitle(Guid);
-        setProvince(Guid);
+//        setProvince(Guid);
+        //***Edit By Yongyuth
+        setProvince(function (_p) {
+            _p.val(Guid).selectpicker('render');
+            setDistrict(function (_d) {
+                _d.val(Guid).selectpicker('render');
+                setSubDistrict(function (_sd) {
+                    _sd.val(Guid).selectpicker('render');
+                });
+            });
+        });
+         //********************
     } else {
         form_Registeredit.find('#txtUser1').val(_formdata.IDCard);
         form_Registeredit.find('#txtUser2').val(_formdata.FName);
@@ -15,9 +26,19 @@ $(function () {
         form_Registeredit.find('#txtUser6').val(_formdata.LName);
         form_Registeredit.find('#txtUser7').val(_formdata.Tel);
         form_Registeredit.find('#txtUser1').val(_formdata.IDCard);
-        form_Registeredit.find('#txtUser1').val(_formdata.IDCard);
+        form_Registeredit.find('#txtZipCode').val(_formdata.ZipCode);
         
-
+        //***Edit By Yongyuth
+        setProvince(function (_p) {
+            _p.val(_formdata.ProvinceKey).selectpicker('render');
+            setDistrict(function (_d) {
+                _d.val(_formdata.DistrictKey).selectpicker('render');
+                setSubDistrict(function (_sd) {
+                    _sd.val(_formdata.SubDistrictKey).selectpicker('render');
+                });
+            });
+        });
+        //********************
 
         form_Registeredit.find('.showinadd').remove();
 
@@ -54,7 +75,13 @@ $(function () {
 
     form_Registeredit.find('#cmdProvince').selectpicker().on({
         change: function () {
-            setDistrict(Guid);
+//            setDistrict(Guid);
+            setDistrict(function (_d) {
+                _d.val(Guid).selectpicker('render');
+                setSubDistrict(function (_sd) {
+                    _sd.val(Guid).selectpicker('render');
+                })
+            });
         }
     });
     function setProvince(v) {
@@ -67,14 +94,18 @@ $(function () {
                 $.each(vdata, function (k, v) {
                     _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.Province + '">&nbsp;&nbsp;' + v.Province + '</option>';
                 });
-                _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
+                _sel.append(_html).selectpicker('refresh');
+                v(_sel);
             }
         });
     }
 
     form_Registeredit.find('#cmdDistrict').selectpicker().on({
         change: function () {
-            setSubDistrict(Guid);
+//            setSubDistrict(Guid);
+            setSubDistrict(function (_sd) {
+                _sd.val(Guid).selectpicker('render');
+            })
         }
     });
     function setDistrict(v) {
@@ -88,7 +119,8 @@ $(function () {
                 $.each(vdata, function (k, v) {
                     _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.District + '">&nbsp;&nbsp;' + v.District + '</option>';
                 });
-                _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
+                _sel.append(_html).selectpicker('refresh');
+                v(_sel);
             }
         });
     }
@@ -111,7 +143,8 @@ $(function () {
                 $.each(vdata, function (k, v) {
                     _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.SubDistrict + '"  data-zipcode="' + v.ZipCode + '">&nbsp;&nbsp;' + v.SubDistrict + '</option>';
                 });
-                _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
+                _sel.append(_html).selectpicker('refresh')
+                v(_sel);
             }
         });
     }
