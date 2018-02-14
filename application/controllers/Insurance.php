@@ -19,13 +19,18 @@ class Insurance extends PCenter {
         $this->load->view('master/insurance/insurance_edit');
     }
 
-    public function findInsurance() {
-        $query = $this->db->select('RowKey, InsuranceName,')->get('MSTInsurance');
+    public function findInsurance() {   
+        $query = $this->db->select('RowKey, InsuranceName,Address,SubDistrict,ZipCode,Tel,')->get('MSTInsurance');
         $_array = array();
         foreach ($query->result() as $row) {
             $_ar = array(
                 'key' => $row->RowKey,
                 'InsuranceName' => $row->InsuranceName,
+                'Address' => $row->Address,
+                'SubDistrict' => $row->SubDistrict,
+                'ZipCode' => $row->ZipCode,
+                'Tel' => $row->Tel,
+                
                 
             );
             array_push($_array, $_ar);
@@ -69,6 +74,10 @@ class Insurance extends PCenter {
             } else {
                 $update = (object) [];
                 $update->InsuranceName = $_data->InsuranceName;
+                $update->Address = $_data->Address;
+                $update->SubDistrict = $_data->SubDistrict;
+                $update->ZipCode = $_data->ZipCode;
+                $update->Tel = $_data->Tel;
                 $update->UpdateBy = PCenter::GUID_EMPTY();
                 $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('MSTInsurance', $update);

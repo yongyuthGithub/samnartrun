@@ -16,6 +16,7 @@ $(function () {
             {data: 'SubDistrict', header: 'ที่อยู่บริษัท'},
             {data: 'Tel', header: 'เบอร์โทรศัพท์'}
         ],
+        
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('insurance/edit'),
