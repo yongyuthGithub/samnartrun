@@ -25,6 +25,8 @@ class  Register extends PCenter {
                 . 'E.FName, '
                 . 'E.LName,'
                 . 'E.SDate,'
+                . 'E.Address,'
+                . 'E.Tel,'
                 . 'T.Title,'
                 . 'E.SubDistrict as SubDistrictKey,'
                 . 'D.RowKey as DistrictKey,'
@@ -101,7 +103,9 @@ class  Register extends PCenter {
         }
 
         echo json_encode($vReturn);
-    }
+    
+        
+                }
 
     public function removeAccount() {
         $_data = json_decode($_POST['data']);

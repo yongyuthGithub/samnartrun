@@ -96,7 +96,7 @@ $(function () {
 
         btnEditFun: function (f, d) {
             $.bPopup({
-                url: mvcPatch('Customer/edit'),
+                url: mvcPatch('Register/edit'),
                 title: 'Edit Customer',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
@@ -112,7 +112,7 @@ $(function () {
                                 buttonOK: function (k) {
                                     k.close();
                                     $.reqData({
-                                        url: mvcPatch('Customer/editCustomer'),
+                                        url: mvcPatch('Register/editRegister'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {

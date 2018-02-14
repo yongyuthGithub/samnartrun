@@ -7,7 +7,16 @@ $(function () {
         setTitle(Guid);
         setProvince(Guid);
     } else {
-        form_Registeredit.find('#txtUser').val(_formdata.Customer);
+        form_Registeredit.find('#txtUser1').val(_formdata.IDCard);
+        form_Registeredit.find('#txtUser2').val(_formdata.FName);
+        form_Registeredit.find('#txtUser3').val(_formdata.Address);
+        form_Registeredit.find('#cmdSubDistrict').val(_formdata.SubDistrict);
+        form_Registeredit.find('#txtSDate').val(_formdata.SDate);
+        form_Registeredit.find('#txtUser6').val(_formdata.LName);
+        form_Registeredit.find('#txtUser7').val(_formdata.Tel);
+        form_Registeredit.find('#txtUser1').val(_formdata.IDCard);
+        form_Registeredit.find('#txtUser1').val(_formdata.IDCard);
+        
 
 
         form_Registeredit.find('.showinadd').remove();
