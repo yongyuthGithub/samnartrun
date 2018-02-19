@@ -113,7 +113,7 @@ class  Register extends PCenter {
         $vReturn = (object) [];
         $this->db->trans_begin();
 
-        $this->db->where_in('RowKey', $_data)->delete('MSTCustomer');
+        $this->db->where_in('RowKey', $_data)->delete('MSTEmployee');
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();

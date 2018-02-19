@@ -97,7 +97,7 @@ $(function () {
         btnEditFun: function (f, d) {
             $.bPopup({
                 url: mvcPatch('Register/edit'),
-                title: 'Edit Customer',
+                title: 'แก้ไขพนักงานขับรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_WIDE,
                 onshow: function (k) {
@@ -163,7 +163,7 @@ $(function () {
                                 return x.key;
                             }).ToArray();
                     $.reqData({
-                        url: mvcPatch('Customer/removeAccount'),
+                        url: mvcPatch('Register/removeAccount'),
                         data: {data: JSON.stringify(vdata)},
                         callback: function (vdata) {
                             if (vdata.success) {
@@ -183,7 +183,7 @@ $(function () {
             alert(JSON.stringify(d));
             form_sumbit.SetDataPost({
                 data: {textId: d.key}
-            }).prop('action', mvcPatch('Customer/branchMain')).submit();
+            }).prop('action', mvcPatch('Register/branchMain')).submit();
         }
     });
 });
