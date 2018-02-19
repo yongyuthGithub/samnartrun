@@ -1,26 +1,23 @@
 $(function () {
-    var form_insurance = $('#form_insurance');
+    var form_Title = $('#form_Title');
 
-    form_insurance.setMainPage({
+    form_Title.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
         btnPreview: true,
         headerString: '',
-        UrlDataJson: mvcPatch('insurance/findInsurance'),
+        UrlDataJson: mvcPatch('Title/findTitle'),
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
-            {data: 'InsuranceName', header: 'ชื่อบริษัท'},
-            {data: 'FullAdress', header: 'ที่อยู่บริษัท'},
-            {data: 'Tel', header: 'เบอร์โทรศัพท์'}
+            {data: 'Title', header: 'คำนำหน้า'}
         ],
-
         btnNewFun: function (f) {
             $.bPopup({
-                url: mvcPatch('insurance/edit'),
-                title: 'เพิ่มบริษัทประกัน',
+                url: mvcPatch('Title/edit'),
+                title: 'เพิ่มคำนำหน้า',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -29,16 +26,12 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = Guid;
-                            obj.InsuranceName = _f.find('#txtinsurance').val();
-                            obj.Address = _f.find('#txtaddress').val();
-                            obj.SubDistrict = _f.find('#cmdSubDistrict').val();
-                            obj.ZipCode = _f.find('#txtZipCode').val();
-                            obj.Tel = _f.find('#txtTel').val();
+                            obj.Title = _f.find('#txtTitle').val();  
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
                                     $.reqData({
-                                        url: mvcPatch('insurance/editinsurance'),
+                                        url: mvcPatch('Title/editTitle'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -69,10 +62,10 @@ $(function () {
                 ]
             });
         },
-        btnEditFun: function (f, d) {
+         btnEditFun: function (f, d) {
             $.bPopup({
-                url: mvcPatch('insurance/edit'),
-                title: 'แก้ไขชื่อบริษัทประกัน',
+                url: mvcPatch('Title/edit'),
+                title: 'แก้ไขคำนาม',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -81,16 +74,12 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = d.key;
-                            obj.InsuranceName = _f.find('#txtinsurance').val();
-                            obj.Address = _f.find('#txtaddress').val();
-                            obj.SubDistrict = _f.find('#cmdSubDistrict').val();
-                            obj.ZipCode = _f.find('#txtZipCode').val();
-                            obj.Tel = _f.find('#txtTel').val();
+                            obj.Title = _f.find('#txtTitle').val();                    
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
                                     $.reqData({
-                                        url: mvcPatch('insurance/editinsurance'),
+                                        url: mvcPatch('Title/editTitle'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -134,7 +123,7 @@ $(function () {
                                 return x.key;
                             }).ToArray();
                     $.reqData({
-                        url: mvcPatch('insurance/removeinsurance'),
+                        url: mvcPatch('Title/removeTitle'),
                         data: {data: JSON.stringify(vdata)},
                         callback: function (vdata) {
                             if (vdata.success) {
@@ -150,6 +139,7 @@ $(function () {
             });
         },
 
+        
         btnPreviewFun: function (f, d) {
 
         }

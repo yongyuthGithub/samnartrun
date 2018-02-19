@@ -111,6 +111,8 @@ $(function () {
             });
         },
         btnDeleteFun: function (f, d) {
+            if (d.length === 0)
+                return false;
             $.bConfirm({
                 message: 'Do you want to delete the data?',
                 type: BootstrapDialog.TYPE_DANGER,
