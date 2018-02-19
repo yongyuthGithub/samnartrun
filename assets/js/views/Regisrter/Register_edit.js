@@ -2,6 +2,23 @@ $(function () {
     var form_Registeredit = $('#form_Registeredit');
     var form_Registeredit_C = $.modelDialog(form_Registeredit);
 
+    form_Registeredit.find('#btn-addidcard').on({
+        click: function () {
+            form_Registeredit.find('#xfile').remove();
+            form_Registeredit.append('<input type="file" id="xfile" name="xfile" style="display: none;" />').find('#xfile').click();
+        }
+    });
+    form_Registeredit.on('change', '#xfile', function (ev) {        
+        var _tool = form_Registeredit.find('#showidcard');
+        var reader = new FileReader();
+        reader.onload = function () {
+            var dataURL = reader.result;
+            _tool.prop("src", dataURL);
+        };
+        var _this = ev.target.files;
+        reader.readAsDataURL(_this[0]);
+    });
+
     var _formdata = form_Registeredit_C.data('data');
     if (_formdata.key === Guid) {
         setTitle(Guid);
@@ -16,7 +33,7 @@ $(function () {
                 });
             });
         });
-         //********************
+        //********************
     } else {
         form_Registeredit.find('#txtUser1').val(_formdata.IDCard);
         form_Registeredit.find('#txtUser2').val(_formdata.FName);
@@ -28,7 +45,7 @@ $(function () {
         form_Registeredit.find('#txtUser1').val(_formdata.IDCard);
         form_Registeredit.find('#txtZipCode').val(_formdata.ZipCode);
         form_Registeredit.find('#txtUser5').val(PHP_JSON_To_ShowDate(_formdata.SDate));
-        
+
         //***Edit By Yongyuth
         setProvince(function (_p) {
             _p.val(_formdata.ProvinceKey).selectpicker('render');
@@ -48,6 +65,12 @@ $(function () {
 
     form_Registeredit.find('#txtSDate').dateTime().on('dp.change', function (e) {
         form_Registeredit.formValidation('revalidateField', form_Registeredit.find('#txtUser5'));
+    });
+    form_Registeredit.find('#txtSDate01').dateTime().on('dp.change', function (e) {
+        form_Registeredit.formValidation('revalidateField', form_Registeredit.find('#txtUser01'));
+    });
+    form_Registeredit.find('#txtSDate02').dateTime().on('dp.change', function (e) {
+        form_Registeredit.formValidation('revalidateField', form_Registeredit.find('#txtUser02'));
     });
 
 //    funDateTime(form_Registeredit.find('#txtSDate')).date('14/02/2018');
