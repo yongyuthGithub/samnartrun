@@ -199,57 +199,58 @@ and open the template in the editor.
                                     <img id="showidcard" class="img-responsive"></div>
 
 
-                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div id="menu1" class="tab-pane fade">
+                    <div id="menu1" class="tab-pane fade in">
 
                         <div class="col-12">   
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <div id="form_record">
-                        <!--                <input type="file" id="xfile" name="xfile" style="display: none;" />-->
-                                        <div id="showimage"></div>
 
-                                        <div id="btn-addimage" class="btn btn-success">Add Image</div>
-                                        <div id="btn-upload" class="btn btn-danger">Delete</div>
-                                    </div>
+<!--                <input type="file" id="xfile" name="xfile" style="display: none;" />-->
+
+
+                                    <div id="btn-01" class="btn btn-success">Add Image</div>
+                                    <div id="btn-upload" class="btn btn-danger">Delete</div>
+                                    <img id="show01" class="img-responsive">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="menu2" class="tab-pane fade">
+                    <div id="menu2" class="tab-pane  fade in">
 
                         <div class="col-12">   
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <div id="form_record">
-                        <!--                <input type="file" id="xfile" name="xfile" style="display: none;" />-->
-                                        <div id="showimage"></div>
-                                        <div class="form-group">
 
-                                            <div class="input-group date" id="txtSDate02">
-                                                <input type='text' class="form-control text-center" id="txtUser02" name="txtUser02" placeholder="วันหมดอายุบัตร" onkeypress="return false;" />
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-calendar"></span>
-                                                </span>
+<!--                <input type="file" id="xfile" name="xfile" style="display: none;" />-->
 
-                                            </div>
+                                    <div class="form-group">
+
+                                        <div class="input-group date" id="txtSDate02">
+                                            <input type='text' class="form-control text-center" id="txtUser02" name="txtUser02" placeholder="วันหมดอายุบัตร" onkeypress="return false;" />
+                                            <span class="input-group-addon">
+                                                <span class="fa fa-calendar"></span>
+                                            </span>
+
                                         </div>
-                                        <div id="btn-addimage" class="btn btn-success">Add Image</div>
-                                        <div id="btn-upload" class="btn btn-danger">Delete</div>
                                     </div>
+                                    <div id="btn-02" class="btn btn-success">Add Image</div>
+                                    <div id="btn-upload" class="btn btn-danger">Delete</div>
+                                    <img id="show02" class="img-responsive">
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
+
+
+
             </div>
-        </form>
     </div>
+</form>
+</div>
 </div>
 
 

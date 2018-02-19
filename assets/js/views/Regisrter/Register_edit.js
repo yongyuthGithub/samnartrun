@@ -19,6 +19,42 @@ $(function () {
         reader.readAsDataURL(_this[0]);
     });
 
+ form_Registeredit.find('#btn-01').on({
+        click: function () {
+            form_Registeredit.find('#xfile1').remove();
+            form_Registeredit.append('<input type="file" id="xfile1" name="xfile1" style="display: none;" />').find('#xfile1').click();
+        }
+    });
+form_Registeredit.on('change', '#xfile1', function (ev) {        
+        var _tool = form_Registeredit.find('#show01');
+        var reader = new FileReader();
+        reader.onload = function () {
+            var dataURL = reader.result;
+            _tool.prop("src", dataURL);
+        };
+        var _this = ev.target.files;
+        reader.readAsDataURL(_this[0]);
+    });
+
+
+form_Registeredit.find('#btn-02').on({
+        click: function () {
+            form_Registeredit.find('#xfile2').remove();
+            form_Registeredit.append('<input type="file" id="xfile2" name="xfile2" style="display: none;" />').find('#xfile2').click();
+        }
+    });
+form_Registeredit.on('change', '#xfile2', function (ev) {        
+        var _tool = form_Registeredit.find('#show02');
+        var reader = new FileReader();
+        reader.onload = function () {
+            var dataURL = reader.result;
+            _tool.prop("src", dataURL);
+        };
+        var _this = ev.target.files;
+        reader.readAsDataURL(_this[0]);
+    });
+
+
     var _formdata = form_Registeredit_C.data('data');
     if (_formdata.key === Guid) {
         setTitle(Guid);
