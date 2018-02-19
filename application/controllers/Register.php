@@ -77,6 +77,7 @@ class  Register extends PCenter {
                     $vReturn->message = $this->db->_error_message();
                 } else {
                     $this->db->trans_commit();
+                    $vReturn->key=$_data->RowKey;
                     $vReturn->success = true;
                 }
             }
@@ -98,6 +99,7 @@ class  Register extends PCenter {
                     $vReturn->message = $this->db->_error_message();
                 } else {
                     $this->db->trans_commit();
+                    $vReturn->key=$_data->RowKey;
                     $vReturn->success = true;
                 }
             }

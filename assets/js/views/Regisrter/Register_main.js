@@ -1,8 +1,8 @@
 $(function () {
-    var form_fule = $('#form_Register');
+    var form_Register = $('#form_Register');
     var form_sumbit = $('#form_sumbit');
 
-    form_fule.setMainPage({
+    form_Register.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
@@ -104,6 +104,8 @@ $(function () {
                     k.getModal().data({
                         data: d,
                         fun: function (_f) {
+
+
                             var obj = new Object();
                             obj.RowKey = d.key;
                             obj.IDCard = _f.find('#txtUser1').val();
@@ -125,8 +127,20 @@ $(function () {
                                         loanding: false,
                                         callback: function (vdata) {
                                             if (vdata.success) {
-                                                _f.find('#btn-close').click();
-                                                f.find('.xref').click();
+                                                var _imagedata = $.ToLinq(_f.find('.tab-image'))
+                                                        .Select(function (x) {
+                                                            return new Object({
+                                                                EmpKey: vdata.key,
+                                                                FileType: $(x).attr('data-type'),
+                                                                RecordStatus:parseInt($(x).attr('data-type')) === 2 ? false : true,
+                                                                EDate:parseInt($(x).attr('data-type')) === 2 ? null : PHP_DateTimeShow_To_JSON($(x).find('.date')),
+                                                                ImageBase64:$(x).find('.myimage').attr('src')
+                                                            });
+                                                        }).ToArray();
+                                                alert(JSON.stringify(_imagedata));
+                                                
+//                                                _f.find('#btn-close').click();
+//                                                f.find('.xref').click();
                                             } else {
                                                 $.bAlert({
                                                     message: vdata.message

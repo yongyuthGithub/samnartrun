@@ -176,7 +176,7 @@ and open the template in the editor.
                 </ul>
 
                 <div class="tab-content">
-                    <div id="home" class="tab-pane fade in active">
+                    <div id="home" class="tab-pane fade in active tab-image" data-type="1">
 
                         <div class="col-12">   
                             <div class="panel panel-default">
@@ -196,13 +196,14 @@ and open the template in the editor.
                                     </div>
                                     <div id="btn-addidcard" class="btn btn-success">Add Image</div>
                                     <div id="btn-removidcard" class="btn btn-danger">Delete</div>
-                                    <img id="showidcard" class="img-responsive"></div>
+                                    <div id="btn-removidcard" class="btn btn-info">View</div>
+                                    <img id="showidcard" class="img-responsive myimage"></div>
 
 
                             </div>
                         </div>
                     </div>
-                    <div id="menu1" class="tab-pane fade in">
+                    <div id="menu1" class="tab-pane fade in tab-image" data-type="2">
 
                         <div class="col-12">   
                             <div class="panel panel-default">
@@ -213,12 +214,12 @@ and open the template in the editor.
 
                                     <div id="btn-01" class="btn btn-success">Add Image</div>
                                     <div id="btn-upload" class="btn btn-danger">Delete</div>
-                                    <img id="show01" class="img-responsive">
+                                    <img id="show01" class="img-responsive myimage">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="menu2" class="tab-pane  fade in">
+                    <div id="menu2" class="tab-pane  fade in tab-image" data-type="3">
 
                         <div class="col-12">   
                             <div class="panel panel-default">
@@ -238,7 +239,7 @@ and open the template in the editor.
                                     </div>
                                     <div id="btn-02" class="btn btn-success">Add Image</div>
                                     <div id="btn-upload" class="btn btn-danger">Delete</div>
-                                    <img id="show02" class="img-responsive">
+                                    <img id="show02" class="img-responsive myimage">
                                 </div>
                             </div>
                         </div>
