@@ -27,6 +27,7 @@ $(function () {
         form_Registeredit.find('#txtUser7').val(_formdata.Tel);
         form_Registeredit.find('#txtUser1').val(_formdata.IDCard);
         form_Registeredit.find('#txtZipCode').val(_formdata.ZipCode);
+        form_Registeredit.find('#txtUser5').val(PHP_JSON_To_ShowDate(_formdata.SDate));
         
         //***Edit By Yongyuth
         setProvince(function (_p) {

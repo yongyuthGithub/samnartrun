@@ -99,14 +99,22 @@ $(function () {
                 url: mvcPatch('Register/edit'),
                 title: 'Edit Customer',
                 closable: false,
-                size: BootstrapDialog.SIZE_NORMAL,
+                size: BootstrapDialog.SIZE_WIDE,
                 onshow: function (k) {
                     k.getModal().data({
                         data: d,
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = d.key;
-                            obj.Customer = _f.find('#txtUser').val();
+                            obj.IDCard = _f.find('#txtUser1').val();
+                            obj.TitleKey = _f.find('#cmdTitle').val();
+                            obj.FName = _f.find('#txtUser2').val();
+                            obj.LName = _f.find('#txtUser6').val();
+                            obj.Address = _f.find('#txtUser3').val();
+                            obj.SubDistrict = _f.find('#cmdSubDistrict').val();
+                            obj.ZipCode = _f.find('#txtZipCode').val();
+                            obj.Tel = _f.find('#txtUser7').val();
+                            obj.SDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate'));
 
                             $.bConfirm({
                                 buttonOK: function (k) {
