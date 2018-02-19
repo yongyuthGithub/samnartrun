@@ -8,7 +8,7 @@ $(function () {
 
     } else {
         form_insuranceedit.find('#txtinsurance').val(_formdata.InsuranceName);
-        form_insuranceedit.find('#txtaddress').val(_formdata.Adress);
+        form_insuranceedit.find('#txtaddress').val(_formdata.Address);
         form_insuranceedit.find('#cmdSubDistrict').val(_formdata.cmdSubDistrict);
         form_insuranceedit.find('#txtZipCode').val(_formdata.ZipCode);
         form_insuranceedit.find('#txtTel').val(_formdata.Tel);     

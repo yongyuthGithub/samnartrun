@@ -19,27 +19,41 @@ class Insurance extends PCenter {
         $this->load->view('master/insurance/insurance_edit');
     }
 
-    public function findInsurance() {   
-        $query = $this->db->select('RowKey, InsuranceName,Address,SubDistrict,ZipCode,Tel,')->get('MSTInsurance');
-        $_array = array();
-        foreach ($query->result() as $row) {
-            $_ar = array(
-                'key' => $row->RowKey,
-                'InsuranceName' => $row->InsuranceName,
-                'Address' => $row->Address,
-                'SubDistrict' => $row->SubDistrict,
-                'ZipCode' => $row->ZipCode,
-                'Tel' => $row->Tel,
-                
-                
-            );
-            array_push($_array, $_ar);
-        }
-        echo json_encode($_array);
+    public function findInsurance() {  
+         $query = $this->db->select('I.RowKey as key, '
+                . 'I.InsuranceName, '
+                . 'I.Address, '
+                . 'Concat(I.Address," ",SD.SubDistrict," ",D.District, " ",P.Province," ",I.ZipCode )as FullAdress, '
+                . 'I.ZipCode,'
+                . 'I.Tel,'
+                . 'I.SubDistrict as SubDistrictKey,'
+                . 'D.RowKey as DistrictKey,'
+                . 'D.ProvinceKey')
+                ->from('MSTInsurance I')
+                ->join('MSTSubDistrict SD','I.SubDistrict=SD.RowKey','left')
+                ->join('MSTDistrict D','SD.DistrictKey=D.RowKey','left')
+                ->join('MSTProvince P','D.ProvinceKey=P.RowKey','left')
+                ->get();
+//        $query = $this->db->select('RowKey, InsuranceName,Address,SubDistrict,ZipCode,Tel,')->get('MSTInsurance');
+//        $_array = array();
+//        foreach ($query->result() as $row) {
+//            $_ar = array(
+//                'key' => $row->RowKey,
+//                'InsuranceName' => $row->InsuranceName,
+//                'Address' => $row->Address,
+//                'SubDistrict' => $row->SubDistrict,
+//                'ZipCode' => $row->ZipCode,
+//                'Tel' => $row->Tel,
+//                
+//                
+//            );
+//            array_push($_array, $_ar);
+//        }
+        echo json_encode($query->result());
     }
 
     public function editinsurance() {
-        $_data = json_decode($_POST['data']);
+        $_data = json_decode($_POST['data'] );
         $vReturn = (object) [];
 
         $this->db->trans_begin();

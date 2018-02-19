@@ -88,19 +88,19 @@ and open the template in the editor.
             </div>
              <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="txtzipcode">รหัสไปรษณีย์ :</label>
+                    <label for="txtZipCode">รหัสไปรษณีย์ :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class=" fa fa-address-card-o" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control" id="txtzipcode" name="txtzipcode" placeholder="รหัสไปรษณีย์">
+                        <input type="text" class="form-control" id="txtZipCode" name="txtZipCode" placeholder="รหัสไปรษณีย์">
                     </div>
                 </div>
             </div>
              <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="txttel">เบอร์โทร :</label>
+                    <label for="txtTel">เบอร์โทร :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class=" fa fa-address-card-o" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control" id="txttel" name="txttel" placeholder="เบอร์โทร">
+                        <input type="text" class="form-control" id="txtTel" name="txtTel" placeholder="เบอร์โทร">
                     </div>
                 </div>
             </div>

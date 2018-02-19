@@ -13,7 +13,7 @@ $(function () {
         UrlLoandingclose: true,
         DataColumns: [
             {data: 'InsuranceName', header: 'ชื่อบริษัท'},
-            {data: 'SubDistrict', header: 'ที่อยู่บริษัท'},
+            {data: 'FullAdress', header: 'ที่อยู่บริษัท'},
             {data: 'Tel', header: 'เบอร์โทรศัพท์'}
         ],
         
