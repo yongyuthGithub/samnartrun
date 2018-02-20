@@ -1,3 +1,4 @@
+<?php echo css_asset('views/insurance/insurancetype_main.css') ?>
 <?php echo js_asset('views/insurance/insurancetype_main.js') ?>
 <div class="col-12">   
     <div class="panel panel-default">

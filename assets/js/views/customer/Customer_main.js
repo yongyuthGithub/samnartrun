@@ -13,7 +13,7 @@ $(function () {
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
-            {data: 'key', header: 'key'},
+            {data: 'CusCode', header: 'ID'},
             {data: 'Customer', header: 'Customer'},
            
         ],

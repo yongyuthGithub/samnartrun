@@ -23,11 +23,12 @@ class customer extends PCenter {
     }
 
     public function findCustomer() {
-        $query = $this->db->select('RowKey, Customer,  ')->from('MSTCustomer')->get();
+        $query = $this->db->select('RowKey, Customer, CusCode')->from('MSTCustomer')->get();
         $_array = array();
         foreach ($query->result() as $row) {
             $_ar = array(
                 'key' => $row->RowKey,
+                'CusCode'=>$row->CusCode,
                 'Customer' => $row->Customer,
                 
             );
