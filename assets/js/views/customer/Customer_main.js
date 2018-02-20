@@ -38,7 +38,10 @@ $(function () {
                             var obj = new Object();
                             obj.RowKey = Guid;
                             obj.Customer = _f.find('#txtUser').val();
-                            
+                            obj.Address = _f.find('#txtaddress').val();
+                            obj.SubDistrict = _f.find('#cmdSubDistrict').val();
+                            obj.ZipCode = _f.find('#txtZipCode').val();
+                            obj.Tel = _f.find('#txtTel').val();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
