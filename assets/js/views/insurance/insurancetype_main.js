@@ -19,9 +19,6 @@ $(function () {
         DataColumns: [
             {data: 'TypeName', header: 'Insurance Type'},
             {data: 'TypeUse', header: 'Type Group'},
-//            {data: 'Menu', header: 'Menu'},
-//            {data: 'Icon', header: 'Icon'},
-//            {data: 'Url', header: 'Url'}
         ],
         DataColumnsDefs: [
             {
