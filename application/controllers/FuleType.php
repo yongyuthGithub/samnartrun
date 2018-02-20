@@ -2,14 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 require __DIR__ . '/../core/PCenter.php';
 
-class Car extends PCenter {
+class FuleType extends PCenter {
 
     public function __construct() {
         parent::__construct();
     }
 
     public function index() {
-        $data['page'] = 'master/Car/Car_main';
+        $data['page'] = 'master/FuleType/Fuletype_main';
         $this->load->view('layout/nav', $data);
     }
 

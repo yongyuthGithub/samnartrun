@@ -14,8 +14,8 @@ $(function () {
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
-            {data: 'Pump', header: 'Pump'},
-            {data: 'PumpType', header: 'PumpType'},
+            {data: 'Pump', header: 'ชื่อปั้ม'},
+            {data: 'PumpType', header: 'ประเภทปั้ม'},
         ],
         DataColumnsDefs: [{
                 render: function (row, type, val2, meta) {
@@ -154,10 +154,12 @@ $(function () {
         },
 
         btnPreviewFun: function (f, d) {
-            alert(JSON.stringify(d));
             form_sumbit.SetDataPost({
-                data: {textId: d.key}
-            }).prop('action', mvcPatch('fule/branchMain')).submit();
+                data: {
+                    txtkey: d.key,
+                    txtdisplay: d.Pump
+                }
+            }).prop('action', mvcPatch('fule/branchindex')).submit();
         }
     });
 });

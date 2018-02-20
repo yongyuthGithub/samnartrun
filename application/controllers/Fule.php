@@ -21,6 +21,11 @@ class Fule extends PCenter {
 
         $this->load->view('master/Fule/fule_edit');
     }
+    
+    public function branchindex() {
+        $data['page'] = 'master/Fule/fulebranch_main';
+        $this->load->view('layout/nav', $data);
+    }
 
     public function findPump() {
         $query = $this->db->select('RowKey, Pump, PumpType, ')->from('MSTPump')->get();

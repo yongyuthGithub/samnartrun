@@ -11,7 +11,7 @@ class customer extends PCenter {
         //$this->load-model('dbconnect');
     }
 
-    //**** Pump
+
     public function index() {
         $data['page'] = 'master/Customer/Customer_main';
         $this->load->view('layout/nav', $data);
@@ -20,6 +20,11 @@ class customer extends PCenter {
     public function edit() {
 
         $this->load->view('master/Customer/Customer_edit');
+    }
+    
+    public function branchindex() {
+        $data['page'] = 'master/Customer/Customerbranch_main';
+        $this->load->view('layout/nav', $data);
     }
 
     public function findCustomer() {

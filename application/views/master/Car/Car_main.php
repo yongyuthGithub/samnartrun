@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <?php
-        // put your code here
-        ?>
-    </body>
-</html>
+<?php echo js_asset('views/Car/Car_main.js') ?>
+<div class="col-12">   
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h1>ข้อมูลรถขนส่ง</h1><h4><small>จัดการข้อมูลรถขนส่ง</small></h4>
+        </div>
+    </div>
+</div>
+<div class="col-12">   
+    <div class="panel panel-default">
+        <div class="panel-body"> 
+            <div id="form_car"></div>
+        </div>
+    </div>
+</div>

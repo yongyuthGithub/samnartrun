@@ -7,7 +7,7 @@ $(function () {
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
-        btnPreview: true,
+        btnPreview: false,
         headerString: '',
         UrlDataJson: mvcPatch('Register/findRegister'),
         UrlLoanding: true,

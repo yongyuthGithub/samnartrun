@@ -8,6 +8,7 @@ $(function () {
         btnDelete: true,
         btnEdit: true,
         btnPreview: true,
+        btnPreviewText: 'Branch',
         headerString: '',
         UrlDataJson: mvcPatch('Customer/findCustomer'),
         UrlLoanding: true,
@@ -156,10 +157,12 @@ $(function () {
         },
 
         btnPreviewFun: function (f, d) {
-            alert(JSON.stringify(d));
             form_sumbit.SetDataPost({
-                data: {textId: d.key}
-            }).prop('action', mvcPatch('Customer/branchMain')).submit();
+                data: {
+                    txtkey: d.key,
+                    txtdisplay: d.Customer
+                }
+            }).prop('action', mvcPatch('Customer/branchindex')).submit();
         }
     });
 });

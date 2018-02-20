@@ -1,7 +1,7 @@
 $(function () {
-    var form_car = $('#form_car');
+    var form_fuletype = $('#form_fuletype');
     
-    form_car.setMainPage({
+    form_fuletype.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
@@ -16,10 +16,10 @@ $(function () {
         UrlLoandingclose: true,
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'CarNumber', header: 'ทะเบียนรถ'},
-            {data: 'Province', header: 'จังหวัด'},
-            {data: 'Brand', header: 'ยี่ห้อ'},
-            {data: 'CarType', header: 'ประเภทรถ'},
+            {data: 'Fuel', header: 'เชื้อเพลิง'},
+            {data: 'FuelType', header: 'ประเภทเชื้อเพลิง'},
+//            {data: 'Menu', header: 'Menu'},
+//            {data: 'Icon', header: 'Icon'},
 //            {data: 'Url', header: 'Url'}
         ],
 //        DataColumnsDefs: [

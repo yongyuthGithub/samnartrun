@@ -166,92 +166,57 @@ and open the template in the editor.
                 </div>
             </div>
             <div class="col-xs-12">
-
-
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#home">รหัสบัตรประชาชน</a></li>
                     <li><a data-toggle="tab" href="#menu1">ทะเบียนบ้าน</a></li>
                     <li><a data-toggle="tab" href="#menu2">ใบขับขี่</a></li>
-
                 </ul>
 
                 <div class="tab-content">
-                    <div id="home" class="tab-pane fade in active tab-image" data-type="1">
+                    <div id="home" class="tab-pane fade in active tab-image" data-type="1" style="padding-top: 10px;">
+                        <div class="col-xs-12">   
+                            <div class="form-group">
+                                <div class="input-group date" id="txtSDate01">
+                                    <input type='text' class="form-control text-center" id="txtUser01" name="txtUser01" placeholder="วันหมดอายุบัตร" onkeypress="return false;" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
 
-                        <div class="col-12">   
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-
-<!--                <input type="file" id="xfile" name="xfile" style="display: none;" />-->
-
-                                    <div class="form-group">
-
-                                        <div class="input-group date" id="txtSDate01">
-                                            <input type='text' class="form-control text-center" id="txtUser01" name="txtUser01" placeholder="วันหมดอายุบัตร" onkeypress="return false;" />
-                                            <span class="input-group-addon">
-                                                <span class="fa fa-calendar"></span>
-                                            </span>
-
-                                        </div>
-                                    </div>
-                                    <div id="btn-addidcard" class="btn btn-success">Add Image</div>
-                                    <div id="btn-removidcard" class="btn btn-danger">Delete</div>
-                                    <div id="btn-removidcard" class="btn btn-info">View</div>
-                                    <img id="showidcard" class="img-responsive myimage"></div>
-
-
-                            </div>
-                        </div>
-                    </div>
-                    <div id="menu1" class="tab-pane fade in tab-image" data-type="2">
-
-                        <div class="col-12">   
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-
-<!--                <input type="file" id="xfile" name="xfile" style="display: none;" />-->
-
-
-                                    <div id="btn-01" class="btn btn-success">Add Image</div>
-                                    <div id="btn-upload" class="btn btn-danger">Delete</div>
-                                    <img id="show01" class="img-responsive myimage">
                                 </div>
                             </div>
+                            <div id="btn-addidcard" class="btn btn-success">Add Image</div>
+                            <div id="btn-removidcard" class="btn btn-danger">Delete</div>
+                            <div id="btn-removidcard" class="btn btn-info">View</div>
+                            <img id="showidcard" class="img-responsive myimage">
                         </div>
                     </div>
-                    <div id="menu2" class="tab-pane  fade in tab-image" data-type="3">
+                    <div id="menu1" class="tab-pane fade in tab-image" data-type="2" style="padding-top: 10px;">
+                        <div class="col-xs-12">   
+                            <div id="btn-01" class="btn btn-success">Add Image</div>
+                            <div id="btn-upload" class="btn btn-danger">Delete</div>
+                            <img id="show01" class="img-responsive myimage">                              
+                        </div>
+                    </div>
+                    <div id="menu2" class="tab-pane  fade in tab-image" data-type="3" style="padding-top: 10px;">
+                        <div class="col-xs-12">   
+                            <div class="form-group">
 
-                        <div class="col-12">   
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-
-<!--                <input type="file" id="xfile" name="xfile" style="display: none;" />-->
-
-                                    <div class="form-group">
-
-                                        <div class="input-group date" id="txtSDate02">
-                                            <input type='text' class="form-control text-center" id="txtUser02" name="txtUser02" placeholder="วันหมดอายุบัตร" onkeypress="return false;" />
-                                            <span class="input-group-addon">
-                                                <span class="fa fa-calendar"></span>
-                                            </span>
-
-                                        </div>
-                                    </div>
-                                    <div id="btn-02" class="btn btn-success">Add Image</div>
-                                    <div id="btn-upload" class="btn btn-danger">Delete</div>
-                                    <img id="show02" class="img-responsive myimage">
+                                <div class="input-group date" id="txtSDate02">
+                                    <input type='text' class="form-control text-center" id="txtUser02" name="txtUser02" placeholder="วันหมดอายุบัตร" onkeypress="return false;" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
                                 </div>
                             </div>
+                            <div id="btn-02" class="btn btn-success">Add Image</div>
+                            <div id="btn-upload" class="btn btn-danger">Delete</div>
+                            <img id="show02" class="img-responsive myimage">
                         </div>
                     </div>
                 </div>
-
-
-
-            </div>
+            </div>    
+        </form>
     </div>
-</form>
-</div>
 </div>
 
 

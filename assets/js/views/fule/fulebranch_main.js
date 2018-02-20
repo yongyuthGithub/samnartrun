@@ -1,14 +1,14 @@
 $(function () {
-    var form_car = $('#form_car');
+    var form_fulebranch = $('#form_fulebranch');
     
-    form_car.setMainPage({
+    form_fulebranch.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
         btnPreview: false,
         headerString: '',
-//        UrlDataJson: mvcPatch('controllers/action'),
+//        UrlDataJson: mvcPatch('fule/action'),
 //    DataJson: function () {
 //        return new Array()
 //    },
@@ -16,10 +16,9 @@ $(function () {
         UrlLoandingclose: true,
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'CarNumber', header: 'ทะเบียนรถ'},
-            {data: 'Province', header: 'จังหวัด'},
-            {data: 'Brand', header: 'ยี่ห้อ'},
-            {data: 'CarType', header: 'ประเภทรถ'},
+            {data: 'PurmpBranch', header: 'สาขา'},
+            {data: 'Address', header: 'ที่อยู่'},
+//            {data: 'Icon', header: 'Icon'},
 //            {data: 'Url', header: 'Url'}
         ],
 //        DataColumnsDefs: [
@@ -41,4 +40,3 @@ $(function () {
         }
     });
 });
-
