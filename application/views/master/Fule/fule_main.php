@@ -8,7 +8,7 @@ and open the template in the editor.
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1>ข้อมูล ปั้มน้ำมัน</h1><h4><small>จัดการข้อมูลปั้มน้ำมัน</small></h4>
+            <h1>ข้อมูลปั้มน้ำมัน</h1><h4><small>จัดการข้อมูลปั้มน้ำมัน</small></h4>
         </div>
     </div>
 </div>

@@ -8,6 +8,7 @@ $(function () {
         btnDelete: true,
         btnEdit: true,
         btnPreview: true,
+        btnPreviewText: 'Branch',
         headerString: '',
         UrlDataJson: mvcPatch('Fule/findPump'),
         UrlLoanding: true,
