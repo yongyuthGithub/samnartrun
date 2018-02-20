@@ -1,5 +1,6 @@
 $(function () {
     var form_insurance = $('#form_insurance');
+    var form_sumbit = $('#form_sumbit');
 
     form_insurance.setMainPage({
         btnNew: true,
@@ -151,7 +152,12 @@ $(function () {
         },
 
         btnPreviewFun: function (f, d) {
-
+            form_sumbit.SetDataPost({
+                data: {
+                    txtkey: d.key,
+                    txtdisplay:d.InsuranceName
+                }
+            }).prop('action', mvcPatch('insurance/typeindex')).submit()
         }
     });
 });

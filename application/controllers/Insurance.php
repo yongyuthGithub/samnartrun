@@ -15,8 +15,12 @@ class Insurance extends PCenter {
     }
 
     public function edit() {
-
         $this->load->view('master/insurance/insurance_edit');
+    }
+    
+    public function typeindex() {
+        $data['page'] = 'master/insurance/insurancetype_main';
+        $this->load->view('layout/nav', $data);
     }
 
     public function findInsurance() {  
@@ -126,5 +130,15 @@ class Insurance extends PCenter {
         }
         echo json_encode($vReturn);
     }
-
+    
+    public function findinsurancetype() {
+        $key = json_decode($_POST['key']);
+        $qryMenu = $this->db->from('MSTInsuranceType')
+                ->where('InsuranceKey',$key)
+                ->select('RowKey as key,'
+                        . 'TypeName,'
+                        . 'TypeUse')
+                ->get();
+        echo json_encode($qryMenu->result());
+    }
 }

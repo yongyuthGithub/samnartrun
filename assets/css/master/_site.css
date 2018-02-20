@@ -2,6 +2,7 @@
     background-color: transparent;
     margin: 0px;
     padding-top: 0px;
+    padding-bottom: 0px;
 }
 .dataTables_length, .dataTables_filter {
     display: none;
