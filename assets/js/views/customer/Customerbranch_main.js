@@ -49,7 +49,7 @@ $(function () {
                                 buttonOK: function (k2) {
                                     k2.close();
                                     $.reqData({
-                                        url: mvcPatch('insurance/editinsurancetype'),
+                                        url: mvcPatch('Customer/editinsurancetype'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
