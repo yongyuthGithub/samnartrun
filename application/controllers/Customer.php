@@ -22,9 +22,13 @@ class customer extends PCenter {
         $this->load->view('master/Customer/Customer_edit');
     }
     
+    
     public function branchindex() {
-        $data['page'] = 'master/Customer/Customerbranch_main';
+        $data['page'] = 'master/Customer/Customertype_main';
         $this->load->view('layout/nav', $data);
+    }
+    public function typeedit() {
+        $this->load->view('master/Customer/Customertype_edit');
     }
 
     public function findCustomer() {

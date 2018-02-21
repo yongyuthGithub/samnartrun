@@ -10,7 +10,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <ol class="breadcrumb">
-                <li><a href="<?php echo base_url('customer/index') ?>">หน้าหลัก</a></li>
+                <li><a href="<?php echo base_url('Customer/index') ?>">หน้าหลัก</a></li>
                 <li class="active"><?php echo $_POST['txtdisplay']; ?></li>
             </ol>
         </div>

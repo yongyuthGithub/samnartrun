@@ -32,6 +32,53 @@ $(function () {
 //            }
 //        ],
         btnNewFun: function (f) {
+            $.bPopup({
+                url: mvcPatch('Customer/typeedit'),
+                title: 'Add Insurance Type',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: new Object({key: Guid}),
+                        fun: function (_f) {
+                            var obj = new Object({
+                                RowKey: Guid,
+                               
+                            });
+                            $.bConfirm({
+                                buttonOK: function (k2) {
+                                    k2.close();
+                                    $.reqData({
+                                        url: mvcPatch('insurance/editinsurancetype'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                f.find('.xref').click();
+                                                k.close();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         },
         btnEditFun: function (f, d) {
         },
