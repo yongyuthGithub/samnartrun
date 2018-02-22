@@ -1,7 +1,7 @@
 $(function () {
     var form_Car = $('#form_Car');
 
-    form_brandcar.setMainPage({
+    form_Car.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
@@ -37,7 +37,7 @@ $(function () {
                                 buttonOK: function (k) {
                                     k.close();
                                     $.reqData({
-                                        url: mvcPatch('Car/editCar'),
+                                        url: mvcPatch('Car/edit'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {

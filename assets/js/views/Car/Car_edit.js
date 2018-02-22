@@ -1,127 +1,97 @@
 $(function () {
-    var form_insuranceedit = $('#form_insuranceedit');
-    var form_insuranceedit_C = $.modelDialog(form_insuranceedit);
+    var form_Caredit = $('#form_Caredit');
+    var form_Caredit_C = $.modelDialog(form_Caredit);
 
-    var _formdata = form_insuranceedit_C.data('data');
+    var _formdata = form_Caredit_C.data('data');
     if (_formdata.key === Guid) {
-        setProvince(function (_p) {
-            _p.val(Guid).selectpicker('render');
-            setDistrict(function (_d) {
-                _d.val(Guid).selectpicker('render');
-                setSubDistrict(function (_sd) {
-                    _sd.val(Guid).selectpicker('render');
-                });
+        setBrand(function (_b) {
+            _b.val(Guid).selectpicker('render');
+            setProvince(function (_p) {
+                _p.val(Guid).selectpicker('render');
             });
         });
     } else {
-        form_insuranceedit.find('#txtinsurance').val(_formdata.InsuranceName);
-        form_insuranceedit.find('#txtaddress').val(_formdata.Address);
-        form_insuranceedit.find('#cmdSubDistrict').val(_formdata.cmdSubDistrict);
-        form_insuranceedit.find('#txtZipCode').val(_formdata.ZipCode);
-        form_insuranceedit.find('#txtTel').val(_formdata.Tel);     
-        form_insuranceedit.find('.showinadd').remove();
-         //***Edit By Yongyuth
-        setProvince(function (_p) {
-            _p.val(_formdata.ProvinceKey).selectpicker('render');
-            setDistrict(function (_d) {
-                _d.val(_formdata.DistrictKey).selectpicker('render');
-                setSubDistrict(function (_sd) {
-                    _sd.val(_formdata.SubDistrictKey).selectpicker('render');
-                });
+        form_Caredit.find('#cmdBrand').val(_formdata.BrandKey);
+        form_Caredit.find('#txtCarNumber').val(_formdata.CarNumber);
+        form_Caredit.find('#cmdProvince').val(_formdata.ProvinceKey);
+        form_Caredit.find('#txtCarType').val(_formdata.CarType);
+        form_Caredit.find('.showinadd').remove();
+        //***Edit By Yongyuth
+         setBrand(function (_b) {
+            _b.val(Guid).selectpicker('render');
+            setProvince(function (_p) {
+                _p.val(Guid).selectpicker('render');
             });
         });
         //********************
     }
 
 
-    form_insuranceedit.find('#cmdProvince').selectpicker().on({
+    form_Caredit.find('#cmdBrand').selectpicker().on({
         change: function () {
 //            setDistrict(Guid);
-            setDistrict(function (_d) {
-                _d.val(Guid).selectpicker('render');
-                setSubDistrict(function (_sd) {
-                    _sd.val(Guid).selectpicker('render');
+            setBrand(function (_b) {
+                _b.val(Guid).selectpicker('render');
+                setProvince(function (_p) {
+                    _p.val(Guid).selectpicker('render');
                 })
             });
         }
     });
-    function setProvince(v) {
+    function setBrand(v) {
         $.reqData({
-            url: mvcPatch('Province/findProvince'),
+            url: mvcPatch('Brand/findBrand'),
             loanding: false,
             callback: function (vdata) {
-                var _sel = form_insuranceedit.find('#cmdProvince').empty();
+                var _sel = form_Caredit.find('#cmdBrand').empty();
                 var _html = '';
                 $.each(vdata, function (k, v) {
-                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.Province + '">&nbsp;&nbsp;' + v.Province + '</option>';
+                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.Brand + '">&nbsp;&nbsp;' + v.Brand + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh');
                 v(_sel);
             }
         });
     }
-    form_insuranceedit.find('#cmdDistrict').selectpicker().on({
-    change: function () {
+    form_Caredit.find('#cmdBrand').selectpicker().on({
+        change: function () {
 //            setSubDistrict(Guid);
-            setSubDistrict(function (_sd) {
-                _sd.val(Guid).selectpicker('render');
+            setBrand(function (_b) {
+                _b.val(Guid).selectpicker('render');
             })
         }
     });
-    function setDistrict(v) {
-//       alert(form_insuranceedit.find('#cmdProvince').val());
+    function setProvice(v) {
+//       alert(form_Caredit.find('#cmdProvince').val());
         $.reqData({
-            url: mvcPatch('Province/findDistrict'),
-            data: {key: form_insuranceedit.find('#cmdProvince').val()},
+            url: mvcPatch('Province/findProvice'),
+            data: {key: form_Caredit.find('#cmdProvince').val()},
             loanding: false,
             callback: function (vdata) {
-                var _sel = form_insuranceedit.find('#cmdDistrict').empty();
+                var _sel = form_Caredit.find('#cmdBrand').empty();
                 var _html = '';
                 $.each(vdata, function (k, v) {
-                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.District + '">&nbsp;&nbsp;' + v.District + '</option>';
+                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.Provice + '">&nbsp;&nbsp;' + v.Provice + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh');
                 v(_sel);
             }
         });
     }
-    form_insuranceedit.find('#cmdSubDistrict').selectpicker().on({
-    change: function () {
-            var _v = $(this).find('option[value="' + $(this).val() + '"]').data('zipcode');
-            form_insuranceedit.find('#txtZipCode').val(_v);
-            form_insuranceedit.formValidation('revalidateField', form_insuranceedit.find('#txtZipCode'));
-        }
-    });
-    function setSubDistrict(v) {
-         $.reqData({
-            url: mvcPatch('Province/findSubDistrict'),
-            data: {key: form_insuranceedit.find('#cmdDistrict').val()},
-            loanding: false,
-            callback: function (vdata) {
-                var _sel = form_insuranceedit.find('#cmdSubDistrict').empty();
-                var _html = '';
-                $.each(vdata, function (k, v) {
-                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.SubDistrict + '"  data-ZipCode="' + v.ZipCode + '">&nbsp;&nbsp;' + v.SubDistrict + '</option>';
-                });
-                _sel.append(_html).selectpicker('refresh')
-                v(_sel);
-            }
-        });
-    }
 
 
-    form_insuranceedit_C.find('#btn-ok').on({
+    form_Caredit_C.find('#btn-ok').on({
         click: function () {
-            form_insuranceedit.submit();
+            form_Caredit.submit();
         }
     })
 
-    form_insuranceedit.myValidation({
+    form_Caredit.myValidation({
         funsuccess: function () {
-            form_insuranceedit_C.data('fun')(form_insuranceedit_C);
+            form_Caredit_C.data('fun')(form_Caredit_C);
         },
         btnactive: [
-            form_insuranceedit_C.find('#btn-ok')
+            form_Caredit_C.find('#btn-ok')
         ],
         fields: {
             cmdBrand: {
@@ -132,7 +102,7 @@ $(function () {
                     }
                 }
             },
-              txtCarNumber: {
+            txtCarNumber: {
                 icon: false,
                 validators: {
                     notEmpty: {

@@ -9,7 +9,7 @@
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body"> 
-            <div id="form_car"></div>
+            <div id="form_Car"></div>
         </div>
     </div>
 </div>
