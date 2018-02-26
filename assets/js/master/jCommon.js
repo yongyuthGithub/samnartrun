@@ -422,6 +422,25 @@ function ChkNumber(v) {
         });
     }
 
+    $.fn.findFile = function (option) {
+        var setting = $.extend({
+            accept: 'image/x-png,image/gif,image/jpeg',
+            multiple: false
+        }, option);
+
+        var _multiple = setting.multiple ? 'multiple' : '';
+        
+        return this.each(function(){
+            var _this = $(this);
+            var _body = $('#myPage');
+            _body.find('#fileupload').remove();
+            _body.append('<input type="file" id="fileupload" name="fileupload" style="display: none;" />').find('#fileupload').click();
+            _body.on('change','#fileupload',function(ev){                
+                
+            });
+        });
+    }
+
     $.reqDataCheckUser = function (option) {
         var setting = $.extend({
             url: '',
