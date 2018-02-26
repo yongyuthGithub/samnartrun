@@ -1,6 +1,6 @@
 $(function () {
     var form_fuletype = $('#form_fuletype');
-    
+
     form_fuletype.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
@@ -32,6 +32,54 @@ $(function () {
 //            }
 //        ],
         btnNewFun: function (f) {
+            $.bPopup({
+                url: mvcPatch('FuleType/edit'),
+                title: 'New PumpType',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: new Object({key: Guid}),
+                        fun: function (_f) {
+                            var obj = new Object();
+                            obj.RowKey = Guid;
+                            obj.Pump = _f.find('#txtUser').val();
+                            obj.PumpType = _f.find('#cmdTitle').val();
+
+                            $.bConfirm({
+                                buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('FuleType/editPump'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                f.find('.xref').click();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;ตกลง',
+                        action: function (k) {
+
+                        }
+                    }
+                ]
+            });
         },
         btnEditFun: function (f, d) {
         },
