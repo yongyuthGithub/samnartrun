@@ -424,19 +424,52 @@ function ChkNumber(v) {
 
     $.fn.findFile = function (option) {
         var setting = $.extend({
-            accept: 'image/x-png,image/gif,image/jpeg',
-            multiple: false
+            accept: 'image/png,image/gif,image/jpeg',
+            custom_html:'',
+            custom_this_image:'',
+//            multiple: false
         }, option);
 
-        var _multiple = setting.multiple ? 'multiple' : '';
-        
-        return this.each(function(){
+//        var _multiple = setting.multiple ? 'multiple' : '';
+
+        return this.each(function () {
             var _this = $(this);
             var _body = $('#myPage');
             _body.find('#fileupload').remove();
-            _body.append('<input type="file" id="fileupload" name="fileupload" style="display: none;" />').find('#fileupload').click();
-            _body.on('change','#fileupload',function(ev){                
-                
+            _body.append('<input type="file" id="fileupload" name="fileupload" style="display: none;" accept="' + setting.accept + '" />').find('#fileupload').click();
+
+            _body.off('change').on('change', '#fileupload', function (ev) {
+                var _thisfile = ev.target.files;
+                $.each(_thisfile, function (k, v) {
+                    try {
+                        var _type = $.ToLinq(setting.accept.split(','))
+                                .Where(x => $.trim(x).toLowerCase() === $.trim(_thisfile[k].type).toLowerCase())
+                                .ToArray();
+                        if (_type.length > 0) {
+                            if (_thisfile[k].size <= ((1024 * 1024) * 4)) {
+                                var reader = new FileReader();
+                                reader.onload = function () {
+                                    var dataURL = reader.result;
+                                    _this.prop("src", dataURL);
+                                    _this.data('data',_thisfile[k]);
+                                };
+                                reader.readAsDataURL(_thisfile[k]);
+                            } else {
+                                $.bAlert({
+                                    message: 'File size exceeds 4 mb.'
+                                });
+                            }
+                        } else {
+                            $.bAlert({
+                                message: 'No file type defined.'
+                            });
+                        }
+                    } catch (e) {
+                        $.bAlert({
+                            message: e.message
+                        });
+                    }
+                });
             });
         });
     }
