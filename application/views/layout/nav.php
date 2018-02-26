@@ -13,8 +13,8 @@
         <?php echo js_asset('master/jquery.min.js') ?>
 <!--        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
         <?php echo js_asset('master/bootstrap.min.js') ?>
-        <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
-        <?php echo css_asset('master/font-awesome.min.css') ?>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <?php // echo css_asset('master/font-awesome.min.css') ?>
         <?php echo css_asset('master/_site.css') ?>
         <?php echo css_asset('master/jquery.dataTables.min.css') ?>
         <?php echo css_asset('master/responsive.dataTables.min.css') ?>
