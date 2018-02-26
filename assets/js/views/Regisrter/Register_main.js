@@ -7,7 +7,7 @@ $(function () {
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
-        btnPreviewText:'ประกัน',
+        btnPreviewText: 'ประกัน',
         btnPreview: true,
         headerString: '',
         UrlDataJson: mvcPatch('Register/findRegister'),
@@ -133,13 +133,13 @@ $(function () {
                                                             return new Object({
                                                                 EmpKey: vdata.key,
                                                                 FileType: $(x).attr('data-type'),
-                                                                RecordStatus:parseInt($(x).attr('data-type')) === 2 ? false : true,
-                                                                EDate:parseInt($(x).attr('data-type')) === 2 ? null : PHP_DateTimeShow_To_JSON($(x).find('.date')),
-                                                                ImageBase64:$(x).find('.myimage').attr('src')
+                                                                RecordStatus: parseInt($(x).attr('data-type')) === 2 ? false : true,
+                                                                EDate: parseInt($(x).attr('data-type')) === 2 ? null : PHP_DateTimeShow_To_JSON($(x).find('.date')),
+                                                                ImageBase64: $(x).find('.myimage').attr('src')
                                                             });
                                                         }).ToArray();
-                                                alert(JSON.stringify(_imagedata));
-                                                
+
+
 //                                                _f.find('#btn-close').click();
 //                                                f.find('.xref').click();
                                             } else {

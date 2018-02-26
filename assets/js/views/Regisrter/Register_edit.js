@@ -2,61 +2,43 @@ $(function () {
     var form_Registeredit = $('#form_Registeredit');
     var form_Registeredit_C = $.modelDialog(form_Registeredit);
 
-    form_Registeredit.find('#btn-addidcard').on({
+    form_Registeredit.find('.btn-addimage').on({
         click: function () {
-            form_Registeredit.find('#showidcard').findFile();
-//            form_Registeredit.find('#xfile').remove();
-//            form_Registeredit.append('<input type="file" id="xfile" name="xfile" style="display: none;" />').find('#xfile').click();
+            $(this).parents('.divImage').find('.imageShow').findFile({
+//                custom_html: '<img class="xcard img-responsive" />',
+//                custom_this_image: '.xcard',
+//                multiple:true,
+//                empty:true
+            });
         }
     });
-//    form_Registeredit.on('change', '#xfile', function (ev) {        
-//        var _tool = form_Registeredit.find('#showidcard');
-//        var reader = new FileReader();
-//        reader.onload = function () {
-//            var dataURL = reader.result;
-//            _tool.prop("src", dataURL);
-//        };
-//        var _this = ev.target.files;
-//        reader.readAsDataURL(_this[0]);
-//    });
-
- form_Registeredit.find('#btn-01').on({
-        click: function () {
-            form_Registeredit.find('#show01').findFile();
-//            form_Registeredit.find('#xfile1').remove();
-//            form_Registeredit.append('<input type="file" id="xfile1" name="xfile1" style="display: none;" />').find('#xfile1').click();
+    form_Registeredit.find('.btn-deleteimage').on({
+        click:function(){
+            $(this).parents('.divImage').find('.imageShow').removeAttr('src');
         }
     });
-//form_Registeredit.on('change', '#xfile1', function (ev) {        
-//        var _tool = form_Registeredit.find('#show01');
-//        var reader = new FileReader();
-//        reader.onload = function () {
-//            var dataURL = reader.result;
-//            _tool.prop("src", dataURL);
-//        };
-//        var _this = ev.target.files;
-//        reader.readAsDataURL(_this[0]);
-//    });
-
-
-form_Registeredit.find('#btn-02').on({
-        click: function () {
-            form_Registeredit.find('#show02').findFile();
-//            form_Registeredit.find('#xfile2').remove();
-//            form_Registeredit.append('<input type="file" id="xfile2" name="xfile2" style="display: none;" />').find('#xfile2').click();
+    
+    form_Registeredit.find('.btn-viewimage').on({
+        click:function(){
+            var _this = $(this).parents('.divImage').find('.imageShow');
+            if(!checkUndefined(_this.attr('src'))){
+                $.bPopup({
+                    url: mvcPatch('Popup/index'),
+                    title: 'Show Picture',
+                    closable: true,
+                    btnCancel:false,
+                    size: BootstrapDialog.SIZE_WIDE,
+                    onshow: function (k) {
+                        k.getModal().data({
+                            data: _this.attr('src')
+                        });
+                    },
+                    buttons: [
+                    ]
+                });
+            }
         }
     });
-//form_Registeredit.on('change', '#xfile2', function (ev) {        
-//        var _tool = form_Registeredit.find('#show02');
-//        var reader = new FileReader();
-//        reader.onload = function () {
-//            var dataURL = reader.result;
-//            _tool.prop("src", dataURL);
-//        };
-//        var _this = ev.target.files;
-//        reader.readAsDataURL(_this[0]);
-//    });
-
 
     var _formdata = form_Registeredit_C.data('data');
     if (_formdata.key === Guid) {
@@ -105,11 +87,11 @@ form_Registeredit.find('#btn-02').on({
     form_Registeredit.find('#txtSDate').dateTime().on('dp.change', function (e) {
         form_Registeredit.formValidation('revalidateField', form_Registeredit.find('#txtUser5'));
     });
-    form_Registeredit.find('#txtSDate01').dateTime().on('dp.change', function (e) {
-        form_Registeredit.formValidation('revalidateField', form_Registeredit.find('#txtUser01'));
+    form_Registeredit.find('#divEDate_Card').dateTime().on('dp.change', function (e) {
+//        form_Registeredit.formValidation('revalidateField', form_Registeredit.find('#txtUser01'));
     });
-    form_Registeredit.find('#txtSDate02').dateTime().on('dp.change', function (e) {
-        form_Registeredit.formValidation('revalidateField', form_Registeredit.find('#txtUser02'));
+    form_Registeredit.find('#divEDate_driver').dateTime().on('dp.change', function (e) {
+//        form_Registeredit.formValidation('revalidateField', form_Registeredit.find('#txtUser02'));
     });
 
 //    funDateTime(form_Registeredit.find('#txtSDate')).date('14/02/2018');

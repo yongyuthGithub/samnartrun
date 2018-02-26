@@ -4,6 +4,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<?php echo css_asset('views/Register/Register_edit.css') ?>
 <?php echo js_asset('views/Regisrter/Register_edit.js') ?>
 <div class="panel panel-default">
     <div class="panel-body">
@@ -152,7 +153,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <label for="txtUser">วันที่เริ่มงาน:</label>
                                         <div class="input-group date" id="txtSDate">
-                                            <input type='text' class="form-control text-center" id="txtUser5" name="txtUser5" placeholder="วันที่เริ่มงาน" onkeypress="return false;" />
+                                            <input type='text' class="form-control text-center" id="txtUser5" name="txtUser5" placeholder="วันที่เริ่มงาน" onkeydown="return false;" />
                                             <span class="input-group-addon">
                                                 <span class="fa fa-calendar"></span>
                                             </span>
@@ -167,50 +168,68 @@ and open the template in the editor.
             </div>
             <div class="col-xs-12">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#home">รหัสบัตรประชาชน</a></li>
+                    <li class="active"><a data-toggle="tab" href="#home">ประชาชน</a></li>
                     <li><a data-toggle="tab" href="#menu1">ทะเบียนบ้าน</a></li>
                     <li><a data-toggle="tab" href="#menu2">ใบขับขี่</a></li>
                 </ul>
 
                 <div class="tab-content">
                     <div id="home" class="tab-pane fade in active tab-image" data-type="1" style="padding-top: 10px;">
-                        <div class="col-xs-12">   
+                        <div class="col-xs-12 col-md-4">   
                             <div class="form-group">
-                                <div class="input-group date" id="txtSDate01">
-                                    <input type='text' class="form-control text-center" id="txtUser01" name="txtUser01" placeholder="วันหมดอายุบัตร" onkeypress="return false;" />
+                                <label for="txtUser">วันที่หมดอายุ:</label>
+                                <div class="input-group date" id="divEDate_Card">
+                                    <input type='text' class="form-control text-center" id="txtUser01" name="txtUser01" placeholder="วันหมดอายุบัตร" onkeydown="return false;" />
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>
-
                                 </div>
                             </div>
-                            <div id="btn-addidcard" class="btn btn-success">Add Image</div>
-                            <div id="btn-removidcard" class="btn btn-danger">Delete</div>
-                            <div id="btn-removidcard" class="btn btn-info">View</div>
-                            <img id="showidcard" class="img-responsive myimage">
+                        </div>
+                        <div class="col-xs-12 col-md-8 divImage">
+                            <img id="img_card" class="img-responsive imageShow" />
+                            <div class="btn-controll">
+                                <div class="btn-back">
+                                    <i class="fa fa-plus btn-addimage btnimage"></i>
+                                    <i class="fa fa-remove btn-deleteimage btnimage"></i>
+                                    <i class="fa fa-search btn-viewimage btnimage"></i> 
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div id="menu1" class="tab-pane fade in tab-image" data-type="2" style="padding-top: 10px;">
-                        <div class="col-xs-12">   
-                            <div id="btn-01" class="btn btn-success">Add Image</div>
-                            <div id="btn-upload" class="btn btn-danger">Delete</div>
-                            <img id="show01" class="img-responsive myimage">                              
+                        <div class="col-xs-12 divImage">
+                            <img id="img_register_home" class="img-responsive imageShow" />
+                            <div class="btn-controll">
+                                <div class="btn-back">
+                                    <i class="fa fa-plus btn-addimage btnimage"></i>
+                                    <i class="fa fa-remove btn-deleteimage btnimage"></i>
+                                    <i class="fa fa-search btn-viewimage btnimage"></i> 
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div id="menu2" class="tab-pane  fade in tab-image" data-type="3" style="padding-top: 10px;">
-                        <div class="col-xs-12">   
+                        <div class="col-xs-12 col-md-4">   
                             <div class="form-group">
-
-                                <div class="input-group date" id="txtSDate02">
-                                    <input type='text' class="form-control text-center" id="txtUser02" name="txtUser02" placeholder="วันหมดอายุบัตร" onkeypress="return false;" />
+                                <label for="txtUser">วันที่หมดอายุ:</label>
+                                <div class="input-group date" id="divEDate_driver">
+                                    <input type='text' class="form-control text-center" id="txtUser01" name="txtUser01" placeholder="วันหมดอายุบัตร" onkeydown="return false;" />
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>
                                 </div>
                             </div>
-                            <div id="btn-02" class="btn btn-success">Add Image</div>
-                            <div id="btn-upload" class="btn btn-danger">Delete</div>
-                            <img id="show02" class="img-responsive myimage">
+                        </div>
+                        <div class="col-xs-12 col-md-8 divImage">
+                            <img id="img_driver" class="img-responsive imageShow" />
+                            <div class="btn-controll">
+                                <div class="btn-back">
+                                    <i class="fa fa-plus btn-addimage btnimage"></i>
+                                    <i class="fa fa-remove btn-deleteimage btnimage"></i>
+                                    <i class="fa fa-search btn-viewimage btnimage"></i> 
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

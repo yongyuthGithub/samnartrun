@@ -3,7 +3,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 require __DIR__ . '/../core/PCenter.php';
 
-class  Register extends PCenter {
+class Register extends PCenter {
 
     public function __construct() {
         parent::__construct();
@@ -15,27 +15,27 @@ class  Register extends PCenter {
     }
 
     public function edit() {
-          $this->load->view('master/register/register_edit');
+        $this->load->view('master/register/register_edit');
     }
-    
- public function findRegister() {
+
+    public function findRegister() {
         $query = $this->db->select('E.RowKey as key, '
-                . 'E.IDCard, '
-                . 'E.TitleKey, '
-                . 'E.FName, '
-                . 'E.LName,'
-                . 'E.SDate,'
-                . 'E.Address,'
-                . 'E.Tel,'
-                . 'T.Title,'
-                . 'E.SubDistrict as SubDistrictKey,'
-                . 'D.RowKey as DistrictKey,'
-                . 'D.ProvinceKey,'
-                . 'E.ZipCode')
+                        . 'E.IDCard, '
+                        . 'E.TitleKey, '
+                        . 'E.FName, '
+                        . 'E.LName,'
+                        . 'E.SDate,'
+                        . 'E.Address,'
+                        . 'E.Tel,'
+                        . 'T.Title,'
+                        . 'E.SubDistrict as SubDistrictKey,'
+                        . 'D.RowKey as DistrictKey,'
+                        . 'D.ProvinceKey,'
+                        . 'E.ZipCode')
                 ->from('MSTEmployee E')
-                ->join('MSTTitle T','E.TitleKey=T.RowKey','left')
-                ->join('MSTSubDistrict SD','E.SubDistrict=SD.RowKey','left')
-                ->join('MSTDistrict D','SD.DistrictKey=D.RowKey','left')
+                ->join('MSTTitle T', 'E.TitleKey=T.RowKey', 'left')
+                ->join('MSTSubDistrict SD', 'E.SubDistrict=SD.RowKey', 'left')
+                ->join('MSTDistrict D', 'SD.DistrictKey=D.RowKey', 'left')
                 ->get();
 //        $_array = array();
 //        foreach ($query->result() as $row) {
@@ -50,8 +50,8 @@ class  Register extends PCenter {
 //            array_push($_array, $_ar);
 //        }
         echo json_encode($query->result());
-    
- }
+    }
+
     public function editRegister() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
@@ -71,13 +71,16 @@ class  Register extends PCenter {
                 $_data->UpdateBy = PCenter::GUID_EMPTY();
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->insert('MSTEmployee', $_data);
+
+                $this->db->where('EmpKey', $_data->RowKey);
+                $this->db->delete('TRNEmployeeFiles');
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;
                     $vReturn->message = $this->db->_error_message();
                 } else {
                     $this->db->trans_commit();
-                    $vReturn->key=$_data->RowKey;
+                    $vReturn->key = $_data->RowKey;
                     $vReturn->success = true;
                 }
             }
@@ -89,26 +92,51 @@ class  Register extends PCenter {
             } else {
                 $update = (object) [];
                 $update->IDCard = $_data->IDCard;
-                 
+
                 $update->UpdateBy = PCenter::GUID_EMPTY();
                 $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('MSTEmployee', $update);
+
+                $this->db->where('EmpKey', $_data->RowKey);
+                $this->db->delete('TRNEmployeeFiles');
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;
                     $vReturn->message = $this->db->_error_message();
                 } else {
                     $this->db->trans_commit();
-                    $vReturn->key=$_data->RowKey;
+                    $vReturn->key = $_data->RowKey;
                     $vReturn->success = true;
                 }
             }
         }
 
         echo json_encode($vReturn);
-    
-        
-                }
+    }
+
+    public function addRegister() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+        $_data->RowKey = PCenter::GUID();
+        $_data->RowStatus = true;
+        $_data->CreateBy = $this->USER_LOGIN()->RowKey;
+        $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+        $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+        $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+        $this->db->insert('TRNEmployeeFiles', $_data);
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
+        }
+
+        echo json_encode($vReturn);
+    }
 
     public function removeAccount() {
         $_data = json_decode($_POST['data']);
@@ -129,10 +157,9 @@ class  Register extends PCenter {
     }
 
     //**** Fuel
-    public function branchMain(){
+    public function branchMain() {
         $data['page'] = 'master/Fule/branch_main';
         $this->load->view('layout/nav', $data);
     }
+
 }
-
-
