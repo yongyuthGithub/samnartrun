@@ -1,6 +1,6 @@
 $(function () {
     var form_customerbranch = $('#form_customerbranch');
-    
+
     form_customerbranch.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
@@ -8,7 +8,8 @@ $(function () {
         btnEdit: true,
         btnPreview: false,
         headerString: '',
-//        UrlDataJson: mvcPatch('controllers/action'),
+        UrlDataJson: mvcPatch('Customer/findCustomertype'),
+        UrlDataSend: {key: $('#txtkey').val()},
 //    DataJson: function () {
 //        return new Array()
 //    },
@@ -17,10 +18,7 @@ $(function () {
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
             {data: 'Branch', header: 'สาขา'},
-            {data: 'Address', header: 'ที่อยู่'},
-//            {data: 'Menu', header: 'Menu'},
-//            {data: 'Icon', header: 'Icon'},
-//            {data: 'Url', header: 'Url'}
+            {data: 'FullAdress', header: 'ที่อยู่'},
         ],
 //        DataColumnsDefs: [
 //            {
@@ -34,22 +32,27 @@ $(function () {
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Customer/typeedit'),
-                title: 'Add Insurance Type',
+                title: 'เพิ่มสาขาลูกค้า',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
                     k.getModal().data({
                         data: new Object({key: Guid}),
                         fun: function (_f) {
-                            var obj = new Object({
-                                RowKey: Guid,
-                               
-                            });
+                            var obj = new Object({});
+                            obj.RowKey = Guid;
+                            obj.CompanyKey = $('#txtkey').val();
+                            obj.Branch = _f.find('#txtTypeName').val();
+                            obj.Address = _f.find('#txtaddress').val();
+                            obj.SubDistrict = _f.find('#cmdSubDistrict').val();
+                            obj.ZipCode = _f.find('#txtZipCode').val();
+                            obj.Tel = _f.find('#txtTel').val();
+
                             $.bConfirm({
                                 buttonOK: function (k2) {
                                     k2.close();
                                     $.reqData({
-                                        url: mvcPatch('Customer/editinsurancetype'),
+                                        url: mvcPatch('Customer/editCustomertype'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -81,8 +84,84 @@ $(function () {
             });
         },
         btnEditFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('Customer/typeedit'),
+                title: 'Edit Insurance Type',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        fun: function (_f) {
+                            var obj = new Object({
+                                RowKey: d.key,
+                                CompanyKey: $('#txtkey').val(),
+                                Branch: _f.find('#txtTypeName').val(),
+                                Address: _f.find('#txtaddress').val(),
+                                SubDistrict: _f.find('#cmdSubDistrict').val(),
+                                ZipCode: _f.find('#txtZipCode').val(),
+                                Tel: _f.find('#txtTel').val(),
+                            });
+                            $.bConfirm({
+                                buttonOK: function (k2) {
+                                    k2.close();
+                                    $.reqData({
+                                        url: mvcPatch('Customer/editCustomertype'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                f.find('.xref').click();
+                                                k.close();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         },
         btnDeleteFun: function (f, d) {
+            $.bConfirm({
+                message: 'Do you want to delete the data?',
+                type: BootstrapDialog.TYPE_DANGER,
+                buttonOK: function (k) {
+                    k.close();
+                    var vdata = $.ToLinq(d)
+                            .Select(function (x) {
+                                return x.key;
+                            }).ToArray();
+                    $.reqData({
+                        url: mvcPatch('Customer/removeAccount1'),
+                        data: {data: JSON.stringify(vdata)},
+                        callback: function (vdata) {
+                            if (vdata.success) {
+                                f.find('.xref').click();
+                            } else {
+                                $.bAlert({
+                                    message: vdata.message
+                                });
+                            }
+                        }
+                    });
+                }
+            });
         },
         btnPreviewFun: function (f, d) {
         }

@@ -14,7 +14,7 @@ $(function () {
             });
         });
     } else {
-        form_customerbranchedit.find('#txtinsurance').val(_formdata.InsuranceName);
+        form_customerbranchedit.find('#txtTypeName').val(_formdata.Branch);
         form_customerbranchedit.find('#txtaddress').val(_formdata.Address);
         form_customerbranchedit.find('#cmdSubDistrict').val(_formdata.cmdSubDistrict);
         form_customerbranchedit.find('#txtZipCode').val(_formdata.ZipCode);

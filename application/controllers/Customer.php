@@ -46,6 +46,24 @@ class customer extends PCenter {
         echo json_encode($_array);
     }
 
+    
+    public function findcustomerr () {  
+         $query = $this->db->select('I.RowKey as key, '
+                . 'I.Branch, '
+                . 'I.Address, '
+                . 'Concat(I.Address," ",SD.SubDistrict," ",D.District, " ",P.Province," ",I.ZipCode )as FullAdress, '
+                . 'I.ZipCode,'
+                . 'I.Tel,'
+                . 'I.SubDistrict as SubDistrictKey,'
+                . 'D.RowKey as DistrictKey,'
+                . 'D.ProvinceKey')
+                ->from('MSTCustomer I')
+                ->join('MSTSubDistrict SD','I.SubDistrict=SD.RowKey','left')
+                ->join('MSTDistrict D','SD.DistrictKey=D.RowKey','left')
+                ->join('MSTProvince P','D.ProvinceKey=P.RowKey','left')
+                ->get();
+             echo json_encode($query->result());
+    }
     public function editcustomer() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
@@ -100,12 +118,108 @@ class customer extends PCenter {
         echo json_encode($vReturn);
     }
 
+   
+    public function findCustomertype() {
+        $key = $_POST['key'];
+         $query = $this->db->select('I.RowKey as key, '
+                . 'I.Branch, '
+                . 'I.Address, '
+                . 'Concat(I.Address," ",SD.SubDistrict," ",D.District, " ",P.Province," ",I.ZipCode )as FullAdress, '
+                . 'I.ZipCode,'
+                . 'I.Tel,'
+                . 'I.SubDistrict as SubDistrictKey,'
+                . 'D.RowKey as DistrictKey,'
+                . 'D.ProvinceKey')
+                ->from('MSTCustomerBranch I')                
+                ->join('MSTSubDistrict SD','I.SubDistrict=SD.RowKey','left')
+                ->join('MSTDistrict D','SD.DistrictKey=D.RowKey','left')
+                ->join('MSTProvince P','D.ProvinceKey=P.RowKey','left')
+                 ->where ('I.CompanyKey',$key)
+                ->get();
+             echo json_encode($query->result());
+        
+    }
+    
+    public function editCustomertype() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+        if ($_data->RowKey === PCenter::GUID_EMPTY()) {
+            $queryChk = $this->db
+                    
+                    ->where('Branch', $_data->Branch)
+                    ->where('CompanyKey', $_data->CompanyKey)
+                    ->from('MSTCustomerBranch')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                $_data->RowKey = PCenter::GUID();
+                $_data->CreateBy = $this->USER_LOGIN()->RowKey;
+                $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->insert('MSTCustomerBranch', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                }
+            }
+        } else {
+            $queryChk = $this->db
+                    
+                    ->where('Branch', $_data->Branch)
+                    ->where('CompanyKey', $_data->CompanyKey)
+                    ->where('RowKey !=', $_data->RowKey)
+                    ->from('MSTCustomerBranch')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->where('RowKey', $_data->RowKey)->update('MSTCustomerBranch', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                }
+            }
+        }
+        echo json_encode($vReturn);
+    }
     public function removeAccount() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
         $this->db->trans_begin();
 
         $this->db->where_in('RowKey', $_data)->delete('MSTCustomer');
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
+        }
+        echo json_encode($vReturn);
+    }
+
+    public function removeAccount1() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+        $this->db->trans_begin();
+
+        $this->db->where_in('RowKey', $_data)->delete('MSTCustomerBranch');
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();

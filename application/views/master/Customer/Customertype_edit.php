@@ -8,7 +8,7 @@
                     <label for="txtTypeName">ชื่อสาขา :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-address-card-o" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control" id="txtTypeName" name="txtTypeName" placeholder="ชื่อประกัน">
+                        <input type="text" class="form-control" id="txtTypeName" name="txtTypeName" placeholder="ชื่อสาขา">
                     </div>
                 </div>
             </div>

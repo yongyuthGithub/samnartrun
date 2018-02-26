@@ -14,7 +14,7 @@ $(function () {
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
-            {data: 'CusCode', header: 'ID'},
+            
             {data: 'Customer', header: 'Customer'},
            
         ],
