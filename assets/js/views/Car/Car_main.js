@@ -17,6 +17,15 @@ $(function () {
             {data: 'Brand', header: 'ยี่ห้อ'},
             {data: 'CarType', header: 'ประเภทรถ'},
         ],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    return parseInt(val2.CarType) === 1 ? '2 เพลา' : '3 เพลา';
+                },
+                orderable: true,
+                targets: 3
+            }
+        ],
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Car/edit'),
@@ -37,7 +46,7 @@ $(function () {
                                 buttonOK: function (k) {
                                     k.close();
                                     $.reqData({
-                                        url: mvcPatch('Car/edit'),
+                                        url: mvcPatch('Car/editCar'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {

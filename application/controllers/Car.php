@@ -17,19 +17,22 @@ class Car extends PCenter {
     public function edit() {
         $this->load->view('master/Car/Car_edit');
     }
-    public function findCar() {  
-         $query = $this->db->select('C.RowKey as key, '
-                . 'C.Brand as BrandKey, '
-                . 'C.CarNumber, '
+
+    public function findCar() {
+        $query = $this->db->select('C.RowKey as key, '
+                        . 'C.BrandKey, '
+                        . 'C.CarNumber, '
 //                . 'Concat(I.Address," ",SD.SubDistrict," ",D.District, " ",P.Province," ",I.ZipCode )as FullAdress, '
-                . 'C.Province as ProvinceKey,'
-                . 'C.CarType,')       
+                        . 'C.ProvinceKey,'
+                        . 'P.Province,'
+                        . 'C.CarType,'
+                . 'B.Brand,')
 //                . 'D.RowKey as DistrictKey,'
 //                . 'D.ProvinceKey'
                 ->from('MSTCar C')
-                ->join('MSTBrand B','C.BrandKey=BK.RowKey','left')
+                ->join('MSTBrand B', 'C.BrandKey=B.RowKey', 'left')
 //                ->join('MSTDistrict D','SD.DistrictKey=D.RowKey','left')
-                ->join('MSTProvince P','B.ProvinceKey=P.RowKey','left')
+                ->join('MSTProvince P', 'C.ProvinceKey=P.RowKey', 'left')
                 ->get();
 //        $query = $this->db->select('RowKey, InsuranceName,Address,SubDistrict,ZipCode,Tel,')->get('MSTInsurance');
 //        $_array = array();
@@ -50,13 +53,15 @@ class Car extends PCenter {
     }
 
     public function editCar() {
-        $_data = json_decode($_POST['data'] );
+        $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
 
         $this->db->trans_begin();
 
         if ($_data->RowKey === PCenter::GUID_EMPTY()) {
-            $queryChk = $this->db->where('BrandKey', $_data->BrandKey)->from('MSTCar')->count_all_results();
+            $queryChk = $this->db
+                    ->where('CarNumber', $_data->CarNumber)
+                    ->from('MSTCar')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
@@ -78,7 +83,7 @@ class Car extends PCenter {
                 }
             }
         } else {
-            $queryChk = $this->db->where('BrandKey', $_data->BrandKey)->where('RowKey !=', $_data->RowKey)->from('MSTCar')->count_all_results();
+            $queryChk = $this->db->where('CarNumber', $_data->CarNumber)->where('RowKey !=', $_data->RowKey)->from('MSTCar')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
@@ -86,9 +91,9 @@ class Car extends PCenter {
                 $update = (object) [];
                 $update->BrandKey = $_data->BrandKey;
                 $update->CarNumber = $_data->CarNumber;
-                $update->Province = $_data->Province;
+                $update->ProvinceKey = $_data->ProvinceKey;
                 $update->CarType = $_data->CarType;
-      
+
                 $update->UpdateBy = PCenter::GUID_EMPTY();
                 $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('MSTCar', $update);
@@ -123,4 +128,5 @@ class Car extends PCenter {
         }
         echo json_encode($vReturn);
     }
+
 }
