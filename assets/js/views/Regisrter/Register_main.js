@@ -59,26 +59,74 @@ $(function () {
                             obj.Tel = _f.find('#txtUser7').val();
                             obj.SDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate'));
 
-                            $.bConfirm({
-                                buttonOK: function (k) {
-                                    k.close();
-                                    $.reqData({
-                                        url: mvcPatch('Register/editRegister'),
-                                        data: {data: JSON.stringify(obj)},
-                                        loanding: false,
-                                        callback: function (vdata) {
-                                            if (vdata.success) {
-                                                _f.find('#btn-close').click();
-                                                f.find('.xref').click();
-                                            } else {
-                                                $.bAlert({
-                                                    message: vdata.message
-                                                });
+                            var _imagedata = $.ToLinq(_f.find('.tab-image'))
+                                    .Select(function (x) {
+                                        return new Object({
+                                            EmpKey: Guid,
+                                            FileType: $(x).attr('data-type'),
+                                            RecordStatus: parseInt($(x).attr('data-type')) === 2 ? false : true,
+                                            EDate: parseInt($(x).attr('data-type')) === 2 ? null : ($(x).find('.txtDate').val() === '') ? null : PHP_DateTimeShow_To_JSON($(x).find('.date')),
+                                            ImageBase64: checkUndefined($(x).find('.imageShow').attr('src')) ? '' : $(x).find('.imageShow').attr('src')
+                                        });
+                                    })
+                                    .Where(x => $.trim(x.ImageBase64).length > 0)
+                                    .ToArray();
+                            if ($.ToLinq(_imagedata).Where(x => (parseInt(x.FileType) !== 2) && checkNull(x.EDate)).ToArray().length > 0) {
+                                $.bAlert({
+                                    message: 'กรุณาระบุวันที่หมดอายุในส่วนของ "บัตรประชาชน" และ "ใบขับขี" ก่อน'
+                                });
+                            } else {
+                                $.bConfirm({
+                                    buttonOK: function (k) {
+                                        k.close();
+                                        $.reqData({
+                                            url: mvcPatch('Register/editRegister'),
+                                            data: {data: JSON.stringify(obj)},
+                                            loanding: false,
+                                            callback: function (vdata) {
+                                                if (vdata.success) {
+                                                    var _indexC = 1;
+                                                    function upImage() {
+                                                        if (_indexC <= _imagedata.length) {
+                                                            _imagedata[(_indexC - 1)].EmpKey = vdata.key;
+                                                            $.reqData({
+                                                                url: mvcPatch('Register/addImage'),
+                                                                data: {data: JSON.stringify(_imagedata[(_indexC - 1)])},
+                                                                loanding: false,
+                                                                callback: function (vdata) {
+                                                                    if (vdata.success) {
+                                                                        _indexC++;
+                                                                        upImage();
+                                                                    } else {
+                                                                        $.bAlert({
+                                                                            message: vdata.message
+                                                                        });
+                                                                    }
+                                                                }
+                                                            });
+                                                        } else {
+                                                            _f.find('#btn-close').click();
+                                                            f.find('.xref').click();
+                                                        }
+                                                    }
+
+                                                    if (_imagedata.length > 0) {
+                                                        upImage();
+                                                    } else {
+                                                        _f.find('#btn-close').click();
+                                                        f.find('.xref').click();
+                                                    }
+
+                                                } else {
+                                                    $.bAlert({
+                                                        message: vdata.message
+                                                    });
+                                                }
                                             }
-                                        }
-                                    });
-                                }
-                            });
+                                        });
+                                    }
+                                });
+                            }
                         }
                     });
                 },
@@ -105,8 +153,6 @@ $(function () {
                     k.getModal().data({
                         data: d,
                         fun: function (_f) {
-
-
                             var obj = new Object();
                             obj.RowKey = d.key;
                             obj.IDCard = _f.find('#txtUser1').val();
@@ -119,38 +165,78 @@ $(function () {
                             obj.Tel = _f.find('#txtUser7').val();
                             obj.SDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate'));
 
-                            $.bConfirm({
-                                buttonOK: function (k) {
-                                    k.close();
-                                    $.reqData({
-                                        url: mvcPatch('Register/editRegister'),
-                                        data: {data: JSON.stringify(obj)},
-                                        loanding: false,
-                                        callback: function (vdata) {
-                                            if (vdata.success) {
-                                                var _imagedata = $.ToLinq(_f.find('.tab-image'))
-                                                        .Select(function (x) {
-                                                            return new Object({
-                                                                EmpKey: vdata.key,
-                                                                FileType: $(x).attr('data-type'),
-                                                                RecordStatus: parseInt($(x).attr('data-type')) === 2 ? false : true,
-                                                                EDate: parseInt($(x).attr('data-type')) === 2 ? null : PHP_DateTimeShow_To_JSON($(x).find('.date')),
-                                                                ImageBase64: $(x).find('.myimage').attr('src')
+                            var _imagedata = $.ToLinq(_f.find('.tab-image'))
+                                    .Select(function (x) {
+                                        return new Object({
+                                            EmpKey: d.key,
+                                            FileType: $(x).attr('data-type'),
+                                            RecordStatus: parseInt($(x).attr('data-type')) === 2 ? false : true,
+                                            EDate: parseInt($(x).attr('data-type')) === 2 ? null : ($(x).find('.txtDate').val() === '') ? null : PHP_DateTimeShow_To_JSON($(x).find('.date')),
+                                            ImageBase64: checkUndefined($(x).find('.imageShow').attr('src')) ? '' : $(x).find('.imageShow').attr('src')
+                                        });
+                                    })
+                                    .Where(x => $.trim(x.ImageBase64).length > 0)
+                                    .ToArray();
+                            if ($.ToLinq(_imagedata).Where(x => (parseInt(x.FileType) !== 2) && checkNull(x.EDate)).ToArray().length > 0) {
+                                $.bAlert({
+                                    message: 'กรุณาระบุวันที่หมดอายุในส่วนของ "บัตรประชาชน" และ "ใบขับขี" ก่อน'
+                                });
+                            } else {
+                                $.bConfirm({
+                                    buttonOK: function (k) {
+                                        k.close();
+
+                                        $.reqData({
+                                            url: mvcPatch('Register/editRegister'),
+                                            data: {data: JSON.stringify(obj)},
+                                            loanding: false,
+                                            callback: function (vdata) {
+                                                if (vdata.success) {
+                                                    var _indexC = 1;
+                                                    function upImage() {
+                                                        if (_indexC <= _imagedata.length) {
+                                                            $.reqData({
+                                                                url: mvcPatch('Register/addImage'),
+                                                                data: {data: JSON.stringify(_imagedata[(_indexC - 1)])},
+                                                                loanding: false,
+                                                                callback: function (vdata) {
+                                                                    if (vdata.success) {
+                                                                        _indexC++;
+                                                                        upImage();
+                                                                    } else {
+                                                                        $.bAlert({
+                                                                            message: vdata.message
+                                                                        });
+                                                                    }
+                                                                }
                                                             });
-                                                        }).ToArray();
+                                                        } else {
+                                                            _f.find('#btn-close').click();
+                                                            f.find('.xref').click();
+                                                        }
+                                                    }
+
+                                                    if (_imagedata.length > 0) {
+                                                        upImage();
+                                                    } else {
+                                                        _f.find('#btn-close').click();
+                                                        f.find('.xref').click();
+                                                    }
 
 
+//                                                alert(JSON.stringify(_imagedata));
 //                                                _f.find('#btn-close').click();
 //                                                f.find('.xref').click();
-                                            } else {
-                                                $.bAlert({
-                                                    message: vdata.message
-                                                });
+                                                } else {
+                                                    $.bAlert({
+                                                        message: vdata.message
+                                                    });
+                                                }
                                             }
-                                        }
-                                    });
-                                }
-                            });
+                                        });
+                                    }
+                                });
+                            }
                         }
                     });
                 },

@@ -5,6 +5,7 @@ const regexpMail = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a
 const regexpNumber = /^[0-9]+$/;
 const regexpDecimal = /^\d+(?:\.\d{1,2})?$/;
 const regexpPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,32}$/;
+const regexpIDCard =/[0-9]{5}[0-9]{7}[0-9]{1}/;
 
 const empPictureType = ["jpg", "gif", "png"];
 $("[data-header-left='true']").parent().addClass("pmd-navbar-left");
@@ -373,6 +374,9 @@ function checkNullAndReturn(v) {
     return v === null || v === 'null' || v === '' ? -1 : v;
 }
 
+function checkNull(v) {
+    return v === null || v === 'null' || v === '' ? true : false;
+}
 function checkUndefined(v) {
     return v === undefined || v === 'undefined' ? true : false;
 }

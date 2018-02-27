@@ -133,7 +133,7 @@ and open the template in the editor.
                                 </div>   
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <label for="txtZipCode">รหัสไปษณี:</label>
+                                        <label for="txtZipCode">รหัสไปรษณีย์:</label>
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-home" style="min-width: 20px;"></i></div>
                                             <input type="text" class="form-control" id="txtZipCode" name="txtZipCode" placeholder="รหัสไปษณี">
@@ -168,9 +168,9 @@ and open the template in the editor.
             </div>
             <div class="col-xs-12">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#home">ประชาชน</a></li>
-                    <li><a data-toggle="tab" href="#menu1">ทะเบียนบ้าน</a></li>
-                    <li><a data-toggle="tab" href="#menu2">ใบขับขี่</a></li>
+                    <li class="active"><a data-toggle="tab" href="#home">เอกสารประชาชน</a></li>
+                    <li><a data-toggle="tab" href="#menu1">เอกสารทะเบียนบ้าน</a></li>
+                    <li><a data-toggle="tab" href="#menu2">เอกสารใบขับขี่</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -179,7 +179,7 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label for="txtUser">วันที่หมดอายุ:</label>
                                 <div class="input-group date" id="divEDate_Card">
-                                    <input type='text' class="form-control text-center" id="txtUser01" name="txtUser01" placeholder="วันหมดอายุบัตร" onkeydown="return false;" />
+                                    <input type='text' class="form-control text-center txtDate" placeholder="วันหมดอายุบัตร" onkeydown="return false;" />
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>
@@ -214,7 +214,7 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label for="txtUser">วันที่หมดอายุ:</label>
                                 <div class="input-group date" id="divEDate_driver">
-                                    <input type='text' class="form-control text-center" id="txtUser01" name="txtUser01" placeholder="วันหมดอายุบัตร" onkeydown="return false;" />
+                                    <input type='text' class="form-control text-center txtDate" placeholder="วันหมดอายุบัตร" onkeydown="return false;" />
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>

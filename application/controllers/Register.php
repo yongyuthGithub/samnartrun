@@ -21,7 +21,7 @@ class Register extends PCenter {
     public function findRegister() {
         $query = $this->db->select('E.RowKey as key, '
                         . 'E.IDCard, '
-                        . 'E.TitleKey, '
+                        . 'E.TitleKey,'
                         . 'E.FName, '
                         . 'E.LName,'
                         . 'E.SDate,'
@@ -37,19 +37,32 @@ class Register extends PCenter {
                 ->join('MSTSubDistrict SD', 'E.SubDistrict=SD.RowKey', 'left')
                 ->join('MSTDistrict D', 'SD.DistrictKey=D.RowKey', 'left')
                 ->get();
-//        $_array = array();
-//        foreach ($query->result() as $row) {
-//            $_ar = array(
-//                'key' => $row->RowKey,
-//                'IDCard' => $row->IDCard,
-//                'TitleKey' => $row->TitleKey,
-//                'FName' => $row->FName,
-//                'LName' => $row->LName,
-//                
-//            );
-//            array_push($_array, $_ar);
-//        }
-        echo json_encode($query->result());
+        $_array = array();
+        foreach ($query->result() as $row) {
+            $_ar = array(
+                'key' => $row->key,
+                'IDCard' => $row->IDCard,
+                'TitleKey' => $row->TitleKey,
+                'Title' => $row->Title,
+                'FName' => $row->FName,
+                'LName' => $row->LName,
+                'SDate' => $row->SDate,
+                'Address' => $row->Address,
+                'Tel' => $row->Tel,
+                'SubDistrictKey' => $row->SubDistrictKey,
+                'DistrictKey' => $row->DistrictKey,
+                'ProvinceKey' => $row->ProvinceKey,
+                'ZipCode' => $row->ZipCode,
+                'TRNEmployeeFiles' => $this->db
+                        ->select('RowKey, EDate, FileType,')
+                        ->where('EmpKey', $row->key)
+                        ->from('TRNEmployeeFiles')
+                        ->get()
+                        ->result()
+            );
+            array_push($_array, $_ar);
+        }
+        echo json_encode($_array);
     }
 
     public function editRegister() {
@@ -114,7 +127,7 @@ class Register extends PCenter {
         echo json_encode($vReturn);
     }
 
-    public function addRegister() {
+    public function addImage() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
 
@@ -136,6 +149,13 @@ class Register extends PCenter {
         }
 
         echo json_encode($vReturn);
+    }
+
+    public function findImage() {
+        $qryMenu = $this->db->select('ImageBase64')
+                ->where('RowKey', $_POST['key'])
+                ->get('TRNEmployeeFiles');
+        echo json_encode($qryMenu->row());
     }
 
     public function removeAccount() {

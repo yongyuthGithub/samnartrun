@@ -13,20 +13,20 @@ $(function () {
         }
     });
     form_Registeredit.find('.btn-deleteimage').on({
-        click:function(){
+        click: function () {
             $(this).parents('.divImage').find('.imageShow').removeAttr('src');
         }
     });
-    
+
     form_Registeredit.find('.btn-viewimage').on({
-        click:function(){
+        click: function () {
             var _this = $(this).parents('.divImage').find('.imageShow');
-            if(!checkUndefined(_this.attr('src'))){
+            if (!checkUndefined(_this.attr('src'))) {
                 $.bPopup({
                     url: mvcPatch('Popup/index'),
                     title: 'Show Picture',
                     closable: true,
-                    btnCancel:false,
+                    btnCancel: false,
                     size: BootstrapDialog.SIZE_WIDE,
                     onshow: function (k) {
                         k.getModal().data({
@@ -66,6 +66,21 @@ $(function () {
         form_Registeredit.find('#txtUser1').val(_formdata.IDCard);
         form_Registeredit.find('#txtZipCode').val(_formdata.ZipCode);
         form_Registeredit.find('#txtUser5').val(PHP_JSON_To_ShowDate(_formdata.SDate));
+
+        $.each(_formdata.TRNEmployeeFiles, function (k, v) {
+            var _image = form_Registeredit.find('.tab-image[data-type="' + v.FileType + '"]');
+            if (!checkNull(v.EDate))
+                _image.find('.txtDate').val(PHP_JSON_To_ShowDate(v.EDate));
+
+            $.reqData({
+                url: mvcPatch('Register/findImage'),
+                data: {key: v.RowKey},
+                loanding: false,
+                callback: function (vdata) {
+                    _image.find('.imageShow').prop('src', vdata.ImageBase64);
+                }
+            });
+        });
 
         //***Edit By Yongyuth
         setProvince(function (_p) {
@@ -212,7 +227,16 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify User Name.'
+                        message: '* กรุณาระบุรหัสบัตรประชาชน'
+                    },
+                    stringLength: {
+                        max: 13,
+                        min: 13,
+                        message: '* กรุณาระบุจำนวนตัวเลย 13 หลักเท่านั้น'
+                    },
+                    regexp: {
+                        regexp: regexpIDCard,
+                        message: '* กรุณาระบุรูปแบบบัตรประชาชนเท่านั้น'
                     }
                 }
             },
@@ -220,7 +244,7 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify Title.'
+                        message: '* กรุณาระบุคำนาม'
                     }
                 }
             },
@@ -228,7 +252,7 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify First Name.'
+                        message: '* กรุณาระบุชื่อ'
                     }
                 }
             },
@@ -236,7 +260,7 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify Last Name.'
+                        message: '* กรุณาระบุนามสกุล'
                     }
                 }
             },
@@ -244,7 +268,7 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify Password.'
+                        message: '* กรุณาระบุที่อยู่'
                     }
                 }
             },
@@ -252,7 +276,7 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify Password.'
+                        message: '* กรุณาระบุจังหวัด'
                     }
                 }
             },
@@ -260,7 +284,7 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify Password.'
+                        message: '* กรุณาระบุอำเภอ'
                     }
                 }
             },
@@ -268,7 +292,7 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify Password.'
+                        message: '* กรุณาระบุตำบล'
                     }
                 }
             },
@@ -276,7 +300,7 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify Password.'
+                        message: '* กรุณาระบุรหัสไปรษณีย์'
                     }
                 }
             },
@@ -284,7 +308,7 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify Password.'
+                        message: '* กรุณาระบุเบอร์โทรศัพท์'
                     }
                 }
             },
@@ -292,7 +316,7 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify Password.'
+                        message: '* กรุณาระบุวันที่เริ่มงาน'
                     }
                 }
             },
