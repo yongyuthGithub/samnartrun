@@ -1,3 +1,4 @@
+<?php echo js_asset('views/Regisrter/Register_Insurance_main.js') ?>
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
@@ -18,7 +19,7 @@
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <div id="form_insurancetype"></div>
+            <div id="form_register_insurance"></div>
         </div>
     </div>
 </div>

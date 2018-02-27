@@ -286,7 +286,7 @@ $(function () {
                     txtkey: d.key,
                     txtdisplay: d.Title + d.FName + ' ' + d.LName
                 }
-            }).prop('action', mvcPatch('Register/branchMain')).submit();
+            }).prop('action', mvcPatch('Register/register_insurance_Main')).submit();
         }
     });
 });

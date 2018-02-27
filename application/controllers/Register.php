@@ -177,9 +177,26 @@ class Register extends PCenter {
     }
 
     //**** Fuel
-    public function branchMain() {
+    public function register_insurance_Main() {
         $data['page'] = 'master/register/register_insurance_main';
         $this->load->view('layout/nav', $data);
+    }
+
+    public function findregister_insurance() {
+        $qryMenu = $this->db->select('ei.RowKey as key,'
+                        . 'ei.SDate,'
+                        . 'ei.EDate,'
+                        . 'ei.Cash,'
+                        . 'ei.InsuranceTypeKey,'
+                        . 'it.TypeName,'
+                        . 'i.InsuranceName')
+                ->join('MSTInsuranceType it', 'ei.InsuranceTypeKey=it.RowKey', 'left')
+                ->join('MSTInsurance i', 'it.InsuranceKey=i.RowKey', 'left')
+                ->where('ei.EmpKey', $_POST['key'])
+                ->where('ei.RowStatus', true)
+                ->from('TRNEmployeeInsurance ei')
+                ->get();
+        echo json_encode($qryMenu->result());
     }
 
 }
