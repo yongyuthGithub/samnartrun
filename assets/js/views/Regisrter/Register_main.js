@@ -281,9 +281,11 @@ $(function () {
         },
 
         btnPreviewFun: function (f, d) {
-            alert(JSON.stringify(d));
             form_sumbit.SetDataPost({
-                data: {textId: d.key}
+                data: {
+                    txtkey: d.key,
+                    txtdisplay: d.Title + d.FName + ' ' + d.LName
+                }
             }).prop('action', mvcPatch('Register/branchMain')).submit();
         }
     });

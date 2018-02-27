@@ -178,7 +178,7 @@ class Register extends PCenter {
 
     //**** Fuel
     public function branchMain() {
-        $data['page'] = 'master/Fule/branch_main';
+        $data['page'] = 'master/register/register_insurance_main';
         $this->load->view('layout/nav', $data);
     }
 
