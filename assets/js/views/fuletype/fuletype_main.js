@@ -8,13 +8,9 @@ $(function () {
         btnEdit: true,
         btnPreview: false,
         headerString: '',
-//        UrlDataJson: mvcPatch('controllers/action'),
-//    DataJson: function () {
-//        return new Array()
-//    },
+        UrlDataJson: mvcPatch('FuleType/findPump'),
         UrlLoanding: true,
         UrlLoandingclose: true,
-//    AfterLoadData: function (f, d, t) { },
         DataColumns: [
             {data: 'Fuel', header: 'เชื้อเพลิง'},
             {data: 'FuelType', header: 'ประเภทเชื้อเพลิง'},
@@ -22,15 +18,14 @@ $(function () {
 //            {data: 'Icon', header: 'Icon'},
 //            {data: 'Url', header: 'Url'}
         ],
-//        DataColumnsDefs: [
-//            {
-//                render: function (row, type, val2, meta) {
-//                    return '<i class="' + val2.Icon + '"></i>';
-//                },
-//                orderable: true,
-//                targets: 3
-//            }
-//        ],
+        DataColumnsDefs: [{
+                render: function (row, type, val2, meta) {
+                    var _val = val2.FuelType === 1 ? 'น้ำมัน' : 'แก๊ซ';
+                    return _val;
+                },
+                orderable: true,
+                targets: 1
+            }],
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('FuleType/edit'),
@@ -43,8 +38,8 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = Guid;
-                            obj.Pump = _f.find('#txtUser').val();
-                            obj.PumpType = _f.find('#cmdTitle').val();
+                            obj.Fuel = _f.find('#txtUser').val();
+                            obj.FuelType = _f.find('#cmdTitle').val();
 
                             $.bConfirm({
                                 buttonOK: function (k) {

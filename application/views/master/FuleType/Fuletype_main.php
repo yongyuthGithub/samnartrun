@@ -4,7 +4,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<?php echo js_asset('views/fule/fule_main.js') ?>
+<?php echo js_asset('views/FuleType/FuleType_main.js') ?>
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
@@ -15,7 +15,7 @@ and open the template in the editor.
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body"> 
-            <div id="form_fule"></div>
+            <div id="form_fuletype"></div>
         </div>
     </div>
 </div>
