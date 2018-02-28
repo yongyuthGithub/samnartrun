@@ -12,8 +12,8 @@ var _formdata = form_fuleedit_C.data('data');
     if (_formdata.key === Guid) {
 //        setTitle(Guid);
     } else {
-        form_fuleedit.find('#txtUser').val(_formdata.Pump);
-        form_fuleedit.find('#cmdTitle').val(_formdata.PumpType).selectpicker('render');
+        form_fuleedit.find('#txtUser').val(_formdata.Fuel);
+        form_fuleedit.find('#cmdTitle').val(_formdata.FuelType).selectpicker('render');
         
         form_fuleedit.find('.showinadd').remove();
         

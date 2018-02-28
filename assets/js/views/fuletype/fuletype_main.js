@@ -77,6 +77,53 @@ $(function () {
             });
         },
         btnEditFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('FuleType/edit'),
+                title: 'Edit Fule',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        fun: function (_f) {
+                            var obj = new Object();
+                            obj.RowKey = d.key;
+                            obj.Fuel = _f.find('#txtUser').val();
+                            obj.FuelType = _f.find('#cmdTitle').val();
+                            $.bConfirm({
+                                buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('FuleType/editPump'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                f.find('.xref').click();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+
+                        }
+                    }
+                ]
+            });
         },
         btnDeleteFun: function (f, d) {
         },

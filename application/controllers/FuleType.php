@@ -59,14 +59,14 @@ public function findPump() {
                 }
             }
         } else {
-            $queryChk = $this->db->where('Fuel', $_data->Pump)->where('RowKey !=', $_data->RowKey)->from('MSTFuel')->count_all_results();
+            $queryChk = $this->db->where('Fuel', $_data->Fuel)->where('RowKey !=', $_data->RowKey)->from('MSTFuel')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
                 $update = (object) [];
-                $update->Pump = $_data->Pump;
-                $update->PumpType = $_data->PumpType;
+                $update->Fuel = $_data->Fuel;
+                $update->FuelType = $_data->FuelType;
                 $update->UpdateBy = PCenter::GUID_EMPTY();
                 $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('MSTFuel', $update);
