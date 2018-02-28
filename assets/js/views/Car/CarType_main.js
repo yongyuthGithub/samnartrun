@@ -1,109 +1,61 @@
 $(function () {
-    var form_Car = $('#form_Car');
+    var form_CarType = $('#form_CarType');
 
-    form_Car.setMainPage({
+    form_CarType.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
-        btnPreview: true,
+        btnPreview: false,
         headerString: '',
-        UrlDataJson: mvcPatch('Car/findCar'),
+        UrlDataJson: mvcPatch('Car/CarType'),
+        UrlDataSend: {key: $('#txtkey').val()},
+//        DataJson: function () {
+//            return new Array()
+//        },
         UrlLoanding: true,
         UrlLoandingclose: true,
+//    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-             {data: 'CarNumber', header: 'ทะเบียนรถ'},
-            {data: 'Province', header: 'จังหวัด'},
-            {data: 'Brand', header: 'ยี่ห้อ'},
-            {data: 'CarType', header: 'ประเภทรถ'},
+            {data: 'TypeName', header: 'ชื่อประเภท'},
+            {data: 'TypeUse', header: 'กลุ่มประกัน'},
         ],
         DataColumnsDefs: [
             {
                 render: function (row, type, val2, meta) {
-                    return parseInt(val2.CarType) === 1 ? '2 เพลา' : '3 เพลา';
+                    return parseInt(val2.TypeUse) === 1 ? 'บุคคล' : 'ยานพาหนะ';
                 },
                 orderable: true,
-                targets: 3
+                targets: 1
             }
         ],
         btnNewFun: function (f) {
             $.bPopup({
-                url: mvcPatch('Car/edit'),
-                title: 'เพิ่มข้อมูลรถ',
+                url: mvcPatch('Car/typeedit'),
+                title: 'เพิ่มประภทประกันของรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
                     k.getModal().data({
                         data: new Object({key: Guid}),
                         fun: function (_f) {
-                            var obj = new Object();
-                            obj.RowKey = Guid;
-                            obj.BrandKey = _f.find('#cmdBrand').val();  
-                            obj.CarNumber = _f.find('#txtCarNumber').val();  
-                            obj.ProvinceKey = _f.find('#cmdProvince').val();  
-                            obj.CarType = _f.find('#txtCarType').val();  
-                            $.bConfirm({
-                                buttonOK: function (k) {
-                                    k.close();
-                                    $.reqData({
-                                        url: mvcPatch('Car/editCar'),
-                                        data: {data: JSON.stringify(obj)},
-                                        loanding: false,
-                                        callback: function (vdata) {
-                                            if (vdata.success) {
-                                                _f.find('#btn-close').click();
-                                                f.find('.xref').click();
-                                            } else {
-                                                $.bAlert({
-                                                    message: vdata.message
-                                                });
-                                            }
-                                        }
-                                    });
-                                }
+                            var obj = new Object({
+                                RowKey: Guid,
+                                InsuranceKey: $('#txtkey').val(),
+                                TypeName: _f.find('#txtTypeName').val(),
+                                TypeUse: _f.find('#cmdTypeUse').val()
                             });
-                        }
-                    });
-                },
-                buttons: [
-                    {
-                        id: 'btn-ok',
-                        icon: 'fa fa-check',
-                        label: '&nbsp;ok',
-                        action: function (k) {
-
-                        }
-                    }
-                ]
-            });
-        },
-         btnEditFun: function (f, d) {
-            $.bPopup({
-                url: mvcPatch('Car/edit'),
-                title: 'แก้ไขข้อมูลรถ',
-                closable: false,
-                size: BootstrapDialog.SIZE_NORMAL,
-                onshow: function (k) {
-                    k.getModal().data({
-                        data: d,
-                        fun: function (_f) {
-                            var obj = new Object();
-                            obj.RowKey = d.key;
-                            obj.BrandKey = _f.find('#cmdBrand').val();  
-                            obj.CarNumber = _f.find('#txtCarNumber').val();  
-                            obj.ProvinceKey = _f.find('#cmdProvince').val();  
-                            obj.CarType = _f.find('#txtCarType').val();                 
                             $.bConfirm({
-                                buttonOK: function (k) {
-                                    k.close();
+                                buttonOK: function (k2) {
+                                    k2.close();
                                     $.reqData({
-                                        url: mvcPatch('Car/editCar'),
+                                        url: mvcPatch('Car/editicartype'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
                                             if (vdata.success) {
-                                                _f.find('#btn-close').click();
                                                 f.find('.xref').click();
+                                                k.close();
                                             } else {
                                                 $.bAlert({
                                                     message: vdata.message
@@ -122,7 +74,58 @@ $(function () {
                         icon: 'fa fa-check',
                         label: '&nbsp;Save',
                         action: function (k) {
-
+                            //javascript code
+                        }
+                    }
+                ]
+            });
+        },
+        btnEditFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('car/typeedit'),
+                title: 'Edit Insurance Type',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        fun: function (_f) {
+                            var obj = new Object({
+                                RowKey: d.key,
+                                InsuranceKey: $('#txtkey').val(),
+                                TypeName: _f.find('#txtTypeName').val(),
+                                TypeUse: _f.find('#cmdTypeUse').val()
+                            });
+                            $.bConfirm({
+                                buttonOK: function (k2) {
+                                    k2.close();
+                                    $.reqData({
+                                        url: mvcPatch('car/editcartype'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                f.find('.xref').click();
+                                                k.close();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
                         }
                     }
                 ]
@@ -141,7 +144,7 @@ $(function () {
                                 return x.key;
                             }).ToArray();
                     $.reqData({
-                        url: mvcPatch('Car/removeCar'),
+                        url: mvcPatch('car/removecartype'),
                         data: {data: JSON.stringify(vdata)},
                         callback: function (vdata) {
                             if (vdata.success) {
@@ -156,10 +159,14 @@ $(function () {
                 }
             });
         },
-
-        
-        btnPreviewFun: function (f, d) {
-
+       btnPreviewFun: function (f, d) {
+            form_sumbit.SetDataPost({
+                data: {
+                    txtkey: d.key,
+                    txtdisplay:d.InsuranceName
+                }
+            }).prop('action', mvcPatch('car/typeindex')).submit()
         }
     });
 });
+

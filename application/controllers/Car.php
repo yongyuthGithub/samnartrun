@@ -17,6 +17,14 @@ class Car extends PCenter {
     public function edit() {
         $this->load->view('master/Car/Car_edit');
     }
+    public function typeindex() {
+        $data['page'] = 'master/Car/CarType_main';
+        $this->load->view('layout/nav', $data);
+    }
+    
+    public function typeedit() {
+        $this->load->view('master/Car/CarType_edit');
+    }
 
     public function findCar() {
         $query = $this->db->select('C.RowKey as key, '
