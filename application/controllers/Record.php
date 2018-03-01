@@ -11,19 +11,19 @@ class Record extends PCenter {
 
     public function index() {
         $data['page'] = 'transaction/record/record_main';
-        $data['dir']=$this->GET_FOLDER_UPLOAD();
-//        mkdir($data['dir'].'/fffffff');
+//        $data['dir']=$this->GET_FOLDER_UPLOAD();
+////        mkdir($data['dir'].'/fffffff');
         $this->load->view('layout/nav', $data);
     }
     
-    public function file_upload(){
-        $file = $_FILES['f'];        
-        $vReturn = (object) [];
-        $vReturn->name=$file['name'];
-        
-        move_uploaded_file($file["tmp_name"],$this->GET_FOLDER_UPLOAD().'/'.$file["name"]);
-                
-        echo json_encode($vReturn);
-    }
+//    public function file_upload(){
+//        $file = $_FILES['f'];        
+//        $vReturn = (object) [];
+//        $vReturn->name=$file['name'];
+//        
+//        move_uploaded_file($file["tmp_name"],$this->GET_FOLDER_UPLOAD().'/'.$file["name"]);
+//                
+//        echo json_encode($vReturn);
+//    }
     
 }
