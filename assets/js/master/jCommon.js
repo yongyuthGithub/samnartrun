@@ -5,7 +5,7 @@ const regexpMail = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a
 const regexpNumber = /^[0-9]+$/;
 const regexpDecimal = /^\d+(?:\.\d{1,2})?$/;
 const regexpPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,32}$/;
-const regexpIDCard =/[0-9]{5}[0-9]{7}[0-9]{1}/;
+const regexpIDCard = /[0-9]{5}[0-9]{7}[0-9]{1}/;
 
 const empPictureType = ["jpg", "gif", "png"];
 $("[data-header-left='true']").parent().addClass("pmd-navbar-left");
@@ -312,8 +312,12 @@ function PHP_DateTime_To_JSON(v) {//---จาก DateTime --> yyyy-MM-dd HH:mm:s
     return yyyy + '-' + mm + '-' + dd + ' ' + tHH + ':' + tMM + ':' + tSS;
 }
 
-function PHP_DateTimeShow_To_JSON(v) {//---จาก ShowDate --> yyyy-MM-dd HH:mm:ss
-    return PHP_DateTime_To_JSON(new Date(funDateTime(v).date()));
+function PHP_DateTimeShow_To_JSON(v, t) {//---จาก ShowDate --> yyyy-MM-dd HH:mm:ss
+    var _t = t === undefined ? false : true;
+    var _date = new Date(funDateTime(v).date());
+    if (!_t)
+        _date = new Date(new Date(funDateTime(v).date()).setHours(0, 0, 0, 0));
+    return PHP_DateTime_To_JSON(_date);
 }
 
 function PHP_JSON_To_DateTime(v) {//---จาก yyyy-MM-dd HH:mm:ss --> DateTime

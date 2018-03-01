@@ -9,6 +9,20 @@ $(function () {
         }
     });
 
+    form_login.find('#txtUser').on('keypress', function (event) {
+        var keycode = event.keyCode || event.which;
+        if (keycode === 13) {
+            form_login.find('#txtPass').focus();
+        }
+    });
+
+    form_login.find('#txtPass').on('keypress', function (event) {
+        var keycode = event.keyCode || event.which;
+        if (keycode === 13) {
+            form_login_C.find('#btn-login').click();
+        }
+    });
+
     form_login.myValidation({
         funsuccess: function () {
             $.reqData({
@@ -55,6 +69,8 @@ $(function () {
             }
         }
     });
+
+    $('#myPage').find('button[type="submit"]').remove();
 });
 
 
