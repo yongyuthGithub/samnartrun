@@ -1,3 +1,4 @@
+<?php echo css_asset('views/transaction/record/record_main.css'); ?>
 <?php echo js_asset('views/transaction/record/record_main.js'); ?>
 <div class="col-12">   
     <div class="panel panel-default">
@@ -9,6 +10,7 @@
 <div id="form_record">
     <div class="col-12">   
         <div class="panel panel-default">
+<!--            <div class="panel-heading">ช่วงระยะเวลาที่แสดงรายการประจำวัน</div>-->
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6">
@@ -34,12 +36,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12">   
-        <div class="panel panel-default">
-            <div class="panel-body">
+                <hr>
                 <div id="form_recordlist"></div>
             </div>
         </div>

@@ -11,8 +11,8 @@ $(function () {
 
         form_record.find('#divSDate').data("DateTimePicker").maxDate(e.date);
     });
-    
-    form_record.find('#divSDate, #divEDate').on('dp.hide',function(e){
+
+    form_record.find('#divSDate, #divEDate').on('dp.hide', function (e) {
         setFind();
     });
 
@@ -20,7 +20,7 @@ $(function () {
 
     setFind();
     function setFind() {
-        var _edate = new Date(form_record.find('#divEDate').data("DateTimePicker").date()).setHours(23, 59, 59,0);
+        var _edate = new Date(form_record.find('#divEDate').data("DateTimePicker").date()).setHours(23, 59, 59, 0);
         form_record.find('#divEDate').data("DateTimePicker").date(new Date(_edate));
         $.reqData({
             url: mvcPatch('Record/findRecord'),
@@ -50,10 +50,13 @@ $(function () {
         },
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'DocID', header: 'DocID'},
-            {data: 'DocDate', header: 'DocDate'},
-            {data: 'Product', header: 'Product'},
-            {data: 'PriceTotal', header: 'PriceTotal'}
+            {data: 'DocID', header: 'เลขที่เอกสาร'},
+            {data: 'DocDate', header: 'วันที่เอกสาร'},
+            {data: 'Product', header: 'สินค้า'},
+            {data: 'PriceTotal', header: 'ค่าบริการ'},
+            {data: 'CNumberF', header: 'รถขนส่ง'},
+            {data: 'CusCodeF', header: 'จากบริษัท'},
+            {data: 'CusCodeS', header: 'ถึงบริษัท'}
         ],
 //        DataColumnsDefs: [
 //            {
@@ -65,6 +68,30 @@ $(function () {
 //            }
 //        ],
         btnNewFun: function (f) {
+            $.bPopup({
+                url: mvcPatch('Record/recordEdit'),
+                title: 'บันทึกรายการประจำวัน',
+                closable: false,
+                size: BootstrapDialog.SIZE_WIDE,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: new Object({key: Guid}),
+                        fun: function (_f) {
+
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         },
         btnEditFun: function (f, d) {
         },
