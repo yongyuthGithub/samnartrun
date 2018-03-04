@@ -2,8 +2,8 @@
 
 //require_once __DIR__ . '\..\models\PCenter.php';
 require __DIR__ . '/../core/PCenter.php';
-require __DIR__ . '/../core/Phinq/PhinqBase.php';
-require __DIR__ . '/../core/Phinq/Phinq.php';
+//require __DIR__ . '/../core/Phinq/PhinqBase.php';
+//require __DIR__ . '/../core/Phinq/Phinq.php';
 
 
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -59,7 +59,8 @@ class Home extends PCenter {
 //                ->orderBy(function($payment) {
 //            return $payment;
 //        }); //sorted ascending
-        
+//        $this->load->library('Phinq/PhinqBase');
+//        $this->load->library('Phinq/Phinq');
         $data['page'] = 'setting/home/main_page';
         $this->load->view('layout/nav', $data);
     }
