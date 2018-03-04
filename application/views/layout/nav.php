@@ -37,6 +37,8 @@
         <?php echo js_asset('master/moment.min.js') ?>
         <?php echo js_asset('master/locales.min.js') ?>
         <?php echo js_asset('master/bootstrap-datetimepicker.min.js') ?>
+        <?php echo js_asset('master/highcharts.js') ?>
+        <?php echo js_asset('master/highcharts-more.js') ?>
         <?php echo js_asset('master/jCustomPageMain.js') ?>
         <?php echo js_asset('master/jCommon.js') ?>
         <?php echo js_asset('views/layout/nav.js') ?>
