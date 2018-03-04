@@ -2,6 +2,10 @@
 
 //require_once __DIR__ . '\..\models\PCenter.php';
 require __DIR__ . '/../core/PCenter.php';
+require __DIR__ . '/../core/Phinq/PhinqBase.php';
+require __DIR__ . '/../core/Phinq/Phinq.php';
+
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends PCenter {
@@ -45,6 +49,17 @@ class Home extends PCenter {
     }
 
     public function main() {
+//        $ddd = new Phinq/Phinq;
+//        
+//        $payments = array(10.5, 11.94, 9.3, 0, 17.1, 10.5, 0);
+//        $paymentQuery = $ddd::create($payments)
+//                ->where(function($payment) {
+//                    return $payment !== 0;
+//                }) //non-zero
+//                ->orderBy(function($payment) {
+//            return $payment;
+//        }); //sorted ascending
+        
         $data['page'] = 'setting/home/main_page';
         $this->load->view('layout/nav', $data);
     }
@@ -56,8 +71,8 @@ class Home extends PCenter {
     public function popupForget() {
         $this->load->view('setting/home/forget_page');
     }
-    
-    public function profile(){
+
+    public function profile() {
         $this->load->view('setting/home/profile_page');
     }
 
@@ -81,7 +96,7 @@ class Home extends PCenter {
             $obj->RowKey = PCenter::GUID();
             $obj->AccountKey = $data->RowKey;
             $obj->Token = md5(PCenter::GUID());
-            $obj->UpdateDate= PCenter::DATATIME_DB(new DateTime());
+            $obj->UpdateDate = PCenter::DATATIME_DB(new DateTime());
             $this->db->insert('TMPLogin', $obj);
 
             setcookie('samnartrun_login', $data->RowKey, time() + (86400 * 7), '/');
@@ -121,9 +136,9 @@ class Home extends PCenter {
         echo json_encode($vReturn);
     }
 
-    public function findProfile(){
+    public function findProfile() {
         $query = $this->db
-                ->where('USRAccount.RowKey',$this->USER_LOGIN()->RowKey)
+                ->where('USRAccount.RowKey', $this->USER_LOGIN()->RowKey)
                 ->from('USRAccount')
                 ->join('MSTTitle', 'MSTTitle.RowKey = USRAccount.TitleKey', 'left')
                 ->select('USRAccount.RowKey AS key,'
@@ -132,17 +147,18 @@ class Home extends PCenter {
                         . ' CONCAT(MSTTitle.Title, USRAccount.FName," ",USRAccount.LName) AS Name,'
                         . ' USRAccount.FName,'
                         . ' USRAccount.LName,'
-                        . ' USRAccount.RowStatus')                
+                        . ' USRAccount.RowStatus')
                 ->get();
         $queryP = $this->db
-                ->where('USRGroupAccount.AccountKey',$this->USER_LOGIN()->RowKey)
+                ->where('USRGroupAccount.AccountKey', $this->USER_LOGIN()->RowKey)
                 ->from('USRGroupAccount')
-                ->join('USRGroup','USRGroupAccount.GroupKey=USRGroup.RowKey','inner')
+                ->join('USRGroup', 'USRGroupAccount.GroupKey=USRGroup.RowKey', 'inner')
                 ->select('USRGroup.UserGroup')
                 ->get();
-        $vReturn = (object)[];
-        $vReturn->User=$query->row();
-        $vReturn->Pemission=$queryP->result_array();
+        $vReturn = (object) [];
+        $vReturn->User = $query->row();
+        $vReturn->Pemission = $queryP->result_array();
         echo json_encode($vReturn);
     }
+
 }
