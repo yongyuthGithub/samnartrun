@@ -17,13 +17,14 @@ class Car extends PCenter {
     public function edit() {
         $this->load->view('master/Car/Car_edit');
     }
-    public function typeindex() {
-        $data['page'] = 'master/Car/CarType_main';
+
+    public function carinsurance() {
+        $data['page'] = 'master/Car/Car_Insurance_main';
         $this->load->view('layout/nav', $data);
     }
-    
-    public function typeedit() {
-        $this->load->view('master/Car/CarType_edit');
+
+    public function carinsuranceedit() {
+        $this->load->view('master/Car/Car_nsurance_edit');
     }
 
     public function findCar() {
@@ -34,7 +35,7 @@ class Car extends PCenter {
                         . 'C.ProvinceKey,'
                         . 'P.Province,'
                         . 'C.CarType,'
-                . 'B.Brand,')
+                        . 'B.Brand,')
 //                . 'D.RowKey as DistrictKey,'
 //                . 'D.ProvinceKey'
                 ->from('MSTCar C')
@@ -68,8 +69,8 @@ class Car extends PCenter {
 
         if ($_data->RowKey === PCenter::GUID_EMPTY()) {
             $queryChk = $this->db
-                    ->where('CarNumber', $_data->CarNumber)
-                    ->from('MSTCar')->count_all_results();
+                            ->where('CarNumber', $_data->CarNumber)
+                            ->from('MSTCar')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
@@ -136,5 +137,91 @@ class Car extends PCenter {
         }
         echo json_encode($vReturn);
     }
+ 
+    public function findinsurancecar() {
+        $key = $_POST['key'];
+        $qryMenu = $this->db->from('TRNCarInsurance')
+                ->where('InsuranceKey',$key)
+                ->select('RowKey as key,'
+                        . 'InsuranceKey,'
+                        . 'TypeName,'
+                        . 'TypeUse')
+                ->get();
+        echo json_encode($qryMenu->result());
+    }
+    
+    public function editinsurancecar() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
 
+        $this->db->trans_begin();
+        if ($_data->RowKey === PCenter::GUID_EMPTY()) {
+            $queryChk = $this->db
+                    ->where('TypeUse', $_data->TypeUse)
+                    ->where('TypeName', $_data->TypeName)
+                    ->where('InsuranceKey', $_data->InsuranceKey)
+                    ->from('MSTInsuranceType')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                $_data->RowKey = PCenter::GUID();
+                $_data->CreateBy = $this->USER_LOGIN()->RowKey;
+                $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->insert('MSTInsuranceType', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                }
+            }
+        } else {
+            $queryChk = $this->db
+                    ->where('TypeUse', $_data->TypeUse)
+                    ->where('TypeName', $_data->TypeName)
+                    ->where('InsuranceKey', $_data->InsuranceKey)
+                    ->where('RowKey !=', $_data->RowKey)
+                    ->from('MSTInsuranceType')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->where('RowKey', $_data->RowKey)->update('MSTInsuranceType', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                }
+            }
+        }
+        echo json_encode($vReturn);
+    }
+    
+    public function removeinsurancecar() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+        $this->db->trans_begin();
+
+        $this->db->where_in('RowKey', $_data)->delete('MSTInsuranceType');
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
+        }
+        echo json_encode($vReturn);
+    }
 }

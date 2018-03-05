@@ -1,14 +1,14 @@
 $(function () {
-    var form_CarType = $('#form_CarType');
+    var form_carinsurance = $('#form_carinsurance');
 
-    form_CarType.setMainPage({
+    form_carinsurance.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
         btnPreview: false,
         headerString: '',
-        UrlDataJson: mvcPatch('Car/CarType'),
+        UrlDataJson: mvcPatch('Car/findinsurancecar'),
         UrlDataSend: {key: $('#txtkey').val()},
 //        DataJson: function () {
 //            return new Array()
@@ -17,8 +17,10 @@ $(function () {
         UrlLoandingclose: true,
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'TypeName', header: 'ชื่อประเภท'},
-            {data: 'TypeUse', header: 'กลุ่มประกัน'},
+            {data: 'Carkey', header: 'เลขทะเบียนรถ'},
+            {data: 'InsuranceTypeKey', header: 'ชนิดของประกัน'},
+            {data: 'SDate', header: 'วันเริ่มประกัน'},
+            {data: 'EDate', header: 'วันหมดอายุประกัน'},
         ],
         DataColumnsDefs: [
             {
@@ -31,8 +33,8 @@ $(function () {
         ],
         btnNewFun: function (f) {
             $.bPopup({
-                url: mvcPatch('Car/typeedit'),
-                title: 'เพิ่มประภทประกันของรถ',
+                url: mvcPatch('Car/editinsurancecar'),
+                title: 'Add Insurance Type',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -41,15 +43,17 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({
                                 RowKey: Guid,
-                                InsuranceKey: $('#txtkey').val(),
-                                TypeName: _f.find('#txtTypeName').val(),
-                                TypeUse: _f.find('#cmdTypeUse').val()
+                                Carkey: $('#txtkey').val(),
+                                InsuranceTypeKey: _f.find('#Insurancecar').val(),
+                                SDate: _f.find('#SDate').val(),
+                                EDate: _f.find('#EDate').val(),
+                                Cash: _f.find('#Cash').val()
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {
                                     k2.close();
                                     $.reqData({
-                                        url: mvcPatch('Car/editicartype'),
+                                        url: mvcPatch('car/editinsurancecar'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -82,7 +86,7 @@ $(function () {
         },
         btnEditFun: function (f, d) {
             $.bPopup({
-                url: mvcPatch('car/typeedit'),
+                url: mvcPatch('car/editinsurancecar'),
                 title: 'Edit Insurance Type',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
@@ -92,15 +96,17 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({
                                 RowKey: d.key,
-                                InsuranceKey: $('#txtkey').val(),
-                                TypeName: _f.find('#txtTypeName').val(),
-                                TypeUse: _f.find('#cmdTypeUse').val()
+                                Carkey: $('#txtkey').val(),
+                                InsuranceTypeKey: _f.find('#Insurancecar').val(),
+                                SDate: _f.find('#SDate').val(),
+                                EDate: _f.find('#EDate').val(),
+                                Cash: _f.find('#Cash').val()
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {
                                     k2.close();
                                     $.reqData({
-                                        url: mvcPatch('car/editcartype'),
+                                        url: mvcPatch('car/editinsurancecar'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -144,7 +150,7 @@ $(function () {
                                 return x.key;
                             }).ToArray();
                     $.reqData({
-                        url: mvcPatch('car/removecartype'),
+                        url: mvcPatch('car/removeinsurancecar'),
                         data: {data: JSON.stringify(vdata)},
                         callback: function (vdata) {
                             if (vdata.success) {
@@ -159,13 +165,7 @@ $(function () {
                 }
             });
         },
-       btnPreviewFun: function (f, d) {
-            form_sumbit.SetDataPost({
-                data: {
-                    txtkey: d.key,
-                    txtdisplay:d.InsuranceName
-                }
-            }).prop('action', mvcPatch('car/typeindex')).submit()
+        btnPreviewFun: function (f, d) {
         }
     });
 });

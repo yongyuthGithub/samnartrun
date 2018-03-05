@@ -1,5 +1,6 @@
 $(function () {
     var form_Car = $('#form_Car');
+    var form_sumbit = $('#form_sumbit');
 
     form_Car.setMainPage({
         btnNew: true,
@@ -159,7 +160,12 @@ $(function () {
 
         
         btnPreviewFun: function (f, d) {
-
+            form_sumbit.SetDataPost({
+                data: {
+                    txtkey: d.key,
+                    txtdisplay:d.CarNumber
+                }
+            }).prop('action', mvcPatch('Car/Carinsurance')).submit()
         }
     });
 });

@@ -1,9 +1,9 @@
-<?php echo css_asset('views/Car/CarType_main.css') ?>
-<?php echo js_asset('views/Car/CarType_main.js') ?>
+<?php echo css_asset('views/Car/Car_Insurance_main.css') ?>
+<?php echo js_asset('views/Car/Car_Insurance_main.js') ?>
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1>ข้อมูลประกันของรถ</h1><h4><small>ข้อมูลประกันของรถ <?php echo $_POST['txtdisplay']; ?></small></h4>
+            <h1>ข้อมูลประเภทประกัน</h1><h4><small>ข้อมูลประเภทประกันของรถ <?php echo $_POST['txtdisplay']; ?></small></h4>
         </div>
     </div>
 </div>
@@ -20,7 +20,7 @@
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <div id="form_CarType"></div>
+            <div id="form_carinsurance"></div>
         </div>
     </div>
 </div>

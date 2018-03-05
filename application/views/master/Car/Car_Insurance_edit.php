@@ -1,7 +1,7 @@
-<?php echo js_asset('views/Car/CarType_edit.js') ?>
+<?php echo js_asset('views/Car/Car_Insurance_edit.js') ?>
 <div class="panel panel-default">
     <div class="panel-body">
-        <form id="form_CarTypeedit">            
+        <form id="form_carinsuranceedit">            
             <div class="col-xs-12">
                 <div class="form-group">
                     <label for="cmdTypeUse">กลุ่มประกัน :</label>
