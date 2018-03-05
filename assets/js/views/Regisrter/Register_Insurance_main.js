@@ -34,7 +34,7 @@ $(function () {
 //        ],
         btnNewFun: function (f) {
              $.bPopup({
-                url: mvcPatch('Register/findeditRegister'),
+                url: mvcPatch('Register/typeedit'),
                 title: 'เพิ่มสาขาลูกค้า',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
@@ -44,18 +44,19 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({});
                             obj.RowKey = Guid;
-                            obj.CompanyKey = $('#txtkey').val();
-                            obj.Branch = _f.find('#txtTypeName').val();
-                            obj.Address = _f.find('#txtaddress').val();
-                            obj.SubDistrict = _f.find('#cmdSubDistrict').val();
-                            obj.ZipCode = _f.find('#txtZipCode').val();
-                            obj.Tel = _f.find('#txtTel').val();
+                            
+                            obj.EmpKey = $('#cmdProvince').val();
+                            obj.InsuranceTypeKey = _f.find('#cmdDistrict').val();
+                            obj.Cash = _f.find('#txtUser3').val();
+                            obj.EDate = _f.find('#txtUser5').val();
+                            obj.SDate = _f.find('#txtUser11').val();
+                            
 
                             $.bConfirm({
                                 buttonOK: function (k2) {
                                     k2.close();
                                     $.reqData({
-                                        url: mvcPatch('Register/findeditRegister'),
+                                        url: mvcPatch('Register/typeedit'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {

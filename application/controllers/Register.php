@@ -182,14 +182,10 @@ class Register extends PCenter {
         $this->load->view('layout/nav', $data);
     }
 
-    public function register_insurance_edit() {
-        $data['page'] = 'master/register/register_insurance_edit';
-        $this->load->view('layout/nav', $data);
+    public function typeedit() {
+        $this->load->view('master/Register/register_insurance_edit');
     }
 
-    
-
-    
     public function findeditRegister() {
         $key = $_POST['key'];
         $qryMenu = $this->db->from('TRNEmployeeInsurance')
@@ -210,6 +206,7 @@ class Register extends PCenter {
         $this->db->trans_begin();
         if ($_data->RowKey === PCenter::GUID_EMPTY()) {
             $queryChk = $this->db
+                            ->where('EmpKey', $_data->EmpKey)
                             ->where('InsuranceTypeKey', $_data->InsuranceTypeKey)
                             ->where('SDate', $_data->SDate)
                             ->where('EDate', $_data->EDate)

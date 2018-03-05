@@ -9,27 +9,11 @@ class Province extends PCenter {
         parent::__construct();
     }
 
-    public function findProvince() {
-        $query = $this->db
-                ->from('MSTProvince')
-                ->select('RowKey, Province')
-                ->order_by('Province', 'asc')
-                ->get();
-        echo json_encode($query->result());
-    }
     public function Insurancetype() {
         $query = $this->db
                 ->from('MSTInsuranceType')
-               ->select('RowKey, TypeName')
+                ->select('RowKey, TypeName')
                 ->order_by('TypeName', 'asc')
-                ->get();
-        echo json_encode($query->result());
-    }
-    public function Insurance() {
-        $query = $this->db
-                ->from('MSTInsurance')
-               ->select('RowKey, InsuranceName')
-                ->order_by('InsuranceName', 'asc')
                 ->get();
         echo json_encode($query->result());
     }
