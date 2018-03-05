@@ -1,4 +1,4 @@
-<?php echo js_asset('views/Customer/Customertype_edit.js') ?>
+<?php echo js_asset('views/customer/Customertype_edit.js') ?>
 <div class="panel panel-default">
     <div class="panel-body">
         <form id="form_customerbranchedit">            
