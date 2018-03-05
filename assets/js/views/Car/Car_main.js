@@ -13,18 +13,26 @@ $(function () {
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
-             {data: 'CarNumber', header: 'ทะเบียนรถ'},
+            {data: 'CarNumber', header: 'ทะเบียนรถ'},
             {data: 'Province', header: 'จังหวัด'},
             {data: 'Brand', header: 'ยี่ห้อ'},
-            {data: 'CarType', header: 'ประเภทรถ'},
+            {data: 'CarGroup', header: 'ประเภท'},
+            {data: 'CarType', header: 'ประเภทเพลา'},
         ],
         DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    return parseInt(val2.CarGroup) === 1 ? 'ส่วนหัว' : 'ส่วนหาง';
+                },
+                orderable: true,
+                targets: 3
+            },
             {
                 render: function (row, type, val2, meta) {
                     return parseInt(val2.CarType) === 1 ? '2 เพลา' : '3 เพลา';
                 },
                 orderable: true,
-                targets: 3
+                targets: 4
             }
         ],
         btnNewFun: function (f) {
@@ -39,10 +47,11 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = Guid;
-                            obj.BrandKey = _f.find('#cmdBrand').val();  
-                            obj.CarNumber = _f.find('#txtCarNumber').val();  
-                            obj.ProvinceKey = _f.find('#cmdProvince').val();  
-                            obj.CarType = _f.find('#txtCarType').val();  
+                            obj.BrandKey = _f.find('#cmdBrand').val();
+                            obj.CarNumber = _f.find('#txtCarNumber').val();
+                            obj.ProvinceKey = _f.find('#cmdProvince').val();
+                            obj.CarType = parseInt(_f.find('#txtCarType').val());
+                            obj.CarGroup = parseInt(_f.find('#cmdGroup').val());
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -78,7 +87,7 @@ $(function () {
                 ]
             });
         },
-         btnEditFun: function (f, d) {
+        btnEditFun: function (f, d) {
             $.bPopup({
                 url: mvcPatch('Car/edit'),
                 title: 'แก้ไขข้อมูลรถ',
@@ -90,10 +99,11 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = d.key;
-                            obj.BrandKey = _f.find('#cmdBrand').val();  
-                            obj.CarNumber = _f.find('#txtCarNumber').val();  
-                            obj.ProvinceKey = _f.find('#cmdProvince').val();  
-                            obj.CarType = _f.find('#txtCarType').val();                 
+                            obj.BrandKey = _f.find('#cmdBrand').val();
+                            obj.CarNumber = _f.find('#txtCarNumber').val();
+                            obj.ProvinceKey = _f.find('#cmdProvince').val();
+                            obj.CarType = parseInt(_f.find('#txtCarType').val());
+                            obj.CarGroup = parseInt(_f.find('#cmdGroup').val());
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -158,12 +168,11 @@ $(function () {
             });
         },
 
-        
         btnPreviewFun: function (f, d) {
             form_sumbit.SetDataPost({
                 data: {
                     txtkey: d.key,
-                    txtdisplay:d.CarNumber
+                    txtdisplay: d.CarNumber
                 }
             }).prop('action', mvcPatch('Car/Carinsurance')).submit()
         }

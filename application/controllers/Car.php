@@ -35,7 +35,8 @@ class Car extends PCenter {
                         . 'C.ProvinceKey,'
                         . 'P.Province,'
                         . 'C.CarType,'
-                        . 'B.Brand,')
+                        . 'B.Brand,'
+                        . 'C.CarGroup')
 //                . 'D.RowKey as DistrictKey,'
 //                . 'D.ProvinceKey'
                 ->from('MSTCar C')
@@ -101,6 +102,7 @@ class Car extends PCenter {
                 $update->BrandKey = $_data->BrandKey;
                 $update->CarNumber = $_data->CarNumber;
                 $update->ProvinceKey = $_data->ProvinceKey;
+                $update->CarGroup = $_data->CarGroup;
                 $update->CarType = $_data->CarType;
 
                 $update->UpdateBy = PCenter::GUID_EMPTY();
@@ -137,11 +139,11 @@ class Car extends PCenter {
         }
         echo json_encode($vReturn);
     }
- 
+
     public function findinsurancecar() {
         $key = $_POST['key'];
         $qryMenu = $this->db->from('TRNCarInsurance')
-                ->where('InsuranceKey',$key)
+                ->where('InsuranceKey', $key)
                 ->select('RowKey as key,'
                         . 'InsuranceKey,'
                         . 'TypeName,'
@@ -149,7 +151,7 @@ class Car extends PCenter {
                 ->get();
         echo json_encode($qryMenu->result());
     }
-    
+
     public function editinsurancecar() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
@@ -157,10 +159,10 @@ class Car extends PCenter {
         $this->db->trans_begin();
         if ($_data->RowKey === PCenter::GUID_EMPTY()) {
             $queryChk = $this->db
-                    ->where('TypeUse', $_data->TypeUse)
-                    ->where('TypeName', $_data->TypeName)
-                    ->where('InsuranceKey', $_data->InsuranceKey)
-                    ->from('MSTInsuranceType')->count_all_results();
+                            ->where('TypeUse', $_data->TypeUse)
+                            ->where('TypeName', $_data->TypeName)
+                            ->where('InsuranceKey', $_data->InsuranceKey)
+                            ->from('MSTInsuranceType')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
@@ -182,11 +184,11 @@ class Car extends PCenter {
             }
         } else {
             $queryChk = $this->db
-                    ->where('TypeUse', $_data->TypeUse)
-                    ->where('TypeName', $_data->TypeName)
-                    ->where('InsuranceKey', $_data->InsuranceKey)
-                    ->where('RowKey !=', $_data->RowKey)
-                    ->from('MSTInsuranceType')->count_all_results();
+                            ->where('TypeUse', $_data->TypeUse)
+                            ->where('TypeName', $_data->TypeName)
+                            ->where('InsuranceKey', $_data->InsuranceKey)
+                            ->where('RowKey !=', $_data->RowKey)
+                            ->from('MSTInsuranceType')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
@@ -206,7 +208,7 @@ class Car extends PCenter {
         }
         echo json_encode($vReturn);
     }
-    
+
     public function removeinsurancecar() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
@@ -224,4 +226,5 @@ class Car extends PCenter {
         }
         echo json_encode($vReturn);
     }
+
 }

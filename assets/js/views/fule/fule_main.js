@@ -78,7 +78,7 @@ $(function () {
 
         btnEditFun: function (f, d) {
             $.bPopup({
-                url: mvcPatch('Ful/edit'),
+                url: mvcPatch('Fule/edit'),
                 title: 'Edit Fule',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,

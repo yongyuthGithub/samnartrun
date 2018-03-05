@@ -5,10 +5,10 @@ $(function () {
     var _formdata = form_Caredit_C.data('data');
     if (_formdata.key === Guid) {
         setBrand(function (_b) {
-            _b.val(Guid).selectpicker('render');           
+            _b.val(Guid).selectpicker('render');
         });
         setProvice(function (_b) {
-            _b.val(Guid).selectpicker('render');           
+            _b.val(Guid).selectpicker('render');
         });
     } else {
         form_Caredit.find('#cmdBrand').val(_formdata.BrandKey);
@@ -16,18 +16,25 @@ $(function () {
         form_Caredit.find('#cmdProvince').val(_formdata.ProvinceKey);
         form_Caredit.find('#txtCarType').val(_formdata.CarType);
         form_Caredit.find('.showinadd').remove();
-         form_Caredit.find('#txtCarType').val(_formdata.CarType).selectpicker('render');
+        form_Caredit.find('#cmdGroup').val(_formdata.CarGroup).selectpicker('render');
+        form_Caredit.find('#txtCarType').val(_formdata.CarType).selectpicker('render');
         //***Edit By Yongyuth
-         setBrand(function (_b) {
-            _b.val(_formdata.BrandKey).selectpicker('render');           
+        setBrand(function (_b) {
+            _b.val(_formdata.BrandKey).selectpicker('render');
         });
-         setProvice(function (_b) {
-            _b.val(_formdata.ProvinceKey).selectpicker('render');           
+        setProvice(function (_b) {
+            _b.val(_formdata.ProvinceKey).selectpicker('render');
         });
         //********************
     }
 
-form_Caredit.find('#txtCarType').selectpicker().on({
+    form_Caredit.find('#cmdGroup').selectpicker().on({
+        change: function () {
+//            setDistrict(Guid);
+        }
+    });
+
+    form_Caredit.find('#txtCarType').selectpicker().on({
         change: function () {
 //            setDistrict(Guid);
         }

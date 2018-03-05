@@ -9,9 +9,30 @@ and open the template in the editor.
 </div>-->
 <?php echo js_asset('views/Car/Car_edit.js') ?>
 <div class="panel panel-default">
-    <div class="panel-body">
-        <form id="form_Caredit">
-             <div class="col-xs-12">
+    <form id="form_Caredit">
+        <div class="panel-body">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="cmdGroup">ประเภทรถ :</label>
+                    <select id="cmdGroup" name="cmdGroup" class="form-control selectpicker show-menu-arrow"
+                            data-width="100%"
+                            data-show-Tick="true"
+                            data-tick-Icon="fa fa-check"
+                            data-size="5"
+                            data-header="false"
+                            data-live-Search="false"
+                            data-live-Search-Placeholder="key word"
+                            data-multiple-Separator=",&nbsp;&nbsp;"
+                            data-actions-Box="false"
+                            data-selectAll-Text="Select All"
+                            data-deselectAll-Text="Deselect All"
+                            data-selected-Text-Format="count > 3">
+                        <option data-icon="fa fa-clone" value="1">&nbsp;&nbsp;ส่วนหัว</option>
+                        <option data-icon="fa fa-clone" value="2">&nbsp;&nbsp;ส่วนหาง</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-12">
                 <div class="form-group">
                     <label for="cmdBrand">ยี่ห้อรถ :</label>
                     <select id="cmdBrand" name="cmdBrand" class="form-control selectpicker show-menu-arrow"
@@ -30,7 +51,7 @@ and open the template in the editor.
                     </select>
                 </div>
             </div>
-              <div class="col-xs-12">
+            <div class="col-xs-12">
                 <div class="form-group">
                     <label for="txtCarNumber">เลขทะเบียนรถ :</label>
                     <div class="input-group">
@@ -39,7 +60,7 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
-          
+
             <div class="col-xs-12">
                 <div class="form-group">
                     <label for="cmdProvince">จังหวัด :</label>
@@ -59,7 +80,7 @@ and open the template in the editor.
                     </select>
                 </div>
             </div>
-             <div class="col-xs-12">
+            <div class="col-xs-12">
                 <div class="form-group">
                     <label for="txtCarType">ประเภทเพลา :</label>
                     <select id="txtCarType" name="txtCarType" class="form-control selectpicker show-menu-arrow"
@@ -75,13 +96,13 @@ and open the template in the editor.
                             data-selectAll-Text="Select All"
                             data-deselectAll-Text="Deselect All"
                             data-selected-Text-Format="count > 3">
-                         <option data-icon="fa fa-clone" value="1">&nbsp;&nbsp;2เพลา</option>
-                        <option data-icon="fa fa-clone" value="2">&nbsp;&nbsp;3เพลา</option>
+                        <option data-icon="fa fa-clone" value="1">&nbsp;&nbsp;2 เพลา</option>
+                        <option data-icon="fa fa-clone" value="2">&nbsp;&nbsp;3 เพลา</option>
                     </select>
-                    </div>
                 </div>
             </div>
-           
-        </form>
-    </div>
+        </div>
+
+    </form>
+</div>
 </div>
