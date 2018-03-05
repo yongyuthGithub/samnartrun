@@ -61,7 +61,24 @@ class Home extends PCenter {
 //        }); //sorted ascending
 //        $this->load->library('Phinq/PhinqBase');
 //        $this->load->library('Phinq/Phinq');
+        $_company = '';
+        $_address='';
+         $qryMenu = $this->db
+                ->select('c.Customer,'
+                        . 'Concat(c.Address," ",sd.SubDistrict," ",d.District, " ",p.Province," ",c.ZipCode )as FullAdress')
+                ->from('SYSCompany c')
+                ->join('MSTSubDistrict sd', 'c.SubDistrict=sd.RowKey', 'left')
+                ->join('MSTDistrict d', 'sd.DistrictKey=d.RowKey', 'left')
+                ->join('MSTProvince p', 'd.ProvinceKey=p.RowKey', 'left')
+                ->get();
+        foreach ($qryMenu->result() as $row){
+            $_company=$row->Customer;
+            $_address=$row->FullAdress;
+        } 
+         
         $data['page'] = 'setting/home/main_page';
+        $data['company']=$_company;
+        $data['address']=$_address;
         $this->load->view('layout/nav', $data);
     }
 

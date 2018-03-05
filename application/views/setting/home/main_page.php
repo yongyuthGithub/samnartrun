@@ -1,7 +1,29 @@
-<div class="col-12">   
+<?php echo js_asset('views/setting/home/main_page.js'); ?>
+<div class="col-xs-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1 style="text-align: center;padding-bottom: 30px;padding-top: 30px;">Welcome to shipping information.</h1><h4><small></small></h4>
+            <h2 style="text-align: center;padding-bottom: 0px;padding-top: 0px;"><?php echo $company; ?></h2><h4 style="text-align: center;"><small><?php echo $address; ?></small></h4>
+        </div>
+    </div>
+</div>
+<div class="col-xs-12">   
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="ch1" style="width:100%;"></div>
+        </div>
+    </div>
+</div>
+<div class="col-xs-12 col-md-6">   
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="ch2" style="width:100%"></div>
+        </div>           
+    </div>
+</div>
+<div class="col-xs-12 col-md-6">   
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="ch3" style="width:100%"></div>
         </div>
     </div>
 </div>
