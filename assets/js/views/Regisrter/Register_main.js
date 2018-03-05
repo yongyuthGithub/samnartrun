@@ -7,7 +7,7 @@ $(function () {
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
-        btnPreviewText: 'ประกัน',
+        btnPreviewText: 'Insurance',
         btnPreview: true,
         headerString: '',
         UrlDataJson: mvcPatch('Register/findRegister'),

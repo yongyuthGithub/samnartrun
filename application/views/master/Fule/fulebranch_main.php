@@ -1,8 +1,9 @@
+<?php echo css_asset('views/fule/fulebranch_main.css') ?>
 <?php echo js_asset('views/fule/fulebranch_main.js') ?>
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1>ข้อมูลสาขาปั้มน้ำมัน</h1><h4><small>ข้อมูลสาขาปั้มน้ำมันของ <?php echo $_POST['txtdisplay']; ?></small></h4>
+            <h1>ข้อมูลสาขาปั้มเชื้อเพลิง</h1><h4><small>ข้อมูลสาขาปั้มเชื้อเพิลงของ <?php echo $_POST['txtdisplay']; ?></small></h4>
         </div>
     </div>
 </div>

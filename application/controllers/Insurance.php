@@ -100,7 +100,7 @@ class Insurance extends PCenter {
                 $update->SubDistrict = $_data->SubDistrict;
                 $update->ZipCode = $_data->ZipCode;
                 $update->Tel = $_data->Tel;
-                $update->UpdateBy = PCenter::GUID_EMPTY();
+                $update->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('MSTInsurance', $update);
                 if ($this->db->trans_status() === FALSE) {

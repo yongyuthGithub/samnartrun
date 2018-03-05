@@ -29,7 +29,7 @@ $(function () {
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('FuleType/edit'),
-                title: 'New PumpType',
+                title: 'เพิ่มประภทเชื้อเพลิง',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -79,7 +79,7 @@ $(function () {
         btnEditFun: function (f, d) {
             $.bPopup({
                 url: mvcPatch('FuleType/edit'),
-                title: 'Edit Fule',
+                title: 'แก้ไขประเภทเชื้อเพลิง',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {

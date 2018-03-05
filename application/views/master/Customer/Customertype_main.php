@@ -1,3 +1,4 @@
+<?php echo css_asset('views/customer/customerbranch_main.css') ?>
 <?php echo js_asset('views/customer/Customerbranch_main.js') ?>
 <div class="col-12">   
     <div class="panel panel-default">

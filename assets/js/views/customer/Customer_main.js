@@ -14,9 +14,8 @@ $(function () {
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
-            
-            {data: 'Customer', header: 'Customer'},
-           
+            {data: 'CusCode', header: 'รหัสลูกค้า'},
+            {data: 'Customer', header: 'ชื่อลูกค้า'}           
         ],
 //        DataColumnsDefs: [{
 //                render: function (row, type, val2, meta) {
@@ -29,7 +28,7 @@ $(function () {
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Customer/edit'),
-                title: 'New Customer',
+                title: 'เพิ่มลูกค้า',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -38,11 +37,8 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = Guid;
+                            obj.CusCode=_f.find('#txtCusCode').val();
                             obj.Customer = _f.find('#txtUser').val();
-                            obj.Address = _f.find('#txtaddress').val();
-                            obj.SubDistrict = _f.find('#cmdSubDistrict').val();
-                            obj.ZipCode = _f.find('#txtZipCode').val();
-                            obj.Tel = _f.find('#txtTel').val();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -82,7 +78,7 @@ $(function () {
         btnEditFun: function (f, d) {
             $.bPopup({
                 url: mvcPatch('Customer/edit'),
-                title: 'Edit Customer',
+                title: 'แก้ไขข้อมูลลูกค้า',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -91,8 +87,8 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = d.key;
-                            obj.Customer = _f.find('#txtUser').val();
-                             
+                            obj.CusCode=_f.find('#txtCusCode').val();
+                            obj.Customer = _f.find('#txtUser').val();                             
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();

@@ -28,7 +28,7 @@ $(function () {
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Fule/edit'),
-                title: 'New Pump',
+                title: 'เพิ่มปั้มเชื้อเพลิง',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -79,7 +79,7 @@ $(function () {
         btnEditFun: function (f, d) {
             $.bPopup({
                 url: mvcPatch('Fule/edit'),
-                title: 'Edit Fule',
+                title: 'แก้ไขปั้มเชื้อเพลิง',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -137,7 +137,7 @@ $(function () {
                                 return x.key;
                             }).ToArray();
                     $.reqData({
-                        url: mvcPatch('Fule/removeAccount'),
+                        url: mvcPatch('Fule/removePump'),
                         data: {data: JSON.stringify(vdata)},
                         callback: function (vdata) {
                             if (vdata.success) {

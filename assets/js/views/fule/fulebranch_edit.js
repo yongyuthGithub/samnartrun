@@ -1,8 +1,8 @@
 $(function () {
-    var form_insuranceedit = $('#form_insuranceedit');
-    var form_insuranceedit_C = $.modelDialog(form_insuranceedit);
+    var form_fulebranchedit = $('#form_fulebranchedit');
+    var form_fulebranchedit_C = $.modelDialog(form_fulebranchedit);
 
-    var _formdata = form_insuranceedit_C.data('data');
+    var _formdata = form_fulebranchedit_C.data('data');
     if (_formdata.key === Guid) {
         setProvince(function (_p) {
             _p.val(Guid).selectpicker('render');
@@ -14,13 +14,10 @@ $(function () {
             });
         });
     } else {
-        form_insuranceedit.find('#txtinsurance').val(_formdata.InsuranceName);
-        form_insuranceedit.find('#txtaddress').val(_formdata.Address);
-        form_insuranceedit.find('#cmdSubDistrict').val(_formdata.cmdSubDistrict);
-        form_insuranceedit.find('#txtZipCode').val(_formdata.ZipCode);
-        form_insuranceedit.find('#txtTel').val(_formdata.Tel);     
-        form_insuranceedit.find('.showinadd').remove();
-         //***Edit By Yongyuth
+        form_fulebranchedit.find('#txtbranch').val(_formdata.PumpBranch);
+        form_fulebranchedit.find('#txtaddress').val(_formdata.Address);
+        form_fulebranchedit.find('#txtZipCode').val(_formdata.ZipCode);
+        //***Edit By Yongyuth
         setProvince(function (_p) {
             _p.val(_formdata.ProvinceKey).selectpicker('render');
             setDistrict(function (_d) {
@@ -30,11 +27,9 @@ $(function () {
                 });
             });
         });
-        //********************
     }
 
-
-    form_insuranceedit.find('#cmdProvince').selectpicker().on({
+    form_fulebranchedit.find('#cmdProvince').selectpicker().on({
         change: function () {
 //            setDistrict(Guid);
             setDistrict(function (_d) {
@@ -50,7 +45,7 @@ $(function () {
             url: mvcPatch('Province/findProvince'),
             loanding: false,
             callback: function (vdata) {
-                var _sel = form_insuranceedit.find('#cmdProvince').empty();
+                var _sel = form_fulebranchedit.find('#cmdProvince').empty();
                 var _html = '';
                 $.each(vdata, function (k, v) {
                     _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.Province + '">&nbsp;&nbsp;' + v.Province + '</option>';
@@ -60,8 +55,8 @@ $(function () {
             }
         });
     }
-    form_insuranceedit.find('#cmdDistrict').selectpicker().on({
-    change: function () {
+    form_fulebranchedit.find('#cmdDistrict').selectpicker().on({
+        change: function () {
 //            setSubDistrict(Guid);
             setSubDistrict(function (_sd) {
                 _sd.val(Guid).selectpicker('render');
@@ -72,10 +67,10 @@ $(function () {
 //       alert(form_insuranceedit.find('#cmdProvince').val());
         $.reqData({
             url: mvcPatch('Province/findDistrict'),
-            data: {key: form_insuranceedit.find('#cmdProvince').val()},
+            data: {key: form_fulebranchedit.find('#cmdProvince').val()},
             loanding: false,
             callback: function (vdata) {
-                var _sel = form_insuranceedit.find('#cmdDistrict').empty();
+                var _sel = form_fulebranchedit.find('#cmdDistrict').empty();
                 var _html = '';
                 $.each(vdata, function (k, v) {
                     _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.District + '">&nbsp;&nbsp;' + v.District + '</option>';
@@ -85,20 +80,20 @@ $(function () {
             }
         });
     }
-    form_insuranceedit.find('#cmdSubDistrict').selectpicker().on({
-    change: function () {
+    form_fulebranchedit.find('#cmdSubDistrict').selectpicker().on({
+        change: function () {
             var _v = $(this).find('option[value="' + $(this).val() + '"]').data('zipcode');
-            form_insuranceedit.find('#txtZipCode').val(_v);
-            form_insuranceedit.formValidation('revalidateField', form_insuranceedit.find('#txtZipCode'));
+            form_fulebranchedit.find('#txtZipCode').val(_v);
+            form_fulebranchedit.formValidation('revalidateField', form_fulebranchedit.find('#txtZipCode'));
         }
     });
     function setSubDistrict(v) {
-         $.reqData({
+        $.reqData({
             url: mvcPatch('Province/findSubDistrict'),
-            data: {key: form_insuranceedit.find('#cmdDistrict').val()},
+            data: {key: form_fulebranchedit.find('#cmdDistrict').val()},
             loanding: false,
             callback: function (vdata) {
-                var _sel = form_insuranceedit.find('#cmdSubDistrict').empty();
+                var _sel = form_fulebranchedit.find('#cmdSubDistrict').empty();
                 var _html = '';
                 $.each(vdata, function (k, v) {
                     _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.SubDistrict + '"  data-ZipCode="' + v.ZipCode + '">&nbsp;&nbsp;' + v.SubDistrict + '</option>';
@@ -109,30 +104,29 @@ $(function () {
         });
     }
 
-
-    form_insuranceedit_C.find('#btn-ok').on({
+    form_fulebranchedit_C.find('#btn-ok').on({
         click: function () {
-            form_insuranceedit.submit();
+            form_fulebranchedit.submit();
         }
     })
 
-    form_insuranceedit.myValidation({
+    form_fulebranchedit.myValidation({
         funsuccess: function () {
-            form_insuranceedit_C.data('fun')(form_insuranceedit_C);
+            form_fulebranchedit_C.data('fun')(form_fulebranchedit_C);
         },
         btnactive: [
-            form_insuranceedit_C.find('#btn-ok')
+            form_fulebranchedit_C.find('#btn-ok')
         ],
         fields: {
-            txtinsurance: {
+            txtbranch: {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* กรุณาใส่ บริษัท.'
+                        message: '* กรุณาใส่ สาขา.'
                     }
                 }
             },
-              txtaddress: {
+            txtaddress: {
                 icon: false,
                 validators: {
                     notEmpty: {
@@ -169,14 +163,6 @@ $(function () {
                 validators: {
                     notEmpty: {
                         message: '* กรุณาใส่ รหัสไปรษณีย์.'
-                    }
-                }
-            },
-            txtTel: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* กรุณาใส่ เบอร์โทร.'
                     }
                 }
             }

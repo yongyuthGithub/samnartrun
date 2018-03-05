@@ -12,17 +12,9 @@ var _formdata = form_Customeredit_C.data('data');
     if (_formdata.key === Guid) {
 //        setTitle(Guid);
     } else {
+        form_Customeredit.find('#txtCusCode').val(_formdata.CusCode);
         form_Customeredit.find('#txtUser').val(_formdata.Customer);
-       
-        
-        form_Customeredit.find('.showinadd').remove();
-        
-//        setTitle(_formdata.TitleKey);
     }
-    form_Customeredit.find('#cmdTitle').selectpicker().on({
-        change: function () {
-        }
-    });
 
 
 
@@ -44,39 +36,7 @@ var _formdata = form_Customeredit_C.data('data');
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify User Name.'
-                    }
-                }
-            },
-            cmdTitle: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* Please specify Title.'
-                    }
-                }
-            },
-            txtFirstName: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* Please specify First Name.'
-                    }
-                }
-            },
-            txtLastName: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* Please specify Last Name.'
-                    }
-                }
-            },
-            txtPassword: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* Please specify Password.'
+                        message: '* ระบุชื่อลูกค้า'
                     }
                 }
             }

@@ -8,6 +8,7 @@ $(function () {
         btnDelete: true,
         btnEdit: true,
         btnPreview: true,
+        btnPreviewText: 'Insurance',
         headerString: '',
         UrlDataJson: mvcPatch('Car/findCar'),
         UrlLoanding: true,
