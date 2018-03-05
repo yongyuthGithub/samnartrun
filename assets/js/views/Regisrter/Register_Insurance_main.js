@@ -8,7 +8,7 @@ $(function () {
         btnEdit: true,
         btnPreview: false,
         headerString: '',
-        UrlDataJson: mvcPatch('Register/findregister_insurance'),
+        UrlDataJson: mvcPatch('Register/findeditRegister'),
         UrlDataSend: {key: $('#txtkey').val()},
 //    DataJson: function () {
 //        return new Array()
@@ -33,6 +33,58 @@ $(function () {
 //            }
 //        ],
         btnNewFun: function (f) {
+             $.bPopup({
+                url: mvcPatch('Register/findeditRegister'),
+                title: 'เพิ่มสาขาลูกค้า',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: new Object({key: Guid}),
+                        fun: function (_f) {
+                            var obj = new Object({});
+                            obj.RowKey = Guid;
+                            obj.CompanyKey = $('#txtkey').val();
+                            obj.Branch = _f.find('#txtTypeName').val();
+                            obj.Address = _f.find('#txtaddress').val();
+                            obj.SubDistrict = _f.find('#cmdSubDistrict').val();
+                            obj.ZipCode = _f.find('#txtZipCode').val();
+                            obj.Tel = _f.find('#txtTel').val();
+
+                            $.bConfirm({
+                                buttonOK: function (k2) {
+                                    k2.close();
+                                    $.reqData({
+                                        url: mvcPatch('Register/findeditRegister'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                f.find('.xref').click();
+                                                k.close();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         },
         btnEditFun: function (f, d) {
         },

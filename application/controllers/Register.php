@@ -182,21 +182,102 @@ class Register extends PCenter {
         $this->load->view('layout/nav', $data);
     }
 
-    public function findregister_insurance() {
-        $qryMenu = $this->db->select('ei.RowKey as key,'
-                        . 'ei.SDate,'
-                        . 'ei.EDate,'
-                        . 'ei.Cash,'
-                        . 'ei.InsuranceTypeKey,'
-                        . 'it.TypeName,'
-                        . 'i.InsuranceName')
-                ->join('MSTInsuranceType it', 'ei.InsuranceTypeKey=it.RowKey', 'left')
-                ->join('MSTInsurance i', 'it.InsuranceKey=i.RowKey', 'left')
-                ->where('ei.EmpKey', $_POST['key'])
-                ->where('ei.RowStatus', true)
-                ->from('TRNEmployeeInsurance ei')
+    public function register_insurance_edit() {
+        $data['page'] = 'master/register/register_insurance_edit';
+        $this->load->view('layout/nav', $data);
+    }
+
+    
+
+    
+    public function findeditRegister() {
+        $key = $_POST['key'];
+        $qryMenu = $this->db->from('TRNEmployeeInsurance')
+                ->where('EmpKey', $key)
+                ->select('RowKey as key,'
+                        . 'InsuranceTypeKey,'
+                        . 'SDate,'
+                        . 'EDate,'
+                        . 'Cash,')
                 ->get();
         echo json_encode($qryMenu->result());
+    }
+
+    public function editeditRegister() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+        if ($_data->RowKey === PCenter::GUID_EMPTY()) {
+            $queryChk = $this->db
+                            ->where('InsuranceTypeKey', $_data->InsuranceTypeKey)
+                            ->where('SDate', $_data->SDate)
+                            ->where('EDate', $_data->EDate)
+                            ->where('Cash', $_data->Cash)
+                            ->from('TRNEmployeeInsurance')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                $_data->RowKey = PCenter::GUID();
+                $_data->CreateBy = $this->USER_LOGIN()->RowKey;
+                $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->insert('TRNEmployeeInsurance', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                }
+            }
+        } else {
+            $queryChk = $this->db
+                            ->where('InsuranceTypeKey', $_data->InsuranceTypeKey)
+                            ->where('SDate', $_data->SDate)
+                            ->where('EDate', $_data->EDate)
+                            ->where('Cash', $_data->Cash)
+                            ->where('RowKey !=', $_data->RowKey)
+                            ->from('TRNEmployeeInsurance')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->where('RowKey', $_data->RowKey)->update('TRNEmployeeInsurance', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                }
+            }
+        }
+        echo json_encode($vReturn);
+    }
+
+    public function removeinsurancetype() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+        $this->db->trans_begin();
+
+        $this->db->where_in('RowKey', $_data)->delete('TRNEmployeeInsurance');
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
+        }
+        echo json_encode($vReturn);
     }
 
 }
