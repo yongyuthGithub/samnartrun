@@ -188,15 +188,20 @@ class Register extends PCenter {
 
     public function findeditRegister() {
         $key = $_POST['key'];
-        $qryMenu = $this->db->from('TRNEmployeeInsurance')
-                ->where('EmpKey', $key)
-                ->select('RowKey as key,'
-                        . 'InsuranceTypeKey,'
-                        . 'SDate,'
-                        . 'EDate,'
-                        . 'Cash,')
+        $query = $this->db->select('E.RowKey as key, '
+                        . 'I.InsuranceName,'
+                        . 'I.RowKey as InsuranceKey,'
+                        . 'IT.TypeName, '
+                        . 'IT.RowKey as TypeKey,'
+                        . 'E.SDate,'
+                        . 'E.EDate,'
+                        . 'E.Cash ,')
+                ->from('TRNEmployeeInsurance E')
+                ->join('MSTInsuranceType IT', 'E.InsuranceTypeKey=IT.RowKey', 'left')
+                ->join('MSTInsurance I', 'IT.InsuranceKey=I.RowKey', 'left')
+                ->where('E.EmpKey', $key)
                 ->get();
-        echo json_encode($qryMenu->result());
+        echo json_encode($query->result());
     }
 
     public function editeditRegister() {

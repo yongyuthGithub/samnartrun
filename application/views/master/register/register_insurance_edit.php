@@ -17,10 +17,11 @@ and open the template in the editor.
                         <div class="col-xs-12 "> 
                             <div class="row">
                                 
+                                
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <label for="cmdProvince">ประเภทประกัน :</label>
-                                        <select id="cmdProvince" name="cmdProvince" class="form-control selectpicker show-menu-arrow"
+                                        <label for="cmdInsurance">บริษัทประกัน :</label>
+                                        <select id="cmdInsurance" name="cmdInsurance" class="form-control selectpicker show-menu-arrow"
                                                 data-width="100%"
                                                 data-show-Tick="true"
                                                 data-tick-Icon="fa fa-check"
@@ -38,8 +39,8 @@ and open the template in the editor.
                                 </div>
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <label for="cmdDistrict">บริษัทประกัน :</label>
-                                        <select id="cmdDistrict" name="cmdDistrict" class="form-control selectpicker show-menu-arrow"
+                                        <label for="cmdInsurancetype">ประเภทประกัน :</label>
+                                        <select id="cmdInsurancetype" name="cmdInsurancetype" class="form-control selectpicker show-menu-arrow"
                                                 data-width="100%"
                                                 data-show-Tick="true"
                                                 data-tick-Icon="fa fa-check"
@@ -55,7 +56,6 @@ and open the template in the editor.
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <label for="txtUser">จำนวนเงิน:</label>

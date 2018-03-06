@@ -1,6 +1,6 @@
 $(function () {
     var form_register_insurance = $('#form_register_insurance');
-    
+
     form_register_insurance.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
@@ -17,11 +17,29 @@ $(function () {
         UrlLoandingclose: true,
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'TypeName', header: 'ประเภทประกัน'},
             {data: 'InsuranceName', header: 'บริษัทประกัน'},
+            {data: 'TypeName', header: 'ประเภทประกัน'},
             {data: 'SDate', header: 'วันที่จัดทำ'},
             {data: 'EDate', header: 'วันหมดอายุ'},
             {data: 'Cash', header: 'จำนวนเงิน'}
+        ],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    var _val = PHP_JSON_To_ShowDate(val2.SDate);
+                    return _val;
+                },
+                orderable: true,
+                targets: 2
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    var _val = PHP_JSON_To_ShowDate(val2.EDate);
+                    return _val;
+                },
+                orderable: true,
+                targets: 3
+            }
         ],
 //        DataColumnsDefs: [
 //            {
@@ -33,9 +51,9 @@ $(function () {
 //            }
 //        ],
         btnNewFun: function (f) {
-             $.bPopup({
+            $.bPopup({
                 url: mvcPatch('Register/typeedit'),
-                title: 'เพิ่มสาขาลูกค้า',
+                title: 'เพิ่มข้อมูลประกัน',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -44,19 +62,19 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({});
                             obj.RowKey = Guid;
-                            
-                            obj.EmpKey = $('#cmdProvince').val();
-                            obj.InsuranceTypeKey = _f.find('#cmdDistrict').val();
+
+                            obj.EmpKey = $('#txtkey').val();
+                            obj.InsuranceTypeKey = _f.find('#cmdInsurancetype').val();
                             obj.Cash = _f.find('#txtUser3').val();
-                            obj.EDate = _f.find('#txtUser5').val();
-                            obj.SDate = _f.find('#txtUser11').val();
-                            
+                            obj.EDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate1'));
+                            obj.SDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate'));
+
 
                             $.bConfirm({
                                 buttonOK: function (k2) {
                                     k2.close();
                                     $.reqData({
-                                        url: mvcPatch('Register/typeedit'),
+                                        url: mvcPatch('Register/editeditRegister'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -88,8 +106,86 @@ $(function () {
             });
         },
         btnEditFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('Register/typeedit'),
+                title: 'แก้ไขข้อมูลประกัน',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        fun: function (_f) {
+                            var obj = new Object({});
+                            obj.RowKey = Guid;
+
+                            obj.EmpKey = $('#txtkey').val();
+                            obj.InsuranceTypeKey = _f.find('#cmdInsurancetype').val();
+                            obj.Cash = _f.find('#txtUser3').val();
+                            obj.EDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate1'));
+                            obj.SDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate'));
+
+
+                            $.bConfirm({
+                                buttonOK: function (k2) {
+                                    k2.close();
+                                    $.reqData({
+                                        url: mvcPatch('Register/editeditRegister'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                f.find('.xref').click();
+                                                k.close();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
+            
         },
         btnDeleteFun: function (f, d) {
+            $.bConfirm({
+                message: 'Do you want to delete the data?',
+                type: BootstrapDialog.TYPE_DANGER,
+                buttonOK: function (k) {
+                    k.close();
+                    var vdata = $.ToLinq(d)
+                            .Select(function (x) {
+                                return x.key;
+                            }).ToArray();
+                    $.reqData({
+                        url: mvcPatch('Register/removeinsurancetype'),
+                        data: {data: JSON.stringify(vdata)},
+                        callback: function (vdata) {
+                            if (vdata.success) {
+                                f.find('.xref').click();
+                            } else {
+                                $.bAlert({
+                                    message: vdata.message
+                                });
+                            }
+                        }
+                    });
+                }
+            });
         },
         btnPreviewFun: function (f, d) {
         }
