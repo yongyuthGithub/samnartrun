@@ -54,4 +54,46 @@ class Record extends PCenter {
         echo json_encode($qryMenu->result());
     }
 
+    public function findCarFirst() {
+        $qryMenu = $this->db->select('c.RowKey,'
+                        . 'c.CarNumber,'
+                        . 'c.CarType,'
+                        . 'p.Province')
+                ->where('c.CarGroup', 1)
+                ->join('MSTProvince p', 'c.ProvinceKey=p.RowKey', 'left')
+                ->from('MSTCar c')
+                ->get();
+        echo json_encode($qryMenu->result());
+    }
+
+    public function findCarSecond() {
+        $qryMenu = $this->db->select('c.RowKey,'
+                        . 'c.CarNumber,'
+                        . 'c.CarType,'
+                        . 'p.Province')
+                ->where('c.CarGroup', 2)
+                ->join('MSTProvince p', 'c.ProvinceKey=p.RowKey', 'left')
+                ->from('MSTCar c')
+                ->get();
+        echo json_encode($qryMenu->result());
+    }
+
+    public function findCustomer() {
+        $qryMenu = $this->db->select('RowKey,'
+                        . 'CusCode,'
+                        . 'Customer')
+                ->get('MSTCustomer');
+        echo json_encode($qryMenu->result());
+    }
+
+    public function findCustomerBranch() {
+        $_key = $_POST['key'];
+        $qryMenu = $this->db->select('RowKey,'
+                        . 'Branch')
+                ->where('CompanyKey', $_key)
+                ->order_by('Branch','asc')
+                ->get('MSTCustomerBranch');
+        echo json_encode($qryMenu->result());
+    }
+
 }
