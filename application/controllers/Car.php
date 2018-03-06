@@ -24,13 +24,9 @@ class Car extends PCenter {
     }
 
     public function carinsuranceedit() {
-        $this->load->view('master/Car/Car_nsurance_edit');
+        $this->load->view('master/Car/Car_Insurance_edit');
     }
-     public function caract() {
-        $data['page'] = 'master/Car/Car_Act_main';
-        $this->load->view('layout/nav', $data);
-    }
-
+    
     public function caractedit() {
         $this->load->view('master/Car/Car_Act_edit');
     }
@@ -150,14 +146,20 @@ class Car extends PCenter {
 
     public function findinsurancecar() {
         $key = $_POST['key'];
-        $qryMenu = $this->db->from('TRNCarInsurance')
-                ->where('InsuranceKey', $key)
-                ->select('RowKey as key,'
-                        . 'InsuranceKey,'
-                        . 'TypeName,'
-                        . 'TypeUse')
+        $query = $this->db->select('T.RowKey as key, '
+                        . 'I.InsuranceName,'
+                        . 'I.RowKey as InsuranceKey,'
+                        . 'IT.TypeName, '
+                        . 'IT.RowKey as TypeKey,'
+                        . 'T.SDate,'
+                        . 'T.EDate,'
+                        . 'T.Cash ,')
+                ->from('TRNCarInsurance T')
+                ->join('MSTInsuranceType IT', 'T.InsuranceTypeKey=IT.RowKey', 'left')
+                ->join('MSTInsurance I', 'IT.InsuranceKey=I.RowKey', 'left')
+                ->where('T.CarKey', $key)
                 ->get();
-        echo json_encode($qryMenu->result());
+        echo json_encode($query->result());
     }
 
     public function editinsurancecar() {
@@ -167,10 +169,12 @@ class Car extends PCenter {
         $this->db->trans_begin();
         if ($_data->RowKey === PCenter::GUID_EMPTY()) {
             $queryChk = $this->db
-                            ->where('TypeUse', $_data->TypeUse)
-                            ->where('TypeName', $_data->TypeName)
-                            ->where('InsuranceKey', $_data->InsuranceKey)
-                            ->from('MSTInsuranceType')->count_all_results();
+                            ->where('CarKey', $_data->CarKey)
+                            ->where('InsuranceTypeKey', $_data->InsuranceTypeKey)
+                            ->where('SDate', $_data->SDate)
+                            ->where('EDate', $_data->EDate)
+                            ->where('Cash', $_data->Cash)
+                            ->from('TRNCarInsurance')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
@@ -180,7 +184,7 @@ class Car extends PCenter {
                 $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
                 $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
-                $this->db->insert('MSTInsuranceType', $_data);
+                $this->db->insert('TRNCarInsurance', $_data);
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;
@@ -192,18 +196,19 @@ class Car extends PCenter {
             }
         } else {
             $queryChk = $this->db
-                            ->where('TypeUse', $_data->TypeUse)
-                            ->where('TypeName', $_data->TypeName)
-                            ->where('InsuranceKey', $_data->InsuranceKey)
+                            ->where('InsuranceTypeKey', $_data->InsuranceTypeKey)
+                            ->where('SDate', $_data->SDate)
+                            ->where('EDate', $_data->EDate)
+                            ->where('Cash', $_data->Cash)
                             ->where('RowKey !=', $_data->RowKey)
-                            ->from('MSTInsuranceType')->count_all_results();
+                            ->from('TRNCarInsurance')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
                 $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
-                $this->db->where('RowKey', $_data->RowKey)->update('MSTInsuranceType', $_data);
+                $this->db->where('RowKey', $_data->RowKey)->update('TRNCarInsurance', $_data);
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;
@@ -222,7 +227,94 @@ class Car extends PCenter {
         $vReturn = (object) [];
         $this->db->trans_begin();
 
-        $this->db->where_in('RowKey', $_data)->delete('MSTInsuranceType');
+        $this->db->where_in('RowKey', $_data)->delete('TRNCarInsurance');
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
+        }
+        echo json_encode($vReturn);
+    }
+ public function findactcar() {
+        $key = $_POST['key'];
+        $query = $this->db->select('T.RowKey as key, '
+                        . 'T.CarKey,'
+                        . 'T.SDate,'
+                        . 'T.EDate,'
+                        . 'T.Cash ,')
+                ->from('TRNCarAct T')
+                ->where('T.CarKey', $key)
+                ->get();
+        echo json_encode($query->result());
+    }
+
+    public function editactcar() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+        if ($_data->RowKey === PCenter::GUID_EMPTY()) {
+            $queryChk = $this->db
+                            ->where('SDate', $_data->SDate)
+                            ->where('EDate', $_data->EDate)
+                            ->where('Cash', $_data->Cash)
+                            ->from('TRNCarAct')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                $_data->RowKey = PCenter::GUID();
+                $_data->CreateBy = $this->USER_LOGIN()->RowKey;
+                $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->insert('TRNCarAct', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false; 
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                }
+            }
+        } else {
+            $queryChk = $this->db
+                            ->where('SDate', $_data->SDate)
+                            ->where('EDate', $_data->EDate)
+                            ->where('Cash', $_data->Cash)
+                            ->where('RowKey !=', $_data->RowKey)
+                            ->from('TRNCarAct')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->where('RowKey', $_data->RowKey)->update('TRNCarAct', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                }
+            }
+        }
+        echo json_encode($vReturn);
+    }
+
+    public function removeactcar() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+        $this->db->trans_begin();
+
+        $this->db->where_in('RowKey', $_data)->delete('TRNCarAct');
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();

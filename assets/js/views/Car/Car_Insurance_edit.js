@@ -1,50 +1,150 @@
 $(function () {
-    var form_carinsuranceedit = $('#form_carinsuranceedit');
-    var form_carinsuranceedit_C = $.modelDialog(form_carinsuranceedit);
+    var form_CarInsuranceedit = $('#form_CarInsuranceedit');
+    var form_CarInsuranceedit_C = $.modelDialog(form_CarInsuranceedit);
 
-    var _formdata = form_carinsuranceedit_C.data('data');
-    if (_formdata.key !== Guid) {
-        form_carinsuranceedit.find('#txtTypeName').val(_formdata.TypeName);
-        form_carinsuranceedit.find('#cmdTypeUse').val(_formdata.TypeUse).selectpicker('render');
+    var _formdata = form_CarInsuranceedit_C.data('data');
+    if (_formdata.key === Guid) {
+//        setProvince(Guid);
+        //***Edit By Yongyuth
+        setInsurance(function (_p) {
+            _p.val(Guid).selectpicker('render');
+            setInsurancetype(function (_d) {
+                _d.val(Guid).selectpicker('render');
+            });
+        });
+        //********************
+    } else {
+
+        form_CarInsuranceedit.find('#txtCash').val(_formdata.Cash);
+        form_CarInsuranceedit.find('#txtSDate1').val(PHP_JSON_To_ShowDate(_formdata.SDate));
+        form_CarInsuranceedit.find('#txtEDate1').val(PHP_JSON_To_ShowDate(_formdata.EDate));
+
+        //***Edit By Yongyuth
+        setInsurance(function (_p) {
+            _p.val(_formdata.InsuranceKey).selectpicker('render');
+            setInsurancetype(function (_d) {
+                _d.val(_formdata.TypeKey).selectpicker('render');
+
+            });
+        });
+        //********************
+
     }
 
-    form_carinsuranceedit.find('#cmdTypeUse').selectpicker({
-    }).on({
+    form_CarInsuranceedit.find('#txtSDate').dateTime().on('dp.change', function (e) {
+        form_CarInsuranceedit.formValidation('revalidateField', form_CarInsuranceedit.find('#txtSDate1'));
+    });
+    form_CarInsuranceedit.find('#txtEDate').dateTime().on('dp.change', function (e) {
+        form_CarInsuranceedit.formValidation('revalidateField', form_CarInsuranceedit.find('#txtEDate1'));
+    });
+   
+
+
+
+    form_CarInsuranceedit.find('#cmdCarInsurance').selectpicker().on({
         change: function () {
-            //javascript on change
+//            setDistrict(Guid);
+            setInsurancetype(function (_d) {
+                _d.val(Guid).selectpicker('render');
+            });
         }
     });
+    function setInsurance(v) {
+        $.reqData({
+            url: mvcPatch('Province/Insurance'),
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_CarInsuranceedit.find('#cmdCarInsurance').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.InsuranceName + '">&nbsp;&nbsp;' + v.InsuranceName + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh');
+                v(_sel);
+            }
+        });
+    }
 
-    form_carinsuranceedit_C.find('#btn-ok').on({
+//    form_CarInsuranceedit.find('#cmdProvince').on({
+//        change: function () {
+////            setSubDistrict(Guid);
+//            setDistrict(function (_sd) {
+//                _sd.val(Guid).selectpicker('render');
+//            })
+//        }
+//    });
+    function setInsurancetype(v) {
+        $.reqData({
+            url: mvcPatch('Province/Insurancetypecar'),
+            data: {key: form_CarInsuranceedit.find('#cmdCarInsurance').val()},
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_CarInsuranceedit.find('#cmdCarInsurancetype').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.TypeName + '">&nbsp;&nbsp;' + v.TypeName + '</option>';
+                });
+                
+                _sel.append(_html).selectpicker('refresh');
+                v(_sel);
+            }
+        });
+    }
+     form_CarInsuranceedit_C.find('#btn-ok').on({
         click: function () {
-            form_carinsuranceedit.submit();
+            form_CarInsuranceedit.submit();
         }
     });
 
-    form_carinsuranceedit.myValidation({
+    form_CarInsuranceedit.myValidation({
         funsuccess: function () {
-            form_carinsuranceedit_C.data('fun')(form_carinsuranceedit_C);
+            form_CarInsuranceedit_C.data('fun')(form_CarInsuranceedit);
         },
         btnactive: [
-            form_carinsuranceedit_C.find('#btn-ok')
+            form_CarInsuranceedit.find('#btn-ok')
         ],
         fields: {
-            cmdTypeUse: {
+            cmdCarInsurance: {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* กรุณาระบุกลุ่มประกัน'
+                        message: '* กรุณาระบุชื่อบริษัทประกัน'
                     }
                 }
             },
-            txtTypeName: {
+            cmdCarInsurancetype: {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* กรุณาระบุชื่อประกัน'
+                        message: '* กรุณาระบุชนิดประกัน'
+                    }
+                }
+            },
+             txtCash: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุจำนวนเงิน'
+                    }
+                }
+            },
+             txtSDate1: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุวันที่เริ่มอายุประกัน'
+                    }
+                }
+            },
+             txtEDate1: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุวันที่หมดอายุประกัน'
                     }
                 }
             }
+            
         }
     });
 });

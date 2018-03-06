@@ -1,7 +1,134 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+$(function () {
+    var form_CarActedit = $('#form_CarActedit');
+    var form_CarActedit_C = $.modelDialog(form_CarActedit);
 
+    var _formdata = form_CarActedit_C.data('data');
+    if (_formdata.key === Guid) {
+//        setProvince(Guid);
+        //***Edit By Yongyuth
+//        setInsurance(function (_p) {
+//            _p.val(Guid).selectpicker('render');
+//            setInsurancetype(function (_d) {
+//                _d.val(Guid).selectpicker('render');
+//            });
+//        });
+//        //********************
+    } else {
+
+        form_CarActedit.find('#txtCash').val(_formdata.Cash);
+        form_CarActedit.find('#txtSDate1').val(PHP_JSON_To_ShowDate(_formdata.SDate));
+        form_CarActedit.find('#txtEDate1').val(PHP_JSON_To_ShowDate(_formdata.EDate));
+//
+//        //***Edit By Yongyuth
+//        setInsurance(function (_p) {
+//            _p.val(_formdata.InsuranceKey).selectpicker('render');
+//            setInsurancetype(function (_d) {
+//                _d.val(_formdata.TypeKey).selectpicker('render');
+//
+//            });
+//        });
+//        //********************
+
+    }
+
+    form_CarActedit.find('#txtSDate').dateTime().on('dp.change', function (e) {
+//        form_CarActedit.formValidation('revalidateField', form_CarActedit.find('#txtSDate11'));
+    });
+    form_CarActedit.find('#txtEDate').dateTime().on('dp.change', function (e) {
+//        form_CarActedit.formValidation('revalidateField', form_CarActedit.find('#txtEDate11'));
+    });
+   
+
+//
+//
+//    form_CarActedit.find('#cmdCarInsurance').selectpicker().on({
+//        change: function () {
+////            setDistrict(Guid);
+//            setInsurancetype(function (_d) {
+//                _d.val(Guid).selectpicker('render');
+//            });
+//        }
+//    });
+//    function setInsurance(v) {
+//        $.reqData({
+//            url: mvcPatch('Province/Insurance'),
+//            loanding: false,
+//            callback: function (vdata) {
+//                var _sel = form_CarActedit.find('#cmdCarInsurance').empty();
+//                var _html = '';
+//                $.each(vdata, function (k, v) {
+//                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.InsuranceName + '">&nbsp;&nbsp;' + v.InsuranceName + '</option>';
+//                });
+//                _sel.append(_html).selectpicker('refresh');
+//                v(_sel);
+//            }
+//        });
+//    }
+//
+////    form_CarActedit.find('#cmdProvince').on({
+////        change: function () {
+//////            setSubDistrict(Guid);
+////            setDistrict(function (_sd) {
+////                _sd.val(Guid).selectpicker('render');
+////            })
+////        }
+////    });
+//    function setInsurancetype(v) {
+//        $.reqData({
+//            url: mvcPatch('Province/Insurancetypecar'),
+//            data: {key: form_CarActedit.find('#cmdCarInsurance').val()},
+//            loanding: false,
+//            callback: function (vdata) {
+//                var _sel = form_CarActedit.find('#cmdCarInsurancetype').empty();
+//                var _html = '';
+//                $.each(vdata, function (k, v) {
+//                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.TypeName + '">&nbsp;&nbsp;' + v.TypeName + '</option>';
+//                });
+//                
+//                _sel.append(_html).selectpicker('refresh');
+//                v(_sel);
+//            }
+//        });
+//    }
+     form_CarActedit_C.find('#btn-ok').on({
+        click: function () {
+            form_CarActedit.submit();
+        }
+    });
+
+    form_CarActedit.myValidation({
+        funsuccess: function () {
+            form_CarActedit_C.data('fun')(form_CarActedit);
+        },
+        btnactive: [
+            form_CarActedit.find('#btn-ok')
+        ],
+        fields: {
+             txtSDate1: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุวันที่เริ่มอายุพ.ร.บ'
+                    }
+                }
+            },
+             txtEDate1: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุวันที่หมดอายุพ.ร.บ'
+                    }
+                }
+            },
+            txtCash: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุจำนวนเงิน'
+                    }
+                }
+            },
+        }
+    });
+});
 

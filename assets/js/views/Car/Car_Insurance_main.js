@@ -18,20 +18,39 @@ $(function () {
         UrlLoandingclose: true,
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'Carkey', header: 'เลขทะเบียนรถ'},
-            {data: 'InsuranceTypeKey', header: 'ชนิดของประกัน'},
+
+            {data: 'InsuranceName', header: 'ชนิดของประกัน'},
             {data: 'SDate', header: 'วันเริ่มประกัน'},
             {data: 'EDate', header: 'วันหมดอายุประกัน'},
+            {data: 'Cash', header: 'จำนวนเงิน'},
         ],
         DataColumnsDefs: [
             {
                 render: function (row, type, val2, meta) {
-                    return parseInt(val2.TypeUse) === 1 ? 'บุคคล' : 'ยานพาหนะ';
+                    var _val = PHP_JSON_To_ShowDate(val2.SDate);
+                    return _val;
                 },
                 orderable: true,
                 targets: 1
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    var _val = PHP_JSON_To_ShowDate(val2.EDate);
+                    return _val;
+                },
+                orderable: true,
+                targets: 2
             }
         ],
+//        DataColumnsDefs: [
+//            {
+//                render: function (row, type, val2, meta) {
+//                    return parseInt(val2.TypeUse) === 1 ? 'บุคคล' : 'ยานพาหนะ';
+//                },
+//                orderable: true,
+//                targets: 1
+//            }
+//        ],
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Car/carinsuranceedit'),
@@ -44,17 +63,17 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({
                                 RowKey: Guid,
-                                Carkey: $('#txtkey').val(),
-                                InsuranceTypeKey: _f.find('#Insurancecar').val(),
-                                SDate: _f.find('#SDate').val(),
-                                EDate: _f.find('#EDate').val(),
-                                Cash: _f.find('#Cash').val()
+                                CarKey: $('#txtkey').val(),
+                                InsuranceTypeKey: _f.find('#cmdCarInsurancetype').val(),
+                                SDate: PHP_DateTimeShow_To_JSON(_f.find('#txtSDate')),
+                                EDate: PHP_DateTimeShow_To_JSON(_f.find('#txtEDate')),
+                                Cash: _f.find('#txtCash').val()
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {
                                     k2.close();
                                     $.reqData({
-                                        url: mvcPatch('car/carinsuranceedit'),
+                                        url: mvcPatch('car/editinsurancecar'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -88,7 +107,7 @@ $(function () {
         btnEditFun: function (f, d) {
             $.bPopup({
                 url: mvcPatch('car/carinsuranceedit'),
-                title: 'Edit Insurance Type',
+                title: 'แก้ไขประกันของรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -97,17 +116,17 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({
                                 RowKey: d.key,
-                                Carkey: $('#txtkey').val(),
-                                InsuranceTypeKey: _f.find('#Insurancecar').val(),
-                                SDate: _f.find('#SDate').val(),
-                                EDate: _f.find('#EDate').val(),
-                                Cash: _f.find('#Cash').val()
+                                CarKey: $('#txtkey').val(),
+                                InsuranceTypeKey: _f.find('#cmdCarInsurancetype').val(),
+                                SDate: PHP_DateTimeShow_To_JSON(_f.find('#txtSDate')),
+                                EDate: PHP_DateTimeShow_To_JSON(_f.find('#txtEDate')),
+                                Cash: _f.find('#txtCash').val()
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {
                                     k2.close();
                                     $.reqData({
-                                        url: mvcPatch('car/carinsuranceedit'),
+                                        url: mvcPatch('car/editinsurancecar'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -169,15 +188,15 @@ $(function () {
         btnPreviewFun: function (f, d) {
         }
     });
-//            ................................................................................................
-   form_caract.setMainPage({
+//            .......................................ACT.........................................................
+    form_caract.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
         btnPreview: false,
         headerString: '',
-        UrlDataJson: mvcPatch('Car/findinsurancecar'),
+        UrlDataJson: mvcPatch('Car/findactcar'),
         UrlDataSend: {key: $('#txtkey').val()},
 //        DataJson: function () {
 //            return new Array()
@@ -186,23 +205,32 @@ $(function () {
         UrlLoandingclose: true,
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'Carkey', header: 'เลขที่พ.ร.บ'},
+            {data: 'Cash', header: 'วงเงิน'},
             {data: 'SDate', header: 'วันเริ่มพ.ร.บ'},
             {data: 'EDate', header: 'วันหมดอายุพ.ร.บ'},
         ],
         DataColumnsDefs: [
             {
                 render: function (row, type, val2, meta) {
-                    return parseInt(val2.TypeUse) === 1 ? 'บุคคล' : 'ยานพาหนะ';
+                    var _val = PHP_JSON_To_ShowDate(val2.SDate);
+                    return _val;
                 },
                 orderable: true,
                 targets: 1
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    var _val = PHP_JSON_To_ShowDate(val2.EDate);
+                    return _val;
+                },
+                orderable: true,
+                targets: 2
             }
         ],
         btnNewFun: function (f) {
             $.bPopup({
-                url: mvcPatch('Car/editinsurancecar'),
-                title: 'เพิ่มชนิดของประกันรถ',
+                url: mvcPatch('Car/caractedit'),
+                title: 'เพิ่มพ.ร.บของรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -211,17 +239,16 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({
                                 RowKey: Guid,
-                                Carkey: $('#txtkey').val(),
-                                InsuranceTypeKey: _f.find('#Insurancecar').val(),
-                                SDate: _f.find('#SDate').val(),
-                                EDate: _f.find('#EDate').val(),
-                                Cash: _f.find('#Cash').val()
+                                CarKey: $('#txtkey').val(),
+                                SDate: PHP_DateTimeShow_To_JSON(_f.find('#txtSDate')),
+                                EDate: PHP_DateTimeShow_To_JSON(_f.find('#txtEDate')),
+                                Cash: _f.find('#txtCash').val()
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {
                                     k2.close();
                                     $.reqData({
-                                        url: mvcPatch('car/editinsurancecar'),
+                                        url: mvcPatch('car/editactcar'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -254,8 +281,8 @@ $(function () {
         },
         btnEditFun: function (f, d) {
             $.bPopup({
-                url: mvcPatch('car/editinsurancecar'),
-                title: 'Edit Insurance Type',
+                url: mvcPatch('car/caractedit'),
+                title: 'แก้ไขพ.ร.บของรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -264,17 +291,16 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({
                                 RowKey: d.key,
-                                Carkey: $('#txtkey').val(),
-                                InsuranceTypeKey: _f.find('#Insurancecar').val(),
-                                SDate: _f.find('#SDate').val(),
-                                EDate: _f.find('#EDate').val(),
-                                Cash: _f.find('#Cash').val()
+                                CarKey: $('#txtkey').val(),
+                                SDate: PHP_DateTimeShow_To_JSON(_f.find('#txtSDate')),
+                                EDate: PHP_DateTimeShow_To_JSON(_f.find('#txtEDate')),
+                                Cash: _f.find('#txtCash').val()
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {
                                     k2.close();
                                     $.reqData({
-                                        url: mvcPatch('car/editinsurancecar'),
+                                        url: mvcPatch('car/editactcar'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -318,7 +344,7 @@ $(function () {
                                 return x.key;
                             }).ToArray();
                     $.reqData({
-                        url: mvcPatch('car/removeinsurancecar'),
+                        url: mvcPatch('car/removeactcar'),
                         data: {data: JSON.stringify(vdata)},
                         callback: function (vdata) {
                             if (vdata.success) {

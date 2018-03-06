@@ -17,6 +17,17 @@ class Province extends PCenter {
                 ->get();
         echo json_encode($query->result());
     }
+    public function Insurancetypecar() {
+        $value = $_POST['key'];
+        $query = $this->db
+                ->from('MSTInsuranceType')
+               ->select('RowKey, TypeName')
+                ->where('InsuranceKey', $value)
+                ->where('TypeUse', 2)
+                ->order_by('TypeName', 'asc')
+                ->get();
+        echo json_encode($query->result());
+    }
     public function Insurancetype() {
         $value = $_POST['key'];
         $query = $this->db
