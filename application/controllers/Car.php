@@ -26,6 +26,14 @@ class Car extends PCenter {
     public function carinsuranceedit() {
         $this->load->view('master/Car/Car_nsurance_edit');
     }
+     public function caract() {
+        $data['page'] = 'master/Car/Car_Act_main';
+        $this->load->view('layout/nav', $data);
+    }
+
+    public function caractedit() {
+        $this->load->view('master/Car/Car_Act_edit');
+    }
 
     public function findCar() {
         $query = $this->db->select('C.RowKey as key, '

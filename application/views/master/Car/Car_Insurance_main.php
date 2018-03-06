@@ -11,7 +11,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <ol class="breadcrumb">
-                <li><a href="<?php echo base_url('Car/index') ?>">หน้าหลัก</a></li>
+                <li><a href="<?php echo base_url('car/index') ?>">หน้าหลัก</a></li>
                 <li class="active"><?php echo $_POST['txtdisplay']; ?></li>
             </ol>
         </div>
@@ -20,7 +20,19 @@
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <div id="form_carinsurance"></div>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#Insurance">ประกันรถยนต์</a></li>
+                <li><a data-toggle="tab" href="#Act">พ.ร.บ</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="Insurance" class="tab-pane fade in active" style="padding-top: 20px;">
+                    <div id="form_carinsurance"></div>
+                </div>
+                <div id="Act" class="tab-pane fade" style="padding-top: 20px;">
+                    <div id="form_caract"></div>
+                </div>
+            </div>    
         </div>
     </div>
 </div>
