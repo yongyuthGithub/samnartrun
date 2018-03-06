@@ -1,22 +1,25 @@
 $(function () {
     var form_recordedit = $('#form_recordedit');
     var form_recordedit_C = $.modelDialog(form_recordedit);
-    var form_income = $('#form_income');
+    var form_incomein = $('#form_incomein');
+    var form_incomeout = $('#form_incomeout');
     var form_fule = $('#form_fule');
 
     var _formdata = form_recordedit_C.data('data');
     if (_formdata.key === Guid) {
         setCarF(Guid);
         setCarS(Guid);
+        form_incomein.data('data', new Array());
+        form_incomeout.data('data', new Array());
         setCustomerF(function (_p) {
             _p.val(Guid).selectpicker('render');
-            setCustomerBranchF(function(_b){
+            setCustomerBranchF(function (_b) {
                 _b.val(Guid).selectpicker('render');
             });
         });
         setCustomerS(function (_p) {
             _p.val(Guid).selectpicker('render');
-            setCustomerBranchS(function(_b){
+            setCustomerBranchS(function (_b) {
                 _b.val(Guid).selectpicker('render');
             });
         });
@@ -28,7 +31,7 @@ $(function () {
     form_recordedit.find('#cmdCarF').selectpicker({
     }).on({
         change: function () {
-            
+
         }
     });
     function setCarF(v) {
@@ -71,7 +74,7 @@ $(function () {
     form_recordedit.find('#cmdCustomerF').selectpicker({
     }).on({
         change: function () {
-            setCustomerBranchF(function(_b){
+            setCustomerBranchF(function (_b) {
                 _b.val(Guid).selectpicker('render');
                 form_recordedit.formValidation('revalidateField', form_recordedit.find('#cmdBranchF'));
             });
@@ -120,7 +123,7 @@ $(function () {
     form_recordedit.find('#cmdCustomerS').selectpicker({
     }).on({
         change: function () {
-             setCustomerBranchS(function(_b){
+            setCustomerBranchS(function (_b) {
                 _b.val(Guid).selectpicker('render');
                 form_recordedit.formValidation('revalidateField', form_recordedit.find('#cmdBranchS'));
             });
@@ -142,7 +145,7 @@ $(function () {
             }
         });
     }
-    
+
     form_recordedit.find('#cmdBranchS').selectpicker({
     }).on({
         change: function () {
@@ -166,7 +169,7 @@ $(function () {
         });
     }
 
-    form_income.setMainPage({
+    form_incomein.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
@@ -175,33 +178,260 @@ $(function () {
         headerString: '',
 //        UrlDataJson: mvcPatch('controllers/action'),
         DataJson: function () {
-            return new Array()
+            return form_incomein.data('data');
         },
         UrlLoanding: true,
         UrlLoandingclose: true,
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'SubMenu', header: 'รายละเอียด', orderable: false},
-            {data: 'Description', header: 'จำนวนเงิน', orderable: false},
+            {data: 'Detial', header: 'รายละเอียด', orderable: false},
+            {data: 'Amount', header: 'จำนวนเงิน', orderable: false},
 //            {data: 'Menu', header: 'Menu'},
 //            {data: 'Icon', header: 'Icon'},
 //            {data: 'Url', header: 'Url'}
         ],
-//        DataColumnsDefs: [
-//            {
-//                render: function (row, type, val2, meta) {
-//                    return '<i class="' + val2.Icon + '"></i>';
-//                },
-//                orderable: true,
-//                targets: 3
-//            }
-//        ],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    return addCommas(val2.Amount, 2);
+                },
+                orderable: true,
+                targets: 1
+            }
+        ],
         DataColumnsOrder: new Array(),
         btnNewFun: function (f) {
+            $.bPopup({
+                url: mvcPatch('Record/incomeinEdit'),
+                title: 'เพิ่มรายการรับ',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: new Object({key: Guid}),
+                        fun: function (_f) {
+                            var obj = new Object({
+                                key: newGuid(),
+                                Detial: _f.find('#txtDetail').val(),
+                                Amount: _f.find('#txtAmount').val()
+                            });
+                            var _chk = $.ToLinq(f.data('data'))
+                                    .Where(x => $.trim(x.Detial).toLocaleLowerCase() === $.trim(obj.Detial).toLocaleLowerCase())
+                                    .ToArray();
+                            if (_chk.length > 0) {
+                                $.bAlert({
+                                    message: 'This item already exists.'
+                                });
+                            } else {
+                                f.data('data').push(obj);
+                                f.find('.xref').click();
+                                _f.find('#btn-close').click();
+                            }
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         },
         btnEditFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('Record/incomeinEdit'),
+                title: 'แก้ไขรายการรับ',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        fun: function (_f) {
+                            var obj = new Object({
+                                key: d.key,
+                                Detial: _f.find('#txtDetail').val(),
+                                Amount: _f.find('#txtAmount').val()
+                            });
+                            var _chk = $.ToLinq(f.data('data'))
+                                    .Where(x => $.trim(x.Detial).toLocaleLowerCase() === $.trim(obj.Detial).toLocaleLowerCase() && x.key !== obj.key)
+                                    .ToArray();
+                            if (_chk.length > 0) {
+                                $.bAlert({
+                                    message: 'This item already exists.'
+                                });
+                            } else {
+                                var _up = $.ToLinq(f.data('data'))
+                                        .Where(x => x.key === obj.key)
+                                        .First();
+                                _up.Detial = obj.Detial;
+                                _up.Amount = obj.Amount;
+                                f.find('.xref').click();
+                                _f.find('#btn-close').click();
+                            }
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         },
         btnDeleteFun: function (f, d) {
+            var _d = $.ToLinq(d)
+                    .Select(function (x) {
+                        return x.key;
+                    });
+            var _u = $.ToLinq(f.data('data'))
+                    .Where(x => !_d.Contains(x.key))
+                    .ToArray();
+            f.data('data', _u);
+            f.find('.xref').click();
+        },
+        btnPreviewFun: function (f, d) {
+        }
+    });
+
+    form_incomeout.setMainPage({
+        btnNew: true,
+        btnDeleteAll: true,
+        btnDelete: true,
+        btnEdit: true,
+        btnPreview: false,
+        headerString: '',
+//        UrlDataJson: mvcPatch('controllers/action'),
+        DataJson: function () {
+            return form_incomeout.data('data');
+        },
+        UrlLoanding: true,
+        UrlLoandingclose: true,
+//    AfterLoadData: function (f, d, t) { },
+        DataColumns: [
+            {data: 'Detial', header: 'รายละเอียด', orderable: false},
+            {data: 'Amount', header: 'จำนวนเงิน', orderable: false},
+//            {data: 'Menu', header: 'Menu'},
+//            {data: 'Icon', header: 'Icon'},
+//            {data: 'Url', header: 'Url'}
+        ],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    return addCommas(val2.Amount, 2);
+                },
+                orderable: true,
+                targets: 1
+            }
+        ],
+        DataColumnsOrder: new Array(),
+        btnNewFun: function (f) {
+            $.bPopup({
+                url: mvcPatch('Record/incomeinEdit'),
+                title: 'เพิ่มรายการจ่าย',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: new Object({key: Guid}),
+                        fun: function (_f) {
+                            var obj = new Object({
+                                key: newGuid(),
+                                Detial: _f.find('#txtDetail').val(),
+                                Amount: _f.find('#txtAmount').val()
+                            });
+                            var _chk = $.ToLinq(f.data('data'))
+                                    .Where(x => $.trim(x.Detial).toLocaleLowerCase() === $.trim(obj.Detial).toLocaleLowerCase())
+                                    .ToArray();
+                            if (_chk.length > 0) {
+                                $.bAlert({
+                                    message: 'This item already exists.'
+                                });
+                            } else {
+                                f.data('data').push(obj);
+                                f.find('.xref').click();
+                                _f.find('#btn-close').click();
+                            }
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
+        },
+        btnEditFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('Record/incomeinEdit'),
+                title: 'แก้ไขรายการจ่าย',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        fun: function (_f) {
+                            var obj = new Object({
+                                key: d.key,
+                                Detial: _f.find('#txtDetail').val(),
+                                Amount: _f.find('#txtAmount').val()
+                            });
+                            var _chk = $.ToLinq(f.data('data'))
+                                    .Where(x => $.trim(x.Detial).toLocaleLowerCase() === $.trim(obj.Detial).toLocaleLowerCase() && x.key !== obj.key)
+                                    .ToArray();
+                            if (_chk.length > 0) {
+                                $.bAlert({
+                                    message: 'This item already exists.'
+                                });
+                            } else {
+                                var _up = $.ToLinq(f.data('data'))
+                                        .Where(x => x.key === obj.key)
+                                        .First();
+                                _up.Detial = obj.Detial;
+                                _up.Amount = obj.Amount;
+                                f.find('.xref').click();
+                                _f.find('#btn-close').click();
+                            }
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
+        },
+        btnDeleteFun: function (f, d) {
+            var _d = $.ToLinq(d)
+                    .Select(function (x) {
+                        return x.key;
+                    });
+            var _u = $.ToLinq(f.data('data'))
+                    .Where(x => !_d.Contains(x.key))
+                    .ToArray();
+            f.data('data', _u);
+            f.find('.xref').click();
         },
         btnPreviewFun: function (f, d) {
         }
@@ -247,13 +477,13 @@ $(function () {
         btnPreviewFun: function (f, d) {
         }
     });
-    
+
     form_recordedit_C.find('#btn-ok').on({
         click: function () {
             form_recordedit.submit();
         }
     });
-    
+
     form_recordedit.myValidation({
         funsuccess: function () {
             form_recordedit_C.data('fun')(form_recordedit_C);

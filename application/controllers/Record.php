@@ -18,6 +18,10 @@ class Record extends PCenter {
         $this->load->view('transaction/record/record_edit');
     }
 
+    public function incomeinEdit() {
+        $this->load->view('transaction/record/recordincomein_edit');
+    }
+
 //    public function file_upload(){
 //        $file = $_FILES['f'];        
 //        $vReturn = (object) [];
@@ -91,7 +95,7 @@ class Record extends PCenter {
         $qryMenu = $this->db->select('RowKey,'
                         . 'Branch')
                 ->where('CompanyKey', $_key)
-                ->order_by('Branch','asc')
+                ->order_by('Branch', 'asc')
                 ->get('MSTCustomerBranch');
         echo json_encode($qryMenu->result());
     }
