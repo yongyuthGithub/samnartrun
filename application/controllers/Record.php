@@ -22,6 +22,10 @@ class Record extends PCenter {
         $this->load->view('transaction/record/recordincomein_edit');
     }
 
+    public function fuleEdit() {
+        $this->load->view('transaction/record/recordfule_edit');
+    }
+
 //    public function file_upload(){
 //        $file = $_FILES['f'];        
 //        $vReturn = (object) [];
@@ -100,4 +104,33 @@ class Record extends PCenter {
         echo json_encode($qryMenu->result());
     }
 
+    public function findFule() {
+        $qryMenu = $this->db->select('RowKey,'
+                        . 'Pump')
+                ->order_by('Pump', 'asc')
+                ->get('MSTPump');
+        echo json_encode($qryMenu->result());
+    }
+
+    public function findFuleBranch() {
+        $_key = $_POST['key'];
+        $qryMenu = $this->db->select('RowKey,'
+                        . 'PumpBranch')
+                ->where('PumpKey',$_key)
+                ->order_by('PumpBranch', 'asc')
+                ->get('MSTPumpBranch');
+        echo json_encode($qryMenu->result());
+    }
+
+    public function findFuleType() {
+        $_key = $_POST['key'];
+        $qryMenu = $this->db->select('pf.RowKey,'
+                        . 'f.Fuel')           
+                ->from('MSTPumpFule pf')
+                ->join('MSTFuel f','pf.FuleKey=f.RowKey','left')
+                ->where('pf.PumpBranchKey',$_key)
+                ->order_by('f.Fuel', 'asc')
+                ->get();
+        echo json_encode($qryMenu->result());
+    }
 }

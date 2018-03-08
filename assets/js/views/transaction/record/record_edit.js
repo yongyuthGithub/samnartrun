@@ -469,6 +469,30 @@ $(function () {
 //        ],
         DataColumnsOrder: new Array(),
         btnNewFun: function (f) {
+            $.bPopup({
+                url: mvcPatch('Record/fuleEdit'),
+                title: 'เพิ่มรายการเติมน้ำมัน',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: new Object({key: Guid}),
+                        fun: function (_f) {
+                            
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         },
         btnEditFun: function (f, d) {
         },
