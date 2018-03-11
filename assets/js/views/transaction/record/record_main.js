@@ -77,7 +77,52 @@ $(function () {
                     k.getModal().data({
                         data: new Object({key: Guid}),
                         fun: function (_f) {
-
+                            var obj = new Object({
+                                RowKey: Guid,
+                                DocID: _f.find('#txtDocID').val(),
+                                DocDate: PHP_DateTimeShow_To_JSON(_f.find('#divDate'), true),
+                                CarFirstKey: _f.find('#cmdCarF').val(),
+                                CarSecondKey: _f.find('#cmdCarS').val(),
+                                Product: _f.find('#txtProduct').val(),
+                                CutsomerForm: _f.find('#cmdBranchF').val(),
+                                CustomerTo: _f.find('#cmdBranchS').val(),
+                                PriceTotal: parseFloat(_f.find('#txtTotal').val()),
+                                Smile: parseFloat(_f.find('#txtMileageF').val()),
+                                Emile: parseFloat(_f.find('#txtMileageS').val()),
+                                TRNFule: $.ToLinq(_f.find('#form_fule').data('data'))
+                                        .Select(function (x) {
+                                            return new Object({
+                                                RowKey: x.key,
+                                                PumpFuleKey: x.PumpKey,
+                                                Price: x.Price,
+                                                Smile: x.Smile
+                                            });
+                                        }).ToArray(),
+                                TRNIncome: $.ToLinq(_f.find('#form_incomein').data('data'))
+                                        .Select(function (x) {
+                                            return new Object({
+                                                RowKey: x.key,
+                                                Detial: x.Detial,
+                                                Amount: x.Amount,
+                                                IncomeType: 1
+                                            });
+                                        }).Union($.ToLinq(_f.find('#form_incomeout').data('data'))
+                                        .Select(function (x) {
+                                            return new Object({
+                                                RowKey: x.key,
+                                                Detial: x.Detial,
+                                                Amount: x.Amount,
+                                                IncomeType: 2
+                                            });
+                                        })).ToArray()
+                            });
+//                            alert(JSON.stringify(obj));
+                            $.bConfirm({
+                                buttonOK: function (k2) {
+                                    k2.close();
+                                    //javascript code
+                                }
+                            });
                         }
                     });
                 },

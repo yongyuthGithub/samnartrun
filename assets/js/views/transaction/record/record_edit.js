@@ -555,6 +555,15 @@ $(function () {
             });
         },
         btnDeleteFun: function (f, d) {
+            var _d = $.ToLinq(d)
+                    .Select(function (x) {
+                        return x.key;
+                    });
+            var _u = $.ToLinq(f.data('data'))
+                    .Where(x => !_d.Contains(x.key))
+                    .ToArray();
+            f.data('data', _u);
+            f.find('.xref').click();
         },
         btnPreviewFun: function (f, d) {
         }
