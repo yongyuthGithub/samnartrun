@@ -66,6 +66,7 @@ class Fule extends PCenter {
                 } else {
                     $this->db->trans_commit();
                     $vReturn->success = true;
+                    $vReturn->key = $_data->RowKey;
                 }
             }
         } else {
@@ -171,6 +172,7 @@ class Fule extends PCenter {
                 } else {
                     $this->db->trans_commit();
                     $vReturn->success = true;
+                    $vReturn->key = $_data->RowKey;
                 }
             }
         } else {

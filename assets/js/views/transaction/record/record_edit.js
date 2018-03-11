@@ -75,7 +75,8 @@ $(function () {
     }).on({
         change: function () {
             setCustomerBranchF(function (_b) {
-                _b.val(Guid).selectpicker('render');
+                if (_b.find('option').length === 0)
+                    _b.val(Guid).selectpicker('render');
                 form_recordedit.formValidation('revalidateField', form_recordedit.find('#cmdBranchF'));
             });
         }
@@ -124,7 +125,8 @@ $(function () {
     }).on({
         change: function () {
             setCustomerBranchS(function (_b) {
-                _b.val(Guid).selectpicker('render');
+                if (_b.find('option').length === 0)
+                    _b.val(Guid).selectpicker('render');
                 form_recordedit.formValidation('revalidateField', form_recordedit.find('#cmdBranchS'));
             });
         }
@@ -437,7 +439,7 @@ $(function () {
         }
     });
 
-    form_fule.setMainPage({
+    form_fule.data('data', new Array()).setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
@@ -446,27 +448,34 @@ $(function () {
         headerString: '',
 //        UrlDataJson: mvcPatch('controllers/action'),
         DataJson: function () {
-            return new Array()
+            return form_fule.data('data');
         },
         UrlLoanding: true,
         UrlLoandingclose: true,
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'SubMenu', header: 'ปั้ม', orderable: false},
-            {data: 'Description', header: 'สาขา', orderable: false},
-            {data: 'Menu', header: 'เลขไมล์ก่อนเติม', orderable: false},
-            {data: 'Icon', header: 'จำนวนเงิน', orderable: false},
+            {data: 'PumpDisplay', header: 'ปั้ม', orderable: false},
+            {data: 'BranchDisplay', header: 'สาขา', orderable: false},
+            {data: 'Smile', header: 'เลขไมล์ก่อนเติม', orderable: false},
+            {data: 'Price', header: 'จำนวนเงิน', orderable: false},
 //            {data: 'Url', header: 'Url'}
         ],
-//        DataColumnsDefs: [
-//            {
-//                render: function (row, type, val2, meta) {
-//                    return '<i class="' + val2.Icon + '"></i>';
-//                },
-//                orderable: true,
-//                targets: 3
-//            }
-//        ],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    return parseFloat(val2.Smile).toFixed(2);
+                },
+                orderable: false,
+                targets: 2
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    return addCommas(val2.Price, 2);
+                },
+                orderable: false,
+                targets: 3
+            }
+        ],
         DataColumnsOrder: new Array(),
         btnNewFun: function (f) {
             $.bPopup({
@@ -478,7 +487,20 @@ $(function () {
                     k.getModal().data({
                         data: new Object({key: Guid}),
                         fun: function (_f) {
-                            
+                            var obj = new Object({
+                                key: newGuid(),
+                                Price: _f.find('#txtAmount').val(),
+                                Smile: _f.find('#txtMile').val(),
+                                FuelDisplay: _f.find('#cmdFuleType option:selected').data('display'),
+                                FuelKey: _f.find('#cmdFuleType').val(),
+                                BranchDisplay: _f.find('#cmdFuleBranch option:selected').data('display'),
+                                BranchKey: _f.find('#cmdFuleBranch').val(),
+                                PumpDisplay: _f.find('#cmdFule option:selected').data('display'),
+                                PumpKey: _f.find('#cmdFule').val()
+                            });
+                            f.data('data').push(obj);
+                            f.find('.xref').click();
+                            _f.find('#btn-close').click();
                         }
                     });
                 },
@@ -495,6 +517,42 @@ $(function () {
             });
         },
         btnEditFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('Record/fuleEdit'),
+                title: 'แก้ไขรายการเติมน้ำมัน',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        fun: function (_f) {
+                            var _update = $.ToLinq(f.data('data'))
+                                    .Where(x => x.key === d.key)
+                                    .First();
+                            _update.Price = _f.find('#txtAmount').val();
+                            _update.Smile = _f.find('#txtMile').val();
+                            _update.FuelDisplay = _f.find('#cmdFuleType option:selected').data('display');
+                            _update.FuelKey = _f.find('#cmdFuleType').val();
+                            _update.BranchDisplay = _f.find('#cmdFuleBranch option:selected').data('display');
+                            _update.BranchKey = _f.find('#cmdFuleBranch').val();
+                            _update.PumpDisplay = _f.find('#cmdFule option:selected').data('display');
+                            _update.PumpKey = _f.find('#cmdFule').val();
+                            f.find('.xref').click();
+                            _f.find('#btn-close').click();
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         },
         btnDeleteFun: function (f, d) {
         },
