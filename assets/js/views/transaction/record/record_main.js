@@ -1,20 +1,20 @@
 $(function () {
     var form_record = $('#form_record');
     var form_recordlist = $('#form_recordlist');
-    form_record.find('#divSDate').dateTime().on('dp.change', function (e) {
-//        form_record.find('#divEDate').data("DateTimePicker").minDate(e.date.add(1,'days'));
-        form_record.find('#divEDate').data("DateTimePicker").minDate(e.date);
-    });
-    form_record.find('#divEDate').dateTime().on('dp.change', function (e) {
-//        form_record.find('#divSDate').data("DateTimePicker").maxDate(e.date.add(-1,'days'));
-
-        form_record.find('#divSDate').data("DateTimePicker").maxDate(e.date);
-    });
+//    form_record.find('#divSDate').dateTime().on('dp.change', function (e) {
+////        form_record.find('#divEDate').data("DateTimePicker").minDate(e.date.add(1,'days'));
+//        form_record.find('#divEDate').data("DateTimePicker").minDate(e.date);
+//    });
+//    form_record.find('#divEDate').dateTime().on('dp.change', function (e) {
+////        form_record.find('#divSDate').data("DateTimePicker").maxDate(e.date.add(-1,'days'));
+//
+//        form_record.find('#divSDate').data("DateTimePicker").maxDate(e.date);
+//    });
 
     form_record.find('#divSDate').datetimepicker({
         format: 'DD/MM/YYYY',
         maxDate: new Date(),
-        defaultDate: new Date().addDays(-1)
+        defaultDate: new Date()
     }).on('dp.change', function (ds) {
         form_record.find('#divEDate').data("DateTimePicker").minDate(ds.date);
         setFind();
@@ -22,8 +22,8 @@ $(function () {
 
     form_record.find('#divEDate').datetimepicker({
         format: 'DD/MM/YYYY',
-        minDate: new Date().addDays(-1),
-        defaultDate: new Date().addDays(1)
+        minDate: new Date(),
+        defaultDate: new Date()
     }).on('dp.change', function (ds) {
         form_record.find('#divSDate').data("DateTimePicker").maxDate(ds.date);
         setFind();
@@ -36,7 +36,7 @@ $(function () {
 //        form_recordlist.find('.xref').click();
 //    });
 //    form_record.find('#divSDate, #divEDate').dateTime().data("DateTimePicker").date(new Date());
-//    setFind();
+    setFind();
     function setFind() {
 //        var _edate = new Date(form_record.find('#divEDate').data("DateTimePicker").date()).setHours(23, 59, 59, 0);
 //        form_record.find('#divEDate').data("DateTimePicker").date(new Date(_edate));
@@ -45,8 +45,8 @@ $(function () {
             data: {vdata: JSON.stringify({
 //                    SDate: PHP_DateTimeShow_To_JSON(form_record.find('#divSDate')),
 //                    EDate: PHP_DateTimeShow_To_JSON(form_record.find('#divEDate'), true)
-                    SDate: setDateJsonTime(form_record.find('#txtSDate').val()),
-                    EDate: setDateJsonTime(form_record.find('#txtEDate').val())
+                    SDate: setDateJson(form_record.find('#txtSDate').val()),
+                    EDate: setDateJson(form_record.find('#txtEDate').val())
                 })
             },
             loanding: false,
@@ -98,6 +98,13 @@ $(function () {
                 },
                 orderable: true,
                 targets: 3
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    return val2.CNumberF + ' / ' + val2.CNumberS;
+                },
+                orderable: true,
+                targets: 4
             }
         ],
         btnNewFun: function (f) {
@@ -113,7 +120,7 @@ $(function () {
                             var obj = new Object({
                                 RowKey: Guid,
                                 DocID: _f.find('#txtDocID').val(),
-                                DocDate: PHP_DateTimeShow_To_JSON(_f.find('#divDate'), true),
+                                DocDate: setDateJson(_f.find('#txtDocDate').val()),
                                 CarFirstKey: _f.find('#cmdCarF').val(),
                                 CarSecondKey: _f.find('#cmdCarS').val(),
                                 Product: _f.find('#txtProduct').val(),

@@ -366,6 +366,11 @@ function setDateJsonTime(v, t) {//---จาก v="dd/MM/yyyy", t="HH:mm:ss" --> 
     return vdate[2] + '-' + vdate[1] + '-' + vdate[0] + ' ' + tdate[0] + ':' + tdate[1] + ':' + tdate[2];
 }
 
+function setDateJson(v) {//---จาก v="dd/MM/yyyy", t="HH:mm:ss" --> DateTime
+    var vdate = v.split('/');
+    return vdate[2] + '-' + vdate[1] + '-' + vdate[0];
+}
+
 function PHP_DateTimeShow_To_JSON(v, t) {//---จาก ShowDate --> yyyy-MM-dd HH:mm:ss
     var _t = t === undefined ? false : true;
     var _date = new Date(funDateTime(v).date());

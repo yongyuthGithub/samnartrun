@@ -27,7 +27,12 @@ $(function () {
 
     }
 
-    form_recordedit.find('#divDate').dateTime();
+    form_recordedit.find('#divDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+//        defaultDate: new Date()
+    }).on('dp.change', function (ds) {
+        form_recordedit.formValidation('revalidateField', form_recordedit.find('#txtDocDate'));
+    });
     form_recordedit.find('#cmdCarF').selectpicker({
     }).on({
         change: function () {
