@@ -285,8 +285,55 @@ function ShowDateToJavaDate(v) {//---จาก ShowDate --> javascript datetime
 }
 //-------------------------------------------------------------
 //-------------PHP DateTime
+Date.prototype.addDays = function (num) {
+    var value = this.valueOf();
+    value += 86400000 * num;
+    return new Date(value);
+}
+
+Date.prototype.addSeconds = function (num) {
+    var value = this.valueOf();
+    value += 1000 * num;
+    return new Date(value);
+}
+
+Date.prototype.addMinutes = function (num) {
+    var value = this.valueOf();
+    value += 60000 * num;
+    return new Date(value);
+}
+
+Date.prototype.addHours = function (num) {
+    var value = this.valueOf();
+    value += 3600000 * num;
+    return new Date(value);
+}
+
+Date.prototype.addMonths = function (num) {
+    var value = new Date(this.valueOf());
+
+    var mo = this.getMonth();
+    var yr = this.getFullYear();
+
+    mo = (mo + num) % 12;
+    if (0 > mo) {
+        yr += (this.getMonth() + num - mo - 12) / 12;
+        mo += 12;
+    } else
+        yr += ((this.getMonth() + num - mo) / 12);
+
+    value.setMonth(mo);
+    value.setYear(yr);
+    return value;
+}
+
 function PHP_DateTime_To_JSON(v) {//---จาก DateTime --> yyyy-MM-dd HH:mm:ss
     var today = v === undefined ? new Date() : v;
+    try {
+        var vt = today.getDate();
+    } catch (e) {
+        today = new Date();
+    }
     var dd = today.getDate();
     var mm = today.getMonth() + 1; //January is 0!
     var tHH = today.getHours();
@@ -310,6 +357,13 @@ function PHP_DateTime_To_JSON(v) {//---จาก DateTime --> yyyy-MM-dd HH:mm:s
         tSS = '0' + tSS;
     }
     return yyyy + '-' + mm + '-' + dd + ' ' + tHH + ':' + tMM + ':' + tSS;
+}
+
+function setDateJsonTime(v, t) {//---จาก v="dd/MM/yyyy", t="HH:mm:ss" --> DateTime
+    var vdate = v.split('/');
+    t = t === undefined ? '00:00:00' : t;
+    var tdate = t.split(':');
+    return vdate[2] + '-' + vdate[1] + '-' + vdate[0] + ' ' + tdate[0] + ':' + tdate[1] + ':' + tdate[2];
 }
 
 function PHP_DateTimeShow_To_JSON(v, t) {//---จาก ShowDate --> yyyy-MM-dd HH:mm:ss
@@ -348,7 +402,7 @@ function PHP_JSON_To_ShowDateTime(v) {//---จาก yyyy-MM-dd HH:mm:ss --> dd/
     if (ss < 10)
         ss = '0' + ss;
 
-    return dd + '/' + MM + '/' + _d[0] + ' ' + HH + '/' + mm + '/' + ss;
+    return dd + '/' + MM + '/' + _d[0] + ' ' + HH + ':' + mm + ':' + ss;
 }
 
 function PHP_JSON_To_ShowDate(v) {//---จาก yyyy-MM-dd HH:mm:ss --> dd/MM/yyyy

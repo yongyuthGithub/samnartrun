@@ -116,7 +116,7 @@ class Record extends PCenter {
         $_key = $_POST['key'];
         $qryMenu = $this->db->select('RowKey,'
                         . 'PumpBranch')
-                ->where('PumpKey',$_key)
+                ->where('PumpKey', $_key)
                 ->order_by('PumpBranch', 'asc')
                 ->get('MSTPumpBranch');
         echo json_encode($qryMenu->result());
@@ -125,12 +125,65 @@ class Record extends PCenter {
     public function findFuleType() {
         $_key = $_POST['key'];
         $qryMenu = $this->db->select('pf.RowKey,'
-                        . 'f.Fuel')           
+                        . 'f.Fuel')
                 ->from('MSTPumpFule pf')
-                ->join('MSTFuel f','pf.FuleKey=f.RowKey','left')
-                ->where('pf.PumpBranchKey',$_key)
+                ->join('MSTFuel f', 'pf.FuleKey=f.RowKey', 'left')
+                ->where('pf.PumpBranchKey', $_key)
                 ->order_by('f.Fuel', 'asc')
                 ->get();
         echo json_encode($qryMenu->result());
     }
+
+    public function editRecord() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+
+        if ($_data->RowKey === PCenter::GUID_EMPTY()) {
+            $queryChk = $this->db->where('DocID', $_data->DocID)->from('TRNWrokSheetHD')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                $_data->RowKey = PCenter::GUID();
+                $_data->RowStatus = true;
+                $_data->CreateBy = $this->USER_LOGIN()->RowKey;
+                $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->insert('TRNWrokSheetHD', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                    $vReturn->key = $_data->RowKey;
+                }
+            }
+        } else {
+            $queryChk = $this->db->where('DocID', $_data->DocID)->where('RowKey !=', $_data->RowKey)->from('TRNWrokSheetHD')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                $_data->UpdateBy = PCenter::GUID_EMPTY();
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->where('RowKey', $_data->RowKey)->update('TRNWrokSheetHD', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                }
+            }
+        }
+
+        echo json_encode($vReturn);
+    }
+
 }
