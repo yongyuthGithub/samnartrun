@@ -153,6 +153,8 @@ class Record extends PCenter {
                 $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->insert('TRNWrokSheetHD', $_data);
+                
+                
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;
@@ -186,4 +188,21 @@ class Record extends PCenter {
         echo json_encode($vReturn);
     }
 
+    public function removeRecord() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+        $this->db->trans_begin();
+
+        $this->db->where_in('RowKey', $_data)->delete('TRNWrokSheetHD');
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
+        }
+        echo json_encode($vReturn);
+    }
 }

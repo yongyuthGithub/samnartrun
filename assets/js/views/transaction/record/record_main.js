@@ -14,7 +14,8 @@ $(function () {
     form_record.find('#divSDate').datetimepicker({
         format: 'DD/MM/YYYY',
         maxDate: new Date(),
-        defaultDate: new Date()
+        defaultDate: new Date(),
+        locale: 'th',
     }).on('dp.change', function (ds) {
         form_record.find('#divEDate').data("DateTimePicker").minDate(ds.date);
         setFind();
@@ -23,7 +24,8 @@ $(function () {
     form_record.find('#divEDate').datetimepicker({
         format: 'DD/MM/YYYY',
         minDate: new Date(),
-        defaultDate: new Date()
+        defaultDate: new Date(),
+        locale: 'th',
     }).on('dp.change', function (ds) {
         form_record.find('#divSDate').data("DateTimePicker").maxDate(ds.date);
         setFind();
@@ -196,6 +198,30 @@ $(function () {
         btnEditFun: function (f, d) {
         },
         btnDeleteFun: function (f, d) {
+            $.bConfirm({
+                message: 'Do you want to delete the data?',
+                type: BootstrapDialog.TYPE_DANGER,
+                buttonOK: function (k) {
+                    k.close();
+                    var vdata = $.ToLinq(d)
+                            .Select(function (x) {
+                                return x.key;
+                            }).ToArray();
+                    $.reqData({
+                        url: mvcPatch('Record/removeRecord'),
+                        data: {data: JSON.stringify(vdata)},
+                        callback: function (vdata) {
+                            if (vdata.success) {
+                                setFind();
+                            } else {
+                                $.bAlert({
+                                    message: vdata.message
+                                });
+                            }
+                        }
+                    });
+                }
+            });
         },
         btnPreviewFun: function (f, d) {
         }

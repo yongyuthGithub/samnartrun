@@ -29,6 +29,7 @@ $(function () {
 
     form_recordedit.find('#divDate').datetimepicker({
         format: 'DD/MM/YYYY',
+        locale: 'th',
 //        defaultDate: new Date()
     }).on('dp.change', function (ds) {
         form_recordedit.formValidation('revalidateField', form_recordedit.find('#txtDocDate'));
