@@ -127,8 +127,8 @@ $(function () {
                                 CutsomerForm: _f.find('#cmdBranchF').val(),
                                 CustomerTo: _f.find('#cmdBranchS').val(),
                                 PriceTotal: parseFloat(_f.find('#txtTotal').val()),
-//                                Smile: parseFloat(_f.find('#txtMileageF').val()),
-//                                Emile: parseFloat(_f.find('#txtMileageS').val()),
+                                Smile: parseFloat(_f.find('#txtMileageF').val()),
+                                Emile: parseFloat(_f.find('#txtMileageS').val()),
                                 TRNFule: $.ToLinq(_f.find('#form_fule').data('data'))
                                         .Select(function (x) {
                                             return new Object({
