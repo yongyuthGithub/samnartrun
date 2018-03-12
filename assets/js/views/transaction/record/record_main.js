@@ -135,7 +135,7 @@ $(function () {
                                         .Select(function (x) {
                                             return new Object({
                                                 RowKey: x.key,
-                                                PumpFuleKey: x.PumpKey,
+                                                PumpFuleKey: x.FuelKey,
                                                 Price: x.Price,
                                                 Smile: x.Smile
                                             });
@@ -196,6 +196,90 @@ $(function () {
             });
         },
         btnEditFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('Record/recordEdit'),
+                title: 'แก้ไขรายการประจำวัน',
+                closable: false,
+                size: BootstrapDialog.SIZE_WIDE,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        fun: function (_f) {
+                            var obj = new Object({
+                                RowKey: d.key,
+                                DocID: _f.find('#txtDocID').val(),
+                                DocDate: setDateJson(_f.find('#txtDocDate').val()),
+                                CarFirstKey: _f.find('#cmdCarF').val(),
+                                CarSecondKey: _f.find('#cmdCarS').val(),
+                                Product: _f.find('#txtProduct').val(),
+                                CutsomerForm: _f.find('#cmdBranchF').val(),
+                                CustomerTo: _f.find('#cmdBranchS').val(),
+                                PriceTotal: parseFloat(_f.find('#txtTotal').val()),
+                                Smile: parseFloat(_f.find('#txtMileageF').val()),
+                                Emile: parseFloat(_f.find('#txtMileageS').val()),
+                                TRNFule: $.ToLinq(_f.find('#form_fule').data('data'))
+                                        .Select(function (x) {
+                                            return new Object({
+                                                RowKey: x.key,
+                                                PumpFuleKey: x.FuelKey,
+                                                Price: x.Price,
+                                                Smile: x.Smile
+                                            });
+                                        }).ToArray(),
+                                TRNIncome: $.ToLinq(_f.find('#form_incomein').data('data'))
+                                        .Select(function (x) {
+                                            return new Object({
+                                                RowKey: x.key,
+                                                Detial: x.Detial,
+                                                Amount: x.Amount,
+                                                IncomeType: 1
+                                            });
+                                        }).Union($.ToLinq(_f.find('#form_incomeout').data('data'))
+                                        .Select(function (x) {
+                                            return new Object({
+                                                RowKey: x.key,
+                                                Detial: x.Detial,
+                                                Amount: x.Amount,
+                                                IncomeType: 2
+                                            });
+                                        })).ToArray()
+                            });
+//                            alert(JSON.stringify(obj));
+                            $.bConfirm({
+                                buttonOK: function (k2) {
+                                    k2.close();
+                                    $.reqData({
+                                        url: mvcPatch('Record/editRecord'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                setFind();
+//                                                f.find('.xref').click();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         },
         btnDeleteFun: function (f, d) {
             $.bConfirm({

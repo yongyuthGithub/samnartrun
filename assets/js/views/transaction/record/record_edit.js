@@ -24,7 +24,14 @@ $(function () {
             });
         });
     } else {
-
+        $.reqData({
+            url: mvcPatch('Record/findRecordOne'),
+            data: {key: _formdata.key},
+            loanding: false,
+            callback: function (vdata) {
+                
+            }
+        });
     }
 
     form_recordedit.find('#divDate').datetimepicker({

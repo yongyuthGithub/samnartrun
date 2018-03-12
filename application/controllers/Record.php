@@ -61,6 +61,40 @@ class Record extends PCenter {
                 ->get();
         echo json_encode($qryMenu->result());
     }
+    
+    public function findRecordOne() {
+        $_key = $_POST['key'];
+        $qryMenu = $this->db->select('w.RowKey,'
+                . 'w.DocID,'
+                . 'w.DocDate,'
+                . 'w.DocDate,'
+                . 'w.Product,'
+                . 'w.PriceTotal,'
+                . 'w.Smile,'
+                . 'w.Emile,'
+                . 'w.CarFirstKey,'
+                . 'w.CarSecondKey,'
+                . 'bf.RowKey as CustBF,'
+                . 'cf.RowKey as CustF,'
+                . 'bs.RowKey as CustBS,'
+                . 'cs.RowKey as CustF')                
+                ->from('TRNWrokSheetHD w')
+                ->join('MSTCustomerBranch bf','w.CutsomerForm=bf.RowKey','left')
+                ->join('MSTCustomer cf','bf.CompanyKey=cf.RowKey','left')
+                ->join('MSTCustomerBranch bs','w.CustomerTo=bs.RowKey','left')
+                ->join('MSTCustomer cs','bs.CompanyKey=cs.RowKey','left')
+                ->where('w.RowKey',$_key)
+                ->get()->row();
+        $qryMenu->TRNIncome =$this->db->select('RowKey as key,'
+                . 'Detial,'
+                . 'IncomeType,'
+                . 'Amount')
+                ->from('TRNIncome')
+                ->where('WorkSheetHDKey',$qryMenu->RowKey)
+                ->get()->result();        
+        
+        echo json_encode($qryMenu);
+    }
 
     public function findCarFirst() {
         $qryMenu = $this->db->select('c.RowKey,'
@@ -148,13 +182,33 @@ class Record extends PCenter {
             } else {
                 $_data->RowKey = PCenter::GUID();
                 $_data->RowStatus = true;
+                $_data->IsBill = 0;
                 $_data->CreateBy = $this->USER_LOGIN()->RowKey;
                 $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
                 $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->insert('TRNWrokSheetHD', $_data);
-                
-                
+
+                foreach ($_data->TRNIncome as $row) {
+                    $row->RowKey = PCenter::GUID();
+                    $row->WorkSheetHDKey = $_data->RowKey;
+                    $row->CreateBy = $this->USER_LOGIN()->RowKey;
+                    $row->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                    $row->UpdateBy = $this->USER_LOGIN()->RowKey;
+                    $row->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                    $this->db->insert('TRNIncome', $row);
+                }
+
+                foreach ($_data->TRNFule as $row) {
+                    $row->RowKey = PCenter::GUID();
+                    $row->WorkSheetHDKey = $_data->RowKey;
+                    $row->CreateBy = $this->USER_LOGIN()->RowKey;
+                    $row->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                    $row->UpdateBy = $this->USER_LOGIN()->RowKey;
+                    $row->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                    $this->db->insert('TRNFule', $row);
+                }
+
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;
@@ -174,6 +228,29 @@ class Record extends PCenter {
                 $_data->UpdateBy = PCenter::GUID_EMPTY();
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('TRNWrokSheetHD', $_data);
+
+                $this->db->where('WorkSheetHDKey', $_data->RowKey)->delete('TRNIncome');
+                foreach ($_data->TRNFule as $row) {
+                    $row->RowKey = PCenter::GUID();
+                    $row->WorkSheetHDKey = $_data->RowKey;
+                    $row->CreateBy = $this->USER_LOGIN()->RowKey;
+                    $row->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                    $row->UpdateBy = $this->USER_LOGIN()->RowKey;
+                    $row->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                    $this->db->insert('TRNFule', $row);
+                }
+
+                $this->db->where('WorkSheetHDKey', $_data->RowKey)->delete('TRNFule');
+                foreach ($_data->TRNFule as $row) {
+                    $row->RowKey = PCenter::GUID();
+                    $row->WorkSheetHDKey = $_data->RowKey;
+                    $row->CreateBy = $this->USER_LOGIN()->RowKey;
+                    $row->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                    $row->UpdateBy = $this->USER_LOGIN()->RowKey;
+                    $row->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                    $this->db->insert('TRNFule', $row);
+                }
+
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;
@@ -205,4 +282,5 @@ class Record extends PCenter {
         }
         echo json_encode($vReturn);
     }
+
 }
