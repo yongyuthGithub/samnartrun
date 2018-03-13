@@ -58,7 +58,8 @@ $(function () {
                                     .Select(function (x) {
                                         return new Object({
                                             FuleKey: x,
-                                            PumpBranchKey: $('#txtkey2').val()
+                                            PumpBranchKey: $('#txtkey2').val(),
+                                            IsDefault: false
                                         });
                                     }).ToArray();
                             $.bConfirm({

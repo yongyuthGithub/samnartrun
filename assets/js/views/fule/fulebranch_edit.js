@@ -17,6 +17,7 @@ $(function () {
         form_fulebranchedit.find('#txtbranch').val(_formdata.PumpBranch);
         form_fulebranchedit.find('#txtaddress').val(_formdata.Address);
         form_fulebranchedit.find('#txtZipCode').val(_formdata.ZipCode);
+        form_fulebranchedit.find('#swDF').prop('checked', parseInt(_formdata.IsDefault) === 1 ? true : false);
         //***Edit By Yongyuth
         setProvince(function (_p) {
             _p.val(_formdata.ProvinceKey).selectpicker('render');

@@ -46,7 +46,8 @@ $(function () {
                                 PumpBranch: _f.find('#txtbranch').val(),
                                 Address: _f.find('#txtaddress').val(),
                                 SubDistrict: _f.find('#cmdSubDistrict').val(),
-                                ZipCode: _f.find('#txtZipCode').val()
+                                ZipCode: _f.find('#txtZipCode').val(),
+                                IsDefault: _f.find('#swDF').is(':checked')
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {
@@ -99,7 +100,8 @@ $(function () {
                                 PumpBranch: _f.find('#txtbranch').val(),
                                 Address: _f.find('#txtaddress').val(),
                                 SubDistrict: _f.find('#cmdSubDistrict').val(),
-                                ZipCode: _f.find('#txtZipCode').val()
+                                ZipCode: _f.find('#txtZipCode').val(),
+                                IsDefault: _f.find('#swDF').is(':checked')
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {

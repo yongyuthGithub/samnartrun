@@ -58,7 +58,7 @@ $(function () {
                                     obj.RowKey = Guid;
                                     obj.Pump = _f.find('#txtUser').val();
                                     obj.PumpType = _f.find('#cmdTitle').val();
-
+                                    
                                     $.bConfirm({
                                         buttonOK: function (k) {
                                             k.close();
@@ -154,7 +154,8 @@ $(function () {
                                         PumpBranch: _f.find('#txtbranch').val(),
                                         Address: _f.find('#txtaddress').val(),
                                         SubDistrict: _f.find('#cmdSubDistrict').val(),
-                                        ZipCode: _f.find('#txtZipCode').val()
+                                        ZipCode: _f.find('#txtZipCode').val(),
+                                        IsDefault: _f.find('#swDF').is(':checked')
                                     });
                                     $.bConfirm({
                                         buttonOK: function (k2) {
@@ -243,7 +244,8 @@ $(function () {
                                             .Select(function (x) {
                                                 return new Object({
                                                     FuleKey: x,
-                                                    PumpBranchKey: form_recordfuleedit.find('#cmdFuleBranch').val()
+                                                    PumpBranchKey: form_recordfuleedit.find('#cmdFuleBranch').val(),
+                                                    IsDefault: false
                                                 });
                                             }).ToArray();
                                     $.bConfirm({

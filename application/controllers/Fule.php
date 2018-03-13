@@ -133,7 +133,8 @@ class Fule extends PCenter {
                         . 'b.SubDistrict as SubDistrictKey,'
                         . 'sd.DistrictKey,'
                         . 'd.ProvinceKey,'
-                        . 'b.ZipCode')
+                        . 'b.ZipCode,'
+                        . 'b.IsDefault')
                 ->from('MSTPumpBranch b')
                 ->join('MSTSubDistrict sd', 'b.SubDistrict=sd.RowKey', 'left')
                 ->join('MSTDistrict d', 'sd.DistrictKey=d.RowKey', 'left')
@@ -158,6 +159,12 @@ class Fule extends PCenter {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
+                if ($_data->IsDefault) {
+                    $this->db->set('IsDefault', false)
+                            ->where('PumpKey', $_data->PumpKey)
+                            ->update('MSTPumpBranch');
+                }
+                
                 $_data->RowKey = PCenter::GUID();
                 $_data->RowStatus = true;
                 $_data->CreateBy = $this->USER_LOGIN()->RowKey;
@@ -185,6 +192,11 @@ class Fule extends PCenter {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
+                if ($_data->IsDefault) {
+                    $this->db->set('IsDefault', false)
+                            ->where('PumpKey', $_data->PumpKey)
+                            ->update('MSTPumpBranch');
+                }
                 $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('MSTPumpBranch', $_data);
