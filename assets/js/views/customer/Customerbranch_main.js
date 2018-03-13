@@ -47,7 +47,7 @@ $(function () {
                             obj.SubDistrict = _f.find('#cmdSubDistrict').val();
                             obj.ZipCode = _f.find('#txtZipCode').val();
                             obj.Tel = _f.find('#txtTel').val();
-
+                            obj.IsDefault = _f.find('#swDF').is(':checked');
                             $.bConfirm({
                                 buttonOK: function (k2) {
                                     k2.close();
@@ -86,7 +86,7 @@ $(function () {
         btnEditFun: function (f, d) {
             $.bPopup({
                 url: mvcPatch('Customer/typeedit'),
-                title: 'Edit Insurance Type',
+                title: 'แก้ไขสาขาลูกค้า',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -101,6 +101,7 @@ $(function () {
                                 SubDistrict: _f.find('#cmdSubDistrict').val(),
                                 ZipCode: _f.find('#txtZipCode').val(),
                                 Tel: _f.find('#txtTel').val(),
+                                IsDefault: _f.find('#swDF').is(':checked')
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {
@@ -138,6 +139,8 @@ $(function () {
             });
         },
         btnDeleteFun: function (f, d) {
+            if (d.length === 0)
+                return false;
             $.bConfirm({
                 message: 'Do you want to delete the data?',
                 type: BootstrapDialog.TYPE_DANGER,

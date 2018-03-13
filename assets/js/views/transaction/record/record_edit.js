@@ -9,8 +9,8 @@ $(function () {
     if (_formdata.key === Guid) {
         setCarF(Guid);
         setCarS(Guid);
-        form_incomein.data('data', new Array());
-        form_incomeout.data('data', new Array());
+//        form_incomein.data('data', new Array());
+//        form_incomeout.data('data', new Array());
         setCustomerF(function (_p) {
             _p.val(Guid).selectpicker('render');
             setCustomerBranchF(function (_b) {
@@ -29,7 +29,50 @@ $(function () {
             data: {key: _formdata.key},
             loanding: false,
             callback: function (vdata) {
-                
+                form_recordedit.find('#txtDocID').val(vdata.DocID);
+                form_recordedit.find('#txtDocDate').val(PHP_JSON_To_ShowDate(vdata.DocDate));
+                setCarF(vdata.CarFirstKey);
+                setCarS(vdata.CarSecondKey);
+                setCustomerF(function (_p) {
+                    _p.val(vdata.CustF).selectpicker('render');
+                    setCustomerBranchF(function (_b) {
+                        _b.val(vdata.CustBF).selectpicker('render');
+                    });
+                });
+                setCustomerS(function (_p) {
+                    _p.val(vdata.CustS).selectpicker('render');
+                    setCustomerBranchS(function (_b) {
+                        _b.val(vdata.CustBS).selectpicker('render');
+                    });
+                });
+                form_recordedit.find('#txtMileageF').val(parseFloat(vdata.Smile).toFixed(2));
+                form_recordedit.find('#txtMileageS').val(parseFloat(vdata.Emile).toFixed(2));
+                form_recordedit.find('#txtProduct').val(vdata.Product);
+                form_recordedit.find('#txtRemark').val(vdata.Remark);
+                form_recordedit.find('#txtTotal').val(parseFloat(vdata.PriceTotal).toFixed(2));
+                var _fule = $.ToLinq(vdata.TRNFule)
+                        .Select(function (x) {
+                            return new Object({
+                                key: x.key,
+                                Price: parseFloat(x.Price).toFixed(2),
+                                Smile: parseFloat(x.Smile).toFixed(2),
+                                FuleKey: x.FuleKey,
+                                FuelDisplay: x.FuelDisplay,
+                                BranchKey: x.BranchKey,
+                                BranchDisplay: x.BranchDisplay,
+                                PumpKey: x.PumpKey,
+                                PumpDisplay: x.PumpDisplay
+                            });
+                        }).ToArray();
+                form_fule.data('data', _fule).find('.xref').click();
+                var _in = $.ToLinq(vdata.TRNIncome)
+                        .Where(x => parseInt(x.IncomeType) === 1)
+                        .ToArray();
+                form_incomein.data('data', _in).find('.xref').click();
+                var _out = $.ToLinq(vdata.TRNIncome)
+                        .Where(x => parseInt(x.IncomeType) === 2)
+                        .ToArray();
+                form_incomeout.data('data', _out).find('.xref').click();
             }
         });
     }
@@ -184,7 +227,7 @@ $(function () {
         });
     }
 
-    form_incomein.setMainPage({
+    form_incomein.data('data', new Array()).setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
@@ -318,7 +361,7 @@ $(function () {
         }
     });
 
-    form_incomeout.setMainPage({
+    form_incomeout.data('data', new Array()).setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
@@ -452,7 +495,7 @@ $(function () {
         }
     });
 
-    form_fule.data('data', new Array()).setMainPage({
+    form_fule.data('data', new Array()).data('data', new Array()).setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
@@ -505,7 +548,7 @@ $(function () {
                                 Price: _f.find('#txtAmount').val(),
                                 Smile: _f.find('#txtMile').val(),
                                 FuelDisplay: _f.find('#cmdFuleType option:selected').data('display'),
-                                FuelKey: _f.find('#cmdFuleType').val(),
+                                FuleKey: _f.find('#cmdFuleType').val(),
                                 BranchDisplay: _f.find('#cmdFuleBranch option:selected').data('display'),
                                 BranchKey: _f.find('#cmdFuleBranch').val(),
                                 PumpDisplay: _f.find('#cmdFule option:selected').data('display'),
@@ -545,7 +588,7 @@ $(function () {
                             _update.Price = _f.find('#txtAmount').val();
                             _update.Smile = _f.find('#txtMile').val();
                             _update.FuelDisplay = _f.find('#cmdFuleType option:selected').data('display');
-                            _update.FuelKey = _f.find('#cmdFuleType').val();
+                            _update.FuleKey = _f.find('#cmdFuleType').val();
                             _update.BranchDisplay = _f.find('#cmdFuleBranch option:selected').data('display');
                             _update.BranchKey = _f.find('#cmdFuleBranch').val();
                             _update.PumpDisplay = _f.find('#cmdFule option:selected').data('display');

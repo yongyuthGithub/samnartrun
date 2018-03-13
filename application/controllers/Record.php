@@ -47,8 +47,10 @@ class Record extends PCenter {
                         . 'cs.CarNumber as CNumberS,'
                         . 'cufc.CusCode as CusCodeF,'
                         . 'cufc.Customer as CustomerF,'
+                        . 'cuf.Branch as BranchF,'
                         . 'cusc.CusCode as CusCodeS,'
-                        . 'cusc.Customer as CustomerS,')
+                        . 'cusc.Customer as CustomerS,'
+                        . 'cus.Branch as BranchS')
                 ->where('w.DocDate >=', $_data->SDate)
                 ->where('w.DocDate <=', $_data->EDate)
                 ->from('TRNWrokSheetHD w')
@@ -77,7 +79,8 @@ class Record extends PCenter {
                                 . 'bf.RowKey as CustBF,'
                                 . 'cf.RowKey as CustF,'
                                 . 'bs.RowKey as CustBS,'
-                                . 'cs.RowKey as CustF')
+                                . 'cs.RowKey as CustS,'
+                                . 'w.Remark')
                         ->from('TRNWrokSheetHD w')
                         ->join('MSTCustomerBranch bf', 'w.CutsomerForm=bf.RowKey', 'left')
                         ->join('MSTCustomer cf', 'bf.CompanyKey=cf.RowKey', 'left')
@@ -96,7 +99,7 @@ class Record extends PCenter {
                                 . 'f.Price,'
                                 . 'f.Smile,'
                                 . 'mf.Fuel as FuelDisplay,'
-                                . 'pf.FuleKey,'
+                                . 'pf.RowKey as FuleKey,'
                                 . 'pb.PumpBranch as BranchDisplay,'
                                 . 'pf.PumpBranchKey as BranchKey,'
                                 . 'p.Pump as PumpDisplay,'
@@ -147,7 +150,8 @@ class Record extends PCenter {
         $_key = $_POST['key'];
         $qryMenu = $this->db->select('RowKey,'
                         . 'Branch')
-                ->where('CompanyKey', $_key)
+                ->where('CompanyKey', $_key)                
+                ->order_by('IsDefault', 'desc')
                 ->order_by('Branch', 'asc')
                 ->get('MSTCustomerBranch');
         echo json_encode($qryMenu->result());
@@ -245,14 +249,14 @@ class Record extends PCenter {
                 $this->db->where('RowKey', $_data->RowKey)->update('TRNWrokSheetHD', $_data);
 
                 $this->db->where('WorkSheetHDKey', $_data->RowKey)->delete('TRNIncome');
-                foreach ($_data->TRNFule as $row) {
+                foreach ($_data->TRNIncome as $row) {
                     $row->RowKey = PCenter::GUID();
                     $row->WorkSheetHDKey = $_data->RowKey;
                     $row->CreateBy = $this->USER_LOGIN()->RowKey;
                     $row->CreateDate = PCenter::DATATIME_DB(new DateTime());
                     $row->UpdateBy = $this->USER_LOGIN()->RowKey;
                     $row->UpdateDate = PCenter::DATATIME_DB(new DateTime());
-                    $this->db->insert('TRNFule', $row);
+                    $this->db->insert('TRNIncome', $row);
                 }
 
                 $this->db->where('WorkSheetHDKey', $_data->RowKey)->delete('TRNFule');

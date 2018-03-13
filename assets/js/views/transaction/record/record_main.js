@@ -107,6 +107,20 @@ $(function () {
                 },
                 orderable: true,
                 targets: 4
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    return ($.trim(val2.CusCodeF).length > 0 ? '(' + val2.CusCodeF + ') ' : '') + val2.CustomerF + ' -> ' + val2.BranchF;
+                },
+                orderable: true,
+                targets: 5
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    return ($.trim(val2.CusCodeS).length > 0 ? '(' + val2.CusCodeS + ') ' : '') + val2.CustomerS + ' -> ' + val2.BranchS;
+                },
+                orderable: true,
+                targets: 6
             }
         ],
         btnNewFun: function (f) {
@@ -131,11 +145,12 @@ $(function () {
                                 PriceTotal: parseFloat(_f.find('#txtTotal').val()),
                                 Smile: parseFloat(_f.find('#txtMileageF').val()),
                                 Emile: parseFloat(_f.find('#txtMileageS').val()),
+                                Remark: _f.find('#txtRemark').val(),
                                 TRNFule: $.ToLinq(_f.find('#form_fule').data('data'))
                                         .Select(function (x) {
                                             return new Object({
                                                 RowKey: x.key,
-                                                PumpFuleKey: x.FuelKey,
+                                                PumpFuleKey: x.FuleKey,
                                                 Price: x.Price,
                                                 Smile: x.Smile
                                             });
@@ -217,11 +232,12 @@ $(function () {
                                 PriceTotal: parseFloat(_f.find('#txtTotal').val()),
                                 Smile: parseFloat(_f.find('#txtMileageF').val()),
                                 Emile: parseFloat(_f.find('#txtMileageS').val()),
+                                Remark: _f.find('#txtRemark').val(),
                                 TRNFule: $.ToLinq(_f.find('#form_fule').data('data'))
                                         .Select(function (x) {
                                             return new Object({
                                                 RowKey: x.key,
-                                                PumpFuleKey: x.FuelKey,
+                                                PumpFuleKey: x.FuleKey,
                                                 Price: x.Price,
                                                 Smile: x.Smile
                                             });

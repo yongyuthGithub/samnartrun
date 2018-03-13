@@ -21,6 +21,7 @@
         <?php echo css_asset('master/bootstrap-select.min.css') ?>
         <?php echo css_asset('master/checkbox_radiobox.css') ?>
         <?php echo css_asset('master/bootstrap-datetimepicker.min.css') ?>
+        <?php echo css_asset('master/material_switch.css') ?>
 
         <?php echo js_asset('master/jquery.cookie.js') ?>
         <?php echo js_asset('master/linq.min.js') ?>

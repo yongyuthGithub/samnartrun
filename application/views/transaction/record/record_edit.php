@@ -168,6 +168,14 @@
                 </div>
             </div>  
             <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="txtRemark">หมายเหตุ :</label>
+                        <textarea class="form-control" name="txtRemark" id="txtRemark" placeholder="หมายเหตุ"></textarea>
+                    </div>
+                </div>
+            </div>  
+            <div class="row">
                 <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-4 col-md-offset-8">
                     <div class="form-group">
                         <label for="txtTotal">ค่าบริการ :</label>

@@ -24,7 +24,7 @@ $(function () {
             setFuleBranch(function (fb) {
                 fb.val(_formdata.BranchKey).selectpicker('render');
                 setFuleType(function (ft) {
-                    ft.val(_formdata.FuelKey).selectpicker('render');
+                    ft.val(_formdata.FuleKey).selectpicker('render');
                 });
             });
         });

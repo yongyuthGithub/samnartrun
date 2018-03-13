@@ -2,8 +2,16 @@
 <div class="panel panel-default">
     <div class="panel-body">
         <form id="form_customerbranchedit">            
-            
-             <div class="col-xs-12">
+            <div class="col-xs-12 col-sm-5 col-sm-offset-7">
+                <div class="form-group">
+                    <label for="swDF">&nbsp;&nbsp;ตั้งเป็นค่าเริ่มต้น :</label>
+                    <div class="material-switch pull-right">
+                        <input id="swDF" name="swDF" type="checkbox"/>
+                        <label for="swDF" class="label-success"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
                 <div class="form-group">
                     <label for="txtTypeName">ชื่อสาขา :</label>
                     <div class="input-group">
@@ -78,7 +86,7 @@
                     </select>
                 </div>
             </div>
-             <div class="col-xs-12">
+            <div class="col-xs-12">
                 <div class="form-group">
                     <label for="txtZipCode">รหัสไปรษณีย์ :</label>
                     <div class="input-group">
@@ -87,7 +95,7 @@
                     </div>
                 </div>
             </div>
-             <div class="col-xs-12">
+            <div class="col-xs-12">
                 <div class="form-group">
                     <label for="txtTel">เบอร์โทร :</label>
                     <div class="input-group">
@@ -95,7 +103,7 @@
                         <input type="text" class="form-control" id="txtTel" name="txtTel" placeholder="เบอร์โทร">
                     </div>
                 </div>
-            </div>
+            </div>            
         </form>
     </div>
 </div>
