@@ -61,38 +61,53 @@ class Record extends PCenter {
                 ->get();
         echo json_encode($qryMenu->result());
     }
-    
+
     public function findRecordOne() {
         $_key = $_POST['key'];
         $qryMenu = $this->db->select('w.RowKey,'
-                . 'w.DocID,'
-                . 'w.DocDate,'
-                . 'w.DocDate,'
-                . 'w.Product,'
-                . 'w.PriceTotal,'
-                . 'w.Smile,'
-                . 'w.Emile,'
-                . 'w.CarFirstKey,'
-                . 'w.CarSecondKey,'
-                . 'bf.RowKey as CustBF,'
-                . 'cf.RowKey as CustF,'
-                . 'bs.RowKey as CustBS,'
-                . 'cs.RowKey as CustF')                
-                ->from('TRNWrokSheetHD w')
-                ->join('MSTCustomerBranch bf','w.CutsomerForm=bf.RowKey','left')
-                ->join('MSTCustomer cf','bf.CompanyKey=cf.RowKey','left')
-                ->join('MSTCustomerBranch bs','w.CustomerTo=bs.RowKey','left')
-                ->join('MSTCustomer cs','bs.CompanyKey=cs.RowKey','left')
-                ->where('w.RowKey',$_key)
-                ->get()->row();
-        $qryMenu->TRNIncome =$this->db->select('RowKey as key,'
-                . 'Detial,'
-                . 'IncomeType,'
-                . 'Amount')
-                ->from('TRNIncome')
-                ->where('WorkSheetHDKey',$qryMenu->RowKey)
-                ->get()->result();        
-        
+                                . 'w.DocID,'
+                                . 'w.DocDate,'
+                                . 'w.DocDate,'
+                                . 'w.Product,'
+                                . 'w.PriceTotal,'
+                                . 'w.Smile,'
+                                . 'w.Emile,'
+                                . 'w.CarFirstKey,'
+                                . 'w.CarSecondKey,'
+                                . 'bf.RowKey as CustBF,'
+                                . 'cf.RowKey as CustF,'
+                                . 'bs.RowKey as CustBS,'
+                                . 'cs.RowKey as CustF')
+                        ->from('TRNWrokSheetHD w')
+                        ->join('MSTCustomerBranch bf', 'w.CutsomerForm=bf.RowKey', 'left')
+                        ->join('MSTCustomer cf', 'bf.CompanyKey=cf.RowKey', 'left')
+                        ->join('MSTCustomerBranch bs', 'w.CustomerTo=bs.RowKey', 'left')
+                        ->join('MSTCustomer cs', 'bs.CompanyKey=cs.RowKey', 'left')
+                        ->where('w.RowKey', $_key)
+                        ->get()->row();
+        $qryMenu->TRNIncome = $this->db->select('RowKey as key,'
+                                . 'Detial,'
+                                . 'IncomeType,'
+                                . 'Amount')
+                        ->from('TRNIncome')
+                        ->where('WorkSheetHDKey', $qryMenu->RowKey)
+                        ->get()->result();
+        $qryMenu->TRNFule = $this->db->select('f.RowKey as key,'
+                                . 'f.Price,'
+                                . 'f.Smile,'
+                                . 'mf.Fuel as FuelDisplay,'
+                                . 'pf.FuleKey,'
+                                . 'pb.PumpBranch as BranchDisplay,'
+                                . 'pf.PumpBranchKey as BranchKey,'
+                                . 'p.Pump as PumpDisplay,'
+                                . 'pb.PumpKey')
+                        ->from('TRNFule f')
+                        ->join('MSTPumpFule pf', 'f.PumpFuleKey=pf.RowKey', 'left')
+                        ->join('MSTFuel mf', 'pf.FuleKey=mf.RowKey', 'left')
+                        ->join('MSTPumpBranch pb', 'pf.PumpBranchKey=pb.RowKey', 'left')
+                        ->join('MSTPump p', 'pb.PumpKey=p.RowKey', 'left')
+                        ->where('f.WorkSheetHDKey', $qryMenu->RowKey)
+                        ->get()->result();
         echo json_encode($qryMenu);
     }
 
