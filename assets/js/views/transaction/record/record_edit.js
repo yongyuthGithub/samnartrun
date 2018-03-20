@@ -13,15 +13,21 @@ $(function () {
 //        form_incomeout.data('data', new Array());
         setCustomerF(function (_p) {
             _p.val(Guid).selectpicker('render');
-            setCustomerBranchF(function (_b) {
-                _b.val(Guid).selectpicker('render');
-            });
+//            setCustomerBranchF(function (_b) {
+//                _b.val(Guid).selectpicker('render');
+//            });
         });
-        setCustomerS(function (_p) {
-            _p.val(Guid).selectpicker('render');
-            setCustomerBranchS(function (_b) {
-                _b.val(Guid).selectpicker('render');
-            });
+//        setCustomerS(function (_p) {
+//            _p.val(Guid).selectpicker('render');
+//            setCustomerBranchS(function (_b) {
+//                _b.val(Guid).selectpicker('render');
+//            });
+//        });
+        setShippingBegin(function (_t) {
+            _t.val(Guid).selectpicker('render');
+        });
+        setShippingEnd(function (_t) {
+            _t.val(Guid).selectpicker('render');
         });
     } else {
         $.reqData({
@@ -35,16 +41,16 @@ $(function () {
                 setCarS(vdata.CarSecondKey);
                 setCustomerF(function (_p) {
                     _p.val(vdata.CustF).selectpicker('render');
-                    setCustomerBranchF(function (_b) {
-                        _b.val(vdata.CustBF).selectpicker('render');
-                    });
+//                    setCustomerBranchF(function (_b) {
+//                        _b.val(vdata.CustBF).selectpicker('render');
+//                    });
                 });
-                setCustomerS(function (_p) {
-                    _p.val(vdata.CustS).selectpicker('render');
-                    setCustomerBranchS(function (_b) {
-                        _b.val(vdata.CustBS).selectpicker('render');
-                    });
-                });
+//                setCustomerS(function (_p) {
+//                    _p.val(vdata.CustS).selectpicker('render');
+//                    setCustomerBranchS(function (_b) {
+//                        _b.val(vdata.CustBS).selectpicker('render');
+//                    });
+//                });
                 form_recordedit.find('#txtMileageF').val(parseFloat(vdata.Smile).toFixed(2));
                 form_recordedit.find('#txtMileageS').val(parseFloat(vdata.Emile).toFixed(2));
                 form_recordedit.find('#txtProduct').val(vdata.Product);
@@ -61,7 +67,8 @@ $(function () {
                                 BranchKey: x.BranchKey,
                                 BranchDisplay: x.BranchDisplay,
                                 PumpKey: x.PumpKey,
-                                PumpDisplay: x.PumpDisplay
+                                PumpDisplay: x.PumpDisplay,
+                                Refer: x.Refer
                             });
                         }).ToArray();
                 form_fule.data('data', _fule).find('.xref').click();
@@ -73,6 +80,14 @@ $(function () {
                         .Where(x => parseInt(x.IncomeType) === 2)
                         .ToArray();
                 form_incomeout.data('data', _out).find('.xref').click();
+                setShippingBegin(function (_t) {
+                    _t.val(vdata.ShippingBegin).selectpicker('render');
+                    form_recordedit.find('#txtContactBegin').val(vdata.ContactBegin);
+                });
+                setShippingEnd(function (_t) {
+                    _t.val(vdata.ShippingEnd).selectpicker('render');
+                    form_recordedit.find('#txtContactEnd').val(vdata.ContactEnd);
+                });
             }
         });
     }
@@ -130,11 +145,11 @@ $(function () {
     form_recordedit.find('#cmdCustomerF').selectpicker({
     }).on({
         change: function () {
-            setCustomerBranchF(function (_b) {
-                if (_b.find('option').length === 0)
-                    _b.val(Guid).selectpicker('render');
-                form_recordedit.formValidation('revalidateField', form_recordedit.find('#cmdBranchF'));
-            });
+//            setCustomerBranchF(function (_b) {
+//                if (_b.find('option').length === 0)
+//                    _b.val(Guid).selectpicker('render');
+//                form_recordedit.formValidation('revalidateField', form_recordedit.find('#cmdBranchF'));
+//            });
         }
     });
     function setCustomerF(v) {
@@ -154,22 +169,157 @@ $(function () {
         });
     }
 
-    form_recordedit.find('#cmdBranchF').selectpicker({
+//    form_recordedit.find('#cmdBranchF').selectpicker({
+//    }).on({
+//        change: function () {
+//            //javascript on change
+//        }
+//    });
+//    function setCustomerBranchF(v) {
+//        $.reqData({
+//            url: mvcPatch('Record/findCustomerBranch'),
+//            data: {key: form_recordedit.find('#cmdCustomerF').val()},
+//            loanding: false,
+//            callback: function (vdata) {
+//                var _sel = form_recordedit.find('#cmdBranchF').empty();
+//                var _html = '';
+//                $.each(vdata, function (k, v) {
+//                    _html += '<option data-icon="fa fa-building-o" value="' + v.RowKey + '" data-display="' + v.Branch + '">&nbsp;&nbsp;' + v.Branch + '</option>';
+//                });
+//                _sel.append(_html).selectpicker('refresh');
+//                v(_sel);
+//            }
+//        });
+//    }
+
+//    form_recordedit.find('#cmdCustomerS').selectpicker({
+//    }).on({
+//        change: function () {
+//            setCustomerBranchS(function (_b) {
+//                if (_b.find('option').length === 0)
+//                    _b.val(Guid).selectpicker('render');
+//                form_recordedit.formValidation('revalidateField', form_recordedit.find('#cmdBranchS'));
+//            });
+//        }
+//    });
+//    function setCustomerS(v) {
+//        $.reqData({
+//            url: mvcPatch('Record/findCustomer'),
+//            loanding: false,
+//            callback: function (vdata) {
+//                var _sel = form_recordedit.find('#cmdCustomerS').empty();
+//                var _html = '';
+//                $.each(vdata, function (k, v) {
+//                    var _c = $.trim(v.CusCode).length === 0 ? v.Customer : v.CusCode + ' -> ' + v.Customer;
+//                    _html += '<option data-icon="fa fa-building" value="' + v.RowKey + '" data-display="' + _c + '">&nbsp;&nbsp;' + _c + '</option>';
+//                });
+//                _sel.append(_html).selectpicker('refresh');
+//                v(_sel);
+//            }
+//        });
+//    }
+
+//    form_recordedit.find('#cmdBranchS').selectpicker({
+//    }).on({
+//        change: function () {
+//            //javascript on change
+//        }
+//    });
+//    function setCustomerBranchS(v) {
+//        $.reqData({
+//            url: mvcPatch('Record/findCustomerBranch'),
+//            data: {key: form_recordedit.find('#cmdCustomerS').val()},
+//            loanding: false,
+//            callback: function (vdata) {
+//                var _sel = form_recordedit.find('#cmdBranchS').empty();
+//                var _html = '';
+//                $.each(vdata, function (k, v) {
+//                    _html += '<option data-icon="fa fa-building-o" value="' + v.RowKey + '" data-display="' + v.Branch + '">&nbsp;&nbsp;' + v.Branch + '</option>';
+//                });
+//                _sel.append(_html).selectpicker('refresh');
+//                v(_sel);
+//            }
+//        });
+//    }
+
+    form_recordedit.find('#cmdShippingBegin').selectpicker({
     }).on({
         change: function () {
-            //javascript on change
+            var _this = $(this);
+            var _con = form_recordedit.find('#txtContactBegin');
+//            if ($.trim(_con.val()).length === 0)
+            _con.val(_this.find('option:checked').data('contact'));
+        },
+        'loaded.bs.select': function (e) {
+            $('#btn-shippingBeginNew').on({
+                click: function () {
+                    $.bPopup({
+                        url: mvcPatch('Shipping/edit'),
+                        title: 'เพิ่มสถานที่ รับ-ส่ง สินค้า',
+                        closable: false,
+                        size: BootstrapDialog.SIZE_NORMAL,
+                        onshow: function (k) {
+                            k.getModal().data({
+                                data: new Object({key: Guid}),
+                                fun: function (_f) {
+                                    var obj = new Object();
+                                    obj.RowKey = Guid;
+                                    obj.LocationName = _f.find('#txtLocationName').val();
+                                    obj.Contact = _f.find('#txtContact').val();
+                                    $.bConfirm({
+                                        buttonOK: function (k) {
+                                            k.close();
+                                            $.reqData({
+                                                url: mvcPatch('Shipping/editShipping'),
+                                                data: {data: JSON.stringify(obj)},
+                                                loanding: false,
+                                                callback: function (vdata) {
+                                                    if (vdata.success) {
+                                                        _f.find('#btn-close').click();
+                                                        setShippingBegin(function (_t) {
+                                                            _t.val(vdata.RowKey).selectpicker('render').change();
+                                                        });
+                                                        var _e = form_recordedit.find('#cmdShippingEnd').val();
+                                                        setShippingEnd(function (_t) {
+                                                            _t.val(_e).selectpicker('render').change();
+                                                        });
+                                                    } else {
+                                                        $.bAlert({
+                                                            message: vdata.message
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        },
+                        buttons: [
+                            {
+                                id: 'btn-ok',
+                                icon: 'fa fa-check',
+                                label: '&nbsp;ตกลง',
+                                action: function (k) {
+
+                                }
+                            }
+                        ]
+                    });
+                }
+            })
         }
     });
-    function setCustomerBranchF(v) {
+    function setShippingBegin(v) {
         $.reqData({
-            url: mvcPatch('Record/findCustomerBranch'),
-            data: {key: form_recordedit.find('#cmdCustomerF').val()},
+            url: mvcPatch('Shipping/findShipping'),
+            data: {},
             loanding: false,
             callback: function (vdata) {
-                var _sel = form_recordedit.find('#cmdBranchF').empty();
+                var _sel = form_recordedit.find('#cmdShippingBegin').empty();
                 var _html = '';
                 $.each(vdata, function (k, v) {
-                    _html += '<option data-icon="fa fa-building-o" value="' + v.RowKey + '" data-display="' + v.Branch + '">&nbsp;&nbsp;' + v.Branch + '</option>';
+                    _html += '<option data-icon="fa fa-home" value="' + v.key + '" data-display="' + v.LocationName + '" data-contact="' + v.Contact + '">&nbsp;&nbsp;' + v.LocationName + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh');
                 v(_sel);
@@ -177,49 +327,84 @@ $(function () {
         });
     }
 
-    form_recordedit.find('#cmdCustomerS').selectpicker({
+    form_recordedit.find('#cmdShippingEnd').selectpicker({
     }).on({
         change: function () {
-            setCustomerBranchS(function (_b) {
-                if (_b.find('option').length === 0)
-                    _b.val(Guid).selectpicker('render');
-                form_recordedit.formValidation('revalidateField', form_recordedit.find('#cmdBranchS'));
-            });
-        }
-    });
-    function setCustomerS(v) {
-        $.reqData({
-            url: mvcPatch('Record/findCustomer'),
-            loanding: false,
-            callback: function (vdata) {
-                var _sel = form_recordedit.find('#cmdCustomerS').empty();
-                var _html = '';
-                $.each(vdata, function (k, v) {
-                    var _c = $.trim(v.CusCode).length === 0 ? v.Customer : v.CusCode + ' -> ' + v.Customer;
-                    _html += '<option data-icon="fa fa-building" value="' + v.RowKey + '" data-display="' + _c + '">&nbsp;&nbsp;' + _c + '</option>';
-                });
-                _sel.append(_html).selectpicker('refresh');
-                v(_sel);
-            }
-        });
-    }
+            var _this = $(this);
+            var _con = form_recordedit.find('#txtContactEnd');
+//            if ($.trim(_con.val()).length === 0)
+            _con.val(_this.find('option:checked').data('contact'));
+        },
+        'loaded.bs.select': function (e) {
+            $('#btn-shippingEnd').on({
+                click: function () {
+                    $.bPopup({
+                        url: mvcPatch('Shipping/edit'),
+                        title: 'เพิ่มสถานที่ รับ-ส่ง สินค้า',
+                        closable: false,
+                        size: BootstrapDialog.SIZE_NORMAL,
+                        onshow: function (k) {
+                            k.getModal().data({
+                                data: new Object({key: Guid}),
+                                fun: function (_f) {
+                                    var obj = new Object();
+                                    obj.RowKey = Guid;
+                                    obj.LocationName = _f.find('#txtLocationName').val();
+                                    obj.Contact = _f.find('#txtContact').val();
+                                    $.bConfirm({
+                                        buttonOK: function (k) {
+                                            k.close();
+                                            $.reqData({
+                                                url: mvcPatch('Shipping/editShipping'),
+                                                data: {data: JSON.stringify(obj)},
+                                                loanding: false,
+                                                callback: function (vdata) {
+                                                    if (vdata.success) {
+                                                        _f.find('#btn-close').click();
+                                                        setShippingEnd(function (_t) {
+                                                            _t.val(vdata.RowKey).selectpicker('render').change();
+                                                        });
+                                                        var _b = form_recordedit.find('#cmdShippingBegin').val();
+                                                        setShippingBegin(function (_t) {
+                                                            _t.val(_b).selectpicker('render').change();
+                                                        });
+                                                    } else {
+                                                        $.bAlert({
+                                                            message: vdata.message
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        },
+                        buttons: [
+                            {
+                                id: 'btn-ok',
+                                icon: 'fa fa-check',
+                                label: '&nbsp;ตกลง',
+                                action: function (k) {
 
-    form_recordedit.find('#cmdBranchS').selectpicker({
-    }).on({
-        change: function () {
-            //javascript on change
+                                }
+                            }
+                        ]
+                    });
+                }
+            })
         }
     });
-    function setCustomerBranchS(v) {
+    function setShippingEnd(v) {
         $.reqData({
-            url: mvcPatch('Record/findCustomerBranch'),
-            data: {key: form_recordedit.find('#cmdCustomerS').val()},
+            url: mvcPatch('Shipping/findShipping'),
+            data: {},
             loanding: false,
             callback: function (vdata) {
-                var _sel = form_recordedit.find('#cmdBranchS').empty();
+                var _sel = form_recordedit.find('#cmdShippingEnd').empty();
                 var _html = '';
                 $.each(vdata, function (k, v) {
-                    _html += '<option data-icon="fa fa-building-o" value="' + v.RowKey + '" data-display="' + v.Branch + '">&nbsp;&nbsp;' + v.Branch + '</option>';
+                    _html += '<option data-icon="fa fa-home" value="' + v.key + '" data-display="' + v.LocationName + '" data-contact="' + v.Contact + '">&nbsp;&nbsp;' + v.LocationName + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh');
                 v(_sel);
@@ -552,7 +737,8 @@ $(function () {
                                 BranchDisplay: _f.find('#cmdFuleBranch option:selected').data('display'),
                                 BranchKey: _f.find('#cmdFuleBranch').val(),
                                 PumpDisplay: _f.find('#cmdFule option:selected').data('display'),
-                                PumpKey: _f.find('#cmdFule').val()
+                                PumpKey: _f.find('#cmdFule').val(),
+                                Refer: _f.find('#txtRefer').val()
                             });
                             f.data('data').push(obj);
                             f.find('.xref').click();
@@ -593,6 +779,7 @@ $(function () {
                             _update.BranchKey = _f.find('#cmdFuleBranch').val();
                             _update.PumpDisplay = _f.find('#cmdFule option:selected').data('display');
                             _update.PumpKey = _f.find('#cmdFule').val();
+                            _update.Refer = _f.find('#txtRefer').val();
                             f.find('.xref').click();
                             _f.find('#btn-close').click();
                         }
@@ -675,31 +862,47 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* ระบุลูกค้าต้นทาง'
+                        message: '* ระบุลูกค้า'
                     }
                 }
             },
-            cmdBranchF: {
+//            cmdBranchF: {
+//                icon: false,
+//                validators: {
+//                    notEmpty: {
+//                        message: '* ระบุสาขาลูกค้าต้นทาง'
+//                    }
+//                }
+//            },
+//            cmdCustomerS: {
+//                icon: false,
+//                validators: {
+//                    notEmpty: {
+//                        message: '* ระบุลูกค้าปลายทาง'
+//                    }
+//                }
+//            },
+//            cmdBranchS: {
+//                icon: false,
+//                validators: {
+//                    notEmpty: {
+//                        message: '* ระบุสาขาลูกค้าปลายทาง'
+//                    }
+//                }
+//            },
+            cmdShippingBegin: {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* ระบุสาขาลูกค้าต้นทาง'
+                        message: '* ระบุสถานที่รับสินค้า'
                     }
                 }
             },
-            cmdCustomerS: {
+            cmdShippingEnd: {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* ระบุลูกค้าปลายทาง'
-                    }
-                }
-            },
-            cmdBranchS: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* ระบุสาขาลูกค้าปลายทาง'
+                        message: '* ระบุสถานที่ส่งสินค้า'
                     }
                 }
             },
@@ -724,6 +927,14 @@ $(function () {
                     regexp: {//***Custom Patter
                         regexp: regexpDecimal,
                         message: '* ระบุเป็นจำนวนตัวเลขเท่านั้น.'
+                    }
+                }
+            },
+            txtProduct: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* ระบุสินค้าที่ขนส่ง'
                     }
                 }
             },

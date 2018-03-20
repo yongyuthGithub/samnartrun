@@ -19,6 +19,7 @@ $(function () {
     } else {
         form_recordfuleedit.find('#txtMile').val(_formdata.Smile);
         form_recordfuleedit.find('#txtAmount').val(_formdata.Price);
+        form_recordfuleedit.find('#txtRefer').val(_formdata.Refer);
         setFule(function (f) {
             f.val(_formdata.PumpKey).selectpicker('render');
             setFuleBranch(function (fb) {

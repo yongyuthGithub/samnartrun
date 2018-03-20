@@ -83,8 +83,8 @@ $(function () {
             {data: 'Product', header: 'สินค้า'},
             {data: 'PriceTotal', header: 'ค่าบริการ'},
             {data: 'CNumberF', header: 'รถขนส่ง'},
-            {data: 'CusCodeF', header: 'จากบริษัท'},
-            {data: 'CusCodeS', header: 'ถึงบริษัท'}
+            {data: 'CusCodeF', header: 'บริษัท'},
+            {data: 'CusCodeS', header: 'สถานที่ รับ-ส่ง'}
         ],
         DataColumnsDefs: [
             {
@@ -110,14 +110,14 @@ $(function () {
             },
             {
                 render: function (row, type, val2, meta) {
-                    return ($.trim(val2.CusCodeF).length > 0 ? '(' + val2.CusCodeF + ') ' : '') + val2.CustomerF + ' -> ' + val2.BranchF;
+                    return ($.trim(val2.CusCodeF).length > 0 ? '(' + val2.CusCodeF + ') ' : '') + val2.CustomerF;
                 },
                 orderable: true,
                 targets: 5
             },
             {
                 render: function (row, type, val2, meta) {
-                    return ($.trim(val2.CusCodeS).length > 0 ? '(' + val2.CusCodeS + ') ' : '') + val2.CustomerS + ' -> ' + val2.BranchS;
+                    return  val2.LocationNameB + ' -> ' + val2.LocationNameE;
                 },
                 orderable: true,
                 targets: 6
@@ -140,8 +140,12 @@ $(function () {
                                 CarFirstKey: _f.find('#cmdCarF').val(),
                                 CarSecondKey: _f.find('#cmdCarS').val(),
                                 Product: _f.find('#txtProduct').val(),
-                                CutsomerForm: _f.find('#cmdBranchF').val(),
-                                CustomerTo: _f.find('#cmdBranchS').val(),
+                                CutsomerKey: _f.find('#cmdCustomerF').val(),
+//                                CustomerTo: _f.find('#cmdBranchS').val(),
+                                ShippingBegin: _f.find('#cmdShippingBegin').val(),
+                                ContactBegin: _f.find('#txtContactBegin').val(),
+                                ShippingEnd: _f.find('#cmdShippingEnd').val(),
+                                ContactEnd: _f.find('#txtContactEnd').val(),
                                 PriceTotal: parseFloat(_f.find('#txtTotal').val()),
                                 Smile: parseFloat(_f.find('#txtMileageF').val()),
                                 Emile: parseFloat(_f.find('#txtMileageS').val()),
@@ -152,7 +156,8 @@ $(function () {
                                                 RowKey: x.key,
                                                 PumpFuleKey: x.FuleKey,
                                                 Price: x.Price,
-                                                Smile: x.Smile
+                                                Smile: x.Smile,
+                                                Refer: x.Refer
                                             });
                                         }).ToArray(),
                                 TRNIncome: $.ToLinq(_f.find('#form_incomein').data('data'))
@@ -227,8 +232,12 @@ $(function () {
                                 CarFirstKey: _f.find('#cmdCarF').val(),
                                 CarSecondKey: _f.find('#cmdCarS').val(),
                                 Product: _f.find('#txtProduct').val(),
-                                CutsomerForm: _f.find('#cmdBranchF').val(),
-                                CustomerTo: _f.find('#cmdBranchS').val(),
+                                CutsomerKey: _f.find('#cmdCustomerF').val(),
+//                                CustomerTo: _f.find('#cmdBranchS').val(),
+                                ShippingBegin: _f.find('#cmdShippingBegin').val(),
+                                ContactBegin: _f.find('#txtContactBegin').val(),
+                                ShippingEnd: _f.find('#cmdShippingEnd').val(),
+                                ContactEnd: _f.find('#txtContactEnd').val(),
                                 PriceTotal: parseFloat(_f.find('#txtTotal').val()),
                                 Smile: parseFloat(_f.find('#txtMileageF').val()),
                                 Emile: parseFloat(_f.find('#txtMileageS').val()),
@@ -239,7 +248,8 @@ $(function () {
                                                 RowKey: x.key,
                                                 PumpFuleKey: x.FuleKey,
                                                 Price: x.Price,
-                                                Smile: x.Smile
+                                                Smile: x.Smile,
+                                                Refer: x.Refer
                                             });
                                         }).ToArray(),
                                 TRNIncome: $.ToLinq(_f.find('#form_incomein').data('data'))

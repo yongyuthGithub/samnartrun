@@ -79,9 +79,9 @@ class Register extends PCenter {
             } else {
                 $_data->RowKey = PCenter::GUID();
                 $_data->RowStatus = true;
-                $_data->CreateBy = PCenter::GUID_EMPTY();
+                $_data->CreateBy = $this->USER_LOGIN()->RowKey;
                 $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
-                $_data->UpdateBy = PCenter::GUID_EMPTY();
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->insert('MSTEmployee', $_data);
 
@@ -106,7 +106,7 @@ class Register extends PCenter {
                 $update = (object) [];
                 $update->IDCard = $_data->IDCard;
 
-                $update->UpdateBy = PCenter::GUID_EMPTY();
+                $update->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('MSTEmployee', $update);
 

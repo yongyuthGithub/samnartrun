@@ -15,7 +15,25 @@ class Record extends PCenter {
     }
 
     public function recordEdit() {
-        $this->load->view('transaction/record/record_edit');
+        $_company = '';
+        $_address = '';
+        $qryMenu = $this->db
+                ->select('c.Customer,'
+                        . 'Concat(c.Address," ",sd.SubDistrict," ",d.District, " ",p.Province," ",c.ZipCode )as FullAdress')
+                ->from('SYSCompany c')
+                ->join('MSTSubDistrict sd', 'c.SubDistrict=sd.RowKey', 'left')
+                ->join('MSTDistrict d', 'sd.DistrictKey=d.RowKey', 'left')
+                ->join('MSTProvince p', 'd.ProvinceKey=p.RowKey', 'left')
+                ->get();
+        foreach ($qryMenu->result() as $row) {
+            $_company = $row->Customer;
+            $_address = $row->FullAdress;
+        }
+
+        $data['page'] = 'setting/home/main_page';
+        $data['company'] = $_company;
+        $data['address'] = $_address;
+        $this->load->view('transaction/record/record_edit', $data);
     }
 
     public function incomeinEdit() {
@@ -47,19 +65,20 @@ class Record extends PCenter {
                         . 'cs.CarNumber as CNumberS,'
                         . 'cufc.CusCode as CusCodeF,'
                         . 'cufc.Customer as CustomerF,'
-                        . 'cuf.Branch as BranchF,'
-                        . 'cusc.CusCode as CusCodeS,'
-                        . 'cusc.Customer as CustomerS,'
-                        . 'cus.Branch as BranchS')
+                        . 'lB.LocationName as LocationNameB,'
+                        . 'lE.LocationName as LocationNameE,'
+//                        . 'cusc.Customer as CustomerS,'
+//                        . 'cus.Branch as BranchS')
+                )
                 ->where('w.DocDate >=', $_data->SDate)
                 ->where('w.DocDate <=', $_data->EDate)
                 ->from('TRNWrokSheetHD w')
                 ->join('MSTCar cf', 'w.CarFirstKey=cf.RowKey', 'left')
                 ->join('MSTCar cs', 'w.CarSecondKey=cs.RowKey', 'left')
-                ->join('MSTCustomerBranch cuf', 'w.CutsomerForm=cuf.RowKey', 'left')
-                ->join('MSTCustomer cufc', 'cuf.CompanyKey=cufc.RowKey', 'left')
-                ->join('MSTCustomerBranch cus', 'w.CustomerTo=cus.RowKey', 'left')
-                ->join('MSTCustomer cusc', 'cus.CompanyKey=cusc.RowKey', 'left')
+//                ->join('MSTCustomerBranch cuf', 'w.CutsomerForm=cuf.RowKey', 'left')
+                ->join('MSTCustomer cufc', 'w.CutsomerKey=cufc.RowKey', 'left')
+                ->join('MSTShippingLocations lB', 'w.ShippingBegin=lB.RowKey', 'left')
+                ->join('MSTShippingLocations lE', 'w.ShippingEnd=lE.RowKey', 'left')
                 ->get();
         echo json_encode($qryMenu->result());
     }
@@ -76,16 +95,18 @@ class Record extends PCenter {
                                 . 'w.Emile,'
                                 . 'w.CarFirstKey,'
                                 . 'w.CarSecondKey,'
-                                . 'bf.RowKey as CustBF,'
+//                                . 'bf.RowKey as CustBF,'
                                 . 'cf.RowKey as CustF,'
-                                . 'bs.RowKey as CustBS,'
-                                . 'cs.RowKey as CustS,'
+                                . 'w.ShippingBegin,'
+                                . 'w.ContactBegin,'
+                                . 'w.ShippingEnd,'
+                                . 'w.ContactEnd,'
                                 . 'w.Remark')
                         ->from('TRNWrokSheetHD w')
-                        ->join('MSTCustomerBranch bf', 'w.CutsomerForm=bf.RowKey', 'left')
-                        ->join('MSTCustomer cf', 'bf.CompanyKey=cf.RowKey', 'left')
-                        ->join('MSTCustomerBranch bs', 'w.CustomerTo=bs.RowKey', 'left')
-                        ->join('MSTCustomer cs', 'bs.CompanyKey=cs.RowKey', 'left')
+//                        ->join('MSTCustomerBranch bf', 'w.CutsomerForm=bf.RowKey', 'left')
+                        ->join('MSTCustomer cf', 'w.CutsomerKey=cf.RowKey', 'left')
+//                        ->join('MSTCustomerBranch bs', 'w.CustomerTo=bs.RowKey', 'left')
+//                        ->join('MSTCustomer cs', 'bs.CompanyKey=cs.RowKey', 'left')
                         ->where('w.RowKey', $_key)
                         ->get()->row();
         $qryMenu->TRNIncome = $this->db->select('RowKey as key,'
@@ -98,6 +119,7 @@ class Record extends PCenter {
         $qryMenu->TRNFule = $this->db->select('f.RowKey as key,'
                                 . 'f.Price,'
                                 . 'f.Smile,'
+                                . 'f.Refer,'
                                 . 'mf.Fuel as FuelDisplay,'
                                 . 'pf.RowKey as FuleKey,'
                                 . 'pb.PumpBranch as BranchDisplay,'
@@ -150,7 +172,7 @@ class Record extends PCenter {
         $_key = $_POST['key'];
         $qryMenu = $this->db->select('RowKey,'
                         . 'Branch')
-                ->where('CompanyKey', $_key)                
+                ->where('CompanyKey', $_key)
                 ->order_by('IsDefault', 'desc')
                 ->order_by('Branch', 'asc')
                 ->get('MSTCustomerBranch');
