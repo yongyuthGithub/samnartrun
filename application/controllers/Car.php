@@ -26,7 +26,7 @@ class Car extends PCenter {
     public function carinsuranceedit() {
         $this->load->view('master/Car/Car_Insurance_edit');
     }
-    
+
     public function caractedit() {
         $this->load->view('master/Car/Car_Act_edit');
     }
@@ -49,21 +49,25 @@ class Car extends PCenter {
                 ->join('MSTProvince P', 'C.ProvinceKey=P.RowKey', 'left')
                 ->get();
 //        $query = $this->db->select('RowKey, InsuranceName,Address,SubDistrict,ZipCode,Tel,')->get('MSTInsurance');
-//        $_array = array();
-//        foreach ($query->result() as $row) {
-//            $_ar = array(
-//                'key' => $row->RowKey,
-//                'InsuranceName' => $row->InsuranceName,
-//                'Address' => $row->Address,
-//                'SubDistrict' => $row->SubDistrict,
-//                'ZipCode' => $row->ZipCode,
-//                'Tel' => $row->Tel,
-//                
-//                
-//            );
-//            array_push($_array, $_ar);
-//        }
-        echo json_encode($query->result());
+        $_array = array();
+        foreach ($query->result() as $row) {
+            $_ar = array(
+                'key' => $row->key,
+                'BrandKey' => $row->BrandKey,
+                'CarNumber' => $row->CarNumber,
+                'ProvinceKey' => $row->ProvinceKey,
+                'Province' => $row->Province,
+                'CarType' => $row->CarType,
+                'Brand' => $row->Brand,
+                'CarGroup' => $row->CarGroup,
+                '_Delete' => $this->db
+                        ->where('CarFirstKey', $row->key)
+                        ->or_where('CarSecondKey', $row->key)
+                        ->from('TRNWrokSheetHD')->count_all_results() > 0 ? false : true
+            );
+            array_push($_array, $_ar);
+        }
+        echo json_encode($_array);
     }
 
     public function editCar() {
@@ -126,7 +130,7 @@ class Car extends PCenter {
         echo json_encode($vReturn);
     }
 
-     public function removeinsurancetype() {
+    public function removeinsurancetype() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
         $this->db->trans_begin();
@@ -239,7 +243,8 @@ class Car extends PCenter {
         }
         echo json_encode($vReturn);
     }
- public function findactcar() {
+
+    public function findactcar() {
         $key = $_POST['key'];
         $query = $this->db->select('T.RowKey as key, '
                         . 'T.CarKey,'
@@ -275,7 +280,7 @@ class Car extends PCenter {
                 $this->db->insert('TRNCarAct', $_data);
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
-                    $vReturn->success = false; 
+                    $vReturn->success = false;
                     $vReturn->message = $this->db->_error_message();
                 } else {
                     $this->db->trans_commit();
