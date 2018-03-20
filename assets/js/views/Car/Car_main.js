@@ -153,7 +153,7 @@ $(function () {
                                 return x.key;
                             }).ToArray();
                     $.reqData({
-                        url: mvcPatch('Car/removeCar'),
+                        url: mvcPatch('Car/removeinsurancetype'),
                         data: {data: JSON.stringify(vdata)},
                         callback: function (vdata) {
                             if (vdata.success) {

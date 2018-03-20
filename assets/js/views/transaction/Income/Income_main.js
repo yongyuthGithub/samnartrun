@@ -1,26 +1,71 @@
 $(function () {
     var form_Income = $('#form_Income');
+    var form_Incometime = $('#form_Incometime');
 
-    form_Income.setMainPage({
+    form_Incometime.find('#divSDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        maxDate: new Date(),
+        defaultDate: new Date(),
+        locale: 'th',
+    }).on('dp.change', function (ds) {
+        form_Incometime.find('#divEDate').data("DateTimePicker").minDate(ds.date);
+        setFind();
+    });
+
+    form_Incometime.find('#divEDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        minDate: new Date(),
+        defaultDate: new Date(),
+        locale: 'th',
+    }).on('dp.change', function (ds) {
+        form_Incometime.find('#divSDate').data("DateTimePicker").maxDate(ds.date);
+        setFind();
+    });
+    setFind();
+    function setFind() {
+//        var _edate = new Date(form_record.find('#divEDate').data("DateTimePicker").date()).setHours(23, 59, 59, 0);
+//        form_record.find('#divEDate').data("DateTimePicker").date(new Date(_edate));
+        $.reqData({
+            url: mvcPatch('Income/findIncome'),
+            data: {vdata: JSON.stringify({
+//                    SDate: PHP_DateTimeShow_To_JSON(form_record.find('#divSDate')),
+//                    EDate: PHP_DateTimeShow_To_JSON(form_record.find('#divEDate'), true)
+                    SDate: setDateJson(form_Incometime.find('#txtSDate').val()),
+                    EDate: setDateJson(form_Incometime.find('#txtEDate').val())
+                })
+            },
+            loanding: false,
+            callback: function (vdata) {
+                form_Income.data('data', vdata).find('.xref').click();
+            }
+        });
+    }
+
+
+
+
+    form_Income.data('data', new Array()).setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
         btnPreview: false,
         headerString: '',
-        UrlDataJson: mvcPatch('Income/findIncome'),
+        DataJson: function () {
+            return form_Income.data('data');
+        },
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
-          {data: 'Detial', header: 'รายละเอียด'},
+            {data: 'Detial', header: 'รายละเอียด'},
             {data: 'IncomeType', header: 'ประเภท'},
             {data: 'DocDate', header: 'วันที่'},
-            
+
             {data: 'Amount', header: 'จำนวนเงิน'},
 //           {data: 'Url', header: 'Url'}
         ],
-       
-         DataColumnsDefs: [
+
+        DataColumnsDefs: [
             {
                 render: function (row, type, val2, meta) {
                     var _val = PHP_JSON_To_ShowDate(val2.DocDate);
@@ -37,12 +82,9 @@ $(function () {
                 orderable: true,
                 targets: 1
             }
-            
-            
-        ],
-        
-        
 
+
+        ],
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Income/edit'),
@@ -105,7 +147,7 @@ $(function () {
                         data: d,
                         fun: function (_f) {
                             var obj = new Object();
-                           obj.RowKey = d.key;
+                            obj.RowKey = d.key;
                             obj.DocDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate'));
                             obj.Detial = _f.find('#txtUser2').val();
                             obj.IncomeType = _f.find('#cmdTitle').val();

@@ -32,7 +32,7 @@ $(function () {
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('insurance/typeedit'),
-                title: 'Add Insurance Type',
+                title: 'เพิ่มประเภทประกัน',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -83,7 +83,7 @@ $(function () {
         btnEditFun: function (f, d) {
             $.bPopup({
                 url: mvcPatch('insurance/typeedit'),
-                title: 'Edit Insurance Type',
+                title: 'แก้ไขประเภทประกัน',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {

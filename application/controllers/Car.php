@@ -126,7 +126,7 @@ class Car extends PCenter {
         echo json_encode($vReturn);
     }
 
-    public function removeCar() {
+     public function removeinsurancetype() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
         $this->db->trans_begin();

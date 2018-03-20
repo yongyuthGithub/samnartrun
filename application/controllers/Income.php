@@ -19,8 +19,14 @@ class Income extends PCenter {
         $this->load->view('transaction/Income/Income_edit');
     }
 
+     
+    
     public function findIncome() {
-        $query = $this->db->select('RowKey, DocDate, Detial,IncomeType,Amount, ')->from('TRNIncomeOther')->get();
+        $_data = json_decode($_POST['vdata']);
+        $query = $this->db->select('RowKey, DocDate, Detial,IncomeType,Amount, ')
+                ->where('DocDate >=', $_data->SDate)
+                ->where('DocDate <=', $_data->EDate)
+                ->from('TRNIncomeOther')->get();
         $_array = array();
         foreach ($query->result() as $row) {
             $_ar = array(
