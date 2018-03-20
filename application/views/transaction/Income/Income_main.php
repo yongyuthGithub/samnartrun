@@ -5,14 +5,15 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 
-<?php echo js_asset('views/Income/Income_main.js') ?>
+<?php echo js_asset('views/transaction/Income/Income_main.js') ?>
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1>ข้อมูลประเภทเชื้อเพลิง</h1><h4><small>จัดการข้อมูลประเภทเชื้อเพลิง</small></h4>
+            <h1>ข้อมูลรายรับ/รายจ่าย</h1><h4><small>จัดการข้อมูลรายรับ/รายจ่าย</small></h4>
         </div>
     </div>
 </div>
+
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body"> 

@@ -12,9 +12,10 @@ $(function () {
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
-            {data: 'DocDate', header: 'วันที่'},
-            {data: 'Detial', header: 'รายละเอียด'},
+          {data: 'Detial', header: 'รายละเอียด'},
             {data: 'IncomeType', header: 'ประเภท'},
+            {data: 'DocDate', header: 'วันที่'},
+            
             {data: 'Amount', header: 'จำนวนเงิน'},
 //           {data: 'Url', header: 'Url'}
         ],
@@ -26,7 +27,7 @@ $(function () {
                     return _val;
                 },
                 orderable: true,
-                targets: 0
+                targets: 2
             },
             {
                 render: function (row, type, val2, meta) {
@@ -34,7 +35,7 @@ $(function () {
                     return _val;
                 },
                 orderable: true,
-                targets: 2
+                targets: 1
             }
             
             
@@ -45,7 +46,7 @@ $(function () {
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Income/edit'),
-                title: 'เพิ่มประภทเชื้อเพลิง',
+                title: 'เพิ่มรายรับ/รายจ่าย',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -95,8 +96,8 @@ $(function () {
         },
         btnEditFun: function (f, d) {
             $.bPopup({
-                url: mvcPatch('FuleType/edit'),
-                title: 'แก้ไขประเภทเชื้อเพลิง',
+                url: mvcPatch('Income/edit'),
+                title: 'แก้ไขรายรับ/รายจ่าย',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -104,14 +105,16 @@ $(function () {
                         data: d,
                         fun: function (_f) {
                             var obj = new Object();
-                            obj.RowKey = d.key;
-                            obj.Fuel = _f.find('#txtUser').val();
-                            obj.FuelType = _f.find('#cmdTitle').val();
+                           obj.RowKey = d.key;
+                            obj.DocDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate'));
+                            obj.Detial = _f.find('#txtUser2').val();
+                            obj.IncomeType = _f.find('#cmdTitle').val();
+                            obj.Amount = _f.find('#txtUser3').val();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
                                     $.reqData({
-                                        url: mvcPatch('FuleType/editPump'),
+                                        url: mvcPatch('Income/editIncome'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {

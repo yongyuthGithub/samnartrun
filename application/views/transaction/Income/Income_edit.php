@@ -7,7 +7,7 @@ and open the template in the editor.
 <!--<div class="page-header">
     <h1>ข้อมูลปั้มน้ำมัน</h1><h4><small>ข้อมูลปั้มน้ำมัน</small></h4>
 </div>-->
-<?php echo js_asset('views/Income/Income_edit.js') ?>
+<?php echo js_asset('views/transaction/Income/Income_edit.js') ?>
 <div class="panel panel-default">
     <div class="panel-body">
         <form id="form_Incomeedit">

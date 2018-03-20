@@ -12,9 +12,12 @@ $(function () {
     if (_formdata.key === Guid) {
 //        setTitle(Guid);
     } else {
-        form_Incomeedit.find('#txtUser').val(_formdata.Fuel);
-        form_Incomeedit.find('#cmdTitle').val(_formdata.FuelType).selectpicker('render');
-
+        form_Incomeedit.find('#txtUser5').val(PHP_JSON_To_ShowDate(_formdata.DocDate));
+         form_Incomeedit.find('#txtUser2').val(_formdata.Detial);
+        form_Incomeedit.find('#cmdTitle').val(_formdata.IncomeType).selectpicker('render');
+        form_Incomeedit.find('#txtUser3').val(_formdata.Amount);
+        
+        
         form_Incomeedit.find('.showinadd').remove();
 
 //        setTitle(_formdata.TitleKey);
@@ -23,11 +26,11 @@ $(function () {
         change: function () {
         }
     });
-    
+
     form_Incomeedit.find('#txtSDate').dateTime().on('dp.change', function (e) {
         form_Incomeedit.formValidation('revalidateField', form_Incomeedit.find('#txtUser5'));
     });
-form_Incomeedit.find('#cmdTitle').selectpicker().on({
+    form_Incomeedit.find('#cmdTitle').selectpicker().on({
         change: function () {
         }
     });

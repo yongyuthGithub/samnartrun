@@ -10,13 +10,13 @@ class Income extends PCenter {
     }
 
     public function index() {
-        $data['page'] = 'master/Income/Income_main';
+        $data['page'] = 'transaction/Income/Income_main';
         $this->load->view('layout/nav', $data);
     }
 
     public function edit() {
 
-        $this->load->view('master/Income/Income_edit');
+        $this->load->view('transaction/Income/Income_edit');
     }
 
     public function findIncome() {
@@ -43,7 +43,7 @@ class Income extends PCenter {
 
         if ($_data->RowKey === PCenter::GUID_EMPTY()) {
             $queryChk = $this->db->where('Detial', $_data->Detial)->from('TRNIncomeOther')->count_all_results();
-            if ($queryChk > 0) {
+            if ($queryChk = 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
@@ -65,7 +65,7 @@ class Income extends PCenter {
             }
         } else {
             $queryChk = $this->db->where('Detial', $_data->Detial)->where('RowKey !=', $_data->RowKey)->from('TRNIncomeOther')->count_all_results();
-            if ($queryChk > 0) {
+            if ($queryChk = 0) {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
