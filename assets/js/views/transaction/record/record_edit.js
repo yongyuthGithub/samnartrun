@@ -161,7 +161,7 @@ $(function () {
                 var _html = '';
                 $.each(vdata, function (k, v) {
                     var _c = $.trim(v.CusCode).length === 0 ? v.Customer : v.CusCode + ' -> ' + v.Customer;
-                    _html += '<option data-icon="fa fa-building" value="' + v.RowKey + '" data-display="' + _c + '">&nbsp;&nbsp;' + _c + '</option>';
+                    _html += '<option data-icon="fa fa-address-book" value="' + v.RowKey + '" data-display="' + _c + '">&nbsp;&nbsp;' + _c + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh');
                 v(_sel);
