@@ -16,7 +16,7 @@ $(function () {
         UrlLoandingclose: true,
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'DocName', header: 'DocName'},
+            {data: 'DocName', header: 'Doc Name'},
             {data: 'Pattern', header: 'Pattern'},
             {data: 'Point', header: 'Point'},
             {data: 'YearMonth', header: 'Month'},
