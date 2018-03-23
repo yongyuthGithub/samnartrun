@@ -164,7 +164,7 @@ class Fule extends PCenter {
                             ->where('PumpKey', $_data->PumpKey)
                             ->update('MSTPumpBranch');
                 }
-                
+
                 $_data->RowKey = PCenter::GUID();
                 $_data->RowStatus = true;
                 $_data->CreateBy = $this->USER_LOGIN()->RowKey;
@@ -246,12 +246,42 @@ class Fule extends PCenter {
         $query = $this->db
                 ->select('pf.RowKey as key, '
                         . 'f.Fuel, '
+                        . 'pf.IsDefault,'
                         . 'f.FuelType')
                 ->from('MSTPumpFule pf')
                 ->join('MSTFuel f', 'pf.FuleKey=f.RowKey', 'left')
                 ->where('pf.PumpBranchKey', $_key)
                 ->get();
         echo json_encode($query->result());
+    }
+
+    public function editBrandDetailDF() {
+        $_thiskey = $_POST['key'];
+        $_mainkey = $_POST['mainkey'];
+        $_status = (int)$_POST['status'];
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+
+        $this->db->set('IsDefault', $_status)
+                ->where('RowKey', $_thiskey)
+                ->update('MSTPumpFule');
+        if ($_status === 1) {
+            $this->db->set('IsDefault', 0)
+                    ->where('PumpBranchKey', $_mainkey)
+                    ->where_not_in('RowKey', $_thiskey)
+                    ->update('MSTPumpFule');
+        }
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
+        }
+        echo json_encode($vReturn);
     }
 
     public function findFuelList() {

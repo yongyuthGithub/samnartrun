@@ -11,7 +11,29 @@ $(function () {
                 }
             }).prop('action', mvcPatch('fule/branchindex')).submit();
         }
-    })
+    });
+
+    form_fuledetail.on('click', '.swDF', function () {
+        var _this = $(this);
+        $.reqData({
+            url: mvcPatch('fule/editBrandDetailDF'),
+            data: {
+                key: _this.data('key'),
+                mainkey: $('#txtkey2').val(),
+                status: _this.is(':checked') ? 1 : 0
+            },
+            loanding: false,
+            callback: function (vdata) {
+                if (vdata.success) {
+                    form_fuledetail.find('.xref').click();
+                } else {
+                    $.bAlert({
+                        message: vdata.message
+                    });
+                }
+            }
+        });
+    });
 
     form_fuledetail.setMainPage({
         btnNew: true,
@@ -30,6 +52,7 @@ $(function () {
         DataColumns: [
             {data: 'Fuel', header: 'เชื้อเพลิง'},
             {data: 'FuelType', header: 'ประเภทเชื้อเพลิง'},
+            {data: 'IsDefault', header: 'ค่าเริ่มต้น'},
         ],
         DataColumnsDefs: [
             {
@@ -38,6 +61,18 @@ $(function () {
                 },
                 orderable: true,
                 targets: 1
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    var _chk = parseInt(val2.IsDefault) > 0 ? 'checked' : '';
+                    var _html = '<div class="form-group"><div class="material-switch">';
+                    _html += '<input id="swDF' + val2.key + '" name="swDF' + val2.key + '" type="checkbox" class="swDF" data-key="' + val2.key + '" ' + _chk + ' />';
+                    _html += '<label for="swDF' + val2.key + '" class="label-success" style="width:auto;"></label>';
+                    _html += '</div></div>';
+                    return _html;
+                },
+                orderable: true,
+                targets: 2
             }
         ],
         btnNewFun: function (f) {

@@ -204,6 +204,7 @@ class Record extends PCenter {
                 ->from('MSTPumpFule pf')
                 ->join('MSTFuel f', 'pf.FuleKey=f.RowKey', 'left')
                 ->where('pf.PumpBranchKey', $_key)
+                ->order_by('pf.IsDefault', 'desc')
                 ->order_by('f.Fuel', 'asc')
                 ->get();
         echo json_encode($qryMenu->result());
