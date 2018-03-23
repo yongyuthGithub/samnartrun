@@ -22,20 +22,20 @@ $(function () {
 //            {data: 'CarType', header: 'ประเภทเพลา'},
         ],
         DataColumnsDefs: [
-            {
-                render: function (row, type, val2, meta) {
-                    return parseInt(val2.CarGroup) === 1 ? 'ส่วนหัว' : '';
-                },
-                orderable: true,
-                targets: 3
-            },
-            {
-                render: function (row, type, val2, meta) {
-                    return parseInt(val2.CarType) === 1 ? '2 เพลา' : '3 เพลา';
-                },
-                orderable: true,
-                targets: 4
-            }
+//            {
+//                render: function (row, type, val2, meta) {
+//                    return parseInt(val2.CarGroup) === 1 ? 'ส่วนหัว' : '';
+//                },
+//                orderable: true,
+//                targets: 3
+//            },
+//            {
+//                render: function (row, type, val2, meta) {
+//                    return parseInt(val2.CarType) === 1 ? '2 เพลา' : '3 เพลา';
+//                },
+//                orderable: true,
+//                targets: 4
+//            }
         ],
         btnNewFun: function (f) {
             $.bPopup({
@@ -200,19 +200,19 @@ $(function () {
             {data: 'CarType', header: 'ประเภทเพลา'},
         ],
         DataColumnsDefs: [
-            {
-                render: function (row, type, val2, meta) {
-                    return parseInt(val2.CarGroup) === 1 ? '' : 'ส่วนหาง';
-                },
-                orderable: true,
-                targets: 3
-            },
+//            {
+//                render: function (row, type, val2, meta) {
+//                    return parseInt(val2.CarGroup) === 1 ? '' : 'ส่วนหาง';
+//                },
+//                orderable: true,
+//                targets: 3
+//            },
             {
                 render: function (row, type, val2, meta) {
                     return parseInt(val2.CarType) === 1 ? '2 เพลา' : '3 เพลา';
                 },
                 orderable: true,
-                targets: 4
+                targets: 3
             }
         ],
         btnNewFun: function (f) {
