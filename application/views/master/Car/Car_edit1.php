@@ -7,9 +7,9 @@ and open the template in the editor.
 <!--<div class="page-header">
     <h1>ข้อมูลAdmin</h1><h4><small>เพิ่มข้อมูลAdmin</small></h4>
 </div>-->
-<?php echo js_asset('views/Car/Car_edit.js') ?>
+<?php echo js_asset('views/Car/Car_edit1.js') ?>
 <div class="panel panel-default">
-    <form id="form_Caredit">
+    <form id="form_Caredit1">
         <div class="panel-body">
 <!--            <div class="col-xs-12">
                 <div class="form-group">
@@ -44,7 +44,7 @@ and open the template in the editor.
                             data-live-Search="true"
                             data-live-Search-Placeholder="key word"
                             data-multiple-Separator=",&nbsp;&nbsp;"
-                            data-actions-Box="false"
+                            data-actions-SBox="false"
                             data-selectAll-Text="Select All"
                             data-deselectAll-Text="Deselect All"
                             data-selected-Text-Format="count > 3">
@@ -80,7 +80,7 @@ and open the template in the editor.
                     </select>
                 </div>
             </div>
-<!--            <div class="col-xs-12">
+            <div class="col-xs-12">
                 <div class="form-group">
                     <label for="txtCarType">ประเภทเพลา :</label>
                     <select id="txtCarType" name="txtCarType" class="form-control selectpicker show-menu-arrow"
@@ -100,7 +100,7 @@ and open the template in the editor.
                         <option data-icon="fa fa-clone" value="2">&nbsp;&nbsp;3 เพลา</option>
                     </select>
                 </div>
-            </div>-->
+            </div>
         </div>
 
     </form>
