@@ -15,7 +15,8 @@ $(function () {
         UrlLoandingclose: true,
         DataColumns: [
             {data: 'CusCode', header: 'รหัสลูกค้า'},
-            {data: 'Customer', header: 'ชื่อลูกค้า'}           
+            {data: 'Customer', header: 'ชื่อลูกค้า'} 
+            
         ],
 //        DataColumnsDefs: [{
 //                render: function (row, type, val2, meta) {

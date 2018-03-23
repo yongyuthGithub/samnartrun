@@ -19,6 +19,7 @@ $(function () {
         DataColumns: [
             {data: 'Branch', header: 'สาขา'},
             {data: 'FullAdress', header: 'ที่อยู่'},
+            {data: 'Tel', header: 'เลขประจำตัวผู้เสียภาษี'},
         ],
 //        DataColumnsDefs: [
 //            {
