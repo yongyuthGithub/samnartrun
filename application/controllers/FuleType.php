@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 require __DIR__ . '/../core/PCenter.php';
 
@@ -12,11 +13,13 @@ class FuleType extends PCenter {
         $data['page'] = 'master/FuleType/Fuletype_main';
         $this->load->view('layout/nav', $data);
     }
-     public function edit() {
+
+    public function edit() {
 
         $this->load->view('master/FuleType/Fuletype_edit');
     }
-public function findPump() {
+
+    public function findFuelType() {
         $query = $this->db->select('RowKey, Fuel, FuelType, ')->from('MSTFuel')->get();
         $_array = array();
         foreach ($query->result() as $row) {
@@ -24,13 +27,18 @@ public function findPump() {
                 'key' => $row->RowKey,
                 'Fuel' => $row->Fuel,
                 'FuelType' => intval($row->FuelType),
+                '_Delete' => $this->db
+                    ->where('pf.FuleKey', $row->RowKey)
+                    ->from('MSTPumpFule pf')
+                    ->join('TRNFule f','pf.RowKey=f.PumpFuleKey')
+                    ->count_all_results() > 0 ? false : true
             );
             array_push($_array, $_ar);
         }
         echo json_encode($_array);
     }
 
-    public function editPump() {
+    public function editFuelType() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
 
@@ -84,7 +92,7 @@ public function findPump() {
         echo json_encode($vReturn);
     }
 
-    public function removeAccount() {
+    public function removeFuleType() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
         $this->db->trans_begin();
@@ -103,8 +111,9 @@ public function findPump() {
     }
 
     //**** Fuel
-    public function branchMain(){
+    public function branchMain() {
         $data['page'] = 'master/Fule/branch_main';
         $this->load->view('layout/nav', $data);
     }
+
 }

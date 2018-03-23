@@ -34,6 +34,12 @@ class Fule extends PCenter {
                 'key' => $row->RowKey,
                 'Pump' => $row->Pump,
                 'PumpType' => intval($row->PumpType),
+                '_Delete' => $this->db
+                        ->where('b.PumpKey', $row->RowKey)
+                        ->from('MSTPumpBranch b')
+                        ->join('MSTPumpFule mf', 'b.RowKey=mf.PumpBranchKey')
+                        ->join('TRNFule f', 'mf.RowKey=f.PumpFuleKey')
+                        ->count_all_results() > 0 ? false : true
             );
             array_push($_array, $_ar);
         }
@@ -141,7 +147,27 @@ class Fule extends PCenter {
                 ->join('MSTProvince p', 'd.ProvinceKey=p.RowKey', 'left')
                 ->where('b.PumpKey', $_key)
                 ->get();
-        echo json_encode($query->result());
+        $_array = array();
+        foreach ($query->result() as $row) {
+            $_ar = array(
+                'key' => $row->key,
+                'PumpBranch' => $row->PumpBranch,
+                'Address' => $row->Address,
+                'FullAdress' => $row->FullAdress,
+                'SubDistrictKey' => $row->SubDistrictKey,
+                'DistrictKey' => $row->DistrictKey,
+                'ProvinceKey' => $row->ProvinceKey,
+                'ZipCode' => $row->ZipCode,
+                'IsDefault' => $row->IsDefault,
+                '_Delete' => $this->db
+                        ->where('pf.PumpBranchKey', $row->key)
+                        ->from('MSTPumpFule pf')
+                        ->join('TRNFule tf', 'pf.RowKey=tf.PumpFuleKey')
+                        ->count_all_results() > 0 ? false : true
+            );
+            array_push($_array, $_ar);
+        }
+        echo json_encode($_array);
     }
 
     public function editBrand() {
@@ -252,13 +278,27 @@ class Fule extends PCenter {
                 ->join('MSTFuel f', 'pf.FuleKey=f.RowKey', 'left')
                 ->where('pf.PumpBranchKey', $_key)
                 ->get();
-        echo json_encode($query->result());
+        $_array = array();
+        foreach ($query->result() as $row) {
+            $_ar = array(
+                'key' => $row->key,
+                'Fuel' => $row->Fuel,
+                'IsDefault' => $row->IsDefault,
+                'FuelType' => $row->FuelType,
+                '_Delete' => $this->db
+                        ->where('pf.PumpFuleKey', $row->key)
+                        ->from('TRNFule pf')
+                        ->count_all_results() > 0 ? false : true
+            );
+            array_push($_array, $_ar);
+        }
+        echo json_encode($_array);
     }
 
     public function editBrandDetailDF() {
         $_thiskey = $_POST['key'];
         $_mainkey = $_POST['mainkey'];
-        $_status = (int)$_POST['status'];
+        $_status = (int) $_POST['status'];
         $vReturn = (object) [];
 
         $this->db->trans_begin();

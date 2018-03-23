@@ -38,6 +38,10 @@ class customer extends PCenter {
                 'key' => $row->RowKey,
                 'CusCode' => $row->CusCode,
                 'Customer' => $row->Customer,
+                '_Delete' => $this->db
+                        ->where('pf.CutsomerKey', $row->RowKey)
+                        ->from('TRNWrokSheetHD pf')
+                        ->count_all_results() > 0 ? false : true
             );
             array_push($_array, $_ar);
         }

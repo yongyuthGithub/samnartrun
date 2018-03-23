@@ -25,6 +25,10 @@ class Brand extends PCenter {
             $_ar = array(
                 'key' => $row->RowKey,
                 'Brand' => $row->Brand,
+                '_Delete' => $this->db
+                        ->where('pf.BrandKey', $row->RowKey)
+                        ->from('MSTCar pf')
+                        ->count_all_results() > 0 ? false : true
             );
             array_push($_array, $_ar);
         }
@@ -104,7 +108,6 @@ class Brand extends PCenter {
     }
 
 }
-
 
 //----------------------------------------------------------------------------
 //    public function getTestjson() {

@@ -113,8 +113,8 @@ $(function () {
                 var _sel = form_recordedit.find('#cmdCarF').empty();
                 var _html = '';
                 $.each(vdata, function (k, v) {
-                    var _p = parseInt(v.CarType) === 1 ? '2 เพลา' : '3 เพลา';
-                    _html += '<option data-icon="fa fa-truck" value="' + v.RowKey + '" data-display="' + v.CarNumber + '">&nbsp;&nbsp;(' + _p + ') ' + v.CarNumber + ' -> ' + v.Province + '</option>';
+//                    var _p = parseInt(v.CarType) === 1 ? '2 เพลา' : '3 เพลา';
+                    _html += '<option data-icon="fa fa-truck" value="' + v.RowKey + '" data-display="' + v.CarNumber + '">&nbsp;&nbsp;' + v.CarNumber + ' -> ' + v.Province + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
             }

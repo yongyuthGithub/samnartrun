@@ -8,7 +8,7 @@ $(function () {
         btnEdit: true,
         btnPreview: false,
         headerString: '',
-        UrlDataJson: mvcPatch('FuleType/findPump'),
+        UrlDataJson: mvcPatch('FuleType/findFuelType'),
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
@@ -45,7 +45,7 @@ $(function () {
                                 buttonOK: function (k) {
                                     k.close();
                                     $.reqData({
-                                        url: mvcPatch('FuleType/editPump'),
+                                        url: mvcPatch('FuleType/editFuelType'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -94,7 +94,7 @@ $(function () {
                                 buttonOK: function (k) {
                                     k.close();
                                     $.reqData({
-                                        url: mvcPatch('FuleType/editPump'),
+                                        url: mvcPatch('FuleType/editFuelType'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -126,6 +126,32 @@ $(function () {
             });
         },
         btnDeleteFun: function (f, d) {
+            if (d.length === 0)
+                return false;
+            $.bConfirm({
+                message: 'Do you want to delete the data?',
+                type: BootstrapDialog.TYPE_DANGER,
+                buttonOK: function (k) {
+                    k.close();
+                    var vdata = $.ToLinq(d)
+                            .Select(function (x) {
+                                return x.key;
+                            }).ToArray();
+                    $.reqData({
+                        url: mvcPatch('FuleType/removeFuleType'),
+                        data: {data: JSON.stringify(vdata)},
+                        callback: function (vdata) {
+                            if (vdata.success) {
+                                f.find('.xref').click();
+                            } else {
+                                $.bAlert({
+                                    message: vdata.message
+                                });
+                            }
+                        }
+                    });
+                }
+            });
         },
         btnPreviewFun: function (f, d) {
         }
