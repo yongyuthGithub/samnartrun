@@ -97,10 +97,10 @@
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="txtTel">เบอร์โทร :</label>
+                    <label for="txtTel">เลขประจำตัวผู้เสียภาษี :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class=" fa fa-address-card-o" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control" id="txtTel" name="txtTel" placeholder="เบอร์โทร">
+                        <input type="text" class="form-control" id="txtTel" name="txtTel" placeholder="เลขประจำตัวผู้เสียภาษี">
                     </div>
                 </div>
             </div>            

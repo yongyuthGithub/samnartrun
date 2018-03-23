@@ -177,7 +177,7 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* กรุณาใส่ เบอร์โทร.'
+                        message: '* กรุณาใส่ เลขประจำตัวผู้เสียภาษี.'
                     }
                 }
             }
