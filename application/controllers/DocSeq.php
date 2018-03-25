@@ -3,7 +3,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 //require __DIR__ . '/../core/PCenter.php';
 include_once APPPATH . 'core/POther.php';
+
 use Fusonic\Linq\Linq;
+
 //require __DIR__ . '/../core/Fusonic/Linq/Linq.php';
 //require __DIR__ . '/../config/autoload.php';
 //use Fusonic\Linq;
@@ -82,13 +84,21 @@ class DocSeq extends PCenter {
                                     ->where('PYear', (int) $_date->format('Y'))
                                     ->where('PMonth', (int) $_date->format('m'))
                                     ->from('SYSDocSeq')->get();
+
+                            $_del = true;
+                            foreach ($this->DocIDKey() as $row) {
+                                if ($row['key'] === $x->key)
+                                    $_del = false;
+                            }
                             return [
                                 'key' => $x->key,
                                 'DocName' => $x->DocName,
                                 'Pattern' => $x->Pattern,
                                 'Point' => $x->Point,
                                 'YearMonth' => $_date->format('Y/m'),
-                                'Seq' => Linq::from($queryChk->result())->count() > 0 ? Linq::from($queryChk->result())->first()->PSeq : 0
+                                'Seq' => Linq::from($queryChk->result())->count() > 0 ? Linq::from($queryChk->result())->first()->PSeq : 0,
+                                '_Delete' => $_del,
+//                                'dddd'=> $this->createDocID($x->key)
                             ];
                         })->toArray();
         echo json_encode($vreturn);
