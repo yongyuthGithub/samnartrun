@@ -1,8 +1,9 @@
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-require __DIR__ . '/../core/PCenter.php';
-
+//require __DIR__ . '/../core/PCenter.php';
+include_once APPPATH . 'core/POther.php';
+use Fusonic\Linq\Linq;
 class Record extends PCenter {
 
     public function __construct() {

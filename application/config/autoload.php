@@ -59,7 +59,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
 $autoload['libraries'] = array('database');
-
+//$autoload['Fusonic/Linq/Linq'] = array();
 /*
 | -------------------------------------------------------------------
 |  Auto-load Drivers
@@ -133,3 +133,5 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('first_model' => 'first');
 */
 $autoload['model'] = array();
+
+//$autoload['core/Fusonic/Linq'] = array();

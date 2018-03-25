@@ -11,14 +11,15 @@
  *
  * @author Yongyuth
  */
-class PCenter extends CI_Controller {
 
+class PCenter extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
         $this->load->helper('url');
         $this->load->helper('asset');
         $this->load->helper('form');
+//        $this->load->library('Fusonic/Linq/Linq.php','Fusonic/Linq/Helper/LinqHelper.php');
         //$this->load-model('dbconnect');
     }
 
@@ -77,6 +78,12 @@ class PCenter extends CI_Controller {
         if (!file_exists($dirFolder))
             mkdir($dirFolder);
         return $dirFolder;
+    }
+    
+    protected function DocPatern(){      
+       
+        $_array = array();
+        
     }
 
 //    public static function getMyHost($url = null) {

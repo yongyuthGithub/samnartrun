@@ -1,8 +1,25 @@
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-require __DIR__ . '/../core/PCenter.php';
-
+//require __DIR__ . '/../core/PCenter.php';
+include_once APPPATH . 'core/POther.php';
+use Fusonic\Linq\Linq;
+//require __DIR__ . '/../core/Fusonic/Linq/Linq.php';
+//require __DIR__ . '/../config/autoload.php';
+//use Fusonic\Linq;
+//require_once(APPPATH.'libraries/Fusonic/Linq/Linq.php');
+//require __DIR__ . '/../libraries/YaLinqo/Linq.php';
+//include_once APPPATH . 'libraries/Fusonic/Linq/Linq.php';
+//include_once APPPATH . 'libraries/Fusonic/Linq/GroupedLinq.php';
+//include_once APPPATH . 'libraries/Fusonic/Linq/Helper/LinqHelper.php';
+//
+//set_include_path('/usr/lib/pear');
+//foreach (glob(APPPATH . 'libraries/Fusonic/Linq/Helper/*.php') as $filename2) {
+//    include_once $filename2;
+//}
+//foreach (glob(APPPATH . 'libraries/Fusonic/Linq/Iterator/*.php') as $filename) {
+//    include_once $filename;
+//}
 class DocSeq extends PCenter {
 
     public function __construct() {
@@ -10,6 +27,17 @@ class DocSeq extends PCenter {
     }
 
     public function index() {
+        $names = array("John", "Peter", "Joe", "Patrick", "Donald", "Eric");
+        $ddd = Linq::from($names)->count();
+//        $reqa = new Fusonic\Linq\Linq($names);
+//        $this->load->library('Fusonic\Linq','dddd');
+//        $ddd= new MyLinq($names);
+//        Fusonic\Linq\Linq::
+//        $result =new Linq();
+//        $result =Linq::from('$name')->in($names)
+//               ->where('$name => strlen($name) < 5')
+//               ->select('$name');
+
         $data['page'] = 'setting/docSeq/docseq_main';
         $this->load->view('layout/nav', $data);
     }
@@ -24,29 +52,46 @@ class DocSeq extends PCenter {
                         . ' Pattern,'
                         . ' Point,')
                 ->get('SYSDocPattern');
-        $_array = array();
-        foreach ($qry->result() as $row) {
-            $_seq = 0;
-            $_date = new DateTime();
-            $queryChk = $this->db->where('PatternKey', $row->key)
-                    ->where('PYear', (int) $_date->format('Y'))
-                    ->where('PMonth', (int) $_date->format('m'))
-                    ->from('SYSDocSeq');
-            foreach ($queryChk->get()->result() as $_row) {
-                $_seq = $_row->PSeq;
-            }
+//        $_array = array();
+//        foreach ($qry->result() as $row) {
+//            $_seq = 0;
+//            $_date = new DateTime();
+//            $queryChk = $this->db->where('PatternKey', $row->key)
+//                    ->where('PYear', (int) $_date->format('Y'))
+//                    ->where('PMonth', (int) $_date->format('m'))
+//                    ->from('SYSDocSeq');
+//            foreach ($queryChk->get()->result() as $_row) {
+//                $_seq = $_row->PSeq;
+//            }
+//
+//            $_ar = array(
+//                'key' => $row->key,
+//                'DocName' => $row->DocName,
+//                'Pattern' => $row->Pattern,
+//                'Point' => $row->Point,
+//                'YearMonth' => $_date->format('Y/m'),
+//                'Seq' => $_seq
+//            );
+//            array_push($_array, $_ar);
+//        }
 
-            $_ar = array(
-                'key' => $row->key,
-                'DocName' => $row->DocName,
-                'Pattern' => $row->Pattern,
-                'Point' => $row->Point,
-                'YearMonth' => $_date->format('Y/m'),
-                'Seq' => $_seq
-            );
-            array_push($_array, $_ar);
-        }
-        echo json_encode($_array);
+        $vreturn = Linq::from($qry->result())
+                        ->select(function($x) {
+                            $_date = new DateTime();
+                            $queryChk = $this->db->where('PatternKey', $x->key)
+                                    ->where('PYear', (int) $_date->format('Y'))
+                                    ->where('PMonth', (int) $_date->format('m'))
+                                    ->from('SYSDocSeq')->get();
+                            return [
+                                'key' => $x->key,
+                                'DocName' => $x->DocName,
+                                'Pattern' => $x->Pattern,
+                                'Point' => $x->Point,
+                                'YearMonth' => $_date->format('Y/m'),
+                                'Seq' => Linq::from($queryChk->result())->count() > 0 ? Linq::from($queryChk->result())->first()->PSeq : 0
+                            ];
+                        })->toArray();
+        echo json_encode($vreturn);
     }
 
     public function editDocPattern() {
@@ -148,4 +193,5 @@ class DocSeq extends PCenter {
         }
         echo json_encode($vReturn);
     }
+
 }
