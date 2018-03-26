@@ -60,6 +60,7 @@ $(function () {
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
+            {data: 'DocID', header: 'DocID'},
             {data: 'Detial', header: 'รายละเอียด'},
             {data: 'IncomeType', header: 'ประเภท'},
             {data: 'DocDate', header: 'วันที่'},
@@ -75,16 +76,25 @@ $(function () {
                     return _val;
                 },
                 orderable: true,
+                targets: 3
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    var _val = parseInt(val2.IncomeType) === 1 ? 'รายรับ' : 'รายจ่าย';
+                    return _val;
+                },
+                orderable: true,
                 targets: 2
             },
             {
                 render: function (row, type, val2, meta) {
-                    var _val = val2.IncomeType === 1 ? 'รายรับ' : 'รายจ่าย';
+                    var _val = val2.DocID === '' ? parseInt(val2.IncomeType) === 1 ? 'รายรับอื่นๆ' : 'รายจ่ายอื่น' : val2.DocID;
                     return _val;
                 },
                 orderable: true,
-                targets: 1
+                targets: 0
             }
+
 
 
         ],

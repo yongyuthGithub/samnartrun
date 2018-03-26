@@ -19,18 +19,34 @@ class InReport extends PCenter {
         $this->load->view('transaction/InReport/InReport_edit');
     }
 
-     
-    
     public function findInReport() {
         $_data = json_decode($_POST['vdata']);
+
+        $qryMenu = $this->db->select('w.RowKey as key,'
+                                . 'w.DocID,'
+                                . 'w.DocDate,'
+                                . 'cf.Detial,'
+                                . 'cf.IncomeType,'
+                                . 'Amount,'
+                        )
+                        ->where('w.DocDate >=', $_data->SDate)
+                        ->where('w.DocDate <=', $_data->EDate)
+                        ->from('TRNWrokSheetHD w')
+//                        ->join('MSTCustomerBranch bf', 'w.CutsomerForm=bf.RowKey', 'left')
+                        ->join('TRNIncome cf', 'cf.WorkSheetHDKey=w.RowKey')
+//                        ->join('MSTCustomerBranch bs', 'w.CustomerTo=bs.RowKey', 'left')
+//                        ->join('MSTCustomer cs', 'bs.CompanyKey=cs.RowKey', 'left')
+                        ->get()->result();
+
         $query = $this->db->select('RowKey, DocDate, Detial,IncomeType,Amount, ')
-                ->where('DocDate >=', $_data->SDate)
-                ->where('DocDate <=', $_data->EDate)
-                ->from('TRNIncomeOther')->get();
+                        ->where('DocDate >=', $_data->SDate)
+                        ->where('DocDate <=', $_data->EDate)
+                        ->from('TRNIncomeOther')->get();
         $_array = array();
         foreach ($query->result() as $row) {
             $_ar = array(
                 'key' => $row->RowKey,
+                'DocID'=> '',
                 'DocDate' => $row->DocDate,
                 'Detial' => ($row->Detial),
                 'IncomeType' => intval($row->IncomeType),
@@ -38,7 +54,8 @@ class InReport extends PCenter {
             );
             array_push($_array, $_ar);
         }
-        echo json_encode($_array);
+        ;
+        echo json_encode(array_merge($_array, $qryMenu));
     }
 
     public function editIncome() {
