@@ -19,6 +19,8 @@ $(function () {
         form_customerbranchedit.find('#cmdSubDistrict').val(_formdata.cmdSubDistrict);
         form_customerbranchedit.find('#txtZipCode').val(_formdata.ZipCode);
         form_customerbranchedit.find('#txtTel').val(_formdata.Tel);
+        form_customerbranchedit.find('#txtIDCard').val(_formdata.IDCard);
+        form_customerbranchedit.find('#txtFax').val(_formdata.Fax);
         form_customerbranchedit.find('#swDF').prop('checked', parseInt(_formdata.IsDefault) === 1 ? true : false);
         form_customerbranchedit.find('.showinadd').remove();
         //***Edit By Yongyuth
@@ -177,10 +179,26 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
+                        message: '* กรุณาใส่ เบอร์โทร.'
+                    }
+                }
+            },
+             txtIDCard: {
+                icon: false,
+                validators: {
+                    notEmpty: {
                         message: '* กรุณาใส่ เลขประจำตัวผู้เสียภาษี.'
                     }
                 }
-            }
+            },
+             txtFax: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาใส่ เบอร์แฟกซ์.'
+                    }
+                }
+            },
         }
 
 

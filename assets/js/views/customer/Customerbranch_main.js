@@ -19,7 +19,9 @@ $(function () {
         DataColumns: [
             {data: 'Branch', header: 'สาขา'},
             {data: 'FullAdress', header: 'ที่อยู่'},
-            {data: 'Tel', header: 'เลขประจำตัวผู้เสียภาษี'},
+            {data: 'Tel', header: 'เบอร์โทร'},
+            {data: 'IDCard', header: 'เลขประจำตัวผู้เสียภาษี'},
+            {data: 'Fax', header: 'แฟกซ์'},
         ],
 //        DataColumnsDefs: [
 //            {
@@ -48,6 +50,8 @@ $(function () {
                             obj.SubDistrict = _f.find('#cmdSubDistrict').val();
                             obj.ZipCode = _f.find('#txtZipCode').val();
                             obj.Tel = _f.find('#txtTel').val();
+                            obj.IDCard = _f.find('#txtIDCard').val();
+                            obj.Fax = _f.find('#txtFax').val();
                             obj.IsDefault = _f.find('#swDF').is(':checked');
                             $.bConfirm({
                                 buttonOK: function (k2) {
@@ -102,6 +106,8 @@ $(function () {
                                 SubDistrict: _f.find('#cmdSubDistrict').val(),
                                 ZipCode: _f.find('#txtZipCode').val(),
                                 Tel: _f.find('#txtTel').val(),
+                                IDCard: _f.find('#txtIDCard').val(),
+                                Fax: _f.find('#txtFax').val(),
                                 IsDefault: _f.find('#swDF').is(':checked')
                             });
                             $.bConfirm({

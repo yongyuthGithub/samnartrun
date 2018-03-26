@@ -125,6 +125,8 @@ class customer extends PCenter {
                         . 'Concat(I.Address," ",SD.SubDistrict," ",D.District, " ",P.Province," ",I.ZipCode )as FullAdress, '
                         . 'I.ZipCode,'
                         . 'I.Tel,'
+                        . 'I.IDCard,'
+                        . 'I.Fax,'
                         . 'I.SubDistrict as SubDistrictKey,'
                         . 'D.RowKey as DistrictKey,'
                         . 'D.ProvinceKey,'
