@@ -127,7 +127,7 @@ $(function () {
             form_customerbranchedit_C.find('#btn-ok')
         ],
         fields: {
-            txtinsurance: {
+            txtTypeName: {
                 icon: false,
                 validators: {
                     notEmpty: {

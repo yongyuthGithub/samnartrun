@@ -108,7 +108,7 @@
                 <div class="form-group">
                     <label for="txtFax">แฟกซ์ :</label>
                     <div class="input-group">
-                        <div class="input-group-addon"><i class=" fa fa-address-card-o" style="min-width: 20px;"></i></div>
+                        <div class="input-group-addon"><i class="fa fa-phone-square" style="min-width: 20px;"></i></div>
                         <input type="text" class="form-control" id="txtFax" name="txtFax" placeholder="แฟกซ์">
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                 <div class="form-group">
                     <label for="txtTel">เบอร์โทร :</label>
                     <div class="input-group">
-                        <div class="input-group-addon"><i class=" fa fa-address-card-o" style="min-width: 20px;"></i></div>
+                        <div class="input-group-addon"><i class=" fa fa-phone-square" style="min-width: 20px;"></i></div>
                         <input type="text" class="form-control" id="txtTel" name="txtTel" placeholder="เบอร์โทร">
                     </div>
                 </div>
