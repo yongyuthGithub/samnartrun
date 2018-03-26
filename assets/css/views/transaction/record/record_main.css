@@ -23,9 +23,9 @@
   text-align: right;
 }
 #form_recordlist #tblform_recordlist thead tr th:nth-child(5) {
-  max-width: 150px !important;
-  min-width: 150px !important;
-  width: 150px !important;
+  max-width: 70px !important;
+  min-width: 70px !important;
+  width: 70px !important;
   text-align: left;
 }
 #form_recordlist #tblform_recordlist thead tr th:nth-child(6) {
@@ -41,6 +41,12 @@
   text-align: left;
 }
 #form_recordlist #tblform_recordlist thead tr th:nth-child(8) {
+  max-width: 150px !important;
+  min-width: 150px !important;
+  width: 150px !important;
+  text-align: left;
+}
+#form_recordlist #tblform_recordlist thead tr th:nth-child(9) {
   max-width: 150px !important;
   min-width: 150px !important;
   width: 150px !important;
@@ -79,9 +85,9 @@
   text-align: right;
 }
 #form_recordlist #tblform_recordlist tbody tr[role=row] td:nth-child(5) {
-  min-width: 150px !important;
-  max-width: 150px !important;
-  width: 150px !important;
+  min-width: 70px !important;
+  max-width: 70px !important;
+  width: 70px !important;
   text-overflow: ellipsis !important;
   overflow: hidden !important;
   text-align: left;
@@ -103,6 +109,14 @@
   text-align: left;
 }
 #form_recordlist #tblform_recordlist tbody tr[role=row] td:nth-child(8) {
+  min-width: 150px !important;
+  max-width: 150px !important;
+  width: 150px !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  text-align: left;
+}
+#form_recordlist #tblform_recordlist tbody tr[role=row] td:nth-child(9) {
   min-width: 150px !important;
   max-width: 150px !important;
   width: 150px !important;

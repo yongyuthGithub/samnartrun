@@ -1,6 +1,7 @@
 $(function () {
     var form_billnew = $('#form_billnew');
     var form_bilelist = $('#form_bilelist');
+    var form_sumbit=$('#form_sumbit');
 
     form_billnew.find('#cmdCust').selectpicker({
     }).on({
@@ -12,7 +13,9 @@ $(function () {
                 loanding: false,
                 callback: function (vdata) {
                     form_bilelist.data('data', vdata).find('.xref').click();
-                    setDataCustBranch();
+                    setDataCustBranch(function (s) {
+                        form_billnew.formValidation('revalidateField', s);
+                    });
                 }
             });
         }
@@ -25,8 +28,8 @@ $(function () {
         }
     });
 
-    setDataCust(Guid);
-    function setDataCust(v) {
+    setDataCust(Guid, function () {});
+    function setDataCust(v, fun) {
         $.reqData({
             url: mvcPatch('Bill/findCustomerIsRecord'),
             loanding: false,
@@ -37,7 +40,7 @@ $(function () {
                     _html += '<option data-icon="fa fa-address-book" value="' + v.RowKey + '" data-display="' + v.Customer + '">&nbsp;&nbsp;(' + v.CusCode + ') ' + v.Customer + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
-                setDataCustBranch();
+                setDataCustBranch(fun);
             }
         });
     }
@@ -49,7 +52,7 @@ $(function () {
         }
     });
 
-    function setDataCustBranch() {
+    function setDataCustBranch(fun) {
         $.reqData({
             url: mvcPatch('Bill/findCustomerBranch'),
             data: {key: form_billnew.find('#cmdCust').val()},
@@ -61,9 +64,18 @@ $(function () {
                     _html += '<option data-icon="fa fa-building" value="' + v.RowKey + '">&nbsp;&nbsp;' + v.Branch + ' ' + v.Address + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh');
+                fun(_sel);
             }
         });
     }
+
+    form_billnew.find('#divDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        locale: 'th',
+        defaultDate: new Date()
+    }).on('dp.change', function (ds) {
+        form_billnew.formValidation('revalidateField', form_billnew.find('#txtDocDate'));
+    });
 
     function sumTotal() {
         var _pricetotal = $.ToLinq(form_bilelist.data('data'))
@@ -75,20 +87,23 @@ $(function () {
 
         var _vStatus = parseInt(form_billnew.find('#cmdVatStatus').val());
         if (_vStatus === 1) {
-            form_billnew.find('#txtVatTotal').val(addCommas(0, 2));
+            form_billnew.find('#txtVatTotal').data('data', 0).val(addCommas(0, 2));
             form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
         } else if (_vStatus === 2) {
-            form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
-            var _vat = (_afDis * 7) / 100;
-            form_billnew.find('#txtVatTotal').val(addCommas(_vat, 2));
-            _afDis = (_pricetotal - parseFloat(form_billnew.find('#txtDiscountTotal').val()) - _vat);
-            form_billnew.find('#txtPriceTotal').data('data', _afDis).val(addCommas(_afDis, 2));
-        } else if (_vStatus === 3) {
-            var _vat = (_afDis * 7) / 100;
+            var _vat = parseFloat(((_afDis * 7) / 100).toFixed(2));
             _afDis = _afDis + _vat;
-            form_billnew.find('#txtVatTotal').val(addCommas(_vat, 2));
+            form_billnew.find('#txtVatTotal').data('data', _vat).val(addCommas(_vat, 2));
             form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
+//            form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
+//            var _vat = parseFloat(((_afDis * 7) / 100).toFixed(2));
+//            form_billnew.find('#txtVatTotal').data('data', _vat).val(addCommas(_vat, 2));
+//            _afDis = (_pricetotal - parseFloat(form_billnew.find('#txtDiscountTotal').val()) - _vat);
+//            var _ptotal = _afDis + parseFloat(form_billnew.find('#txtDiscountTotal').val());
+//            form_billnew.find('#txtPriceTotal').data('data', _ptotal).val(addCommas(_ptotal, 2));
         }
+//        else if (_vStatus === 3) {
+//
+//        }
     }
 
     form_billnew.find('#txtDiscountTotal').on({
@@ -220,6 +235,87 @@ $(function () {
             f.find('.xref').click();
         },
         btnPreviewFun: function (f, d) {
+        }
+    });
+
+    form_billnew.find('#btn-print').on({
+        click: function () {
+            form_billnew.submit();
+        }
+    });
+
+    form_billnew.myValidation({
+        funsuccess: function () {
+            if (form_bilelist.data('data').length === 0) {
+                $.bAlert({
+                    message: 'ต้องมีใบงานอย่างน้อย 1 รายการเพื่อใช้ในการออกบิล'
+                });
+            } else {
+                var obj = new Object({
+                    RowKey: $('#txtkey').val(),
+                    DocDate: setDateJson(form_billnew.find('#txtDocDate').val()),
+                    CustomerBranchKey: form_billnew.find('#cmdCustBranch').val(),
+                    Vat: parseFloat(form_billnew.find('#txtVatTotal').data('data')),
+                    VatStatus: parseInt(form_billnew.find('#cmdVatStatus').val()),
+                    Discount: parseFloat(form_billnew.find('#txtDiscountTotal').val()),
+                    PrintCount: parseInt(0),
+                    TRNBillLD: $.ToLinq(form_bilelist.data('data'))
+                            .Select(function (x) {
+                                return new Object({
+                                    WrokSheetHDKey: x.key,
+                                    Discount: parseFloat(x.Discount)
+                                });
+                            }).ToArray()
+                });
+                $.bConfirm({
+                    buttonOK: function (k) {
+                        k.close();
+                        $.reqData({
+                            url: mvcPatch('Bill/editBill'),
+                            data: {data: JSON.stringify(obj)},
+                            loanding: false,
+                            callback: function (vdata) {
+                                if (vdata.success) {
+                                    form_sumbit.prop('action',mvcPatch('Bill/index')).submit();
+                                } else {
+                                    $.bAlert({
+                                        message: vdata.message
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        },
+        btnactive: [
+            form_billnew.find('#btn-print')
+        ],
+        fields: {
+            cmdCust: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* เลือกรายชื่อลูกค้าเพื่อทำการออกบิล'
+                    }
+                }
+            },
+            cmdCustBranch: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* เลือกที่อยู่ลูกค้าเพื่อใช้ในการออกบิล'
+                    }
+                }
+            },
+            txtDocDate: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* ระบุวันที่ออกบิล'
+                    }
+                }
+            }
         }
     });
 });

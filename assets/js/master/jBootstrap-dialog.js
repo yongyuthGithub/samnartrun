@@ -104,8 +104,8 @@
 
     $.bAlert = function (option) {
         var setting = $.extend({
-            title: 'Error',
-            message: 'There are errors in the management.',
+            title: 'มีข้อผิดพลาด',
+            message: 'มีข้อผิดพลาดในการจัดการ',
             type: BootstrapDialog.TYPE_DANGER,
             closable: false,
             buttonOK: function (k) {
@@ -132,8 +132,8 @@
 
     $.bConfirm = function (option) {
         var setting = $.extend({
-            title: 'Confirm action',
-            message: 'Do you want to do this?',
+            title: 'ยืนยันการดำเนินการ',
+            message: 'ต้องการบันทึกข้อมูลใช่หรือไม่',
             type: BootstrapDialog.TYPE_PRIMARY,
             closable: false,
             buttonOK: function (k) {

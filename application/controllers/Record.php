@@ -3,7 +3,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 //require __DIR__ . '/../core/PCenter.php';
 include_once APPPATH . 'core/POther.php';
+
 use Fusonic\Linq\Linq;
+
 class Record extends PCenter {
 
     public function __construct() {
@@ -68,6 +70,8 @@ class Record extends PCenter {
                         . 'cufc.Customer as CustomerF,'
                         . 'lB.LocationName as LocationNameB,'
                         . 'lE.LocationName as LocationNameE,'
+                        . 'w.IsBill,'
+                        . 'bh.DocID as BillID'
 //                        . 'cusc.Customer as CustomerS,'
 //                        . 'cus.Branch as BranchS')
                 )
@@ -80,8 +84,29 @@ class Record extends PCenter {
                 ->join('MSTCustomer cufc', 'w.CutsomerKey=cufc.RowKey', 'left')
                 ->join('MSTShippingLocations lB', 'w.ShippingBegin=lB.RowKey', 'left')
                 ->join('MSTShippingLocations lE', 'w.ShippingEnd=lE.RowKey', 'left')
+                ->join('TRNBillLD b', 'w.RowKey=b.WrokSheetHDKey', 'left')
+                ->join('TRNBillHD bh', 'b.BillHDKey=bh.RowKey', 'left')
                 ->get();
-        echo json_encode($qryMenu->result());
+        $show = Linq::from($qryMenu->result())
+                ->select(function($x) {
+                    return [
+                        'key' => $x->key,
+                        'DocID' => $x->DocID,
+                        'DocDate' => $x->DocDate,
+                        'Product' => $x->Product,
+                        'PriceTotal' => $x->PriceTotal,
+                        'CNumberF' => $x->CNumberF,
+                        'CNumberS' => $x->CNumberS,
+                        'CusCodeF' => $x->CusCodeF,
+                        'CustomerF' => $x->CustomerF,
+                        'LocationNameB' => $x->LocationNameB,
+                        'LocationNameE' => $x->LocationNameE,
+                        'BillID' => $x->BillID === NULL ? '' : $x->BillID,
+                        '_Delete' => !$x->IsBill
+                    ];
+                })
+                ->toArray();
+        echo json_encode($show);
     }
 
     public function findRecordOne() {

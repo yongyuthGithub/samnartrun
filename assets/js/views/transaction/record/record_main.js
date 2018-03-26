@@ -82,6 +82,7 @@ $(function () {
             {data: 'DocDate', header: 'วันที่เอกสาร'},
             {data: 'Product', header: 'สินค้า'},
             {data: 'PriceTotal', header: 'ค่าบริการ'},
+            {data: 'BillID', header: 'เลขที่บิล'},
             {data: 'CNumberF', header: 'รถขนส่ง'},
             {data: 'CusCodeF', header: 'บริษัท'},
             {data: 'CusCodeS', header: 'สถานที่ รับ-ส่ง'}
@@ -103,24 +104,31 @@ $(function () {
             },
             {
                 render: function (row, type, val2, meta) {
-                    return val2.CNumberF + ' / ' + val2.CNumberS;
+                    return $.trim(val2.BillID).length > 0 ? val2.BillID : '-';
                 },
                 orderable: true,
                 targets: 4
             },
             {
                 render: function (row, type, val2, meta) {
-                    return ($.trim(val2.CusCodeF).length > 0 ? '(' + val2.CusCodeF + ') ' : '') + val2.CustomerF;
+                    return val2.CNumberF + ' / ' + val2.CNumberS;
                 },
                 orderable: true,
                 targets: 5
             },
             {
                 render: function (row, type, val2, meta) {
-                    return  val2.LocationNameB + ' -> ' + val2.LocationNameE;
+                    return ($.trim(val2.CusCodeF).length > 0 ? '(' + val2.CusCodeF + ') ' : '') + val2.CustomerF;
                 },
                 orderable: true,
                 targets: 6
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    return  val2.LocationNameB + ' -> ' + val2.LocationNameE;
+                },
+                orderable: true,
+                targets: 7
             }
         ],
         btnNewFun: function (f) {

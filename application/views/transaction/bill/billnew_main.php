@@ -11,7 +11,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <ol class="breadcrumb">
-                <li><a href="<?php echo base_url('Bill/index') ?>">หน้าหลัก</a></li>
+                <li><a id="btn-back" href="<?php echo base_url('Bill/index') ?>">หน้าหลัก</a></li>
                 <li class="active"><?php echo $_POST['txtdisplay']; ?></li>
             </ol>
         </div>
@@ -42,7 +42,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="col-xs-12 col-sm-3 col-md-3">
                         <div class="form-group">
                             <label for="cmdCustBranch">สาขา :</label>
                             <select id="cmdCustBranch" name="cmdCustBranch" class="form-control selectpicker show-menu-arrow"
@@ -61,31 +61,20 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-2 col-md-2">
+                    <div class="col-xs-12 col-sm-3 col-md-3">
                         <div class="form-group">
-                            <label for="cmdVatStatus">รูปแบบภาษี :</label>
-                            <select id="cmdVatStatus" name="cmdVatStatus" class="form-control selectpicker show-menu-arrow"
-                                    data-width="100%"
-                                    data-show-Tick="true"
-                                    data-tick-Icon="fa fa-check"
-                                    data-size="5"
-                                    data-header="false"
-                                    data-live-Search="false"
-                                    data-live-Search-Placeholder="key word"
-                                    data-multiple-Separator=",&nbsp;&nbsp;"
-                                    data-actions-Box="false"
-                                    data-selectAll-Text="Select All"
-                                    data-deselectAll-Text="Deselect All"
-                                    data-selected-Text-Format="count > 3">
-                                <option data-icon="fa fa-sliders" value="1">&nbsp;&nbsp;ไม่คำนวณภาษี</option>
-                                <option data-icon="fa fa-sliders" value="2">&nbsp;&nbsp;คำนวณภาษีใน</option>
-                                <option data-icon="fa fa-sliders" value="3">&nbsp;&nbsp;คำนวณภาษีนอก</option>
-                            </select>
+                            <label for="txtDocDate">วันที่ออกบิล :</label>
+                            <div class="input-group date" id="divDate">
+                                <input type='text' class="form-control text-center" id="txtDocDate" name="txtDocDate" placeholder="วันเอกสาร" onkeydown="return false;" />
+                                <span class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-2 col-md-2 col-md-offset-2" style="height: 74px;line-height: 74px;">
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-md-offset-1" style="height: 74px;line-height: 74px;">
                         <div class="form-group" style="padding-top: 4px;">
-                            <button type="button" class="btn btn-success form-control">ออกบิล</button>
+                            <button type="button" id="btn-print" class="btn btn-success form-control"><i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp;ออกบิล</button>
                         </div>
                     </div>
                 </div>
@@ -107,12 +96,40 @@
                 <div class="row">  
                     <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
                         <div class="form-group" style="margin-bottom: 0px;">
-                            <label for="txtDiscountTotal" class="text-right" style="line-height: 34px;">ส่วนลด :</label>
+                            <label for="txtDiscountTotal" class="text-right" style="line-height: 34px;">ส่วนลดท้ายบิล :</label>
                         </div>
                     </div>
                     <div class="col-xs-8 col-sm-4 col-md-3">
                         <div class="form-group" style="margin-bottom: 0px;">
                             <input type="text" class="form-control text-right" id="txtDiscountTotal" name="txtDiscountTotal" placeholder="ส่วนสดท้ายบิล" value="0.00">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">    
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <label for="cmdVatStatus" class="text-right" style="line-height: 34px;">รูปแบบการคำนวณภาษี :</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <select id="cmdVatStatus" name="cmdVatStatus" class="form-control selectpicker show-menu-arrow"
+                                    data-width="100%"
+                                    data-show-Tick="true"
+                                    data-tick-Icon="fa fa-check"
+                                    data-size="5"
+                                    data-header="false"
+                                    data-live-Search="false"
+                                    data-live-Search-Placeholder="key word"
+                                    data-multiple-Separator=",&nbsp;&nbsp;"
+                                    data-actions-Box="false"
+                                    data-selectAll-Text="Select All"
+                                    data-deselectAll-Text="Deselect All"
+                                    data-selected-Text-Format="count > 3">
+                                <option data-icon="fa fa-sliders" value="1">&nbsp;&nbsp;รวมภาษีมูลค่า (Include VAT)</option>
+                                <option data-icon="fa fa-sliders" value="2">&nbsp;&nbsp;ยังไม่รวมภาษี (Exclude VAT)</option>
+                                <!--<option data-icon="fa fa-sliders" value="3">&nbsp;&nbsp;คำนวณภาษีนอก</option>-->
+                            </select>
                         </div>
                     </div>
                 </div>

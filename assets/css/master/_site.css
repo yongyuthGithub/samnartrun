@@ -112,3 +112,6 @@ textarea{
 #btn-alert:hover{
     opacity: 1;
 }
+.btn.dropdown-toggle{
+    z-index: 0!important;
+}
