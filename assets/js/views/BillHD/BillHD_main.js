@@ -1,5 +1,4 @@
 $(function () {
-     var form_sumbit = $('#form_sumbit');
     var form_record = $('#form_record');
     var form_recordlist = $('#form_recordlist');
 //    form_record.find('#divSDate').dateTime().on('dp.change', function (e) {
@@ -84,8 +83,8 @@ $(function () {
             {data: 'Product', header: 'สินค้า'},
             {data: 'PriceTotal', header: 'ค่าบริการ'},
             {data: 'CNumberF', header: 'รถขนส่ง'},
-            {data: 'CusCodeF', header: 'จากบริษัท'},
-            {data: 'CusCodeS', header: 'ถึงบริษัท'}
+            {data: 'CusCodeF', header: 'บริษัท'},
+            {data: 'CusCodeS', header: 'สถานที่ รับ-ส่ง'}
         ],
         DataColumnsDefs: [
             {
@@ -111,14 +110,14 @@ $(function () {
             },
             {
                 render: function (row, type, val2, meta) {
-                    return ($.trim(val2.CusCodeF).length > 0 ? '(' + val2.CusCodeF + ') ' : '') + val2.CustomerF + ' -> ' + val2.BranchF;
+                    return ($.trim(val2.CusCodeF).length > 0 ? '(' + val2.CusCodeF + ') ' : '') + val2.CustomerF;
                 },
                 orderable: true,
                 targets: 5
             },
             {
                 render: function (row, type, val2, meta) {
-                    return ($.trim(val2.CusCodeS).length > 0 ? '(' + val2.CusCodeS + ') ' : '') + val2.CustomerS + ' -> ' + val2.BranchS;
+                    return  val2.LocationNameB + ' -> ' + val2.LocationNameE;
                 },
                 orderable: true,
                 targets: 6

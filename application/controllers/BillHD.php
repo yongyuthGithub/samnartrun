@@ -27,7 +27,37 @@ class BillHD extends PCenter {
         $this->load->view('master/BillHD/Newbill_edit');
     }
 
-    public function newbill() {
+  
+    public function findRecord() {
+        $_data = json_decode($_POST['vdata']);
+        $qryMenu = $this->db->select('w.RowKey as key,'
+                        . 'w.DocID,'
+                        . 'w.DocDate,'
+                        . 'w.Product,'
+                        . 'w.PriceTotal,'
+                        . 'cf.CarNumber as CNumberF,'
+                        . 'cs.CarNumber as CNumberS,'
+                        . 'cufc.CusCode as CusCodeF,'
+                        . 'cufc.Customer as CustomerF,'
+                        . 'lB.LocationName as LocationNameB,'
+                        . 'lE.LocationName as LocationNameE,'
+//                        . 'cusc.Customer as CustomerS,'
+//                        . 'cus.Branch as BranchS')
+                )
+                ->where('w.DocDate >=', $_data->SDate)
+                ->where('w.DocDate <=', $_data->EDate)
+                ->from('TRNWrokSheetHD w')
+                ->join('MSTCar cf', 'w.CarFirstKey=cf.RowKey', 'left')
+                ->join('MSTCar cs', 'w.CarSecondKey=cs.RowKey', 'left')
+//                ->join('MSTCustomerBranch cuf', 'w.CutsomerForm=cuf.RowKey', 'left')
+                ->join('MSTCustomer cufc', 'w.CutsomerKey=cufc.RowKey', 'left')
+                ->join('MSTShippingLocations lB', 'w.ShippingBegin=lB.RowKey', 'left')
+                ->join('MSTShippingLocations lE', 'w.ShippingEnd=lE.RowKey', 'left')
+                ->get();
+        echo json_encode($qryMenu->result());
+    }
+
+    public function findRecordOne() {
         $_key = $_POST['key'];
         $qryMenu = $this->db->select('w.RowKey,'
                                 . 'w.DocID,'
@@ -39,16 +69,18 @@ class BillHD extends PCenter {
                                 . 'w.Emile,'
                                 . 'w.CarFirstKey,'
                                 . 'w.CarSecondKey,'
-                                . 'bf.RowKey as CustBF,'
+//                                . 'bf.RowKey as CustBF,'
                                 . 'cf.RowKey as CustF,'
-                                . 'bs.RowKey as CustBS,'
-                                . 'cs.RowKey as CustS,'
+                                . 'w.ShippingBegin,'
+                                . 'w.ContactBegin,'
+                                . 'w.ShippingEnd,'
+                                . 'w.ContactEnd,'
                                 . 'w.Remark')
                         ->from('TRNWrokSheetHD w')
-                        ->join('MSTCustomerBranch bf', 'w.CutsomerForm=bf.RowKey', 'left')
-                        ->join('MSTCustomer cf', 'bf.CompanyKey=cf.RowKey', 'left')
-                        ->join('MSTCustomerBranch bs', 'w.CustomerTo=bs.RowKey', 'left')
-                        ->join('MSTCustomer cs', 'bs.CompanyKey=cs.RowKey', 'left')
+//                        ->join('MSTCustomerBranch bf', 'w.CutsomerForm=bf.RowKey', 'left')
+                        ->join('MSTCustomer cf', 'w.CutsomerKey=cf.RowKey', 'left')
+//                        ->join('MSTCustomerBranch bs', 'w.CustomerTo=bs.RowKey', 'left')
+//                        ->join('MSTCustomer cs', 'bs.CompanyKey=cs.RowKey', 'left')
                         ->where('w.RowKey', $_key)
                         ->get()->row();
         $qryMenu->TRNIncome = $this->db->select('RowKey as key,'
@@ -61,6 +93,7 @@ class BillHD extends PCenter {
         $qryMenu->TRNFule = $this->db->select('f.RowKey as key,'
                                 . 'f.Price,'
                                 . 'f.Smile,'
+                                . 'f.Refer,'
                                 . 'mf.Fuel as FuelDisplay,'
                                 . 'pf.RowKey as FuleKey,'
                                 . 'pb.PumpBranch as BranchDisplay,'
@@ -145,6 +178,7 @@ class BillHD extends PCenter {
                 ->from('MSTPumpFule pf')
                 ->join('MSTFuel f', 'pf.FuleKey=f.RowKey', 'left')
                 ->where('pf.PumpBranchKey', $_key)
+                ->order_by('pf.IsDefault', 'desc')
                 ->order_by('f.Fuel', 'asc')
                 ->get();
         echo json_encode($qryMenu->result());
