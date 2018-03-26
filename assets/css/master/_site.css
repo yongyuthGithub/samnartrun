@@ -37,6 +37,12 @@ table.dataTable.no-footer {
     border-bottom: 1px solid #ddd !important;
 }
 
+table.dataTable.noneBtn > tbody td{
+    padding-top:  10px !important;
+    padding-bottom:  10px !important;
+    /*margin: 0px !important;*/
+}
+
 table.dataTable > tbody td{
     padding-top:  2px !important;
     padding-bottom:  2px !important;
@@ -74,9 +80,11 @@ table.dataTable > tbody tr[role=row] > td::before{
     line-height: 35px;
 }
 
-tr.odd, tr.even{
-    min-height: 35px;
-}
+/*tr.odd > td, tr.even > td{
+    line-height: 34px;
+    padding-top: 5px!important;
+    padding-bottom: 5px!important;
+}*/
 
 textarea{
     min-height: 150px;

@@ -148,7 +148,10 @@
 
 
             //_html += '<div class="col-lg-12 col-xs-12">';
-            _html += '<table id="' + tblName + '" class="display nowrap responsive xmain" cellspacing="0" style="width:100%;">';
+            var _heightTd = '';
+            if (setting.btnDelete === false && setting.btnDeleteAll === false && setting.btnEdit === false && setting.btnPreview === false)
+                _heightTd = 'noneBtn';
+            _html += '<table id="' + tblName + '" class="display nowrap responsive xmain ' + _heightTd + '" cellspacing="0" style="width:100%;">';
             _html += '<thead>';
             _html += '<tr>';
             $.each(setting.DataColumns, function (key, val) {
