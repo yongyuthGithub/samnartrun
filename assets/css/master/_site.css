@@ -74,6 +74,10 @@ table.dataTable > tbody tr[role=row] > td::before{
     line-height: 35px;
 }
 
+tr.odd, tr.even{
+    min-height: 35px;
+}
+
 textarea{
     min-height: 150px;
 }

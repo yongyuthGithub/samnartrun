@@ -12,6 +12,7 @@ $(function () {
                 loanding: false,
                 callback: function (vdata) {
                     form_bilelist.data('data', vdata).find('.xref').click();
+                    setDataCustBranch();
                 }
             });
         }
@@ -36,6 +37,30 @@ $(function () {
                     _html += '<option data-icon="fa fa-address-book" value="' + v.RowKey + '" data-display="' + v.Customer + '">&nbsp;&nbsp;(' + v.CusCode + ') ' + v.Customer + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
+                setDataCustBranch();
+            }
+        });
+    }
+
+    form_billnew.find('#cmdCustBranch').selectpicker({
+    }).on({
+        change: function () {
+            //javascript on change
+        }
+    });
+
+    function setDataCustBranch() {
+        $.reqData({
+            url: mvcPatch('Bill/findCustomerBranch'),
+            data: {key: form_billnew.find('#cmdCust').val()},
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_billnew.find('#cmdCustBranch').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    _html += '<option data-icon="fa fa-building" value="' + v.RowKey + '">&nbsp;&nbsp;' + v.Branch + ' ' + v.Address + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh');
             }
         });
     }
@@ -53,26 +78,38 @@ $(function () {
             form_billnew.find('#txtVatTotal').val(addCommas(0, 2));
             form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
         } else if (_vStatus === 2) {
-//            form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
-//            var _vat = (_afDis * 7) / 100;
-//            _afDis = (_afDis + _vat);
-//            form_billnew.find('#txtVatTotal').val(addCommas(_vat, 2));
+            form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
+            var _vat = (_afDis * 7) / 100;
+            form_billnew.find('#txtVatTotal').val(addCommas(_vat, 2));
+            _afDis = (_pricetotal - parseFloat(form_billnew.find('#txtDiscountTotal').val()) - _vat);
+            form_billnew.find('#txtPriceTotal').data('data', _afDis).val(addCommas(_afDis, 2));
         } else if (_vStatus === 3) {
             var _vat = (_afDis * 7) / 100;
             _afDis = _afDis + _vat;
             form_billnew.find('#txtVatTotal').val(addCommas(_vat, 2));
             form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
         }
-
-        
     }
 
     form_billnew.find('#txtDiscountTotal').on({
         focusout: function () {
-            var _v = $(this).val();
-            $(this).val(ChkNumber(_v));
+            var _v = ChkNumber($(this).val()).toFixed(2);
+            $(this).val(_v);
             sumTotal();
         }
+    });
+
+    form_bilelist.on('focusout', '.txtDis', function () {
+        var _key = $(this).data('key');
+        var _v = ChkNumber($(this).val()).toFixed(2);
+        var _thisD = $.ToLinq(form_bilelist.data('data'))
+                .Where(x => x.key === _key)
+                .First();
+        _thisD.Discount = _v;
+        _thisD.NetPrice = (_thisD.PriceTotal - _thisD.Discount).toFixed(2);
+        $(this).parents('tr').find('.tTotal').text(addCommas(_thisD.NetPrice, 2));
+        $(this).val(_v);
+        sumTotal();
     });
 
     form_bilelist.data('data', new Array()).setMainPage({
@@ -116,14 +153,14 @@ $(function () {
             },
             {
                 render: function (row, type, val2, meta) {
-                    return '<input type="text" class="form-control text-right txtDis" id="t' + val2.key + '" name="t' + val2.key + '" placeholder="ส่วนลด" value="' + val2.Discount + '">';
+                    return '<input type="text" class="form-control text-right txtDis" id="t' + val2.key + '" name="t' + val2.key + '" data-key="' + val2.key + '" placeholder="ส่วนลด" value="' + val2.Discount + '">';
                 },
                 orderable: true,
                 targets: 4
             },
             {
                 render: function (row, type, val2, meta) {
-                    return addCommas(val2.NetPrice, 2)
+                    return '<div class="tTotal">' + addCommas(val2.NetPrice, 2) + '</div>';
                 },
                 orderable: true,
                 targets: 5

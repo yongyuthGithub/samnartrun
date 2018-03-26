@@ -47,6 +47,19 @@ class Bill extends PCenter {
         }
     }
 
+    public function findCustomerBranch() {
+        $_key = $_POST['key'];
+        $qryMenu = $this->db->select('RowKey,'
+                        . 'Branch,'
+                        . 'Address')
+                ->where('CompanyKey', $_key)
+                ->order_by('IsDefault', 'desc')
+                ->order_by('Branch', 'asc')
+                ->from('MSTCustomerBranch')
+                ->get();
+        echo json_encode($qryMenu->result());
+    }
+
     public function findRecordNotIsBill() {
         $_key = $_POST['key'];
         $qryMenu = $this->db->select('RowKey as key,'

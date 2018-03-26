@@ -42,7 +42,26 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-3 col-md-2">
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                        <div class="form-group">
+                            <label for="cmdCustBranch">สาขา :</label>
+                            <select id="cmdCustBranch" name="cmdCustBranch" class="form-control selectpicker show-menu-arrow"
+                                    data-width="100%"
+                                    data-show-Tick="true"
+                                    data-tick-Icon="fa fa-check"
+                                    data-size="5"
+                                    data-header="false"
+                                    data-live-Search="true"
+                                    data-live-Search-Placeholder="key word"
+                                    data-multiple-Separator=",&nbsp;&nbsp;"
+                                    data-actions-Box="false"
+                                    data-selectAll-Text="Select All"
+                                    data-deselectAll-Text="Deselect All"
+                                    data-selected-Text-Format="count > 3">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2">
                         <div class="form-group">
                             <label for="cmdVatStatus">รูปแบบภาษี :</label>
                             <select id="cmdVatStatus" name="cmdVatStatus" class="form-control selectpicker show-menu-arrow"
@@ -64,8 +83,8 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-3 col-sm-offset-2 col-md-2 col-md-offset-5" style="height: 74px;line-height: 74px;">
-                        <div class="form-group">
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-md-offset-2" style="height: 74px;line-height: 74px;">
+                        <div class="form-group" style="padding-top: 4px;">
                             <button type="button" class="btn btn-success form-control">ออกบิล</button>
                         </div>
                     </div>
@@ -75,48 +94,48 @@
                 <hr>
                 <div class="row">  
                     <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 0px;">
                             <label for="txtPriceTotal" class="text-right" style="line-height: 34px;">เงินรวม :</label>
                         </div>
                     </div>
                     <div class="col-xs-8 col-sm-4 col-md-3">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 0px;">
                             <input type="text" class="form-control text-right" id="txtPriceTotal" name="txtPriceTotal" placeholder="เงินรวม" disabled value="0.00">
                         </div>
                     </div>
                 </div>
                 <div class="row">  
                     <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 0px;">
                             <label for="txtDiscountTotal" class="text-right" style="line-height: 34px;">ส่วนลด :</label>
                         </div>
                     </div>
                     <div class="col-xs-8 col-sm-4 col-md-3">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 0px;">
                             <input type="text" class="form-control text-right" id="txtDiscountTotal" name="txtDiscountTotal" placeholder="ส่วนสดท้ายบิล" value="0.00">
                         </div>
                     </div>
                 </div>
                 <div class="row">  
                     <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 0px;">
                             <label for="txtVatTotal" class="text-right" style="line-height: 34px;">ภาษี :</label>
                         </div>
                     </div>
                     <div class="col-xs-8 col-sm-4 col-md-3">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 0px;">
                             <input type="text" class="form-control text-right" id="txtVatTotal" name="txtVatTotal" placeholder="ภาษี" disabled value="0.00">
                         </div>
                     </div>
                 </div>
                 <div class="row">  
                     <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 0px;">
                             <label for="txtNetPrice" class="text-right" style="line-height: 34px;">จำนวนเงินสุทธิ :</label>
                         </div>
                     </div>
                     <div class="col-xs-8 col-sm-4 col-md-3">
-                        <div class="form-group">
+                        <div class="form-group" style="margin-bottom: 0px;">
                             <input type="text" class="form-control text-right" id="txtNetPrice" name="txtNetPrice" placeholder="จำนวนเงินสุทธิ" disabled value="0.00">
                         </div>
                     </div>
