@@ -60,8 +60,8 @@ $(function () {
 
     form_recordlist.data('data', new Array()).setMainPage({
         btnNew: true,
-        btnDeleteAll: true,
-        btnDelete: true,
+        btnDeleteAll: false,
+        btnDelete: false,
         btnEdit: true,
         btnPreview: false,
         headerString: '',
