@@ -38,8 +38,19 @@ $(function () {
                 .Select(function (x) {
                     return x.PriceTotal - x.Discount;
                 }).Sum();
-        form_billnew.find('#txtPriceTotal').val(addCommas(_pricetotal, 2));
+        form_billnew.find('#txtPriceTotal').data('data', _pricetotal).val(addCommas(_pricetotal, 2));
+        var _afDis = form_billnew.find('#txtPriceTotal').data('data') - form_billnew.find('#txtDiscountTotal').val();
+        form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
     }
+
+    form_billnew.find('#txtDiscountTotal').on({
+        focusout: function () {
+            var _v = $(this).val();
+            $(this).val(ChkNumber(_v));
+            sumTotal();
+        }
+    });
+
     form_bilelist.data('data', new Array()).setMainPage({
         btnNew: true,
         btnDeleteAll: true,
