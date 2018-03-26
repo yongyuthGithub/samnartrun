@@ -7,7 +7,7 @@
         </div>
     </div>
 </div>
-<div id="form_record">
+<div id="form_BillHD">
     <div class="col-12">   
         <div class="panel panel-default">
             <div class="panel-body">

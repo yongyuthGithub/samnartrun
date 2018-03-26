@@ -28,7 +28,7 @@ class BillHD extends PCenter {
     }
 
   
-    public function findRecord() {
+    public function findBillHD() {
         $_data = json_decode($_POST['vdata']);
         $qryMenu = $this->db->select('w.RowKey as key,'
                         . 'w.DocID,'
@@ -57,7 +57,7 @@ class BillHD extends PCenter {
         echo json_encode($qryMenu->result());
     }
 
-    public function findRecordOne() {
+    public function findBillHDone() {
         $_key = $_POST['key'];
         $qryMenu = $this->db->select('w.RowKey,'
                                 . 'w.DocID,'

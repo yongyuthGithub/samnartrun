@@ -1,5 +1,5 @@
 $(function () {
-    var form_record = $('#form_record');
+    var form_BillHD = $('#form_BillHD');
     var form_recordlist = $('#form_recordlist');
 //    form_record.find('#divSDate').dateTime().on('dp.change', function (e) {
 ////        form_record.find('#divEDate').data("DateTimePicker").minDate(e.date.add(1,'days'));
@@ -11,23 +11,23 @@ $(function () {
 //        form_record.find('#divSDate').data("DateTimePicker").maxDate(e.date);
 //    });
 
-    form_record.find('#divSDate').datetimepicker({
+    form_BillHD.find('#divSDate').datetimepicker({
         format: 'DD/MM/YYYY',
         maxDate: new Date(),
         defaultDate: new Date(),
         locale: 'th',
     }).on('dp.change', function (ds) {
-        form_record.find('#divEDate').data("DateTimePicker").minDate(ds.date);
+        form_BillHD.find('#divEDate').data("DateTimePicker").minDate(ds.date);
         setFind();
     });
 
-    form_record.find('#divEDate').datetimepicker({
+    form_BillHD.find('#divEDate').datetimepicker({
         format: 'DD/MM/YYYY',
         minDate: new Date(),
         defaultDate: new Date(),
         locale: 'th',
     }).on('dp.change', function (ds) {
-        form_record.find('#divSDate').data("DateTimePicker").maxDate(ds.date);
+        form_BillHD.find('#divSDate').data("DateTimePicker").maxDate(ds.date);
         setFind();
     });
 
@@ -43,12 +43,12 @@ $(function () {
 //        var _edate = new Date(form_record.find('#divEDate').data("DateTimePicker").date()).setHours(23, 59, 59, 0);
 //        form_record.find('#divEDate').data("DateTimePicker").date(new Date(_edate));
         $.reqData({
-            url: mvcPatch('Record/findRecord'),
+            url: mvcPatch('BillHD/findBillHD'),
             data: {vdata: JSON.stringify({
 //                    SDate: PHP_DateTimeShow_To_JSON(form_record.find('#divSDate')),
 //                    EDate: PHP_DateTimeShow_To_JSON(form_record.find('#divEDate'), true)
-                    SDate: setDateJson(form_record.find('#txtSDate').val()),
-                    EDate: setDateJson(form_record.find('#txtEDate').val())
+                    SDate: setDateJson(form_BillHD.find('#txtSDate').val()),
+                    EDate: setDateJson(form_BillHD.find('#txtEDate').val())
                 })
             },
             loanding: false,
@@ -124,38 +124,60 @@ $(function () {
             }
         ],
         btnNewFun: function (f) {
-             form_sumbit.SetDataPost({
-                
-            }).prop('action', mvcPatch('BillHD/newindex')).submit()
+            $.bPopup({
+                url: mvcPatch('BillHD/edit'),
+                title: 'รายการบิล',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: new Object({key: Guid}),
+                        fun: function (_f) {
+                            var obj = new Object();
+                            obj.RowKey = Guid;
+                            obj.CusCode=_f.find('#txtCusCode').val();
+                            obj.Customer = _f.find('#txtUser').val();
+                            $.bConfirm({
+                                buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('Customer/editCustomer'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                f.find('.xref').click();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;ตกลง',
+                        action: function (k) {
+
+                        }
+                    }
+                ]
+            });
         },
+
         btnEditFun: function (f, d) {
            
         },
         btnDeleteFun: function (f, d) {
-            $.bConfirm({
-                message: 'Do you want to delete the data?',
-                type: BootstrapDialog.TYPE_DANGER,
-                buttonOK: function (k) {
-                    k.close();
-                    var vdata = $.ToLinq(d)
-                            .Select(function (x) {
-                                return x.key;
-                            }).ToArray();
-                    $.reqData({
-                        url: mvcPatch('Record/removeRecord'),
-                        data: {data: JSON.stringify(vdata)},
-                        callback: function (vdata) {
-                            if (vdata.success) {
-                                setFind();
-                            } else {
-                                $.bAlert({
-                                    message: vdata.message
-                                });
-                            }
-                        }
-                    });
-                }
-            });
+         
         },
         btnPreviewFun: function (f, d) {
         }
