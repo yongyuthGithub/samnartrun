@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <hr>
-                <div id="form_recordlist"></div>
+                <div id="form_recordlist1"></div>
             </div>
         </div>
     </div>

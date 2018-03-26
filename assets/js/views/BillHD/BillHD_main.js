@@ -1,6 +1,6 @@
 $(function () {
     var form_BillHD = $('#form_BillHD');
-    var form_recordlist = $('#form_recordlist');
+    var form_recordlist1 = $('#form_recordlist1');
 //    form_record.find('#divSDate').dateTime().on('dp.change', function (e) {
 ////        form_record.find('#divEDate').data("DateTimePicker").minDate(e.date.add(1,'days'));
 //        form_record.find('#divEDate').data("DateTimePicker").minDate(e.date);
@@ -53,12 +53,12 @@ $(function () {
             },
             loanding: false,
             callback: function (vdata) {
-                form_recordlist.data('data', vdata).find('.xref').click();
+                form_recordlist1.data('data', vdata).find('.xref').click();
             }
         });
     }
 
-    form_recordlist.data('data', new Array()).setMainPage({
+    form_recordlist1.data('data', new Array()).setMainPage({
         btnNew: true,
         btnDeleteAll: false,
         btnDelete: false,
@@ -68,7 +68,7 @@ $(function () {
         UrlLoanding: false,
         UrlLoandingclose: false,
         DataJson: function () {
-            return form_recordlist.data('data');
+            return form_recordlist1.data('data');
         },
 //        UrlDataJson: mvcPatch('Record/findRecord'),
 //        UrlDataSend: {vdata: JSON.stringify({
