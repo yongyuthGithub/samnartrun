@@ -37,7 +37,7 @@ table.dataTable.no-footer {
     border-bottom: 1px solid #ddd !important;
 }
 
-table.dataTable.noneBtn > tbody td{
+.tdNoneBtn {
     padding-top:  10px !important;
     padding-bottom:  10px !important;
     /*margin: 0px !important;*/

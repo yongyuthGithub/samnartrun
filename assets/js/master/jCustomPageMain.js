@@ -148,10 +148,10 @@
 
 
             //_html += '<div class="col-lg-12 col-xs-12">';
-            var _heightTd = '';
-            if (setting.btnDelete === false && setting.btnDeleteAll === false && setting.btnEdit === false && setting.btnPreview === false)
-                _heightTd = 'noneBtn';
-            _html += '<table id="' + tblName + '" class="display nowrap responsive xmain ' + _heightTd + '" cellspacing="0" style="width:100%;">';
+//            var _heightTd = '';
+//            if (setting.btnDelete === false && setting.btnDeleteAll === false && setting.btnEdit === false && setting.btnPreview === false)
+//                _heightTd = 'noneBtn';
+            _html += '<table id="' + tblName + '" class="display nowrap responsive xmain" cellspacing="0" style="width:100%;">';
             _html += '<thead>';
             _html += '<tr>';
             $.each(setting.DataColumns, function (key, val) {
@@ -564,7 +564,10 @@
                 //        setting.btnEditFun(formId, vdata);
                 //    }
                 //});
-
+//                $.each(formId.find('#' + tblName + ' tbody').find('tr > td'), function (kk, vv) {
+//                    if ($(vv).find('.btn,.checkbox').length === 0)
+//                        $(vv).addClass('tdNoneBtn');
+//                });
                 setting.FundCallback(formId, tblEmp);
                 //var oTbl = $('#' + tblName).dataTable();
                 //oTbl.fnPageChange(_pageSelect);

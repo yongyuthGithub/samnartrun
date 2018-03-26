@@ -72,8 +72,7 @@ $(function () {
         DataColumnsDefs: [
             {
                 render: function (row, type, val2, meta) {
-                    var _val = PHP_JSON_To_ShowDate(val2.DocDate);
-                    return _val;
+                    return '<div class="tdNoneBtn">' + PHP_JSON_To_ShowDate(val2.DocDate) + '</div>';
                 },
                 orderable: true,
                 targets: 3
