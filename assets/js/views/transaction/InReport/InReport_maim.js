@@ -1,5 +1,5 @@
 $(function () {
-    var form_Income = $('#form_Income');
+    var form_InReport = $('#form_InReport');
     var form_Incometime = $('#form_Incometime');
 
     form_Incometime.find('#divSDate').datetimepicker({
@@ -26,7 +26,7 @@ $(function () {
 //        var _edate = new Date(form_record.find('#divEDate').data("DateTimePicker").date()).setHours(23, 59, 59, 0);
 //        form_record.find('#divEDate').data("DateTimePicker").date(new Date(_edate));
         $.reqData({
-            url: mvcPatch('InReport/findIncome'),
+            url: mvcPatch('InReport/findInReport'),
             data: {vdata: JSON.stringify({
 //                    SDate: PHP_DateTimeShow_To_JSON(form_record.find('#divSDate')),
 //                    EDate: PHP_DateTimeShow_To_JSON(form_record.find('#divEDate'), true)
@@ -36,7 +36,7 @@ $(function () {
             },
             loanding: false,
             callback: function (vdata) {
-                form_Income.data('data', vdata).find('.xref').click();
+                form_InReport.data('data', vdata).find('.xref').click();
             }
         });
     }
@@ -44,15 +44,18 @@ $(function () {
 
 
 
-    form_Income.data('data', new Array()).setMainPage({
+    form_InReport.data('data', new Array()).setMainPage({
         btnNew: true,
-        btnDeleteAll: true,
-        btnDelete: true,
+        btnNewText: 'พิมพ์รายงาน',
+        btnNewIcon: '',
+        btnNewStyle: 'btn-success',
+        btnDeleteAll: false,
+        btnDelete: false,
         btnEdit: true,
         btnPreview: false,
         headerString: '',
         DataJson: function () {
-            return form_Income.data('data');
+            return form_InReport.data('data');
         },
         UrlLoanding: true,
         UrlLoandingclose: true,

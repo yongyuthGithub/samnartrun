@@ -5,7 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 
-<?php echo js_asset('views/transaction/InReport/InReport_main.js') ?>
+<?php echo js_asset('views/transaction/InReport/InReport_maim.js') ?>
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
@@ -43,7 +43,7 @@ and open the template in the editor.
                     </div>
                 </div>
                 <hr>
-                <div id="form_Income"></div>
+                <div id="form_InReport"></div>
             </div>
         </div>
     </div>

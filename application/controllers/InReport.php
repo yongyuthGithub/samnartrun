@@ -21,7 +21,7 @@ class InReport extends PCenter {
 
      
     
-    public function findIncome() {
+    public function findInReport() {
         $_data = json_decode($_POST['vdata']);
         $query = $this->db->select('RowKey, DocDate, Detial,IncomeType,Amount, ')
                 ->where('DocDate >=', $_data->SDate)
