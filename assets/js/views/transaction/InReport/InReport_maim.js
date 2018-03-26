@@ -51,7 +51,7 @@ $(function () {
         btnNewStyle: 'btn-success',
         btnDeleteAll: false,
         btnDelete: false,
-        btnEdit: true,
+        btnEdit: false,
         btnPreview: false,
         headerString: '',
         DataJson: function () {
