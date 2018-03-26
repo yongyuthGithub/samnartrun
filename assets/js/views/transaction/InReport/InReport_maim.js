@@ -47,7 +47,7 @@ $(function () {
     form_InReport.data('data', new Array()).setMainPage({
         btnNew: true,
         btnNewText: 'พิมพ์รายงาน',
-        btnNewIcon: '',
+        btnNewIcon: 'fa fa-files-o',
         btnNewStyle: 'btn-success',
         btnDeleteAll: false,
         btnDelete: false,
