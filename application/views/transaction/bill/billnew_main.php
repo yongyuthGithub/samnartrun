@@ -45,7 +45,7 @@
                     <div class="col-xs-12 col-sm-3 col-md-2">
                         <div class="form-group">
                             <label for="cmdVatStatus">รูปแบบภาษี :</label>
-                            <select id="cmdCarF" name="cmdVatStatus" class="form-control selectpicker show-menu-arrow"
+                            <select id="cmdVatStatus" name="cmdVatStatus" class="form-control selectpicker show-menu-arrow"
                                     data-width="100%"
                                     data-show-Tick="true"
                                     data-tick-Icon="fa fa-check"

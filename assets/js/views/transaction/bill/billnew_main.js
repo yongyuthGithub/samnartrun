@@ -17,6 +17,13 @@ $(function () {
         }
     });
 
+    form_billnew.find('#cmdVatStatus').selectpicker({
+    }).on({
+        change: function () {
+            sumTotal();
+        }
+    });
+
     setDataCust(Guid);
     function setDataCust(v) {
         $.reqData({
@@ -39,8 +46,25 @@ $(function () {
                     return x.PriceTotal - x.Discount;
                 }).Sum();
         form_billnew.find('#txtPriceTotal').data('data', _pricetotal).val(addCommas(_pricetotal, 2));
-        var _afDis = form_billnew.find('#txtPriceTotal').data('data') - form_billnew.find('#txtDiscountTotal').val();
-        form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
+        var _afDis = _pricetotal - form_billnew.find('#txtDiscountTotal').val();
+
+        var _vStatus = parseInt(form_billnew.find('#cmdVatStatus').val());
+        if (_vStatus === 1) {
+            form_billnew.find('#txtVatTotal').val(addCommas(0, 2));
+            form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
+        } else if (_vStatus === 2) {
+//            form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
+//            var _vat = (_afDis * 7) / 100;
+//            _afDis = (_afDis + _vat);
+//            form_billnew.find('#txtVatTotal').val(addCommas(_vat, 2));
+        } else if (_vStatus === 3) {
+            var _vat = (_afDis * 7) / 100;
+            _afDis = _afDis + _vat;
+            form_billnew.find('#txtVatTotal').val(addCommas(_vat, 2));
+            form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
+        }
+
+        
     }
 
     form_billnew.find('#txtDiscountTotal').on({
