@@ -21,6 +21,10 @@ class Bill extends PCenter {
         $this->load->view('layout/nav', $data);
     }
 
+    public function newRecord() {
+        $this->load->view('transaction/bill/billnewrecord_edit');
+    }
+
     public function findCustomerIsRecord() {
         $qryMenu = $this->db->select('CutsomerKey')
                 ->where('IsBill', false)
@@ -62,6 +66,37 @@ class Bill extends PCenter {
         } else {
             echo json_encode(array());
         }
+    }
+
+    public function findRecordByCustomer() {
+        $_key = $_POST['key'];
+        $_data = json_decode($_POST['vdata']);
+        $qryMenu = $this->db->select('RowKey as key,'
+                        . 'DocID,'
+                        . 'DocDate,'
+                        . 'Product,'
+                        . 'PriceTotal,')
+                ->where('CutsomerKey', $_key)
+                ->where('IsBill', false)
+                ->where_not_in('RowKey', $_data)
+                ->from('TRNWrokSheetHD')
+                ->get();
+        echo json_encode($qryMenu->result());
+    }
+
+    public function findRecordByKey() {
+        $_data = json_decode($_POST['data']);
+        $qryMenu = $this->db->select('RowKey as key,'
+                        . 'DocID,'
+                        . 'DocDate,'
+                        . 'Product,'
+                        . 'PriceTotal,'
+                        . '0 as Discount,'
+                        . 'PriceTotal as NetPrice')
+                ->where_in('RowKey', $_data)
+                ->from('TRNWrokSheetHD')
+                ->get();
+        echo json_encode($qryMenu->result());
     }
 
 }

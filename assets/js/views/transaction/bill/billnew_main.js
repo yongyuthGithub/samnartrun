@@ -33,6 +33,13 @@ $(function () {
         });
     }
 
+    function sumTotal() {
+        var _pricetotal = $.ToLinq(form_bilelist.data('data'))
+                .Select(function (x) {
+                    return x.PriceTotal - x.Discount;
+                }).Sum();
+        form_billnew.find('#txtPriceTotal').val(addCommas(_pricetotal, 2));
+    }
     form_bilelist.data('data', new Array()).setMainPage({
         btnNew: true,
         btnDeleteAll: true,
@@ -46,7 +53,9 @@ $(function () {
         },
         UrlLoanding: true,
         UrlLoandingclose: true,
-//    AfterLoadData: function (f, d, t) { },
+        AfterLoadData: function (f, d, t) {
+            sumTotal();
+        },
         DataColumns: [
             {data: 'DocID', header: 'เลขที่ใบงาน'},
             {data: 'DocDate', header: 'วันที่ใบงาน'},
@@ -86,10 +95,57 @@ $(function () {
             }
         ],
         btnNewFun: function (f) {
+            $.bPopup({
+                url: mvcPatch('Bill/newRecord'),
+                title: 'เลือกใบงานเพิ่ม',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        key: form_billnew.find('#cmdCust').val(),
+                        data: $.ToLinq(f.data('data')).Select(function (x) {
+                            return x.key
+                        }).ToArray(),
+                        fun: function (_f) {
+                            $.reqData({
+                                url: mvcPatch('Bill/findRecordByKey'),
+                                data: {data: JSON.stringify(_f.find('#cmdNewRecord').val())},
+                                loanding: false,
+                                callback: function (vdata) {
+                                    $.each(vdata, function (k2, v2) {
+                                        f.data('data').push(v2);
+                                    });
+                                    f.find('.xref').click();
+                                    _f.find('#btn-close').click();
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         },
         btnEditFun: function (f, d) {
         },
         btnDeleteFun: function (f, d) {
+            var _d = $.ToLinq(d)
+                    .Select(function (x) {
+                        return x.key;
+                    });
+            var _u = $.ToLinq(f.data('data'))
+                    .Where(x => !_d.Contains(x.key))
+                    .ToArray();
+            f.data('data', _u);
+            f.find('.xref').click();
         },
         btnPreviewFun: function (f, d) {
         }
