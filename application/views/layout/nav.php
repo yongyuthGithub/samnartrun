@@ -23,6 +23,7 @@
         <?php echo css_asset('master/checkbox_radiobox.css') ?>
         <?php echo css_asset('master/bootstrap-datetimepicker.min.css') ?>
         <?php echo css_asset('master/material_switch.css') ?>
+        <?php echo css_asset('master/stimulsoft.viewer.office2013.whiteblue.css') ?>
 
         <?php echo js_asset('master/jquery.cookie.js') ?>
         <?php echo js_asset('master/linq.min.js') ?>
@@ -41,6 +42,8 @@
         <?php echo js_asset('master/bootstrap-datetimepicker.min.js') ?>
         <?php echo js_asset('master/highcharts.js') ?>
         <?php echo js_asset('master/highcharts-more.js') ?>
+        <?php echo js_asset('master/stimulsoft.reports.js') ?>
+        <?php echo js_asset('master/stimulsoft.viewer.js') ?>
         <?php echo js_asset('master/jCustomPageMain.js') ?>
         <?php echo js_asset('master/jCommon.js') ?>
         <?php echo js_asset('views/layout/nav.js') ?>
