@@ -28,6 +28,10 @@ class Bill extends PCenter {
     public function displayPrint() {
         $this->load->view('transaction/bill/billPrintView');
     }
+    
+    public function loadBillReport() {
+        $this->load->view('transaction/bill/reports/Report.mrt');
+    }
 
     public function findbill() {
         $_data = json_decode($_POST['vdata']);
