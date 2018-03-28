@@ -41,9 +41,9 @@
   text-align: right;
 }
 #form_bilelist #tblform_bilelist thead tr th:nth-child(8) {
-  max-width: 60px !important;
-  min-width: 60px !important;
-  width: 60px !important;
+  max-width: 120px !important;
+  min-width: 120px !important;
+  width: 120px !important;
   text-align: right;
 }
 #form_bilelist #tblform_bilelist tbody tr[role=row] td:first-child {
@@ -103,9 +103,9 @@
   text-align: right;
 }
 #form_bilelist #tblform_bilelist tbody tr[role=row] td:nth-child(8) {
-  min-width: 60px !important;
-  max-width: 60px !important;
-  width: 60px !important;
+  min-width: 120px !important;
+  max-width: 120px !important;
+  width: 120px !important;
   text-overflow: ellipsis !important;
   overflow: hidden !important;
   text-align: right;

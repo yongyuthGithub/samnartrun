@@ -46,7 +46,10 @@ $(function () {
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
-        btnPreview: false,
+        btnPreview: true,
+        btnPreviewText: 'Print',
+        btnPreviewIcon: 'glyphicon glyphicon-print',
+        btnPreviewStyle: 'btn-success',
         headerString: '',
 //        UrlDataJson: mvcPatch('controllers/action'),
         DataJson: function () {
@@ -114,6 +117,31 @@ $(function () {
         btnDeleteFun: function (f, d) {
         },
         btnPreviewFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('Bill/displayPrint'),
+                title: 'Print Bill ' + d.DocID,
+                closable: false,
+                size: BootstrapDialog.SIZE_WIDE,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d.key,
+                        fun: function (_f) {
+
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-print',
+                        icon: 'glyphicon glyphicon-print',
+                        label: '&nbsp;Print',
+                        cssClass: BootstrapDialog.TYPE_SUCCESS,
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         }
     });
 });

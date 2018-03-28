@@ -48,9 +48,6 @@
         <?php echo js_asset('master/jCommon.js') ?>
         <?php echo js_asset('views/layout/nav.js') ?>
         <style>
-
-
-
             .navbar {
                 font-family: Montserrat, sans-serif;
                 margin-bottom: 0;
