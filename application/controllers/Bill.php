@@ -24,11 +24,11 @@ class Bill extends PCenter {
     public function newRecord() {
         $this->load->view('transaction/bill/billnewrecord_edit');
     }
-    
+
     public function displayPrint() {
         $this->load->view('transaction/bill/billPrintView');
     }
-    
+
     public function loadBillReport() {
         $this->load->view('transaction/bill/reports/Report.mrt');
     }
@@ -51,20 +51,26 @@ class Bill extends PCenter {
                 ->get();
         $qShow = Linq::from($qryMenu->result())
                 ->select(function($x) {
-                    $pTotal = Linq::from($this->db->select('h.PriceTotal,b.Discount')
+                    $pTotal = Linq::from($this->db->select('h.PriceTotal,b.Discount,bh.VatStatus')
                                     ->where('b.BillHDKey', $x->key)
                                     ->from('TRNBillLD b')
+                                    ->join('TRNBillHD bh','b.BillHDKey=bh.RowKey')
                                     ->join('TRNWrokSheetHD h', 'b.WrokSheetHDKey=h.RowKey')
                                     ->get()->result())
                             ->select(function($k) {
-                                return $k->PriceTotal - $k->Discount;
+                                if ((int) $k->VatStatus === 0 || (int) $k->VatStatus === 2) {
+                                    return $k->PriceTotal - $k->Discount;
+                                } else if ((int) $k->VatStatus === 1) {
+                                    $_t = $k->PriceTotal - $k->Discount;
+                                    return $_t - (($_t * 7) / 100);
+                                }
                             })->sum();
-                    $nTotal = 0;
-                    if ((int) $x->VatStatus === 1) {
-                        $nTotal = $pTotal - $x->Discount;
-                    } else if ((int) $x->VatStatus === 2) {
-                        $nTotal = ($pTotal - $x->Discount) + $x->Vat;
-                    }
+                    $nTotal = $pTotal + $x->Vat;
+//                    if ((int) $x->VatStatus === 1) {
+//                        $nTotal = $pTotal - $x->Discount;
+//                    } else if ((int) $x->VatStatus === 2) {
+//                        $nTotal = ($pTotal - $x->Discount) + $x->Vat;
+//                    }
                     return [
                         'key' => $x->key,
                         'DocID' => $x->DocID,
@@ -81,9 +87,58 @@ class Bill extends PCenter {
         echo json_encode($qShow);
     }
 
+    public function findbillOne() {
+        $_key = $_POST['key'];
+        $qryMenu = $this->db->select('b.DocDate,'
+                                . 'b.CustomerBranchKey,'
+                                . 'cb.CompanyKey,'
+                                . 'b.DocDate,'
+                                . 'b.Vat,'
+                                . 'b.VatStatus,'
+                                . 'b.Discount')
+                        ->where('b.RowKey', $_key)
+                        ->from('TRNBillHD b')
+                        ->join('MSTCustomerBranch cb', 'b.CustomerBranchKey=cb.RowKey', 'left')
+                        ->get()->row();
+        $qryMenu->TRNBillLD = Linq::from($this->db->select('hd.RowKey as key,'
+                                        . 'hd.DocID,'
+                                        . 'hd.DocDate,'
+                                        . 'hd.Product,'
+                                        . 'hd.PriceTotal,'
+                                        . 'd.Discount')
+                                ->where('d.BillHDKey', $_key)
+                                ->from('TRNBillLD d')
+                                ->join('TRNWrokSheetHD hd', 'd.WrokSheetHDKey=hd.RowKey', 'left')
+                                ->get()->result())
+                        ->select(function($x) {
+                            return [
+                                'key' => $x->key,
+                                'DocID' => $x->DocID,
+                                'DocDate' => $x->DocDate,
+                                'Product' => $x->Product,
+                                'PriceTotal' => $x->PriceTotal,
+                                'Discount' => $x->Discount,
+                                'NetPrice' => $x->PriceTotal - $x->Discount
+                            ];
+                        })->toArray();
+
+        echo json_encode($qryMenu);
+    }
+
     public function findCustomerIsRecord() {
+        $billkey = $_POST['key'];
+        $cuskey = PCenter::GUID_EMPTY();
+        foreach ($this->db->select('c.CompanyKey')
+                ->where('b.RowKey', $billkey)
+                ->from('TRNBillHD b')
+                ->join('MSTCustomerBranch c', 'b.CustomerBranchKey=c.RowKey', 'left')
+                ->get()->result() as $row) {
+            $cuskey = $row->CompanyKey;
+        }
+
         $qryMenu = $this->db->select('CutsomerKey')
                 ->where('IsBill', false)
+                ->or_where('CutsomerKey', $cuskey)
                 ->from('TRNWrokSheetHD')
                 ->get();
 
@@ -138,19 +193,31 @@ class Bill extends PCenter {
     }
 
     public function findRecordByCustomer() {
+        $billkey = $_POST['billkey'];
         $_key = $_POST['key'];
         $_data = json_decode($_POST['vdata']);
         $qryMenu = $this->db->select('RowKey as key,'
-                        . 'DocID,'
-                        . 'DocDate,'
-                        . 'Product,'
-                        . 'PriceTotal,')
-                ->where('CutsomerKey', $_key)
-                ->where('IsBill', false)
-                ->where_not_in('RowKey', $_data)
-                ->from('TRNWrokSheetHD')
-                ->get();
-        echo json_encode($qryMenu->result());
+                                . 'DocID,'
+                                . 'DocDate,'
+                                . 'Product,'
+                                . 'PriceTotal,')
+                        ->where('CutsomerKey', $_key)
+                        ->where('IsBill', false)
+                        ->where_not_in('RowKey', $_data)
+                        ->from('TRNWrokSheetHD')
+                        ->get()->result();
+        $qryThis = $this->db->select('hd.RowKey as key,'
+                                . 'hd.DocID,'
+                                . 'hd.DocDate,'
+                                . 'hd.Product,'
+                                . 'hd.PriceTotal,')
+                        ->where_not_in('hd.RowKey', $_data)
+                        ->where('bl.BillHDKey', $billkey)
+                        ->from('TRNWrokSheetHD hd')
+                        ->join('TRNBillLD bl', 'hd.RowKey=bl.WrokSheetHDKey')
+                        ->get()->result();
+
+        echo json_encode(array_merge($qryMenu, $qryThis));
     }
 
     public function findRecordByKey() {
@@ -204,10 +271,10 @@ class Bill extends PCenter {
             $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
             $this->db->where('RowKey', $_data->RowKey)->update('TRNBillHD', $_data);
 
-            $this->db->where('BillHDKey', $_data->RowKey);
-            $this->db->delete('TRNBillLD');
-
-            $keyUp = Linq::from($_data->TRNBillLD)
+            $keyUp = Linq::from($this->db->select('WrokSheetHDKey')
+                            ->where('BillHDKey', $_data->RowKey)
+                            ->from('TRNBillLD')
+                            ->get()->result())
                     ->select(function($x) {
                         return $x->WrokSheetHDKey;
                     })
@@ -215,6 +282,9 @@ class Bill extends PCenter {
             $this->db->set('IsBill', false);
             $this->db->where_in('RowKey', $keyUp);
             $this->db->update('TRNWrokSheetHD');
+
+            $this->db->where('BillHDKey', $_data->RowKey);
+            $this->db->delete('TRNBillLD');
 
             foreach ($_data->TRNBillLD as $_row) {
                 $_row->RowKey = PCenter::GUID();

@@ -1,7 +1,30 @@
 $(function () {
     var form_billnew = $('#form_billnew');
     var form_bilelist = $('#form_bilelist');
-    var form_sumbit=$('#form_sumbit');
+    var form_sumbit = $('#form_sumbit');
+
+    if ($('#txtkey').val() !== Guid) {
+        $.reqData({
+            url: mvcPatch('Bill/findbillOne'),
+            data: {key: $('#txtkey').val()},
+            loanding: false,
+            callback: function (vdata) {
+                $('#title').text('แก้ไขรายการบิล');
+                form_billnew.find('#txtDocDate').val(PHP_JSON_To_ShowDate(vdata.DocDate));
+                form_billnew.find('#cmdCust').prop('disabled', true);
+                form_billnew.find('#cmdCustBranch').prop('disabled', true);
+                form_billnew.find('#txtDiscountTotal').val(vdata.Discount);                
+                form_bilelist.data('data', vdata.TRNBillLD);
+                form_billnew.find('#cmdVatStatus').val(vdata.VatStatus).selectpicker('render').change();
+
+                setDataCust(vdata.CompanyKey, function (sel) {
+                    sel.val(vdata.CustomerBranchKey).selectpicker('render');
+                });
+            }
+        });
+    } else {
+        setDataCust(Guid, function () {});
+    }
 
     form_billnew.find('#cmdCust').selectpicker({
     }).on({
@@ -12,7 +35,8 @@ $(function () {
                 data: {key: _key},
                 loanding: false,
                 callback: function (vdata) {
-                    form_bilelist.data('data', vdata).find('.xref').click();
+                    form_bilelist.data('data', vdata);
+                    form_billnew.find('#cmdVatStatus').change();
                     setDataCustBranch(function (s) {
                         form_billnew.formValidation('revalidateField', s);
                     });
@@ -24,14 +48,25 @@ $(function () {
     form_billnew.find('#cmdVatStatus').selectpicker({
     }).on({
         change: function () {
-            sumTotal();
+            $.each(form_bilelist.data('data'), function (k, v) {
+                var _vStatus = parseInt(form_billnew.find('#cmdVatStatus').val());
+                if (_vStatus === 0 || _vStatus === 2) {
+                    v.NetPrice = v.PriceTotal - v.Discount;
+                } else {
+                    var _t = v.PriceTotal - v.Discount;
+                    v.NetPrice = _t - ((_t * 7) / 100);
+                }
+            });
+//            sumTotal();
+            form_bilelist.find('.xref').click();
         }
     });
 
-    setDataCust(Guid, function () {});
+
     function setDataCust(v, fun) {
         $.reqData({
             url: mvcPatch('Bill/findCustomerIsRecord'),
+            data: {key: $('#txtkey').val()},
             loanding: false,
             callback: function (vdata) {
                 var _sel = form_billnew.find('#cmdCust').empty();
@@ -78,41 +113,67 @@ $(function () {
     });
 
     function sumTotal() {
-        var _pricetotal = $.ToLinq(form_bilelist.data('data'))
+        var _pTotal = $.ToLinq(form_bilelist.data('data'))
                 .Select(function (x) {
-                    return x.PriceTotal - x.Discount;
+                    return parseFloat(x.NetPrice);
                 }).Sum();
-        form_billnew.find('#txtPriceTotal').data('data', _pricetotal).val(addCommas(_pricetotal, 2));
-        var _afDis = _pricetotal - form_billnew.find('#txtDiscountTotal').val();
+        var _pDis = $.ToLinq(form_bilelist.data('data'))
+                .Select(function (x) {
+                    return parseFloat(x.Discount);
+                }).Sum();
+        var _pVat = $.ToLinq(form_bilelist.data('data'))
+                .Select(function (x) {
+                    return (parseFloat(x.PriceTotal) - parseFloat(x.Discount)) - parseFloat(x.NetPrice);
+                }).Sum();
+        form_billnew.find('#txtPriceTotal').data('data', _pTotal).val(addCommas(_pTotal, 2));
+        form_billnew.find('#txtDiscountTotal').data('data', _pDis).val(addCommas(_pDis, 2));
 
         var _vStatus = parseInt(form_billnew.find('#cmdVatStatus').val());
-        if (_vStatus === 1) {
-            form_billnew.find('#txtVatTotal').data('data', 0).val(addCommas(0, 2));
-            form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
-        } else if (_vStatus === 2) {
-            var _vat = parseFloat(((_afDis * 7) / 100).toFixed(2));
-            _afDis = _afDis + _vat;
-            form_billnew.find('#txtVatTotal').data('data', _vat).val(addCommas(_vat, 2));
-            form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
-//            form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
-//            var _vat = parseFloat(((_afDis * 7) / 100).toFixed(2));
-//            form_billnew.find('#txtVatTotal').data('data', _vat).val(addCommas(_vat, 2));
-//            _afDis = (_pricetotal - parseFloat(form_billnew.find('#txtDiscountTotal').val()) - _vat);
-//            var _ptotal = _afDis + parseFloat(form_billnew.find('#txtDiscountTotal').val());
-//            form_billnew.find('#txtPriceTotal').data('data', _ptotal).val(addCommas(_ptotal, 2));
+        if (_vStatus === 2) {
+            var _eVat = (_pTotal * 7) / 100;
+            form_billnew.find('#txtVatTotal').data('data', _eVat).val(addCommas(_eVat, 2));
+            _pTotal = _pTotal + _eVat;
+        } else {
+            form_billnew.find('#txtVatTotal').data('data', _pVat).val(addCommas(_pVat, 2));
+            _pTotal = _pTotal + _pVat;
         }
-//        else if (_vStatus === 3) {
+        form_billnew.find('#txtNetPrice').data('data', _pTotal).val(addCommas(_pTotal, 2));
+
+//        var _pricetotal = $.ToLinq(form_bilelist.data('data'))
+//                .Select(function (x) {
+//                    return x.PriceTotal - x.Discount;
+//                }).Sum();
+//        form_billnew.find('#txtPriceTotal').data('data', _pricetotal).val(addCommas(_pricetotal, 2));
+//        var _afDis = _pricetotal - form_billnew.find('#txtDiscountTotal').val();
 //
+//        var _vStatus = parseInt(form_billnew.find('#cmdVatStatus').val());
+//        if (_vStatus === 1) {
+//            form_billnew.find('#txtVatTotal').data('data', 0).val(addCommas(0, 2));
+//            form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
+//        } else if (_vStatus === 2) {
+//            var _vat = parseFloat(((_afDis * 7) / 100).toFixed(2));
+//            _afDis = _afDis + _vat;
+//            form_billnew.find('#txtVatTotal').data('data', _vat).val(addCommas(_vat, 2));
+//            form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
+////            form_billnew.find('#txtNetPrice').data('data', _afDis).val(addCommas(_afDis, 2));
+////            var _vat = parseFloat(((_afDis * 7) / 100).toFixed(2));
+////            form_billnew.find('#txtVatTotal').data('data', _vat).val(addCommas(_vat, 2));
+////            _afDis = (_pricetotal - parseFloat(form_billnew.find('#txtDiscountTotal').val()) - _vat);
+////            var _ptotal = _afDis + parseFloat(form_billnew.find('#txtDiscountTotal').val());
+////            form_billnew.find('#txtPriceTotal').data('data', _ptotal).val(addCommas(_ptotal, 2));
 //        }
+////        else if (_vStatus === 3) {
+////
+////        }
     }
 
-    form_billnew.find('#txtDiscountTotal').on({
-        focusout: function () {
-            var _v = ChkNumber($(this).val()).toFixed(2);
-            $(this).val(_v);
-            sumTotal();
-        }
-    });
+//    form_billnew.find('#txtDiscountTotal').on({
+//        focusout: function () {
+//            var _v = ChkNumber($(this).val()).toFixed(2);
+//            $(this).val(_v);
+//            sumTotal();
+//        }
+//    });
 
     form_bilelist.on('focusout', '.txtDis', function () {
         var _key = $(this).data('key');
@@ -120,11 +181,19 @@ $(function () {
         var _thisD = $.ToLinq(form_bilelist.data('data'))
                 .Where(x => x.key === _key)
                 .First();
-        _thisD.Discount = _v;
-        _thisD.NetPrice = (_thisD.PriceTotal - _thisD.Discount).toFixed(2);
+        _thisD.Discount = parseFloat(_v);
+
+        var _vStatus = parseInt(form_billnew.find('#cmdVatStatus').val());
+        if (_vStatus === 0 || _vStatus === 2) {
+            _thisD.NetPrice = _thisD.PriceTotal - _thisD.Discount;
+        } else {
+            var _t = _thisD.PriceTotal - _thisD.Discount;
+            _thisD.NetPrice = _t - ((_t * 7) / 100);
+        }
         $(this).parents('tr').find('.tTotal').text(addCommas(_thisD.NetPrice, 2));
         $(this).val(_v);
         sumTotal();
+//        form_billnew.find('#cmdVatStatus').change();
     });
 
     form_bilelist.data('data', new Array()).setMainPage({
@@ -202,7 +271,8 @@ $(function () {
                                     $.each(vdata, function (k2, v2) {
                                         f.data('data').push(v2);
                                     });
-                                    f.find('.xref').click();
+//                                    f.find('.xref').click();
+                                    form_billnew.find('#cmdVatStatus').change();
                                     _f.find('#btn-close').click();
                                 }
                             });
@@ -276,7 +346,7 @@ $(function () {
                             loanding: false,
                             callback: function (vdata) {
                                 if (vdata.success) {
-                                    form_sumbit.prop('action',mvcPatch('Bill/index')).submit();
+                                    form_sumbit.prop('action', mvcPatch('Bill/index')).submit();
                                 } else {
                                     $.bAlert({
                                         message: vdata.message

@@ -19,7 +19,8 @@ $(function () {
             url: mvcPatch('Bill/findRecordByCustomer'),
             data: {
                 key: _formdata.data('key'),
-                vdata: JSON.stringify(_formdata.data('data'))
+                vdata: JSON.stringify(_formdata.data('data')),
+                billkey: $('#txtkey').val()
             },
             loanding: false,
             callback: function (vdata) {

@@ -3,7 +3,7 @@
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1>สร้างรายการบิลใหม่</h1><h4><small>จัดการออกบิลแต่ละรายการลูกค้าที่มีอยู่ในระบบ</small></h4>
+            <h1 id="title">สร้างรายการบิลใหม่</h1><h4><small>จัดการออกบิลแต่ละรายการลูกค้าที่มีอยู่ในระบบ</small></h4>
         </div>
     </div>
 </div>
@@ -96,12 +96,12 @@
                 <div class="row">  
                     <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
                         <div class="form-group" style="margin-bottom: 0px;">
-                            <label for="txtDiscountTotal" class="text-right" style="line-height: 34px;">ส่วนลดท้ายบิล :</label>
+                            <label for="txtDiscountTotal" class="text-right" style="line-height: 34px;">ส่วนลดรวม :</label>
                         </div>
                     </div>
                     <div class="col-xs-8 col-sm-4 col-md-3">
                         <div class="form-group" style="margin-bottom: 0px;">
-                            <input type="text" class="form-control text-right" id="txtDiscountTotal" name="txtDiscountTotal" placeholder="ส่วนสดท้ายบิล" value="0.00">
+                            <input type="text" class="form-control text-right" id="txtDiscountTotal" name="txtDiscountTotal" placeholder="ส่วนสด" disabled value="0.00">
                         </div>
                     </div>
                 </div>
@@ -126,6 +126,7 @@
                                     data-selectAll-Text="Select All"
                                     data-deselectAll-Text="Deselect All"
                                     data-selected-Text-Format="count > 3">
+                                <option data-icon="fa fa-sliders" value="0">&nbsp;&nbsp;ไม่คำนวณภาษี</option>
                                 <option data-icon="fa fa-sliders" value="1">&nbsp;&nbsp;รวมภาษีมูลค่า (Include VAT)</option>
                                 <option data-icon="fa fa-sliders" value="2">&nbsp;&nbsp;ยังไม่รวมภาษี (Exclude VAT)</option>
                                 <!--<option data-icon="fa fa-sliders" value="3">&nbsp;&nbsp;คำนวณภาษีนอก</option>-->

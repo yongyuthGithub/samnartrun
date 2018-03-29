@@ -77,7 +77,7 @@ $(function () {
             },
             {
                 render: function (row, type, val2, meta) {
-                    return addCommas(val2.TotalPrice, 2);
+                    return addCommas(val2.TotalPrice + parseFloat(val2.Discount), 2);
                 },
                 orderable: true,
                 targets: 3
@@ -113,6 +113,12 @@ $(function () {
             }).prop('action', mvcPatch('Bill/indexNew')).submit();
         },
         btnEditFun: function (f, d) {
+            form_sumbit.SetDataPost({
+                data: {
+                    txtkey: d.key,
+                    txtdisplay: d.DocID
+                }
+            }).prop('action', mvcPatch('Bill/indexNew')).submit();
         },
         btnDeleteFun: function (f, d) {
         },
