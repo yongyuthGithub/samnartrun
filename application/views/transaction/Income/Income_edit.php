@@ -34,7 +34,7 @@ and open the template in the editor.
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="cmdTitle">Type :</label>
+                    <label for="cmdTitle">ประเภท :</label>
                     <select id="cmdTitle" name="cmdTitle" class="form-control selectpicker show-menu-arrow"
                             data-width="100%"
                             data-show-Tick="true"

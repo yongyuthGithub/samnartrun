@@ -13,7 +13,7 @@ and open the template in the editor.
         <form id="form_fuleedit">
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="txtUser">Name Pump:</label>
+                    <label for="txtUser">ชื่อปั้ม:</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="	fa fa-paypal" style="min-width: 20px;"></i></div>
                         <input type="text" class="form-control" id="txtUser" name="txtUser" placeholder="Input Name Pump">
@@ -22,7 +22,7 @@ and open the template in the editor.
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="cmdTitle">Type :</label>
+                    <label for="cmdTitle">ประเภท :</label>
                     <select id="cmdTitle" name="cmdTitle" class="form-control selectpicker show-menu-arrow"
                             data-width="100%"
                             data-show-Tick="true"
