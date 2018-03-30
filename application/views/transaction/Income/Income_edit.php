@@ -13,7 +13,7 @@ and open the template in the editor.
         <form id="form_Incomeedit">
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="txtUser">วันที่เริ่มงาน:</label>
+                    <label for="txtUser">วันที่เริ่มงาน :</label>
                     <div class="input-group date" id="txtSDate">
                         <input type='text' class="form-control text-center" id="txtUser5" name="txtUser5" placeholder="วันที่เริ่มงาน" onkeydown="return false;" />
                         <span class="input-group-addon">
@@ -25,7 +25,7 @@ and open the template in the editor.
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="txtUser">ชื่อ:</label>
+                    <label for="txtUser">รายละเอียด :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-address-book" style="min-width: 20px;"></i></div>
                         <input type="text" class="form-control" id="txtUser2" name="txtUser2" placeholder="ชื่อ">
@@ -55,7 +55,7 @@ and open the template in the editor.
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="txtUser">จำนวนเงิน:</label>
+                    <label for="txtUser">จำนวนเงิน :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-address-book" style="min-width: 20px;"></i></div>
                         <input type="text" class="form-control" id="txtUser3" name="txtUser3" placeholder="ชื่อ">
