@@ -166,6 +166,53 @@ class PCenter extends CI_Controller {
         return Linq::from($qry)->toArray();
     }
 
+    protected function num2wordsThai($number_input) {
+        $number = $number_input; //ใส่ตัวเลขที่นี่
+        $digit = array('ศูนย์', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า', 'สิบ');
+        $num = array('', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน');
+        $number = explode(".", $number);
+        $c_num[0] = $len = strlen($number[0]);
+        $c_num[1] = $len2 = strlen($number[1]);
+        $convert = '';
+//คิดจำนวนเต็ม
+        for ($n = 0; $n < $len; $n++) {
+            $c_num[0] --;
+            $c_digit = substr($number[0], $n, 1);
+            if ($c_num[0] == 0 && $c_digit == 1)
+                $digit[$c_digit] = 'เอ็ด';
+            if ($c_num[0] == 0 && $c_digit == 2)
+                $digit[$c_digit] = 'สอง';
+            if ($c_num[0] == 1 && $c_digit == 2)
+                $digit[$c_digit] = 'ยี่';
+            if ($c_num[0] == 1 && $c_digit == 1)
+                $digit[$c_digit] = '';
+            $convert .= $digit[$c_digit];
+            $convert .= $num[$c_num[0]];
+        }
+        $convert .= 'บาท';
+        if ($number[1] == '') {
+            $convert .= 'ถ้วน';
+        }
+//คิดจุดทศนิยม
+        for ($n = 0; $n < $len2; $n++) {
+            $c_num[1] --;
+            $c_digit = substr($number[1], $n, 1);
+            if ($c_num[1] == 0 && $c_digit == 1)
+                $digit[$c_digit] = 'หนึ่ง';
+            if ($c_num[1] == 0 && $c_digit == 2)
+                $digit[$c_digit] = 'สอง';
+            if ($c_num[1] == 1 && $c_digit == 2)
+                $digit[$c_digit] = 'ยี่';
+            if ($c_num[1] == 1 && $c_digit == 1)
+                $digit[$c_digit] = '';
+            $convert .= $digit[$c_digit];
+            $convert .= $num[$c_num[1]];
+        }
+        if ($number[1] != '')
+            $convert .= 'สตางค์';
+        return $convert .= '';
+    }
+
 //    public static function getMyHost($url = null) {
 //        if ($url == null) {
 //            return prep_url($_SERVER['HTTP_HOST']) . '/samnartrun/';

@@ -44,6 +44,7 @@
         <?php echo js_asset('master/highcharts-more.js') ?>
         <?php echo js_asset('master/stimulsoft.reports.js') ?>
         <?php echo js_asset('master/stimulsoft.viewer.js') ?>
+        <?php echo js_asset('master/thaibath.js') ?>
         <?php echo js_asset('master/jCustomPageMain.js') ?>
         <?php echo js_asset('master/jCommon.js') ?>
         <?php echo js_asset('views/layout/nav.js') ?>

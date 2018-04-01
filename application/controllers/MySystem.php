@@ -69,4 +69,22 @@ class MySystem extends PCenter {
         echo json_encode($vReturn);
     }
 
+    public function findMyCompany() {
+        $qryMenu = $this->db
+                ->select('c.IDCard,'
+                        . 'c.Customer,'
+                        . 'c.Address,'
+                        . 'sd.SubDistrict,'
+                        . 'd.District,'
+                        . 'p.Province,'
+                        . 'c.ZipCode,'
+                        . 'c.Tel,'
+                        . 'c.Fax')
+                ->from('SYSCompany c')
+                ->join('MSTSubDistrict sd', 'c.SubDistrict=sd.RowKey', 'left')
+                ->join('MSTDistrict d', 'sd.DistrictKey=d.RowKey', 'left')
+                ->join('MSTProvince p', 'd.ProvinceKey=p.RowKey', 'left')
+                ->get();
+        echo json_encode($qryMenu->row());
+    }
 }
