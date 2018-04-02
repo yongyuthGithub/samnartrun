@@ -17,7 +17,7 @@ class Car extends PCenter {
     public function edit() {
         $this->load->view('master/Car/Car_edit');
     }
-    
+
     public function edit1() {
         $this->load->view('master/Car/Car_edit1');
     }
@@ -47,7 +47,7 @@ class Car extends PCenter {
                         . 'C.CarGroup')
 //                . 'D.RowKey as DistrictKey,'
 //                . 'D.ProvinceKey'
-                ->where('C.CarGroup',1)
+                ->where('C.CarGroup', 1)
                 ->from('MSTCar C')
                 ->join('MSTBrand B', 'C.BrandKey=B.RowKey', 'left')
 //                ->join('MSTDistrict D','SD.DistrictKey=D.RowKey','left')
@@ -134,6 +134,7 @@ class Car extends PCenter {
 
         echo json_encode($vReturn);
     }
+
     public function findCar1() {
         $query = $this->db->select('C.RowKey as key, '
                         . 'C.BrandKey, '
@@ -146,7 +147,7 @@ class Car extends PCenter {
                         . 'C.CarGroup')
 //                . 'D.RowKey as DistrictKey,'
 //                . 'D.ProvinceKey'
-                ->where('C.CarGroup',2)
+                ->where('C.CarGroup', 2)
                 ->from('MSTCar C')
                 ->join('MSTBrand B', 'C.BrandKey=B.RowKey', 'left')
 //                ->join('MSTDistrict D','SD.DistrictKey=D.RowKey','left')
@@ -354,6 +355,7 @@ class Car extends PCenter {
                         . 'T.CarKey,'
                         . 'T.SDate,'
                         . 'T.EDate,'
+                        . 'T.ActType,'
                         . 'T.Cash ,')
                 ->from('TRNCarAct T')
                 ->where('T.CarKey', $key)
@@ -368,6 +370,7 @@ class Car extends PCenter {
         $this->db->trans_begin();
         if ($_data->RowKey === PCenter::GUID_EMPTY()) {
             $queryChk = $this->db
+                            ->where('ActType', $_data->ActType)
                             ->where('SDate', $_data->SDate)
                             ->where('EDate', $_data->EDate)
                             ->where('Cash', $_data->Cash)
@@ -393,6 +396,7 @@ class Car extends PCenter {
             }
         } else {
             $queryChk = $this->db
+                            ->where('ActType', $_data->ActType)
                             ->where('SDate', $_data->SDate)
                             ->where('EDate', $_data->EDate)
                             ->where('Cash', $_data->Cash)

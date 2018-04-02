@@ -21,8 +21,8 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#Insurance">ประกันรถยนต์</a></li>
-                <li><a data-toggle="tab" href="#Act">พ.ร.บ</a></li>
+                <li class="active"><a data-toggle="tab" href="#Insurance">ประกันรถยนต์/ประกันสินค้า</a></li>
+                <li><a data-toggle="tab" href="#Act">พ.ร.บ/ภาษี</a></li> 
             </ul>
 
             <div class="tab-content">

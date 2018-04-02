@@ -50,6 +50,9 @@ $(function () {
         btnDelete: true,
         btnEdit: true,
         btnPreview: false,
+        btnEditText: 'แก้ไข',
+        btnNewText: 'เพิ่ม',
+        btnDeleteText: 'ลบ',
         headerString: '',
         DataJson: function () {
             return form_Income.data('data');
@@ -60,7 +63,6 @@ $(function () {
             {data: 'Detial', header: 'รายละเอียด'},
             {data: 'IncomeType', header: 'ประเภท'},
             {data: 'DocDate', header: 'วันที่'},
-
             {data: 'Amount', header: 'จำนวนเงิน'},
 //           {data: 'Url', header: 'Url'}
         ],

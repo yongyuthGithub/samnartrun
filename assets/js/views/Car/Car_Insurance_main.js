@@ -211,11 +211,19 @@ $(function () {
         UrlLoandingclose: true,
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'Cash', header: 'วงเงิน'},
+            {data: 'Cash', header: 'จำนวนเงิน'},
             {data: 'SDate', header: 'วันเริ่มพ.ร.บ'},
             {data: 'EDate', header: 'วันหมดอายุพ.ร.บ'},
+            {data: 'ActType', header: 'ประเภท'},
         ],
         DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    return parseInt(val2.ActType) === 1 ? 'พ.ร.บ' : 'ภาษี';
+                },
+                orderable: true,
+                targets: 3
+            },
             {
                 render: function (row, type, val2, meta) {
                     var _val = PHP_JSON_To_ShowDate(val2.SDate);
@@ -246,6 +254,7 @@ $(function () {
                             var obj = new Object({
                                 RowKey: Guid,
                                 CarKey: $('#txtkey').val(),
+                                ActType: parseInt(_f.find('#txtcmdCartaxtype').val()),
                                 SDate: PHP_DateTimeShow_To_JSON(_f.find('#txtSDate')),
                                 EDate: PHP_DateTimeShow_To_JSON(_f.find('#txtEDate')),
                                 Cash: _f.find('#txtCash').val()
@@ -298,6 +307,7 @@ $(function () {
                             var obj = new Object({
                                 RowKey: d.key,
                                 CarKey: $('#txtkey').val(),
+                                ActType: parseInt(_f.find('#txtcmdCartaxtype').val()),
                                 SDate: PHP_DateTimeShow_To_JSON(_f.find('#txtSDate')),
                                 EDate: PHP_DateTimeShow_To_JSON(_f.find('#txtEDate')),
                                 Cash: _f.find('#txtCash').val()

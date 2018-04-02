@@ -24,6 +24,8 @@ $(function () {
             btnDelete: true,
             btnEdit: false,
             btnPreview: false,
+            btnNewText: 'เพิ่ม',
+            btnDeleteText: 'ลบ',
             headerString: '',
 //            UrlDataJson: mvcPatch('controllers/action'),
             DataJson: function () {

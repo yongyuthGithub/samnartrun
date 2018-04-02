@@ -8,7 +8,7 @@ $(function () {
         btnDelete: true,
         btnEdit: true,
         btnPreview: true,
-        btnPreviewText:'ประเภท',
+        btnPreviewText:'ประเภทประกัน',
         btnEditText: 'แก้ไข',
         btnNewText: 'เพิ่ม',
         btnDeleteText: 'ลบ',

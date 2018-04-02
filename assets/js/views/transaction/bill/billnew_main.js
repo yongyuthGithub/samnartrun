@@ -202,6 +202,9 @@ $(function () {
         btnDelete: true,
         btnEdit: false,
         btnPreview: false,
+        btnEditText: 'แก้ไข',
+        btnNewText: 'เพิ่ม',
+        btnDeleteText: 'ลบ',
         headerString: '',
 //        UrlDataJson: mvcPatch('controllers/action'),
         DataJson: function () {

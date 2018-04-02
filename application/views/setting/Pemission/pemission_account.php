@@ -4,7 +4,7 @@
         <form id="form_add_account">
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="cmdAccount">Account :</label>
+                    <label for="cmdAccount">บัญชีผู้ใช้ :</label>
                     <select id="cmdAccount" name="cmdAccount" class="form-control selectpicker show-menu-arrow"
                             data-width="100%"
                             data-show-Tick="true"

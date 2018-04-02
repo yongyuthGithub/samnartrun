@@ -12,7 +12,7 @@ $(function () {
         btnEditText: 'แก้ไข',
         btnNewText: 'เพิ่ม',
         btnDeleteText: 'ลบ',
-        btnPreviewText: 'ประกันรถยนต์',
+        btnPreviewText: 'ประกัน',
         headerString: '',
         UrlDataJson: mvcPatch('Car/findCar'),
         UrlLoanding: true,

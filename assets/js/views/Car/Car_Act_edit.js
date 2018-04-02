@@ -16,6 +16,7 @@ $(function () {
     } else {
 
         form_CarActedit.find('#txtCash').val(_formdata.Cash);
+        form_CarActedit.find('#txtcmdCartaxtype').val(_formdata.ActType).selectpicker('rander');
         form_CarActedit.find('#txtSDate1').val(PHP_JSON_To_ShowDate(_formdata.SDate));
         form_CarActedit.find('#txtEDate1').val(PHP_JSON_To_ShowDate(_formdata.EDate));
 //
@@ -37,8 +38,13 @@ $(function () {
     form_CarActedit.find('#txtEDate').dateTime().on('dp.change', function (e) {
 //        form_CarActedit.formValidation('revalidateField', form_CarActedit.find('#txtEDate11'));
     });
-   
 
+ form_CarActedit.find('#txtcmdCartaxtype').selectpicker({
+    }).on({
+        change: function () {
+            //javascript on change
+        }
+    });
 //
 //
 //    form_CarActedit.find('#cmdCarInsurance').selectpicker().on({
@@ -90,7 +96,7 @@ $(function () {
 //            }
 //        });
 //    }
-     form_CarActedit_C.find('#btn-ok').on({
+    form_CarActedit_C.find('#btn-ok').on({
         click: function () {
             form_CarActedit.submit();
         }
@@ -104,7 +110,7 @@ $(function () {
             form_CarActedit.find('#btn-ok')
         ],
         fields: {
-             txtSDate1: {
+            txtSDate1: {
                 icon: false,
                 validators: {
                     notEmpty: {
@@ -112,11 +118,19 @@ $(function () {
                     }
                 }
             },
-             txtEDate1: {
+            txtEDate1: {
                 icon: false,
                 validators: {
                     notEmpty: {
                         message: '* กรุณาระบุวันที่หมดอายุพ.ร.บ'
+                    }
+                }
+            },
+             txtcmdCartaxtype: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุประเภท'
                     }
                 }
             },
