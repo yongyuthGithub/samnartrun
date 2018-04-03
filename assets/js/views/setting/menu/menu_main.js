@@ -35,7 +35,7 @@ $(function () {
         btnEditText: 'แก้ไข',
         btnNewText: 'เพิ่ม',
         btnDeleteText: 'ลบ',
-        btnPreviewText: 'อื่นๆ',
+        btnPreviewText: 'ลำดับ',
         headerString: '',
         UrlDataJson: mvcPatch('menu/findMenu'),
         UrlLoanding: false,
