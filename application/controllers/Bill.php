@@ -54,7 +54,7 @@ class Bill extends PCenter {
                     $pTotal = Linq::from($this->db->select('h.PriceTotal,b.Discount,bh.VatStatus')
                                     ->where('b.BillHDKey', $x->key)
                                     ->from('TRNBillLD b')
-                                    ->join('TRNBillHD bh','b.BillHDKey=bh.RowKey')
+                                    ->join('TRNBillHD bh', 'b.BillHDKey=bh.RowKey')
                                     ->join('TRNWrokSheetHD h', 'b.WrokSheetHDKey=h.RowKey')
                                     ->get()->result())
                             ->select(function($k) {
@@ -305,6 +305,23 @@ class Bill extends PCenter {
             }
         }
         echo json_encode($vReturn);
+    }
+
+    public function findBillWithReport() {
+        $_key = $_POST['key'];
+        $qry = $this->db->select('b.DocDate,'
+                                . 'b.DocID,'
+                                . 'b.Vat,'
+                                . 'b.VatStatus,'
+                                . 'b.Discount,'
+                                . 'b.PrintCount,'
+                                . 'b.CustomerBranchKey')
+                        ->from('TRNBillHD b')
+                        ->where('b.RowKey', $_key)
+                        ->get()->row();
+        $qry->Company = $this->MyCompayDetail();
+        $qry->Customer = $this->GetCustomerByBranch($qry->CustomerBranchKey);
+        echo json_encode($qry);
     }
 
 }

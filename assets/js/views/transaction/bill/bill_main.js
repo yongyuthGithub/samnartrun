@@ -128,7 +128,7 @@ $(function () {
         btnPreviewFun: function (f, d) {
             $.bPopup({
                 url: mvcPatch('Bill/displayPrint'),
-                title: 'Print Bill ' + d.DocID,
+                title: 'พิมพ์บิลเลขที่ ' + d.DocID,
                 closable: false,
                 size: BootstrapDialog.SIZE_WIDE,
                 onshow: function (k) {

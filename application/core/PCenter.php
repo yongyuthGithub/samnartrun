@@ -213,6 +213,108 @@ class PCenter extends CI_Controller {
         return $convert .= '';
     }
 
+    protected function MyCompayDetail() {
+        $qry = $this->db
+                ->select('c.IDCard,'
+                        . 'c.Customer,'
+                        . 'c.Address,'
+                        . 'sd.SubDistrict,'
+                        . 'd.District,'
+                        . 'p.Province,'
+                        . 'c.ZipCode,'
+                        . 'c.Tel,'
+                        . 'c.Fax')
+                ->from('SYSCompany c')
+                ->join('MSTSubDistrict sd', 'c.SubDistrict=sd.RowKey', 'left')
+                ->join('MSTDistrict d', 'sd.DistrictKey=d.RowKey', 'left')
+                ->join('MSTProvince p', 'd.ProvinceKey=p.RowKey', 'left')
+                ->get();
+        return $qry->row();
+    }
+
+    protected function GetCustomer($CustKey, $BranchKey = NULL) {
+        if ($BranchKey === NULL) {
+            $qry = $this->db
+                            ->select('c.CusCode,'
+                                    . 'c.Customer,'
+                                    . 'b.Branch,'
+                                    . 'b.Address,'
+                                    . 'b.IDCard,'
+                                    . 'b.Tel,'
+                                    . 'b.Fax,'
+                                    . 'b.Email,'
+                                    . 'sd.SubDistrict,'
+                                    . 'sd.RowKey as SubDistrictKey,'
+                                    . 'd.District,'
+                                    . 'd.RowKey as DistrictKey,'
+                                    . 'p.Province,'
+                                    . 'p.RowKey as ProvinceKey,'
+                                    . 'b.ZipCode')
+                            ->from('MSTCustomer c')
+                            ->where('c.RowKey', $CustKey)
+                            ->join('MSTCustomerBranch b', 'c.RowKey=b.CompanyKey')
+                            ->where('b.IsDefault', true)
+                            ->join('MSTSubDistrict sd', 'b.SubDistrict=sd.RowKey')
+                            ->join('MSTDistrict d', 'sd.DistrictKey=d.RowKey')
+                            ->join('MSTProvince p', 'd.ProvinceKey=p.RowKey')
+                            ->get()->row();
+            return $qry;
+        } else {
+            $qry = $this->db
+                            ->select('c.CusCode,'
+                                    . 'c.Customer,'
+                                    . 'b.Branch,'
+                                    . 'b.Address,'
+                                    . 'b.IDCard,'
+                                    . 'b.Tel,'
+                                    . 'b.Fax,'
+                                    . 'b.Email,'
+                                    . 'sd.SubDistrict,'
+                                    . 'sd.RowKey as SubDistrictKey,'
+                                    . 'd.District,'
+                                    . 'd.RowKey as DistrictKey,'
+                                    . 'p.Province,'
+                                    . 'p.RowKey as ProvinceKey,'
+                                    . 'b.ZipCode')
+                            ->from('MSTCustomer c')
+                            ->where('c.RowKey', $CustKey)
+                            ->join('MSTCustomerBranch b', 'c.RowKey=b.CompanyKey')
+                            ->where('b.RowKey', $BranchKey)
+                            ->join('MSTSubDistrict sd', 'b.SubDistrict=sd.RowKey')
+                            ->join('MSTDistrict d', 'sd.DistrictKey=d.RowKey')
+                            ->join('MSTProvince p', 'd.ProvinceKey=p.RowKey')
+                            ->get()->row();
+            return $qry;
+        }
+    }
+
+    protected function GetCustomerByBranch($BranchKey) {
+        $qry = $this->db
+                        ->select('c.CusCode,'
+                                . 'c.Customer,'
+                                . 'b.Branch,'
+                                . 'b.Address,'
+                                . 'b.IDCard,'
+                                . 'b.Tel,'
+                                . 'b.Fax,'
+                                . 'b.Email,'
+                                . 'sd.SubDistrict,'
+                                . 'sd.RowKey as SubDistrictKey,'
+                                . 'd.District,'
+                                . 'd.RowKey as DistrictKey,'
+                                . 'p.Province,'
+                                . 'p.RowKey as ProvinceKey,'
+                                . 'b.ZipCode')
+                        ->from('MSTCustomer c')
+                        ->join('MSTCustomerBranch b', 'c.RowKey=b.CompanyKey')
+                        ->where('b.RowKey', $BranchKey)
+                        ->join('MSTSubDistrict sd', 'b.SubDistrict=sd.RowKey')
+                        ->join('MSTDistrict d', 'sd.DistrictKey=d.RowKey')
+                        ->join('MSTProvince p', 'd.ProvinceKey=p.RowKey')
+                        ->get()->row();
+        return $qry;
+    }
+
 //    public static function getMyHost($url = null) {
 //        if ($url == null) {
 //            return prep_url($_SERVER['HTTP_HOST']) . '/samnartrun/';

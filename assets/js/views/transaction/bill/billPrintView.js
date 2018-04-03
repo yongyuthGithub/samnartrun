@@ -1,4 +1,6 @@
 $(function () {
+    var form_showBill = $('#form_showBill');
+    var form_showBill_C = $.modelDialog(form_showBill);
 //    var str = Stimulsoft.System.IO.File.getFile(mvcPatch('Bill/loadBillReport'));
 //    var str = Stimulsoft.System.IO.File.getFile(mvcPatch('reports/Report.mrt'));
     var options = new Stimulsoft.Viewer.StiViewerOptions();
@@ -17,19 +19,32 @@ $(function () {
     report.dictionary.databases.clear();
 
     $.reqData({
-        url: mvcPatch('MySystem/findMyCompany'),
-//        data: {data: JSON.stringify(obj)},
+        url: mvcPatch('Bill/findBillWithReport'),
+        data: {key: form_showBill_C.data('data')},
         loanding: false,
         callback: function (vdata) {
-            report.dictionary.variables.getByName('CompanyName').valueObject = vdata.Customer;
-            report.dictionary.variables.getByName('CompanyAddress').valueObject = vdata.Address;
-            report.dictionary.variables.getByName('CompanySubDistrict').valueObject = vdata.SubDistrict;
-            report.dictionary.variables.getByName('CompanyDistrict').valueObject = vdata.District;
-            report.dictionary.variables.getByName('CompanyProvince').valueObject = vdata.Province;
-            report.dictionary.variables.getByName('CompanyZipCode').valueObject = vdata.ZipCode;
-            report.dictionary.variables.getByName('CompanyTel').valueObject = vdata.Tel;
-            report.dictionary.variables.getByName('CompanyFax').valueObject = vdata.Fax;
-            report.dictionary.variables.getByName('CustomerIDCard').valueObject = vdata.IDCard;
+            report.dictionary.variables.getByName('CompanyName').valueObject = vdata.Company.Customer;
+            report.dictionary.variables.getByName('CompanyAddress').valueObject = vdata.Company.Address;
+            report.dictionary.variables.getByName('CompanySubDistrict').valueObject = vdata.Company.SubDistrict;
+            report.dictionary.variables.getByName('CompanyDistrict').valueObject = vdata.Company.District;
+            report.dictionary.variables.getByName('CompanyProvince').valueObject = vdata.Company.Province;
+            report.dictionary.variables.getByName('CompanyZipCode').valueObject = vdata.Company.ZipCode;
+            report.dictionary.variables.getByName('CompanyTel').valueObject = vdata.Company.Tel;
+            report.dictionary.variables.getByName('CompanyFax').valueObject = vdata.Company.Fax;
+            report.dictionary.variables.getByName('CustomerIDCard').valueObject = vdata.Company.IDCard;
+
+            report.dictionary.variables.getByName('CustName').valueObject = vdata.Customer.Customer;
+            report.dictionary.variables.getByName('CustAddress').valueObject = vdata.Customer.Address;
+            report.dictionary.variables.getByName('CustSubDistrict').valueObject = vdata.Customer.SubDistrict;
+            report.dictionary.variables.getByName('CustDistrict').valueObject = vdata.Customer.District;
+            report.dictionary.variables.getByName('CustProvince').valueObject = vdata.Customer.Province;
+            report.dictionary.variables.getByName('CustTel').valueObject = vdata.Customer.Tel;
+            report.dictionary.variables.getByName('CustFax').valueObject = vdata.Customer.Fax;
+            report.dictionary.variables.getByName('CustIDCard').valueObject = vdata.Customer.IDCard;            
+            report.dictionary.variables.getByName('CustZipCode').valueObject = vdata.Customer.ZipCode;
+            report.dictionary.variables.getByName('CustBranch').valueObject = vdata.Customer.Branch;
+            
+            report.dictionary.variables.getByName('BillDate').valueObject = PHP_JSON_To_ShowDate(vdata.DocDate);
             viewer.report = report;
 
         }
