@@ -7,6 +7,9 @@ $(function () {
         btnDelete: true,
         btnEdit: true,
         btnPreview: false,
+        btnEditText: 'แก้ไข',
+        btnNewText: 'เพิ่ม',
+        btnDeleteText: 'ลบ',
         headerString: '',
         UrlDataJson: mvcPatch('DocSeq/findDocPattern'),
 //    DataJson: function () {

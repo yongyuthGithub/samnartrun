@@ -65,6 +65,8 @@ $(function () {
         btnEdit: true,
         btnNewText: 'พิมพ์รายงาน',
         btnPreview: false,
+        btnNewIcon: 'glyphicon glyphicon-print',
+        btnNewStyle: 'btn-success',
         headerString: '',
         UrlLoanding: false,
         UrlLoandingclose: false,
@@ -136,7 +138,7 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = Guid;
-                            obj.CusCode=_f.find('#txtCusCode').val();
+                            obj.CusCode = _f.find('#txtCusCode').val();
                             obj.Customer = _f.find('#txtUser').val();
                             $.bConfirm({
                                 buttonOK: function (k) {
@@ -175,10 +177,10 @@ $(function () {
         },
 
         btnEditFun: function (f, d) {
-           
+
         },
         btnDeleteFun: function (f, d) {
-         
+
         },
         btnPreviewFun: function (f, d) {
         }
