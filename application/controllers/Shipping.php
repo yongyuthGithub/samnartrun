@@ -21,9 +21,10 @@ class Shipping extends PCenter {
     public function findShipping() {
         $qryMenu = $this->db->select('RowKey as key,'
                         . 'LocationName,'
-                        . 'Contact,')
+                        . 'Contact,'
+                        . 'UpdateDate')
                 ->from('MSTShippingLocations')
-                ->order_by('LocationName','asc')
+                ->order_by('LocationName', 'asc')
                 ->get();
         $_array = array();
         foreach ($qryMenu->result() as $row) {
@@ -31,6 +32,7 @@ class Shipping extends PCenter {
                 'key' => $row->key,
                 'LocationName' => $row->LocationName,
                 'Contact' => $row->Contact,
+                'UpdateDate' => $row->UpdateDate,
                 '_Delete' => $this->db
                         ->where('ShippingBegin', $row->key)
                         ->or_where('ShippingEnd', $row->key)

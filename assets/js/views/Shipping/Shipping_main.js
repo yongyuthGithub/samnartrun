@@ -21,19 +21,19 @@ $(function () {
         DataColumns: [
             {data: 'LocationName', header: 'สถานที่ รับ-ส่ง สินค้า'},
             {data: 'Contact', header: 'ติดต่อ'},
-//            {data: 'Menu', header: 'Menu'},
+            {data: 'UpdateDate', header: 'วันที่แก้ไขล่าสุด'},
 //            {data: 'Icon', header: 'Icon'},
 //            {data: 'Url', header: 'Url'}
         ],
-//        DataColumnsDefs: [
-//            {
-//                render: function (row, type, val2, meta) {
-//                    return '<i class="' + val2.Icon + '"></i>';
-//                },
-//                orderable: true,
-//                targets: 3
-//            }
-//        ],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    return PHP_JSON_To_ShowDate(val2.UpdateDate);
+                },
+                orderable: true,
+                targets: 2
+            }
+        ],
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Shipping/edit'),
