@@ -7,13 +7,15 @@ $(function () {
         loanding: true,
         callback: function (vdata) {
             if (vdata.length > 0) {
-                var _vdata = $.ToLinq(vdata).First();                
+                var _vdata = $.ToLinq(vdata).First();
                 form_mysystem.find('#txtIDCard').val(_vdata.IDCard);
                 form_mysystem.find('#txtName').val(_vdata.Customer);
                 form_mysystem.find('#txtAddress').val(_vdata.Address);
                 form_mysystem.find('#txtZipCode').val(_vdata.ZipCode);
                 form_mysystem.find('#txtTel').val(_vdata.Tel);
                 form_mysystem.find('#txtFax').val(_vdata.Fax);
+                form_mysystem.find('#txtAccountCode').val(_vdata.AccountCode);
+                form_mysystem.find('#txtAccountName').val(_vdata.AccountName);
 
                 setProvince(function (_p) {
                     _p.val(_vdata.ProvinceKey).selectpicker('render');
@@ -24,6 +26,13 @@ $(function () {
                         });
                     });
                 });
+
+                setBank(function (_b) {
+                    _b.val(_vdata.BankKey).selectpicker('render');
+                    setBankBranch(function (_bc) {
+                        _bc.val(_vdata.BankBranchKey).selectpicker('render');
+                    })
+                });
             } else {
                 setProvince(function (_p) {
                     _p.val(Guid).selectpicker('render');
@@ -33,6 +42,13 @@ $(function () {
                             _sd.val(Guid).selectpicker('render');
                         });
                     });
+                });
+
+                setBank(function (_b) {
+                    _b.val(Guid).selectpicker('render');
+                    setBankBranch(function (_bc) {
+//                        _bc.val(Guid).selectpicker('render');
+                    })
                 });
             }
         }
@@ -117,6 +133,52 @@ $(function () {
         });
     }
 
+    form_mysystem.find('#cmdBank').selectpicker().on({
+        change: function () {
+            setBankBranch(function (_bc) {
+//                _bc.val(Guid).selectpicker('render');
+                form_mysystem.formValidation('revalidateField', form_mysystem.find('#cmdBankBranch'));
+            });
+        }
+    });
+    function setBank(v) {
+        $.reqData({
+            url: mvcPatch('MySystem/findBank'),
+//            data: {key: form_mysystem.find('#cmdDistrict').val()},
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_mysystem.find('#cmdBank').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    _html += '<option data-icon="fa fa-bank" value="' + v.RowKey + '" data-display="' + v.Bank + '">&nbsp;&nbsp;' + v.Bank + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh')
+                v(_sel);
+            }
+        });
+    }
+
+    form_mysystem.find('#cmdBankBranch').selectpicker().on({
+        change: function () {
+        }
+    });
+    function setBankBranch(v) {
+        $.reqData({
+            url: mvcPatch('MySystem/findBankBranch'),
+            data: {key: form_mysystem.find('#cmdBank').val()},
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_mysystem.find('#cmdBankBranch').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    _html += '<option data-icon="fa fa-bank" value="' + v.RowKey + '" data-display="' + v.Branch + '">&nbsp;&nbsp;' + v.Branch + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh')
+                v(_sel);
+            }
+        });
+    }
+
     form_mysystem.find('#btn-save').on({
         click: function () {
             form_mysystem.submit();
@@ -132,7 +194,10 @@ $(function () {
                 SubDistrict: form_mysystem.find('#cmdSubDistrict').val(),
                 ZipCode: form_mysystem.find('#txtZipCode').val(),
                 Tel: form_mysystem.find('#txtTel').val(),
-                Fax: form_mysystem.find('#txtFax').val()
+                Fax: form_mysystem.find('#txtFax').val(),
+                AccountCode: form_mysystem.find('#txtAccountCode').val(),
+                AccountName: form_mysystem.find('#txtAccountName').val(),
+                BankBranchKey: form_mysystem.find('#cmdBankBranch').val(),
             });
             $.bConfirm({
                 buttonOK: function (k) {
@@ -220,6 +285,38 @@ $(function () {
                 validators: {
                     notEmpty: {
                         message: '* กรุณาระบุรหัสไปรษณีย์'
+                    }
+                }
+            },
+            txtAccountCode: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุหมายเลขบัญชี'
+                    }
+                }
+            },
+            cmdBank: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุธนาคาร'
+                    }
+                }
+            },
+            cmdBankBranch: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุสาขาธนาคาร'
+                    }
+                }
+            },
+            txtAccountName: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุชื่อบัญชี'
                     }
                 }
             },

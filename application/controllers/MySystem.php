@@ -24,11 +24,16 @@ class MySystem extends PCenter {
                         . 'd.ProvinceKey,'
                         . 'c.ZipCode,'
                         . 'c.Tel,'
-                        . 'c.Fax')
+                        . 'c.Fax,'
+                        . 'c.AccountCode,'
+                        . 'c.AccountName,'
+                        . 'c.BankBranchKey,'
+                        . 'bb.BankKey')
                 ->from('SYSCompany c')
                 ->join('MSTSubDistrict sd', 'c.SubDistrict=sd.RowKey', 'left')
                 ->join('MSTDistrict d', 'sd.DistrictKey=d.RowKey', 'left')
                 ->join('MSTProvince p', 'd.ProvinceKey=p.RowKey', 'left')
+                ->join('MSTBankBranch bb', 'c.BankBranchKey=bb.RowKey', 'left')
                 ->get();
         echo json_encode($qryMenu->result());
     }
@@ -72,8 +77,29 @@ class MySystem extends PCenter {
     public function findMyCompany() {
         echo json_encode($this->MyCompayDetail());
     }
-    
-    public function dd(){
-        
+
+    public function findBank() {
+        $qryMenu = $this->db
+                ->select('RowKey,'
+                        . 'Bank,'
+                        . 'IsDefault')
+                ->from('MSTBank')
+                ->order_by('Bank', 'asc')
+                ->get();
+        echo json_encode($qryMenu->result());
     }
+
+    public function findBankBranch() {
+        $key = $_POST['key'];
+        $qryMenu = $this->db
+                ->select('RowKey,'
+                        . 'Branch,'
+                        . 'IsDefault')
+                ->where('BankKey', $key)
+                ->from('MSTBankBranch')
+                ->order_by('Branch', 'asc')
+                ->get();
+        echo json_encode($qryMenu->result());
+    }
+
 }
