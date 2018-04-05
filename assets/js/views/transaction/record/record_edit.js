@@ -29,6 +29,10 @@ $(function () {
         setShippingEnd(function (_t) {
             _t.val(Guid).selectpicker('render');
         });
+        setProduct(function (_p) {
+            _p.val(Guid).selectpicker('render');
+        });
+        setEmp(Guid);
     } else {
         $.reqData({
             url: mvcPatch('Record/findRecordOne'),
@@ -88,6 +92,12 @@ $(function () {
                     _t.val(vdata.ShippingEnd).selectpicker('render');
                     form_recordedit.find('#txtContactEnd').val(vdata.ContactEnd);
                 });
+                setProduct(function (_p) {
+                    _p.val(vdata.ProductKey).selectpicker('render');
+                });
+
+                setEmp(vdata.EmpKey);
+                form_recordedit.find('#txtSkillLabor').val(vdata.SkillLabor);
             }
         });
     }
@@ -136,6 +146,28 @@ $(function () {
                 $.each(vdata, function (k, v) {
                     var _p = parseInt(v.CarType) === 1 ? '2 เพลา' : '3 เพลา';
                     _html += '<option data-icon="fa fa-truck" value="' + v.RowKey + '" data-display="' + v.CarNumber + '">&nbsp;&nbsp;(' + _p + ') ' + v.CarNumber + ' -> ' + v.Province + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
+            }
+        });
+    }
+
+    form_recordedit.find('#cmdEmp').selectpicker({
+    }).on({
+        change: function () {
+            //javascript on change
+        }
+    });
+    function setEmp(v) {
+        $.reqData({
+            url: mvcPatch('Record/findEmp'),
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_recordedit.find('#cmdEmp').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    var _p = parseInt(v.CarType) === 1 ? '2 เพลา' : '3 เพลา';
+                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="(' + v.IDCard + ') ' + v.Title + v.FName + ' ' + v.LName + '">&nbsp;&nbsp;(' + v.IDCard + ') ' + v.Title + v.FName + ' ' + v.LName + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
             }
@@ -412,6 +444,83 @@ $(function () {
         });
     }
 
+    form_recordedit.find('#cmdProduct').selectpicker({
+    }).on({
+        change: function () {
+
+        },
+        'loaded.bs.select': function (e) {
+            $('#btn-productNew').on({
+                click: function () {
+                    $.bPopup({
+                        url: mvcPatch('Product/edit'),
+                        title: 'เพิ่มรายชื่อสินค้า',
+                        closable: false,
+                        size: BootstrapDialog.SIZE_NORMAL,
+                        onshow: function (k) {
+                            k.getModal().data({
+                                data: new Object({key: Guid}),
+                                fun: function (_f) {
+                                    var obj = new Object();
+                                    obj.RowKey = Guid;
+                                    obj.ProductName = _f.find('#txtProductName').val();
+                                    $.bConfirm({
+                                        buttonOK: function (k) {
+                                            k.close();
+                                            $.reqData({
+                                                url: mvcPatch('Product/editProduct'),
+                                                data: {data: JSON.stringify(obj)},
+                                                loanding: false,
+                                                callback: function (vdata) {
+                                                    if (vdata.success) {
+                                                        _f.find('#btn-close').click();
+                                                        setProduct(function (_t) {
+                                                            _t.val(vdata.key).selectpicker('render').change();
+                                                        });
+                                                    } else {
+                                                        $.bAlert({
+                                                            message: vdata.message
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        },
+                        buttons: [
+                            {
+                                id: 'btn-ok',
+                                icon: 'fa fa-check',
+                                label: '&nbsp;ตกลง',
+                                action: function (k) {
+
+                                }
+                            }
+                        ]
+                    });
+                }
+            });
+        }
+    });
+    function setProduct(v) {
+        $.reqData({
+            url: mvcPatch('Record/findProduct'),
+            data: {},
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_recordedit.find('#cmdProduct').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    _html += '<option data-icon="fa fa-cube" value="' + v.RowKey + '" data-display="' + v.ProductName + '">&nbsp;&nbsp;' + v.ProductName + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh');
+                v(_sel);
+            }
+        });
+    }
+
     form_incomein.data('data', new Array()).setMainPage({
         btnNew: true,
         btnDeleteAll: true,
@@ -427,7 +536,7 @@ $(function () {
         UrlLoandingclose: true,
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'Detial', header: 'รายละเอียด', orderable: false},
+            {data: 'IncomeName', header: 'รายละเอียด', orderable: false},
             {data: 'Amount', header: 'จำนวนเงิน', orderable: false},
 //            {data: 'Menu', header: 'Menu'},
 //            {data: 'Icon', header: 'Icon'},
@@ -455,21 +564,23 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({
                                 key: newGuid(),
-                                Detial: _f.find('#txtDetail').val(),
+//                                Detial: _f.find('#txtDetail').val(),
+                                IncomeKey: _f.find('#cmdIncomeName').val(),
+                                IncomeName: _f.find('#cmdIncomeName').find('option:selected').data('display'),
                                 Amount: _f.find('#txtAmount').val()
                             });
                             var _chk = $.ToLinq(f.data('data'))
                                     .Where(x => $.trim(x.Detial).toLocaleLowerCase() === $.trim(obj.Detial).toLocaleLowerCase())
                                     .ToArray();
-                            if (_chk.length > 0) {
-                                $.bAlert({
-                                    message: 'This item already exists.'
-                                });
-                            } else {
-                                f.data('data').push(obj);
-                                f.find('.xref').click();
-                                _f.find('#btn-close').click();
-                            }
+//                            if (_chk.length > 0) {
+//                                $.bAlert({
+//                                    message: 'This item already exists.'
+//                                });
+//                            } else {
+                            f.data('data').push(obj);
+                            f.find('.xref').click();
+                            _f.find('#btn-close').click();
+//                            }
                         }
                     });
                 },
@@ -497,25 +608,27 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({
                                 key: d.key,
-                                Detial: _f.find('#txtDetail').val(),
+                                //                                Detial: _f.find('#txtDetail').val(),
+                                IncomeKey: _f.find('#cmdIncomeName').val(),
+                                IncomeName: _f.find('#cmdIncomeName').find('option:selected').data('display'),
                                 Amount: _f.find('#txtAmount').val()
                             });
                             var _chk = $.ToLinq(f.data('data'))
                                     .Where(x => $.trim(x.Detial).toLocaleLowerCase() === $.trim(obj.Detial).toLocaleLowerCase() && x.key !== obj.key)
                                     .ToArray();
-                            if (_chk.length > 0) {
-                                $.bAlert({
-                                    message: 'This item already exists.'
-                                });
-                            } else {
-                                var _up = $.ToLinq(f.data('data'))
-                                        .Where(x => x.key === obj.key)
-                                        .First();
-                                _up.Detial = obj.Detial;
-                                _up.Amount = obj.Amount;
-                                f.find('.xref').click();
-                                _f.find('#btn-close').click();
-                            }
+//                            if (_chk.length > 0) {
+//                                $.bAlert({
+//                                    message: 'This item already exists.'
+//                                });
+//                            } else {
+                            var _up = $.ToLinq(f.data('data'))
+                                    .Where(x => x.key === obj.key)
+                                    .First();
+                            _up.IncomeKey = obj.IncomeKey;
+                            _up.IncomeName = obj.IncomeName;
+                            f.find('.xref').click();
+                            _f.find('#btn-close').click();
+//                            }
                         }
                     });
                 },
@@ -561,7 +674,7 @@ $(function () {
         UrlLoandingclose: true,
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'Detial', header: 'รายละเอียด', orderable: false},
+            {data: 'IncomeName', header: 'รายละเอียด', orderable: false},
             {data: 'Amount', header: 'จำนวนเงิน', orderable: false},
 //            {data: 'Menu', header: 'Menu'},
 //            {data: 'Icon', header: 'Icon'},
@@ -589,21 +702,23 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({
                                 key: newGuid(),
-                                Detial: _f.find('#txtDetail').val(),
+                                //                                Detial: _f.find('#txtDetail').val(),
+                                IncomeKey: _f.find('#cmdIncomeName').val(),
+                                IncomeName: _f.find('#cmdIncomeName').find('option:selected').data('display'),
                                 Amount: _f.find('#txtAmount').val()
                             });
                             var _chk = $.ToLinq(f.data('data'))
                                     .Where(x => $.trim(x.Detial).toLocaleLowerCase() === $.trim(obj.Detial).toLocaleLowerCase())
                                     .ToArray();
-                            if (_chk.length > 0) {
-                                $.bAlert({
-                                    message: 'This item already exists.'
-                                });
-                            } else {
-                                f.data('data').push(obj);
-                                f.find('.xref').click();
-                                _f.find('#btn-close').click();
-                            }
+//                            if (_chk.length > 0) {
+//                                $.bAlert({
+//                                    message: 'This item already exists.'
+//                                });
+//                            } else {
+                            f.data('data').push(obj);
+                            f.find('.xref').click();
+                            _f.find('#btn-close').click();
+//                            }
                         }
                     });
                 },
@@ -631,25 +746,28 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({
                                 key: d.key,
-                                Detial: _f.find('#txtDetail').val(),
+                                //                                Detial: _f.find('#txtDetail').val(),
+                                IncomeKey: _f.find('#cmdIncomeName').val(),
+                                IncomeName: _f.find('#cmdIncomeName').find('option:selected').data('display'),
                                 Amount: _f.find('#txtAmount').val()
                             });
                             var _chk = $.ToLinq(f.data('data'))
                                     .Where(x => $.trim(x.Detial).toLocaleLowerCase() === $.trim(obj.Detial).toLocaleLowerCase() && x.key !== obj.key)
                                     .ToArray();
-                            if (_chk.length > 0) {
-                                $.bAlert({
-                                    message: 'This item already exists.'
-                                });
-                            } else {
-                                var _up = $.ToLinq(f.data('data'))
-                                        .Where(x => x.key === obj.key)
-                                        .First();
-                                _up.Detial = obj.Detial;
-                                _up.Amount = obj.Amount;
-                                f.find('.xref').click();
-                                _f.find('#btn-close').click();
-                            }
+//                            if (_chk.length > 0) {
+//                                $.bAlert({
+//                                    message: 'This item already exists.'
+//                                });
+//                            } else {
+                            var _up = $.ToLinq(f.data('data'))
+                                    .Where(x => x.key === obj.key)
+                                    .First();
+                            _up.IncomeKey = obj.IncomeKey;
+                            _up.IncomeName = obj.IncomeName;
+                            _up.Amount = obj.Amount;
+                            f.find('.xref').click();
+                            _f.find('#btn-close').click();
+//                            }
                         }
                     });
                 },
@@ -858,6 +976,14 @@ $(function () {
                     }
                 }
             },
+            cmdEmp: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* ระบุพนักงานขับรถ'
+                    }
+                }
+            },
             cmdCustomerF: {
                 icon: false,
                 validators: {
@@ -930,11 +1056,23 @@ $(function () {
                     }
                 }
             },
-            txtProduct: {
+            cmdProduct: {
                 icon: false,
                 validators: {
                     notEmpty: {
                         message: '* ระบุสินค้าที่ขนส่ง'
+                    }
+                }
+            },
+            txtSkillLabor: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* ระบุค่าฝีมือ'
+                    },
+                    regexp: {//***Custom Patter
+                        regexp: regexpDecimal,
+                        message: '* ระบุเป็นจำนวนตัวเลขเท่านั้น.'
                     }
                 }
             },

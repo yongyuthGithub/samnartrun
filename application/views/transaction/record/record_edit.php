@@ -28,19 +28,19 @@
                     </div>
                 </div>
             </div>
-<!--            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-4 col-md-offset-8">
-                    <div class="form-group">
-                        <label for="txtDocDate">วันที่วิ่งงาน :</label>
-                        <div class="input-group date" id="divDate">
-                            <input type='text' class="form-control text-center" id="txtDocDate" name="txtDocDate" placeholder="วันเอกสาร" onkeydown="return false;" />
-                            <span class="input-group-addon">
-                                <span class="fa fa-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
+            <!--            <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-4 col-md-offset-8">
+                                <div class="form-group">
+                                    <label for="txtDocDate">วันที่วิ่งงาน :</label>
+                                    <div class="input-group date" id="divDate">
+                                        <input type='text' class="form-control text-center" id="txtDocDate" name="txtDocDate" placeholder="วันเอกสาร" onkeydown="return false;" />
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
@@ -81,6 +81,9 @@
                     </div>
                 </div>
             </div>
+            <!--            <div class="row">
+            
+                        </div>-->
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
@@ -99,7 +102,7 @@
                                 data-deselectAll-Text="Deselect All"
                                 data-selected-Text-Format="count > 3">
                         </select>
-                    </div>
+                    </div>                    
                     <div class="form-group" style="display:none;">
                         <label for="cmdBranchF">สาขาต้นทาง :</label>
                         <select id="cmdBranchF" name="cmdBranchF" class="form-control selectpicker show-menu-arrow"
@@ -126,6 +129,25 @@
                                                 </div>
                                             </div>
                                         </div>-->
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="cmdEmp">พนักงานขับรถ :</label>
+                        <select id="cmdEmp" name="cmdEmp" class="form-control selectpicker show-menu-arrow"
+                                data-width="100%"
+                                data-show-Tick="true"
+                                data-tick-Icon="fa fa-check"
+                                data-size="5"
+                                data-header="false"
+                                data-live-Search="true"
+                                data-live-Search-Placeholder="key word"
+                                data-multiple-Separator=",&nbsp;&nbsp;"
+                                data-actions-Box="false"
+                                data-selectAll-Text="Select All"
+                                data-deselectAll-Text="Deselect All"
+                                data-selected-Text-Format="count > 3">
+                        </select>
+                    </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <div class="form-group" style="display:none;">
@@ -252,14 +274,41 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-9">
+                <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-3 col-md-offset-9">
                     <div class="form-group">
-                        <label for="txtProduct">สินค้าที่ขนส่ง :</label>
+                        <label for="txtSkillLabor">ค่าฝีมือ :</label>
                         <div class="input-group">
-                            <div class="input-group-addon"><i class="fa fa-cube" style="min-width: 20px;"></i></div>
-                            <input type="text" class="form-control" id="txtProduct" name="txtProduct" placeholder="รายละเอียดสินค้าทีทำการขนส่ง">
-    <!--                        <textarea class="form-control" name="txtProduct" id="txtProduct" placeholder="รายละเอียดสินค้าทีทำการขนส่ง"></textarea>-->
+                            <div class="input-group-addon"><i class="fa fa-btc" style="min-width: 20px;"></i></div>
+                            <input type="text" class="form-control text-right" id="txtSkillLabor" name="txtSkillLabor" placeholder="ค่าฝีมือ">
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-9">
+                    <!--                    <div class="form-group">
+                                            <label for="txtProduct">สินค้าที่ขนส่ง :</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-cube" style="min-width: 20px;"></i></div>
+                                                <input type="text" class="form-control" id="txtProduct" name="txtProduct" placeholder="รายละเอียดสินค้าทีทำการขนส่ง">
+                                            </div>
+                                        </div>-->
+                    <div class="form-group">
+                        <label for="cmdProduct">สินค้าที่ขนส่ง :</label>
+                        <select id="cmdProduct" name="cmdProduct" class="form-control selectpicker show-menu-arrow"
+                                data-width="100%"
+                                data-show-Tick="true"
+                                data-tick-Icon="fa fa-check"
+                                data-size="5"
+                                data-header="<div id='btn-productNew' class='btn btn-success'>เพิ่ม</div>"
+                                data-live-Search="true"
+                                data-live-Search-Placeholder="key word"
+                                data-multiple-Separator=",&nbsp;&nbsp;"
+                                data-actions-Box="false"
+                                data-selectAll-Text="Select All"
+                                data-deselectAll-Text="Deselect All"
+                                data-selected-Text-Format="count > 3">
+                        </select>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3">
@@ -295,6 +344,7 @@
                                 </div>
                             </div>
                         </div>-->
+
             <div class="row">
                 <div class="col-xs-12">
                     <ul class="nav nav-tabs">

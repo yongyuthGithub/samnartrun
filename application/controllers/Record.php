@@ -63,6 +63,7 @@ class Record extends PCenter {
                         . 'w.DocID,'
                         . 'w.DocDate,'
                         . 'w.Product,'
+                        . 'p.ProductName,'
                         . 'w.PriceTotal,'
                         . 'cf.CarNumber as CNumberF,'
                         . 'cs.CarNumber as CNumberS,'
@@ -71,7 +72,9 @@ class Record extends PCenter {
                         . 'lB.LocationName as LocationNameB,'
                         . 'lE.LocationName as LocationNameE,'
                         . 'w.IsBill,'
-                        . 'bh.DocID as BillID'
+                        . 'bh.DocID as BillID,'
+//                        . 'w.EmpKey,'
+//                        . 'w.SkillLabor'
 //                        . 'cusc.Customer as CustomerS,'
 //                        . 'cus.Branch as BranchS')
                 )
@@ -86,6 +89,7 @@ class Record extends PCenter {
                 ->join('MSTShippingLocations lE', 'w.ShippingEnd=lE.RowKey', 'left')
                 ->join('TRNBillLD b', 'w.RowKey=b.WrokSheetHDKey', 'left')
                 ->join('TRNBillHD bh', 'b.BillHDKey=bh.RowKey', 'left')
+                ->join('MSTProductName p', 'w.ProductKey=p.RowKey', 'left')
                 ->get();
         $show = Linq::from($qryMenu->result())
                 ->select(function($x) {
@@ -94,6 +98,7 @@ class Record extends PCenter {
                         'DocID' => $x->DocID,
                         'DocDate' => $x->DocDate,
                         'Product' => $x->Product,
+                        'ProductName' => $x->ProductName,
                         'PriceTotal' => $x->PriceTotal,
                         'CNumberF' => $x->CNumberF,
                         'CNumberS' => $x->CNumberS,
@@ -116,6 +121,7 @@ class Record extends PCenter {
                                 . 'w.DocDate,'
                                 . 'w.DocDate,'
                                 . 'w.Product,'
+                                . 'w.ProductKey,'
                                 . 'w.PriceTotal,'
                                 . 'w.Smile,'
                                 . 'w.Emile,'
@@ -127,6 +133,8 @@ class Record extends PCenter {
                                 . 'w.ContactBegin,'
                                 . 'w.ShippingEnd,'
                                 . 'w.ContactEnd,'
+                                . 'w.EmpKey,'
+                                . 'w.SkillLabor,'
                                 . 'w.Remark')
                         ->from('TRNWrokSheetHD w')
 //                        ->join('MSTCustomerBranch bf', 'w.CutsomerForm=bf.RowKey', 'left')
@@ -135,12 +143,15 @@ class Record extends PCenter {
 //                        ->join('MSTCustomer cs', 'bs.CompanyKey=cs.RowKey', 'left')
                         ->where('w.RowKey', $_key)
                         ->get()->row();
-        $qryMenu->TRNIncome = $this->db->select('RowKey as key,'
-                                . 'Detial,'
-                                . 'IncomeType,'
-                                . 'Amount')
-                        ->from('TRNIncome')
-                        ->where('WorkSheetHDKey', $qryMenu->RowKey)
+        $qryMenu->TRNIncome = $this->db->select('i.RowKey as key,'
+                                . 'i.Detial,'
+                                . 'i.IncomeType,'
+                                . 'i.IncomeKey,'
+                                . 'mi.IncomeName,'
+                                . 'i.Amount')
+                        ->from('TRNIncome i')
+                        ->join('MSTIncomeName mi', 'i.IncomeKey=mi.RowKey', 'left')
+                        ->where('i.WorkSheetHDKey', $qryMenu->RowKey)
                         ->get()->result();
         $qryMenu->TRNFule = $this->db->select('f.RowKey as key,'
                                 . 'f.Price,'
@@ -232,6 +243,28 @@ class Record extends PCenter {
                 ->where('pf.PumpBranchKey', $_key)
                 ->order_by('pf.IsDefault', 'desc')
                 ->order_by('f.Fuel', 'asc')
+                ->get();
+        echo json_encode($qryMenu->result());
+    }
+
+    public function findProduct() {
+        $qryMenu = $this->db->select('p.RowKey,'
+                        . 'p.ProductName')
+                ->from('MSTProductName p')
+                ->order_by('p.ProductName', 'asc')
+                ->get();
+        echo json_encode($qryMenu->result());
+    }
+
+    public function findEmp() {
+        $qryMenu = $this->db->select('p.RowKey,'
+                        . 'p.IDCard,'
+                        . 'p.FName,'
+                        . 'p.LName,'
+                        . 't.Title')
+                ->from('MSTEmployee p')
+                ->join('MSTTitle t', 'p.TitleKey=t.RowKey', 'left')
+                ->order_by('p.IDCard', 'asc')
                 ->get();
         echo json_encode($qryMenu->result());
     }

@@ -83,7 +83,7 @@ $(function () {
         DataColumns: [
             {data: 'DocID', header: 'เลขที่เอกสาร'},
             {data: 'DocDate', header: 'วันที่เอกสาร'},
-            {data: 'Product', header: 'สินค้า'},
+            {data: 'ProductName', header: 'สินค้า'},
             {data: 'PriceTotal', header: 'ค่าบริการ'},
             {data: 'BillID', header: 'เลขที่บิล'},
             {data: 'CNumberF', header: 'รถขนส่ง'},
@@ -150,7 +150,8 @@ $(function () {
                                 DocDate: setDateJson(_f.find('#txtDocDate').val()),
                                 CarFirstKey: _f.find('#cmdCarF').val(),
                                 CarSecondKey: _f.find('#cmdCarS').val(),
-                                Product: _f.find('#txtProduct').val(),
+//                                Product: _f.find('#txtProduct').val(),
+                                ProductKey: _f.find('#cmdProduct').val(),
                                 CutsomerKey: _f.find('#cmdCustomerF').val(),
 //                                CustomerTo: _f.find('#cmdBranchS').val(),
                                 ShippingBegin: _f.find('#cmdShippingBegin').val(),
@@ -175,7 +176,8 @@ $(function () {
                                         .Select(function (x) {
                                             return new Object({
                                                 RowKey: x.key,
-                                                Detial: x.Detial,
+//                                                Detial: x.Detial,
+                                                IncomeKey: x.IncomeKey,
                                                 Amount: x.Amount,
                                                 IncomeType: 1
                                             });
@@ -183,7 +185,8 @@ $(function () {
                                         .Select(function (x) {
                                             return new Object({
                                                 RowKey: x.key,
-                                                Detial: x.Detial,
+//                                                Detial: x.Detial,
+                                                IncomeKey: x.IncomeKey,
                                                 Amount: x.Amount,
                                                 IncomeType: 2
                                             });
@@ -242,7 +245,8 @@ $(function () {
                                 DocDate: setDateJson(_f.find('#txtDocDate').val()),
                                 CarFirstKey: _f.find('#cmdCarF').val(),
                                 CarSecondKey: _f.find('#cmdCarS').val(),
-                                Product: _f.find('#txtProduct').val(),
+//                                Product: _f.find('#txtProduct').val(),
+                                ProductKey: _f.find('#cmdProduct').val(),
                                 CutsomerKey: _f.find('#cmdCustomerF').val(),
 //                                CustomerTo: _f.find('#cmdBranchS').val(),
                                 ShippingBegin: _f.find('#cmdShippingBegin').val(),
@@ -253,6 +257,8 @@ $(function () {
                                 Smile: parseFloat(_f.find('#txtMileageF').val()),
                                 Emile: parseFloat(_f.find('#txtMileageS').val()),
                                 Remark: _f.find('#txtRemark').val(),
+                                EmpKey:_f.find('#cmdEmp').val(),
+                                SkillLabor:parseFloat(_f.find('#txtSkillLabor').val()),
                                 TRNFule: $.ToLinq(_f.find('#form_fule').data('data'))
                                         .Select(function (x) {
                                             return new Object({
@@ -267,7 +273,8 @@ $(function () {
                                         .Select(function (x) {
                                             return new Object({
                                                 RowKey: x.key,
-                                                Detial: x.Detial,
+//                                                Detial: x.Detial,
+                                                IncomeKey: x.IncomeKey,
                                                 Amount: x.Amount,
                                                 IncomeType: 1
                                             });
@@ -275,7 +282,8 @@ $(function () {
                                         .Select(function (x) {
                                             return new Object({
                                                 RowKey: x.key,
-                                                Detial: x.Detial,
+//                                                Detial: x.Detial,
+                                                IncomeKey: x.IncomeKey,
                                                 Amount: x.Amount,
                                                 IncomeType: 2
                                             });
