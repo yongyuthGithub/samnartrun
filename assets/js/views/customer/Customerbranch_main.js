@@ -56,6 +56,8 @@ $(function () {
                             obj.IDCard = _f.find('#txtIDCard').val();
                             obj.Fax = _f.find('#txtFax').val();
                             obj.IsDefault = _f.find('#swDF').is(':checked');
+                            obj.BillDay = parseFloat(_f.find('#txtBillDay').val());
+                            obj.DueDate = parseFloat(_f.find('#txtDueDate').val());
                             $.bConfirm({
                                 buttonOK: function (k2) {
                                     k2.close();
@@ -111,7 +113,9 @@ $(function () {
                                 Tel: _f.find('#txtTel').val(),
                                 IDCard: _f.find('#txtIDCard').val(),
                                 Fax: _f.find('#txtFax').val(),
-                                IsDefault: _f.find('#swDF').is(':checked')
+                                IsDefault: _f.find('#swDF').is(':checked'),
+                                BillDay: parseFloat(_f.find('#txtBillDay').val()),
+                                DueDate: parseFloat(_f.find('#txtDueDate').val())
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {

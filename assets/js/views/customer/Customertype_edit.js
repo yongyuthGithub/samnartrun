@@ -22,6 +22,8 @@ $(function () {
         form_customerbranchedit.find('#txtIDCard').val(_formdata.IDCard);
         form_customerbranchedit.find('#txtFax').val(_formdata.Fax);
         form_customerbranchedit.find('#swDF').prop('checked', parseInt(_formdata.IsDefault) === 1 ? true : false);
+        form_customerbranchedit.find('#txtBillDay').val(_formdata.BillDay);
+        form_customerbranchedit.find('#txtDueDate').val(_formdata.DueDate);
         form_customerbranchedit.find('.showinadd').remove();
         //***Edit By Yongyuth
         setProvince(function (_p) {
@@ -183,7 +185,7 @@ $(function () {
                     }
                 }
             },
-             txtIDCard: {
+            txtIDCard: {
                 icon: false,
                 validators: {
                     notEmpty: {
@@ -191,7 +193,7 @@ $(function () {
                     }
                 }
             },
-             txtFax: {
+            txtFax: {
                 icon: false,
                 validators: {
                     notEmpty: {
@@ -199,6 +201,30 @@ $(function () {
                     }
                 }
             },
+            txtBillDay: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุระยะเวลาวางบิล'
+                    },
+                    regexp: {//***Custom Patter
+                        regexp: regexpNumber,
+                        message: '* ระบุเป็นจำนวนตัวเลขเท่านั้น.'
+                    }
+                }
+            },
+            txtDueDate: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุระยะเวลาครบกำหนดวางบิล'
+                    },
+                    regexp: {//***Custom Patter
+                        regexp: regexpNumber,
+                        message: '* ระบุเป็นจำนวนตัวเลขเท่านั้น.'
+                    }
+                }
+            }
         }
 
 

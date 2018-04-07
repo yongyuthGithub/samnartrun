@@ -130,7 +130,9 @@ class customer extends PCenter {
                         . 'I.SubDistrict as SubDistrictKey,'
                         . 'D.RowKey as DistrictKey,'
                         . 'D.ProvinceKey,'
-                        . 'I.IsDefault')
+                        . 'I.IsDefault,'
+                        . 'I.BillDay,'
+                        . 'I.DueDate')
                 ->from('MSTCustomerBranch I')
                 ->join('MSTSubDistrict SD', 'I.SubDistrict=SD.RowKey', 'left')
                 ->join('MSTDistrict D', 'SD.DistrictKey=D.RowKey', 'left')

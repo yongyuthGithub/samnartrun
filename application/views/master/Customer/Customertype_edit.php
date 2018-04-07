@@ -121,7 +121,25 @@
                         <input type="text" class="form-control" id="txtTel" name="txtTel" placeholder="เบอร์โทร">
                     </div>
                 </div>
-            </div>            
+            </div>   
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label for="txtBillDay">ระยะเวลาวางบิล(นับตั้งแต่วันที่บันทึกใบงานวันแรก) :</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-newspaper-o" style="min-width: 20px;"></i></div>
+                        <input type="text" class="form-control text-right" id="txtBillDay" name="txtBillDay" placeholder="ระยะเวลาวางบิล">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label for="txtDueDate">ระยะเวลาครบกำหนดวางบิล(นับตั้งแต่วันที่วางบิล) :</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-money" style="min-width: 20px;"></i></div>
+                        <input type="text" class="form-control text-right" id="txtDueDate" name="txtDueDate" placeholder="ระยะเวลาครบกำหนดวางบิล">
+                    </div>
+                </div>
+            </div>   
         </form>
     </div>
 </div>
