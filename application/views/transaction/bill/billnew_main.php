@@ -158,6 +158,48 @@
                         </div>
                     </div>
                 </div>
+                <hr>
+                <div class="row">  
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group">
+                            <label for="txtDueDate">วันครบกำหนดชำระ :</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <div class="input-group date" id="divDueDate">
+                            <input type='text' class="form-control text-center" id="txtDueDate" name="txtDueDate" placeholder="วันครบกำหนดชำระ" onkeydown="return false;" />
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">  
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <label for="cmdPayType">รูปแบบการชำระ :</label>                           
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <select id="cmdPayType" name="cmdPayType" class="form-control selectpicker show-menu-arrow"
+                                data-width="100%"
+                                data-show-Tick="true"
+                                data-tick-Icon="fa fa-check"
+                                data-size="5"
+                                data-header="false"
+                                data-live-Search="false"
+                                data-live-Search-Placeholder="key word"
+                                data-multiple-Separator=",&nbsp;&nbsp;"
+                                data-actions-Box="false"
+                                data-selectAll-Text="Select All"
+                                data-deselectAll-Text="Deselect All"
+                                data-selected-Text-Format="count > 3">
+                            <option data-icon="fa fa-btc" value="0">&nbsp;&nbsp;ไม่ระบุ</option>
+                            <option data-icon="fa fa-btc" value="1">&nbsp;&nbsp;ชำระโดยเงินสด</option>
+                            <option data-icon="fa fa-btc" value="2">&nbsp;&nbsp;ชำระโดยเช็ค</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

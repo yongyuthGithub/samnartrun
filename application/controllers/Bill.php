@@ -95,7 +95,9 @@ class Bill extends PCenter {
                                 . 'b.DocDate,'
                                 . 'b.Vat,'
                                 . 'b.VatStatus,'
-                                . 'b.Discount')
+                                . 'b.Discount,'
+                                . 'b.DueDate,'
+                                . 'b.PayType')
                         ->where('b.RowKey', $_key)
                         ->from('TRNBillHD b')
                         ->join('MSTCustomerBranch cb', 'b.CustomerBranchKey=cb.RowKey', 'left')
@@ -103,12 +105,13 @@ class Bill extends PCenter {
         $qryMenu->TRNBillLD = Linq::from($this->db->select('hd.RowKey as key,'
                                         . 'hd.DocID,'
                                         . 'hd.DocDate,'
-                                        . 'hd.Product,'
+                                        . 'p.ProductName as Product,'
                                         . 'hd.PriceTotal,'
                                         . 'd.Discount')
                                 ->where('d.BillHDKey', $_key)
                                 ->from('TRNBillLD d')
                                 ->join('TRNWrokSheetHD hd', 'd.WrokSheetHDKey=hd.RowKey', 'left')
+                                ->join('MSTProductName p', 'hd.ProductKey=p.RowKey', 'left')
                                 ->get()->result())
                         ->select(function($x) {
                             return [
@@ -162,7 +165,8 @@ class Bill extends PCenter {
         $_key = $_POST['key'];
         $qryMenu = $this->db->select('RowKey,'
                         . 'Branch,'
-                        . 'Address')
+                        . 'Address,'
+                        . 'DueDate')
                 ->where('CompanyKey', $_key)
                 ->order_by('IsDefault', 'desc')
                 ->order_by('Branch', 'asc')
@@ -173,16 +177,17 @@ class Bill extends PCenter {
 
     public function findRecordNotIsBill() {
         $_key = $_POST['key'];
-        $qryMenu = $this->db->select('RowKey as key,'
-                        . 'DocID,'
-                        . 'DocDate,'
-                        . 'Product,'
-                        . 'PriceTotal,'
+        $qryMenu = $this->db->select('hd.RowKey as key,'
+                        . 'hd.DocID,'
+                        . 'hd.DocDate,'
+                        . 'p.ProductName as Product,'
+                        . 'hd.PriceTotal,'
                         . '0 as Discount,'
-                        . 'PriceTotal as NetPrice')
-                ->where('CutsomerKey', $_key)
-                ->where('IsBill', false)
-                ->from('TRNWrokSheetHD')
+                        . 'hd.PriceTotal as NetPrice')
+                ->where('hd.CutsomerKey', $_key)
+                ->where('hd.IsBill', false)
+                ->from('TRNWrokSheetHD hd')
+                ->join('MSTProductName p', 'hd.ProductKey=p.RowKey', 'left')
                 ->get();
 
         if (Linq::from($qryMenu->result())->count() > 0) {
@@ -196,25 +201,27 @@ class Bill extends PCenter {
         $billkey = $_POST['billkey'];
         $_key = $_POST['key'];
         $_data = json_decode($_POST['vdata']);
-        $qryMenu = $this->db->select('RowKey as key,'
-                                . 'DocID,'
-                                . 'DocDate,'
-                                . 'Product,'
-                                . 'PriceTotal,')
-                        ->where('CutsomerKey', $_key)
-                        ->where('IsBill', false)
-                        ->where_not_in('RowKey', $_data)
-                        ->from('TRNWrokSheetHD')
+        $qryMenu = $this->db->select('hd.RowKey as key,'
+                                . 'hd.DocID,'
+                                . 'hd.DocDate,'
+                                . 'p.ProductName as Product,'
+                                . 'hd.PriceTotal,')
+                        ->where('hd.CutsomerKey', $_key)
+                        ->where('hd.IsBill', false)
+                        ->where_not_in('hd.RowKey', $_data)
+                        ->from('TRNWrokSheetHD hd')
+                        ->join('MSTProductName p', 'hd.ProductKey=p.RowKey', 'left')
                         ->get()->result();
         $qryThis = $this->db->select('hd.RowKey as key,'
                                 . 'hd.DocID,'
                                 . 'hd.DocDate,'
-                                . 'hd.Product,'
+                                . 'p.ProductName as Product,'
                                 . 'hd.PriceTotal,')
                         ->where_not_in('hd.RowKey', $_data)
                         ->where('bl.BillHDKey', $billkey)
                         ->from('TRNWrokSheetHD hd')
                         ->join('TRNBillLD bl', 'hd.RowKey=bl.WrokSheetHDKey')
+                        ->join('MSTProductName p', 'hd.ProductKey=p.RowKey', 'left')
                         ->get()->result();
 
         echo json_encode(array_merge($qryMenu, $qryThis));
@@ -222,15 +229,16 @@ class Bill extends PCenter {
 
     public function findRecordByKey() {
         $_data = json_decode($_POST['data']);
-        $qryMenu = $this->db->select('RowKey as key,'
-                        . 'DocID,'
-                        . 'DocDate,'
-                        . 'Product,'
-                        . 'PriceTotal,'
+        $qryMenu = $this->db->select('hd.RowKey as key,'
+                        . 'hd.DocID,'
+                        . 'hd.DocDate,'
+                        . 'p.ProductName as Product,'
+                        . 'hd.PriceTotal,'
                         . '0 as Discount,'
-                        . 'PriceTotal as NetPrice')
-                ->where_in('RowKey', $_data)
-                ->from('TRNWrokSheetHD')
+                        . 'hd.PriceTotal as NetPrice')
+                ->where_in('hd.RowKey', $_data)
+                ->from('TRNWrokSheetHD hd')
+                ->join('MSTProductName p', 'hd.ProductKey=p.RowKey', 'left')
                 ->get();
         echo json_encode($qryMenu->result());
     }
@@ -315,7 +323,9 @@ class Bill extends PCenter {
                                 . 'b.VatStatus,'
                                 . 'b.Discount,'
                                 . 'b.PrintCount,'
-                                . 'b.CustomerBranchKey')
+                                . 'b.CustomerBranchKey,'
+                                . 'b.DueDate,'
+                                . 'b.PayType')
                         ->from('TRNBillHD b')
                         ->where('b.RowKey', $_key)
                         ->get()->row();

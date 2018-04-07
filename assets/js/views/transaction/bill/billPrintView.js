@@ -40,11 +40,24 @@ $(function () {
             report.dictionary.variables.getByName('CustProvince').valueObject = vdata.Customer.Province;
             report.dictionary.variables.getByName('CustTel').valueObject = vdata.Customer.Tel;
             report.dictionary.variables.getByName('CustFax').valueObject = vdata.Customer.Fax;
-            report.dictionary.variables.getByName('CustIDCard').valueObject = vdata.Customer.IDCard;            
+            report.dictionary.variables.getByName('CustIDCard').valueObject = vdata.Customer.IDCard;
             report.dictionary.variables.getByName('CustZipCode').valueObject = vdata.Customer.ZipCode;
             report.dictionary.variables.getByName('CustBranch').valueObject = vdata.Customer.Branch;
-            
+
             report.dictionary.variables.getByName('BillDate').valueObject = PHP_JSON_To_ShowDate(vdata.DocDate);
+
+            try {
+                report.dictionary.variables.getByName('BillDueDate').valueObject = PHP_JSON_To_ShowDate(vdata.DueDate);
+            } catch (e) {
+                report.dictionary.variables.getByName('BillDueDate').valueObject = PHP_JSON_To_ShowDate(vdata.DocDate);
+            }
+            var _pay = '';
+            if (parseInt(vdata.PayType) === 1) {
+                _pay = 'ชำระเงินสด';
+            } else if (parseInt(vdata.PayType) === 2) {
+                _pay = 'ชำระเช็ค';
+            }
+            report.dictionary.variables.getByName('PayType').valueObject = _pay;
             viewer.report = report;
 
         }

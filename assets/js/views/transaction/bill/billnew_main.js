@@ -11,11 +11,20 @@ $(function () {
             callback: function (vdata) {
                 $('#title').text('แก้ไขรายการบิล');
                 form_billnew.find('#txtDocDate').val(PHP_JSON_To_ShowDate(vdata.DocDate));
+                try {
+                    form_billnew.find('#txtDueDate').val(PHP_JSON_To_ShowDate(vdata.DueDate));
+                    form_billnew.find('#divDueDate').data("DateTimePicker").minDate(PHP_JSON_To_ShowDate(vdata.DocDate));
+                } catch (e) {
+                    form_billnew.find('#txtDueDate').val(PHP_JSON_To_ShowDate(vdata.DocDate));
+                    form_billnew.find('#divDueDate').data("DateTimePicker").minDate(PHP_JSON_To_ShowDate(vdata.DocDate));
+                }
+
                 form_billnew.find('#cmdCust').prop('disabled', true);
                 form_billnew.find('#cmdCustBranch').prop('disabled', true);
-                form_billnew.find('#txtDiscountTotal').val(vdata.Discount);                
+                form_billnew.find('#txtDiscountTotal').val(vdata.Discount);
                 form_bilelist.data('data', vdata.TRNBillLD);
                 form_billnew.find('#cmdVatStatus').val(vdata.VatStatus).selectpicker('render').change();
+                form_billnew.find('#cmdPayType').val(vdata.PayType).selectpicker('render');
 
                 setDataCust(vdata.CompanyKey, function (sel) {
                     sel.val(vdata.CustomerBranchKey).selectpicker('render');
@@ -39,6 +48,8 @@ $(function () {
                     form_billnew.find('#cmdVatStatus').change();
                     setDataCustBranch(function (s) {
                         form_billnew.formValidation('revalidateField', s);
+//                        form_billnew.find('#divDueDate').data("DateTimePicker").minDate(form_billnew.find('#txtDocDate').data("DateTimePicker").date());
+                        setDueData();
                     });
                 }
             });
@@ -83,7 +94,7 @@ $(function () {
     form_billnew.find('#cmdCustBranch').selectpicker({
     }).on({
         change: function () {
-            //javascript on change
+            setDueData();
         }
     });
 
@@ -96,7 +107,7 @@ $(function () {
                 var _sel = form_billnew.find('#cmdCustBranch').empty();
                 var _html = '';
                 $.each(vdata, function (k, v) {
-                    _html += '<option data-icon="fa fa-building" value="' + v.RowKey + '">&nbsp;&nbsp;' + v.Branch + ' ' + v.Address + '</option>';
+                    _html += '<option data-icon="fa fa-building" value="' + v.RowKey + '" data-duedate="' + v.DueDate + '">&nbsp;&nbsp;' + v.Branch + ' ' + v.Address + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh');
                 fun(_sel);
@@ -110,7 +121,26 @@ $(function () {
         defaultDate: new Date()
     }).on('dp.change', function (ds) {
         form_billnew.formValidation('revalidateField', form_billnew.find('#txtDocDate'));
+//        form_billnew.find('#divDueDate').data("DateTimePicker").minDate(ds.date);
+        setDueData();
     });
+
+    form_billnew.find('#divDueDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        locale: 'th',
+        defaultDate: new Date()
+    }).on('dp.change', function (ds) {
+        form_billnew.formValidation('revalidateField', form_billnew.find('#txtDueDate'));
+    });
+
+    function setDueData() {
+        var _dueday = ChkNumber(form_billnew.find('#cmdCustBranch').find('option:selected').data('duedate'));
+        var _d = new Date(form_billnew.find('#divDate').data("DateTimePicker").date()).addDays(_dueday);
+        form_billnew.find('#divDueDate').data("DateTimePicker").minDate(form_billnew.find('#divDate').data("DateTimePicker").date());
+        form_billnew.find('#txtDueDate').val(getDateCustom(_d));
+
+//        alert(new Date(form_billnew.find('#divDate').data("DateTimePicker").date()));
+    }
 
     function sumTotal() {
         var _pTotal = $.ToLinq(form_bilelist.data('data'))
@@ -332,6 +362,8 @@ $(function () {
                     VatStatus: parseInt(form_billnew.find('#cmdVatStatus').val()),
                     Discount: parseFloat(form_billnew.find('#txtDiscountTotal').val()),
                     PrintCount: parseInt(0),
+                    DueDate: setDateJson(form_billnew.find('#txtDueDate').val()),
+                    PayType: parseInt(form_billnew.find('#cmdPayType').val()),
                     TRNBillLD: $.ToLinq(form_bilelist.data('data'))
                             .Select(function (x) {
                                 return new Object({

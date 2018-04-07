@@ -162,6 +162,8 @@ $(function () {
                                 Smile: parseFloat(_f.find('#txtMileageF').val()),
                                 Emile: parseFloat(_f.find('#txtMileageS').val()),
                                 Remark: _f.find('#txtRemark').val(),
+                                EmpKey: _f.find('#cmdEmp').val(),
+                                SkillLabor: parseFloat(_f.find('#txtSkillLabor').val()),
                                 TRNFule: $.ToLinq(_f.find('#form_fule').data('data'))
                                         .Select(function (x) {
                                             return new Object({
@@ -257,8 +259,8 @@ $(function () {
                                 Smile: parseFloat(_f.find('#txtMileageF').val()),
                                 Emile: parseFloat(_f.find('#txtMileageS').val()),
                                 Remark: _f.find('#txtRemark').val(),
-                                EmpKey:_f.find('#cmdEmp').val(),
-                                SkillLabor:parseFloat(_f.find('#txtSkillLabor').val()),
+                                EmpKey: _f.find('#cmdEmp').val(),
+                                SkillLabor: parseFloat(_f.find('#txtSkillLabor').val()),
                                 TRNFule: $.ToLinq(_f.find('#form_fule').data('data'))
                                         .Select(function (x) {
                                             return new Object({

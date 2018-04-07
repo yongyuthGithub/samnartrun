@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2018.1.6.0",
-  "ReportGuid": "2bf572d349254b43b3da4a8e095dd140",
+  "ReportGuid": "a8b15d4613fe43bb8f2f359282c786fc",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportCreated": "/Date(1522261189533+0700)/",
-  "ReportChanged": "/Date(1522678105150+0700)/",
+  "ReportChanged": "/Date(1523128799939+0700)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Inches",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -118,6 +118,16 @@
       "19": {
         "Name": "CustBranch",
         "Alias": "CustBranch",
+        "Type": "System.String"
+      },
+      "20": {
+        "Name": "BillDueDate",
+        "Alias": "BillDueDate",
+        "Type": "System.String"
+      },
+      "21": {
+        "Name": "PayType",
+        "Alias": "PayType",
         "Type": "System.String"
       }
     },
@@ -383,7 +393,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "กำหนดชำระเงินวันที่/PAYMENT DATE\r\n12/04/2018\r\nเงินสด"
+                "Value": "กำหนดชำระเงินวันที่ / PAYMENT DATE\r\n{BillDueDate}\r\n{PayType}"
               },
               "HorAlignment": "Center",
               "VertAlignment": "Center",
