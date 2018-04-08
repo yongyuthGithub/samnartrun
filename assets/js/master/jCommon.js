@@ -466,6 +466,32 @@ function ChkNumber(v) {
         return Enumerable.From(v);
     }
 
+    $.ReportViewer = function (option) {
+        var options = new Stimulsoft.Viewer.StiViewerOptions();
+        options.toolbar.zoom = Stimulsoft.Viewer.StiZoomMode.PageWidth;
+        options.toolbar.viewMode = Stimulsoft.Viewer.StiWebViewMode.WholeReport;
+        options.toolbar.showPrintButton = false;
+        options.toolbar.showSaveButton = false;
+        options.toolbar.showFullScreenButton = false;
+        
+        var setting = $.extend({
+            viewer_id: 'display-prevuew',
+            report_path: '',
+            viewer_option: options,
+            fun: function () {}
+        }, option);       
+
+        var viewer = new Stimulsoft.Viewer.StiViewer(setting.viewer_option, "StiViewer", false);
+        viewer.renderHtml(setting.viewer_id);
+        viewer.showProcessIndicator();
+
+        var report = new Stimulsoft.Report.StiReport();
+        report.loadFile(setting.report_path);
+        report.dictionary.databases.clear();
+
+        setting.fun(report,report.dictionary.variables, viewer);
+    };
+
     $.myLoading = function (v) {
         if (v === undefined)
             v = 'show';

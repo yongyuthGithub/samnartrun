@@ -331,6 +331,24 @@ class Bill extends PCenter {
                         ->get()->row();
         $qry->Company = $this->MyCompayDetail();
         $qry->Customer = $this->GetCustomerByBranch($qry->CustomerBranchKey);
+        $qry->Detail = $this->db->select('p.ProductName as Product,'
+                                . 'hd.DocID,'
+                                . 'hd.DocDate,'
+                                . 'hd.PriceTotal,'
+                                . 'd.Discount,'
+                                . 'ls.LocationName as ShippingBegin,'
+                                . 'le.LocationName as ShippingEnd,'
+                                . 'c.CarNumber,'
+                                . 'pv.Province')
+                        ->from('TRNBillLD d')
+                        ->where('d.BillHDKey', $_key)
+                        ->join('TRNWrokSheetHD hd', 'd.WrokSheetHDKey=hd.RowKey')
+                        ->join('MSTProductName p', 'hd.ProductKey=p.RowKey', 'left')
+                        ->join('MSTShippingLocations ls', 'hd.ShippingBegin=ls.RowKey', 'left')
+                        ->join('MSTShippingLocations le', 'hd.ShippingEnd=le.RowKey', 'left')
+                        ->join('MSTCar c', 'hd.CarFirstKey=c.RowKey', 'left')
+                        ->join('MSTProvince pv', 'c.ProvinceKey=pv.RowKey', 'left')
+                        ->get()->result();
         echo json_encode($qry);
     }
 
