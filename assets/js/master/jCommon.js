@@ -384,7 +384,7 @@ function PHP_JSON_To_DateTime(v) {//---จาก yyyy-MM-dd HH:mm:ss --> DateTim
     var _d = _dt[0].split('-');
     var _t = _dt[1].split(':');
 //    alert(JSON.stringify(_d) + ', ' + JSON.stringify(_t));
-    return new Date(parseInt(_d[0]), parseInt(_d[1] - 1), parseInt(_d[1]), parseInt(_t[0]), parseInt(_t[1]), parseInt(_t[2]));
+    return new Date(parseInt(_d[0]), parseInt(_d[1] - 1), parseInt(_d[2]), parseInt(_t[0]), parseInt(_t[1]), parseInt(_t[2]));
 }
 
 function PHP_JSON_To_ShowDateTime(v) {//---จาก yyyy-MM-dd HH:mm:ss --> dd/MM/yyyy HH:mm:ss

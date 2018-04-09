@@ -113,10 +113,27 @@ $(function () {
                             .Select(function (x) {
                                 return new Object({
                                     DocID: x.DocID,
-                                    DocDate: PHP_JSON_To_DateTime(x.DocDate)
+                                    DocDate: PHP_JSON_To_ShowDate(x.DocDate),
+                                    Discount: x.Discount,
+                                    CarNumber: x.CarNumber,
+                                    PriceTotal: parseFloat(x.PriceTotal),
+                                    Product: x.Product,
+                                    Province: x.Province,
+                                    ShippingBegin: x.ShippingBegin,
+                                    ShippingEnd: x.ShippingEnd,
+                                    dDocDate: PHP_JSON_To_DateTime(x.DocDate)
                                 });
                             }).ToArray();
-                    report.regData('DataList.root', 'DataList.root', JSON.stringify(_d));
+                    var _txtTotal = $.ToLinq(_d).Select(function (x) {
+                        return x.PriceTotal - x.Discount;
+                    }).Sum();
+                    variables.getByName('TxtTotal').valueObject = ArabicNumberToText(_txtTotal);
+
+                    var _Date = $.ToLinq(_d).Select(function (x) {
+                        return x.dDocDate;
+                    }).OrderBy(x => x);
+                    variables.getByName('TxtDate').valueObject = getDateCustom(_Date.First(x => x)) + ' - ' + getDateCustom(_Date.Last(x => x));
+                            report.regData('DataList', 'DataList', JSON.stringify(_d));
                     viewer.report = report;
 
                     $('#btn-print').on({
