@@ -103,6 +103,7 @@ $(function () {
                             obj.Detial = _f.find('#txtUser2').val();
                             obj.IncomeType = _f.find('#cmdTitle').val();
                             obj.Amount = _f.find('#txtUser3').val();
+                            obj.IsVat = _f.find('#swDF').is(':checked');
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -113,7 +114,7 @@ $(function () {
                                         callback: function (vdata) {
                                             if (vdata.success) {
                                                 _f.find('#btn-close').click();
-                                                f.find('.xref').click();
+                                                setFind();
                                             } else {
                                                 $.bAlert({
                                                     message: vdata.message
@@ -154,6 +155,7 @@ $(function () {
                             obj.Detial = _f.find('#txtUser2').val();
                             obj.IncomeType = _f.find('#cmdTitle').val();
                             obj.Amount = _f.find('#txtUser3').val();
+                            obj.IsVat = _f.find('#swDF').is(':checked');
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -164,7 +166,7 @@ $(function () {
                                         callback: function (vdata) {
                                             if (vdata.success) {
                                                 _f.find('#btn-close').click();
-                                                f.find('.xref').click();
+                                                setFind();
                                             } else {
                                                 $.bAlert({
                                                     message: vdata.message

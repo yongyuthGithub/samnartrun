@@ -56,9 +56,9 @@ class Income extends PCenter {
             } else {
                 $_data->RowKey = PCenter::GUID();
                 $_data->RowStatus = true;
-                $_data->CreateBy = PCenter::GUID_EMPTY();
+                $_data->CreateBy = $this->USER_LOGIN()->RowKey;
                 $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
-                $_data->UpdateBy = PCenter::GUID_EMPTY();
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->insert('TRNIncomeOther', $_data);
                 if ($this->db->trans_status() === FALSE) {
@@ -76,14 +76,9 @@ class Income extends PCenter {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
-                $update = (object) [];
-                $update->DocDate = $_data->DocDate;
-                $update->Detial = $_data->Detial;
-                $update->IncomeType = $_data->IncomeType;
-                $update->Amount = $_data->Amount;
-                $update->UpdateBy = PCenter::GUID_EMPTY();
-                $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
-                $this->db->where('RowKey', $_data->RowKey)->update('TRNIncomeOther', $update);
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->where('RowKey', $_data->RowKey)->update('TRNIncomeOther', $_data);
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;
