@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2018.1.6.0",
-  "ReportGuid": "3d9e1cc62dbf4feaadb6660c89877d9a",
+  "ReportGuid": "d1a8b4afbfe64d1eb4db39a150785a59",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportCreated": "/Date(1522261189000+0700)/",
-  "ReportChanged": "/Date(1523340730840+0700)/",
+  "ReportChanged": "/Date(1523346431943+0700)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Inches",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -139,6 +139,11 @@
         "Name": "TxtDate",
         "Alias": "TxtDate",
         "Type": "System.String"
+      },
+      "24": {
+        "Name": "NetTotal",
+        "Alias": "NetTotal",
+        "Type": "System.Decimal"
       }
     },
     "DataSources": {
@@ -755,7 +760,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{Format(\"{0:#,##0.00}\", Sum(root.PriceTotal))}"
+                "Value": "{Format(\"{0:#,##0.00}\", NetTotal)}"
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",

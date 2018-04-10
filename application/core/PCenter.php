@@ -304,7 +304,8 @@ class PCenter extends CI_Controller {
                                 . 'd.RowKey as DistrictKey,'
                                 . 'p.Province,'
                                 . 'p.RowKey as ProvinceKey,'
-                                . 'b.ZipCode')
+                                . 'b.ZipCode,'
+                                . 'b.DueDate as Due')
                         ->from('MSTCustomer c')
                         ->join('MSTCustomerBranch b', 'c.RowKey=b.CompanyKey')
                         ->where('b.RowKey', $BranchKey)

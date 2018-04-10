@@ -105,7 +105,7 @@ $(function () {
                     if (parseInt(vdata.PayType) === 1) {
                         _pay = 'ชำระเงินสด';
                     } else if (parseInt(vdata.PayType) === 2) {
-                        _pay = 'ชำระเช็ค';
+                        _pay = 'เครดิต ' + vdata.Customer.Due + ' วัน';
                     }
                     variables.getByName('PayType').valueObject = _pay;
 
@@ -115,9 +115,10 @@ $(function () {
                                 return new Object({
                                     DocID: x.DocID,
                                     DocDate: PHP_JSON_To_ShowDate(x.DocDate),
-                                    Discount: x.Discount,
+                                    Discount: parseFloat(x.Discount),
                                     CarNumber: x.CarNumber,
-                                    PriceTotal: parseFloat(x.PriceTotal) - parseFloat(x.Discount),
+//                                    PriceTotal: parseFloat(x.PriceTotal) - parseFloat(x.Discount),
+                                    PriceTotal: parseFloat(x.PriceTotal),
                                     Vat: _VatStatus > 0 ? ((parseFloat(x.PriceTotal) - parseFloat(x.Discount)) * 7) / 100 : 0,
                                     Product: x.Product,
                                     Province: x.Province,
@@ -127,19 +128,22 @@ $(function () {
                                     Remark: x.Remark
                                 });
                             }).ToArray();
-                    if (_VatStatus === 1 || _VatStatus === 2) {
-                        $.each(_d, function (k, v) {
-                            if (_VatStatus === 1) {
-                                v.PriceTotal = v.PriceTotal - v.Vat;
-                            } else {
-                                v.PriceTotal = v.PriceTotal + v.Vat;
-                            }
-                        });
-                    }
+//                    if (_VatStatus === 1 || _VatStatus === 2) {
+                    $.each(_d, function (k, v) {
+                        if (_VatStatus === 1) {
+                            v.PriceTotal = (v.PriceTotal + v.Discount) - v.Vat;
+                        }
+//                            else {
+//                                v.PriceTotal = v.PriceTotal + v.Discount + v.Vat;
+//                            }
+                    });
+//                    }
                     var _txtTotal = $.ToLinq(_d).Select(function (x) {
-                        return x.PriceTotal;
+//                        return _VatStatus === 1 ? (x.PriceTotal + x.Discount + x.Vat) : x.PriceTotal;
+                        return (x.PriceTotal - x.Discount) + x.Vat;
                     }).Sum();
                     variables.getByName('TxtTotal').valueObject = ArabicNumberToText(_txtTotal);
+                    variables.getByName('NetTotal').valueObject = _txtTotal;
 
                     var _Date = $.ToLinq(_d).Select(function (x) {
                         return x.dDocDate;
