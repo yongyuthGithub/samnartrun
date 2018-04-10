@@ -26,7 +26,7 @@ $(function () {
         DataColumnsDefs: [
             {
                 render: function (row, type, val2, meta) {
-                    return parseInt(val2.TypeUse) === 1 ? 'บุคคล' : 'ยานพาหนะ';
+                    return parseInt(val2.TypeUse) === 1 ? 'บุคคล' : parseInt(val2.TypeUse) === 2 ? 'ยานพาหนะ' : 'ประกันสินค้า';
                 },
                 orderable: true,
                 targets: 1

@@ -20,7 +20,7 @@
                             data-selected-Text-Format="count > 3">
                         <option data-icon="fa fa-drivers-license-o" value="1" data-display="บุคคล">บุคคล</option>
                         <option data-icon="fa fa-drivers-license-o" value="2" data-display="ยานพหานะ">ยานพหานะ</option>
-                        <option data-icon="fa fa-drivers-license-o" value="3" data-display="สินค้า">สินค้า</option>
+                        <option data-icon="fa fa-drivers-license-o" value="3" data-display="สินค้า">ประกันสินค้า</option>
                     </select>
                 </div>
             </div>
