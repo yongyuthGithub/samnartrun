@@ -16,8 +16,20 @@ and open the template in the editor.
 
 <div class="col-12">   
     <div class="panel panel-default">
-        <div class="panel-body"> 
-            <div id="form_Register"></div>
+        <div class="panel-body">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#personnel">ข้อมูลพนักงาน</a></li>
+                <li><a data-toggle="tab" href="#personnelcar">ข้อมูลคนขับรถ</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="personnel" class="tab-pane fade in active" style="padding-top: 20px;">
+                    <div id="form_Register"></div>
+                </div>
+                <div id="TailCar" class="tab-pane fade" style="padding-top: 20px;">
+                    <div id="form_Car1"></div>
+                </div>
+            </div>    
         </div>
     </div>
 </div>
