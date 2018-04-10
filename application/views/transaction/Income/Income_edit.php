@@ -11,6 +11,15 @@ and open the template in the editor.
 <div class="panel panel-default">
     <div class="panel-body">
         <form id="form_Incomeedit">
+            <div class="col-xs-12 col-sm-5 col-sm-offset-7">
+                <div class="form-group">
+                    <label for="swDF">&nbsp;&nbsp;คำนวนภาษี :</label>
+                    <div class="material-switch pull-right">
+                        <input id="swDF" name="swDF" type="checkbox"/>
+                        <label for="swDF" class="label-success"></label>
+                    </div>
+                </div>
+            </div>
             <div class="col-xs-12">
                 <div class="form-group">
                     <label for="txtUser">วันที่เริ่มงาน :</label>

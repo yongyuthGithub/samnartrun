@@ -23,7 +23,7 @@ class Income extends PCenter {
     
     public function findIncome() {
         $_data = json_decode($_POST['vdata']);
-        $query = $this->db->select('RowKey, DocDate, Detial,IncomeType,Amount, ')
+        $query = $this->db->select('RowKey, DocDate, Detial,IncomeType,Amount,IsVat, ')
                 ->where('DocDate >=', $_data->SDate)
                 ->where('DocDate <=', $_data->EDate)
                 ->from('TRNIncomeOther')->get();
@@ -35,6 +35,7 @@ class Income extends PCenter {
                 'Detial' => ($row->Detial),
                 'IncomeType' => intval($row->IncomeType),
                 'Amount' => ($row->Amount),
+                'IsVat' => ($row->IsVat),
             );
             array_push($_array, $_ar);
         }
