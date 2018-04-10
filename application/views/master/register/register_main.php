@@ -26,8 +26,8 @@ and open the template in the editor.
                 <div id="personnel" class="tab-pane fade in active" style="padding-top: 20px;">
                     <div id="form_Register"></div>
                 </div>
-                <div id="TailCar" class="tab-pane fade" style="padding-top: 20px;">
-                    <div id="form_Car1"></div>
+                <div id="personnelcar" class="tab-pane fade" style="padding-top: 20px;">
+                    <div id="form_CarEmpedit1"></div>
                 </div>
             </div>    
         </div>

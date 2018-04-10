@@ -1,5 +1,6 @@
 $(function () {
     var form_Register = $('#form_Register');
+    var form_CarEmpedit1 = $('#form_CarEmpedit1');
     var form_sumbit = $('#form_sumbit');
 
     form_Register.setMainPage({
@@ -292,5 +293,185 @@ $(function () {
             }).prop('action', mvcPatch('Register/register_insurance_Main')).submit();
         }
     });
-});
 
+
+//---------------------------------------CarEmp---------------------------------------------------
+form_CarEmpedit1.setMainPage({
+        btnNew: true,
+        btnDeleteAll: true,
+        btnDelete: true,
+        btnEdit: true,
+        btnEditText: 'แก้ไข',
+        btnNewText: 'เพิ่ม',
+        btnDeleteText: 'ลบ',
+        btnPreview: false,
+        headerString: '',
+        UrlDataJson: mvcPatch('register/findcaremp'),
+        UrlDataSend: {key: $('#txtkey').val()},
+//        DataJson: function () {
+//            return new Array()
+//        },
+        UrlLoanding: true,
+        UrlLoandingclose: true,
+//    AfterLoadData: function (f, d, t) { },
+        DataColumns: [
+            {data: 'CarNumber', header: 'ทะเบียนรถ'},
+            {data: 'BeginDate', header: 'วันเริ่มทำงาน'},
+            {data: 'EmpKey', header: 'ชื่อพนักงานขับรถ'},
+            {data: 'SkillLabor', header: 'เงินเดือน'},
+        ],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    var _val = PHP_JSON_To_ShowDate(val2.BeginDate);
+                    return _val;
+                },
+                orderable: true,
+                targets: 1
+            },
+             {
+                render: function (row, type, val2, meta) {
+                    var _val = val2.Title + ' ' + val2.FName +' '+ val2.LName;
+                    return _val;
+                },
+                orderable: true,
+                targets: 2
+            },
+            
+        ],
+        btnNewFun: function (f) {
+            $.bPopup({
+                url: mvcPatch('register/carempedit'),
+                title: 'เพิ่มพนักงานขับรถ',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: new Object({key: Guid}),
+                        fun: function (_f) {
+                            var obj = new Object({
+                                RowKey: Guid,
+                                CarKey: $('#txtcmdCarnumber').val(),
+                                EmpKey: $('#txtcmdCaremployee').val(),
+                                BeginDate: PHP_DateTimeShow_To_JSON(_f.find('#txtSDate')),
+                                SkillLabor: _f.find('#txtCash').val()
+                            });
+                            $.bConfirm({
+                                buttonOK: function (k2) {
+                                    k2.close();
+                                    $.reqData({
+                                        url: mvcPatch('register/editcaremp'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                f.find('.xref').click();
+                                                k.close();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
+        },
+        btnEditFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('register/carempedit'),
+                title: 'แก้ไขพนักงานขับรถ',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        fun: function (_f) {
+                            var obj = new Object({
+                                RowKey: d.key,
+                                CarKey: $('#txtcmdCarnumber').val(),
+                                EmpKey: $('#txtcmdCaremployee').val(),
+                                BeginDate: PHP_DateTimeShow_To_JSON(_f.find('#txtSDate')),
+                                SkillLabor: _f.find('#txtCash').val()
+                            });
+                            $.bConfirm({
+                                buttonOK: function (k2) {
+                                    k2.close();
+                                    $.reqData({
+                                        url: mvcPatch('register/editcaremp'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                f.find('.xref').click();
+                                                k.close();
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
+        },
+        btnDeleteFun: function (f, d) {
+            if (d.length === 0)
+                return false;
+            $.bConfirm({
+                message: 'Do you want to delete the data?',
+                type: BootstrapDialog.TYPE_DANGER,
+                buttonOK: function (k) {
+                    k.close();
+                    var vdata = $.ToLinq(d)
+                            .Select(function (x) {
+                                return x.key;
+                            }).ToArray();
+                    $.reqData({
+                        url: mvcPatch('register/removecaremp'),
+                        data: {data: JSON.stringify(vdata)},
+                        callback: function (vdata) {
+                            if (vdata.success) {
+                                f.find('.xref').click();
+                            } else {
+                                $.bAlert({
+                                    message: vdata.message
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        },
+        btnPreviewFun: function (f, d) {
+        }
+    });
+});

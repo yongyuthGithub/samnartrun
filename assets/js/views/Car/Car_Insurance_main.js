@@ -57,7 +57,7 @@ $(function () {
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Car/carinsuranceedit'),
-                title: 'เพิ่มชนิดของประกันรถ',
+                title: 'เพิ่มของประกันรถ/ประกันสินค้า',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -110,7 +110,7 @@ $(function () {
         btnEditFun: function (f, d) {
             $.bPopup({
                 url: mvcPatch('car/carinsuranceedit'),
-                title: 'แก้ไขประกันของรถ',
+                title: 'แก้ไขประกันของรถ/ประกันสินค้า',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -244,7 +244,7 @@ $(function () {
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Car/caractedit'),
-                title: 'เพิ่มพ.ร.บของรถ',
+                title: 'เพิ่มพ.ร.บ/ภาษี ของรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -297,7 +297,7 @@ $(function () {
         btnEditFun: function (f, d) {
             $.bPopup({
                 url: mvcPatch('car/caractedit'),
-                title: 'แก้ไขพ.ร.บของรถ',
+                title: 'แก้ไขพ.ร.บ/ภาษี ของรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
