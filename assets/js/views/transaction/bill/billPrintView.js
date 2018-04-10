@@ -109,6 +109,7 @@ $(function () {
                     }
                     variables.getByName('PayType').valueObject = _pay;
 
+                    var _VatStatus = parseInt(vdata.VatStatus);
                     var _d = $.ToLinq(vdata.Detail)
                             .Select(function (x) {
                                 return new Object({
@@ -116,16 +117,27 @@ $(function () {
                                     DocDate: PHP_JSON_To_ShowDate(x.DocDate),
                                     Discount: x.Discount,
                                     CarNumber: x.CarNumber,
-                                    PriceTotal: parseFloat(x.PriceTotal),
+                                    PriceTotal: parseFloat(x.PriceTotal) - parseFloat(x.Discount),
+                                    Vat: _VatStatus > 0 ? ((parseFloat(x.PriceTotal) - parseFloat(x.Discount)) * 7) / 100 : 0,
                                     Product: x.Product,
                                     Province: x.Province,
                                     ShippingBegin: x.ShippingBegin,
                                     ShippingEnd: x.ShippingEnd,
-                                    dDocDate: PHP_JSON_To_DateTime(x.DocDate)
+                                    dDocDate: PHP_JSON_To_DateTime(x.DocDate),
+                                    Remark: x.Remark
                                 });
                             }).ToArray();
+                    if (_VatStatus === 1 || _VatStatus === 2) {
+                        $.each(_d, function (k, v) {
+                            if (_VatStatus === 1) {
+                                v.PriceTotal = v.PriceTotal - v.Vat;
+                            } else {
+                                v.PriceTotal = v.PriceTotal + v.Vat;
+                            }
+                        });
+                    }
                     var _txtTotal = $.ToLinq(_d).Select(function (x) {
-                        return x.PriceTotal - x.Discount;
+                        return x.PriceTotal;
                     }).Sum();
                     variables.getByName('TxtTotal').valueObject = ArabicNumberToText(_txtTotal);
 
@@ -133,7 +145,7 @@ $(function () {
                         return x.dDocDate;
                     }).OrderBy(x => x);
                     variables.getByName('TxtDate').valueObject = getDateCustom(_Date.First(x => x)) + ' - ' + getDateCustom(_Date.Last(x => x));
-                            report.regData('DataList', 'DataList', JSON.stringify(_d));
+                    report.regData('DataList', 'DataList', JSON.stringify(_d));
                     viewer.report = report;
 
                     $('#btn-print').on({

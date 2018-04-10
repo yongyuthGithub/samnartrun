@@ -339,7 +339,8 @@ class Bill extends PCenter {
                                 . 'ls.LocationName as ShippingBegin,'
                                 . 'le.LocationName as ShippingEnd,'
                                 . 'c.CarNumber,'
-                                . 'pv.Province')
+                                . 'pv.Province,'
+                                . 'hd.Remark')
                         ->from('TRNBillLD d')
                         ->where('d.BillHDKey', $_key)
                         ->join('TRNWrokSheetHD hd', 'd.WrokSheetHDKey=hd.RowKey')
