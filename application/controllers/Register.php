@@ -107,12 +107,9 @@ class Register extends PCenter {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
-                $update = (object) [];
-                $update->IDCard = $_data->IDCard;
-
-                $update->UpdateBy = $this->USER_LOGIN()->RowKey;
-                $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
-                $this->db->where('RowKey', $_data->RowKey)->update('MSTEmployee', $update);
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->where('RowKey', $_data->RowKey)->update('MSTEmployee', $_data);
 
                 $this->db->where('EmpKey', $_data->RowKey);
                 $this->db->delete('TRNEmployeeFiles');
