@@ -50,8 +50,9 @@ $(function () {
         btnEditText: 'แก้ไข',
         btnNewText: 'เพิ่ม',
         btnDeleteText: 'ลบ',
-        btnPreviewText: 'Print',
-        btnPreviewIcon: 'glyphicon glyphicon-print',
+        btnPreviewText: 'Preview',
+//        btnPreviewIcon: 'glyphicon glyphicon-print',
+        btnPreviewIcon: 'fa fa-search',
         btnPreviewStyle: 'btn-success',
         headerString: '',
 //        UrlDataJson: mvcPatch('controllers/action'),
@@ -129,10 +130,12 @@ $(function () {
             $.bPopup({
                 url: mvcPatch('Bill/displayPrint'),
                 title: 'พิมพ์บิลเลขที่ ' + d.DocID,
-                closable: false,
+                closable: true,
                 size: BootstrapDialog.SIZE_WIDE,
+                btnCancel: false,
                 onshow: function (k) {
                     k.getModal().data({
+                        print: PrintStatus.Preview,
                         data: d.key,
                         fun: function (_f) {
 
@@ -140,15 +143,24 @@ $(function () {
                     });
                 },
                 buttons: [
-                    {
-                        id: 'btn-print',
-                        icon: 'glyphicon glyphicon-print',
-                        label: '&nbsp;Print',
-                        cssClass: BootstrapDialog.TYPE_SUCCESS,
-                        action: function (k) {
-                            //javascript code
-                        }
-                    }
+//                    {
+//                        id: 'btn-print',
+//                        icon: 'glyphicon glyphicon-print',
+//                        label: '&nbsp;Print',
+//                        cssClass: BootstrapDialog.TYPE_SUCCESS,
+//                        action: function (k) {
+//                            //javascript code
+//                        }
+//                    },
+//                    {
+//                        id: 'btn-preview',
+//                        icon: 'fa fa-search',
+//                        label: '&nbsp;Priview',
+//                        cssClass: BootstrapDialog.TYPE_SUCCESS,
+//                        action: function (k) {
+//                            //javascript code
+//                        }
+//                    }
                 ]
             });
         }

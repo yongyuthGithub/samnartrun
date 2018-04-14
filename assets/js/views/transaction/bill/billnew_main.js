@@ -356,6 +356,7 @@ $(function () {
             } else {
                 var obj = new Object({
                     RowKey: $('#txtkey').val(),
+//                    DocID: $('.breadcrumb').find('.active').text(),
                     DocDate: setDateJson(form_billnew.find('#txtDocDate').val()),
                     CustomerBranchKey: form_billnew.find('#cmdCustBranch').val(),
                     Vat: parseFloat(form_billnew.find('#txtVatTotal').data('data')),
@@ -381,7 +382,36 @@ $(function () {
                             loanding: false,
                             callback: function (vdata) {
                                 if (vdata.success) {
-                                    form_sumbit.prop('action', mvcPatch('Bill/index')).submit();
+                                    $.bPopup({
+                                        url: mvcPatch('Bill/displayPrint'),
+                                        title: 'พิมพ์บิล',
+                                        closable: false,
+                                        size: BootstrapDialog.SIZE_WIDE,
+                                        onshow: function (k) {
+                                            k.getModal().data({
+                                                print: PrintStatus.Print,
+                                                data: vdata.key,
+                                                fun: function (_f) {
+
+                                                }
+                                            });
+                                        },
+                                        onhidden: function (k) {
+                                            form_sumbit.prop('action', mvcPatch('Bill/index')).submit();
+                                        },
+                                        buttons: [
+                                            {
+                                                id: 'btn-print',
+                                                icon: 'glyphicon glyphicon-print',
+                                                label: '&nbsp;Print',
+                                                cssClass: BootstrapDialog.TYPE_SUCCESS,
+                                                action: function (k) {
+                                                    //javascript code
+                                                }
+                                            }
+                                        ]
+                                    });
+
                                 } else {
                                     $.bAlert({
                                         message: vdata.message

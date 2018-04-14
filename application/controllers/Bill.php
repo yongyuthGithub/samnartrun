@@ -310,6 +310,7 @@ class Bill extends PCenter {
             } else {
                 $this->db->trans_commit();
                 $vReturn->success = true;
+                $vReturn->key = $_data->RowKey;
             }
         }
         echo json_encode($vReturn);
@@ -351,6 +352,40 @@ class Bill extends PCenter {
                         ->join('MSTProvince pv', 'c.ProvinceKey=pv.RowKey', 'left')
                         ->get()->result();
         echo json_encode($qry);
+    }
+
+    public function printTemp() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+        $_data->RowKey = PCenter::GUID();
+        $_data->CreateBy = $this->USER_LOGIN()->RowKey;
+        $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+        $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+        $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+        $this->db->insert('TRNBillHDPrint', $_data);
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
+        }
+        $vReturn->ReportView = $_data->ReportView;
+        echo json_encode($vReturn);
+    }
+
+    public function printTempLoad() {
+        $_key = $_POST['key'];
+        $qry = Linq::from($this->db->select('ReportView')
+                                ->where('BillHDKey', $_key)
+                                ->from('TRNBillHDPrint')
+                                ->order_by('UpdateDate', 'desc')
+                                ->get()->result())
+                        ->firstOrNull()->ReportView;
+        echo $qry;
     }
 
 }

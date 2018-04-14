@@ -88,6 +88,11 @@ var DeliveryChargeType = {
     PerMinOrder: 2,
     PerOrder: 3
 }
+
+var PrintStatus = {
+    Preview: 0,
+    Print: 1
+}
 function DeliveryChargeTypeStr(v) {
     if (parseInt(v) === DeliveryChargeType.NoCharge) {
         return 'No Charge';
@@ -469,17 +474,18 @@ function ChkNumber(v) {
     $.ReportViewer = function (option) {
         var options = new Stimulsoft.Viewer.StiViewerOptions();
         options.toolbar.zoom = Stimulsoft.Viewer.StiZoomMode.PageWidth;
-        options.toolbar.viewMode = Stimulsoft.Viewer.StiWebViewMode.WholeReport;
+//        options.toolbar.viewMode = Stimulsoft.Viewer.StiWebViewMode.WholeReport;
         options.toolbar.showPrintButton = false;
         options.toolbar.showSaveButton = false;
         options.toolbar.showFullScreenButton = false;
-        
+
         var setting = $.extend({
             viewer_id: 'display-prevuew',
             report_path: '',
             viewer_option: options,
+            report_watermark: '',
             fun: function () {}
-        }, option);       
+        }, option);
 
         var viewer = new Stimulsoft.Viewer.StiViewer(setting.viewer_option, "StiViewer", false);
         viewer.renderHtml(setting.viewer_id);
@@ -489,8 +495,108 @@ function ChkNumber(v) {
         report.loadFile(setting.report_path);
         report.dictionary.databases.clear();
 
-        setting.fun(report,report.dictionary.variables, viewer);
+        setting.fun(report, report.dictionary.variables, viewer);
     };
+
+    $.ReportViewerOnly = function (option) {
+        var options = new Stimulsoft.Viewer.StiViewerOptions();
+        options.toolbar.zoom = Stimulsoft.Viewer.StiZoomMode.PageWidth;
+//        options.toolbar.viewMode = Stimulsoft.Viewer.StiWebViewMode.WholeReport;
+        options.toolbar.showPrintButton = false;
+        options.toolbar.showSaveButton = false;
+        options.toolbar.showFullScreenButton = false;
+
+        var setting = $.extend({
+            viewer_id: 'display-prevuew',
+            report_path: '',
+            report_data: new Object(),
+            viewer_option: options,
+            report_watermark: '',
+            fun: function () {}
+        }, option);
+
+        var viewer = new Stimulsoft.Viewer.StiViewer(setting.viewer_option, "StiViewer", false);
+
+        viewer.renderHtml(setting.viewer_id);
+        viewer.showProcessIndicator();
+//        viewer.onBeginProcessData = function (event) {
+//            alert('dd');
+//        };
+
+        $.reqData({
+            url: setting.report_path,
+            data: setting.report_data,
+            loanding: false,
+            callback: function (vdata) {
+//                if (vdata.success) {
+                var report = new Stimulsoft.Report.StiReport();
+                var _page = vdata.RenderedPages;
+                if ($.trim(setting.report_watermark).length > 0)
+                    $.each(_page, function (k, v) {
+                        v.Watermark.Text = setting.report_watermark;
+                    });
+                report.load(vdata);
+//                report.print();
+                viewer.report = report;
+                setting.fun(report, report.dictionary.variables, viewer);
+            }
+        });
+    };
+
+//    $.ReportJsonPrint = function (option) {
+//        var setting = $.extend({
+//            report_json: new Object(),
+//            report_watermark: ''
+//        }, option);
+//
+////        var _this = $('#myPage');
+////        _this.find('#viewer_temp').remove();
+////        _this.append('<div id="viewer_temp" style="display:none;"></div>');
+//
+//        var report2 = new Stimulsoft.Report.StiReport();
+////        var Watermark = new Stimulsoft.Report.Components.StiText();
+////        if ($.trim(setting.report_watermark).length > 0)
+////            Watermark.Text = setting.report_watermark;
+//        var _vdata = JSON.parse(setting.report_json);
+//        var _page = _vdata.RenderedPages;
+//        if ($.trim(setting.report_watermark).length > 0)
+//            $.each(_page, function (k, v) {
+//                v.Watermark.Text = setting.report_watermark;
+//                alert('d');
+//            });
+////        var viewer = new Stimulsoft.Viewer.StiViewer(null, "StiViewer2", false);
+////        viewer.renderHtml('viewer_temp');
+////        var _page = _vdata.RenderedPages;
+////        if ($.trim(setting.report_watermark).length > 0) {
+//////            alert(JSON.stringify(_page));
+////            $.each(_vdata.RenderedPages, function (k, v) {
+////                v.Watermark.Enabled = 'True';
+////                v.Watermark.Text = setting.report_watermark;
+//////                alert(JSON.stringify(v.Watermark));
+////            });
+//////            alert(_vdata.RenderedPages[0].Watermark.Text);
+////        }
+////        report2.render();
+//        report2.load(_vdata);
+////        report2.Watermark.Text = setting.report_watermark;
+//
+////        if ($.trim(setting.report_watermark).length > 0) {
+////            alert(JSON.stringify(report2.Pages[0]));
+////            $.each(report2.Pages, function (k, v) {
+////                v.Watermark.Enabled = True;
+////                v.Watermark.Text = setting.report_watermark;
+////                v.Watermark.Angle = 45;
+////                alert(JSON.stringify(v.Watermark));
+////            });
+////        }
+//
+////        viewer.report = report2;
+////        report2.render();
+////        viewer.onEndProcessData = function (event) {
+//        report2.print();
+////        }
+//
+//    };
 
     $.myLoading = function (v) {
         if (v === undefined)

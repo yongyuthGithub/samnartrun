@@ -63,103 +63,151 @@ $(function () {
 //        }
 //    });
 //    report.reqData('DataList','DataList',JSON.stringify(new Array()));
+    var _printstatus = form_showBill_C.data('print');
+    if (_printstatus === PrintStatus.Print) {
+        $.ReportViewer({
+            viewer_id: 'display-prevuew',
+            report_path: mvcPatch('Bill/loadBillReport'),
+            fun: function (report, variables, viewer) {
+                $.reqData({
+                    url: mvcPatch('Bill/findBillWithReport'),
+                    data: {key: form_showBill_C.data('data')},
+                    loanding: false,
+                    callback: function (vdata) {
+                        variables.getByName('CompanyName').valueObject = vdata.Company.Customer;
+                        variables.getByName('CompanyAddress').valueObject = vdata.Company.Address;
+                        variables.getByName('CompanySubDistrict').valueObject = vdata.Company.SubDistrict;
+                        variables.getByName('CompanyDistrict').valueObject = vdata.Company.District;
+                        variables.getByName('CompanyProvince').valueObject = vdata.Company.Province;
+                        variables.getByName('CompanyZipCode').valueObject = vdata.Company.ZipCode;
+                        variables.getByName('CompanyTel').valueObject = vdata.Company.Tel;
+                        variables.getByName('CompanyFax').valueObject = vdata.Company.Fax;
+                        variables.getByName('CustomerIDCard').valueObject = vdata.Company.IDCard;
 
-    $.ReportViewer({
-        viewer_id: 'display-prevuew',
-        report_path: mvcPatch('Bill/loadBillReport'),
-        fun: function (report, variables, viewer) {
-            $.reqData({
-                url: mvcPatch('Bill/findBillWithReport'),
-                data: {key: form_showBill_C.data('data')},
-                loanding: false,
-                callback: function (vdata) {
-                    variables.getByName('CompanyName').valueObject = vdata.Company.Customer;
-                    variables.getByName('CompanyAddress').valueObject = vdata.Company.Address;
-                    variables.getByName('CompanySubDistrict').valueObject = vdata.Company.SubDistrict;
-                    variables.getByName('CompanyDistrict').valueObject = vdata.Company.District;
-                    variables.getByName('CompanyProvince').valueObject = vdata.Company.Province;
-                    variables.getByName('CompanyZipCode').valueObject = vdata.Company.ZipCode;
-                    variables.getByName('CompanyTel').valueObject = vdata.Company.Tel;
-                    variables.getByName('CompanyFax').valueObject = vdata.Company.Fax;
-                    variables.getByName('CustomerIDCard').valueObject = vdata.Company.IDCard;
+                        variables.getByName('CustName').valueObject = vdata.Customer.Customer;
+                        variables.getByName('CustAddress').valueObject = vdata.Customer.Address;
+                        variables.getByName('CustSubDistrict').valueObject = vdata.Customer.SubDistrict;
+                        variables.getByName('CustDistrict').valueObject = vdata.Customer.District;
+                        variables.getByName('CustProvince').valueObject = vdata.Customer.Province;
+                        variables.getByName('CustTel').valueObject = vdata.Customer.Tel;
+                        variables.getByName('CustFax').valueObject = vdata.Customer.Fax;
+                        variables.getByName('CustIDCard').valueObject = vdata.Customer.IDCard;
+                        variables.getByName('CustZipCode').valueObject = vdata.Customer.ZipCode;
+                        variables.getByName('CustBranch').valueObject = vdata.Customer.Branch;
 
-                    variables.getByName('CustName').valueObject = vdata.Customer.Customer;
-                    variables.getByName('CustAddress').valueObject = vdata.Customer.Address;
-                    variables.getByName('CustSubDistrict').valueObject = vdata.Customer.SubDistrict;
-                    variables.getByName('CustDistrict').valueObject = vdata.Customer.District;
-                    variables.getByName('CustProvince').valueObject = vdata.Customer.Province;
-                    variables.getByName('CustTel').valueObject = vdata.Customer.Tel;
-                    variables.getByName('CustFax').valueObject = vdata.Customer.Fax;
-                    variables.getByName('CustIDCard').valueObject = vdata.Customer.IDCard;
-                    variables.getByName('CustZipCode').valueObject = vdata.Customer.ZipCode;
-                    variables.getByName('CustBranch').valueObject = vdata.Customer.Branch;
+                        variables.getByName('BillDate').valueObject = PHP_JSON_To_ShowDate(vdata.DocDate);
 
-                    variables.getByName('BillDate').valueObject = PHP_JSON_To_ShowDate(vdata.DocDate);
-
-                    try {
-                        variables.getByName('BillDueDate').valueObject = PHP_JSON_To_ShowDate(vdata.DueDate);
-                    } catch (e) {
-                        variables.getByName('BillDueDate').valueObject = PHP_JSON_To_ShowDate(vdata.DocDate);
-                    }
-                    var _pay = '';
-                    if (parseInt(vdata.PayType) === 1) {
-                        _pay = 'ชำระเงินสด';
-                    } else if (parseInt(vdata.PayType) === 2) {
-                        _pay = 'เครดิต ' + vdata.Customer.Due + ' วัน';
-                    }
-                    variables.getByName('PayType').valueObject = _pay;
-
-                    var _VatStatus = parseInt(vdata.VatStatus);
-                    var _d = $.ToLinq(vdata.Detail)
-                            .Select(function (x) {
-                                return new Object({
-                                    DocID: x.DocID,
-                                    DocDate: PHP_JSON_To_ShowDate(x.DocDate),
-                                    Discount: parseFloat(x.Discount),
-                                    CarNumber: x.CarNumber,
-//                                    PriceTotal: parseFloat(x.PriceTotal) - parseFloat(x.Discount),
-                                    PriceTotal: parseFloat(x.PriceTotal),
-                                    Vat: _VatStatus > 0 ? ((parseFloat(x.PriceTotal) - parseFloat(x.Discount)) * 7) / 100 : 0,
-                                    Product: x.Product,
-                                    Province: x.Province,
-                                    ShippingBegin: x.ShippingBegin,
-                                    ShippingEnd: x.ShippingEnd,
-                                    dDocDate: PHP_JSON_To_DateTime(x.DocDate),
-                                    Remark: x.Remark
-                                });
-                            }).ToArray();
-//                    if (_VatStatus === 1 || _VatStatus === 2) {
-                    $.each(_d, function (k, v) {
-                        if (_VatStatus === 1) {
-                            v.PriceTotal = (v.PriceTotal + v.Discount) - v.Vat;
+                        try {
+                            variables.getByName('BillDueDate').valueObject = PHP_JSON_To_ShowDate(vdata.DueDate);
+                        } catch (e) {
+                            variables.getByName('BillDueDate').valueObject = PHP_JSON_To_ShowDate(vdata.DocDate);
                         }
+                        var _pay = '';
+                        if (parseInt(vdata.PayType) === 1) {
+                            _pay = 'ชำระเงินสด';
+                        } else if (parseInt(vdata.PayType) === 2) {
+                            _pay = 'เครดิต ' + vdata.Customer.Due + ' วัน';
+                        }
+                        variables.getByName('PayType').valueObject = _pay;
+
+                        var _VatStatus = parseInt(vdata.VatStatus);
+                        var _d = $.ToLinq(vdata.Detail)
+                                .Select(function (x) {
+                                    return new Object({
+                                        DocID: x.DocID,
+                                        DocDate: PHP_JSON_To_ShowDate(x.DocDate),
+                                        Discount: parseFloat(x.Discount),
+                                        CarNumber: x.CarNumber,
+//                                    PriceTotal: parseFloat(x.PriceTotal) - parseFloat(x.Discount),
+                                        PriceTotal: parseFloat(x.PriceTotal),
+                                        Vat: _VatStatus > 0 ? ((parseFloat(x.PriceTotal) - parseFloat(x.Discount)) * 7) / 100 : 0,
+                                        Product: x.Product,
+                                        Province: x.Province,
+                                        ShippingBegin: x.ShippingBegin,
+                                        ShippingEnd: x.ShippingEnd,
+                                        dDocDate: PHP_JSON_To_DateTime(x.DocDate),
+                                        Remark: x.Remark
+                                    });
+                                }).ToArray();
+//                    if (_VatStatus === 1 || _VatStatus === 2) {
+                        $.each(_d, function (k, v) {
+                            if (_VatStatus === 1) {
+                                v.PriceTotal = (v.PriceTotal + v.Discount) - v.Vat;
+                            }
 //                            else {
 //                                v.PriceTotal = v.PriceTotal + v.Discount + v.Vat;
 //                            }
-                    });
+                        });
 //                    }
-                    var _txtTotal = $.ToLinq(_d).Select(function (x) {
+                        var _txtTotal = $.ToLinq(_d).Select(function (x) {
 //                        return _VatStatus === 1 ? (x.PriceTotal + x.Discount + x.Vat) : x.PriceTotal;
-                        return (x.PriceTotal - x.Discount) + x.Vat;
-                    }).Sum();
-                    variables.getByName('TxtTotal').valueObject = ArabicNumberToText(_txtTotal);
-                    variables.getByName('NetTotal').valueObject = _txtTotal;
+                            return (x.PriceTotal - x.Discount) + x.Vat;
+                        }).Sum();
+                        variables.getByName('TxtTotal').valueObject = ArabicNumberToText(_txtTotal);
+                        variables.getByName('NetTotal').valueObject = _txtTotal;
 
-                    var _Date = $.ToLinq(_d).Select(function (x) {
-                        return x.dDocDate;
-                    }).OrderBy(x => x);
-                    variables.getByName('TxtDate').valueObject = getDateCustom(_Date.First(x => x)) + ' - ' + getDateCustom(_Date.Last(x => x));
-                    report.regData('DataList', 'DataList', JSON.stringify(_d));
-                    viewer.report = report;
+                        var _Date = $.ToLinq(_d).Select(function (x) {
+                            return x.dDocDate;
+                        }).OrderBy(x => x);
+                        variables.getByName('TxtDate').valueObject = getDateCustom(_Date.First(x => x)) + ' - ' + getDateCustom(_Date.Last(x => x));
+                        report.regData('DataList', 'DataList', JSON.stringify(_d));
+                        viewer.onEndProcessData = function (ev) {
 
-                    $('#btn-print').on({
-                        click: function () {
-                            report.print();
                         }
-                    });
-                }
-            });
-        }
-    });
+                        report.render();
+                        viewer.report = report;
+
+                        var obj = new Object({
+                            BillHDKey: form_showBill_C.data('data'),
+                            ReportView: viewer.report.saveDocumentToJsonString()
+//                                ReportView: stream.toArray()
+                        });
+                        $.reqData({
+                            url: mvcPatch('Bill/printTemp'),
+                            data: {data: JSON.stringify(obj)},
+                            loanding: false,
+                            callback: function (vdata) {
+                                if (vdata.success) {
+//                                        $.ReportViewerOnly({
+//                                            report_path: mvcPatch('Bill/printTempLoad'),
+//                                            report_data: {key: form_showBill_C.data('data')}
+//                                        });
+
+                                    form_showBill_C.find('#btn-print').on({
+                                        click: function () {
+                                            viewer.report.print();
+                                        }
+                                    });
+                                } else {
+                                    $.bAlert({
+                                        message: vdata.message
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    } else if (_printstatus === PrintStatus.Preview) {
+        $.ReportViewerOnly({
+            viewer_id: 'display-prevuew',
+            report_path: mvcPatch('Bill/printTempLoad'),
+            report_data: {key: form_showBill_C.data('data')},
+            report_watermark: 'เอกสารตัวอย่าง.',
+            fun: function (report, variables, viewer) {
+//                $('#btn-preview').on({
+//                    click:function(){
+//                        viewer.report.render();
+//                        viewer.report.print();
+//                    }
+//                });
+            }
+        });
+
+    }
+
+//
+
 });
 
