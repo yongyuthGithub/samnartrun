@@ -365,6 +365,8 @@ $(function () {
                     PrintCount: parseInt(0),
                     DueDate: setDateJson(form_billnew.find('#txtDueDate').val()),
                     PayType: parseInt(form_billnew.find('#cmdPayType').val()),
+                    Amounts: parseFloat(form_billnew.find('#txtNetPrice').data('data')),
+                    Remain: parseFloat(form_billnew.find('#txtNetPrice').data('data')),
                     TRNBillLD: $.ToLinq(form_bilelist.data('data'))
                             .Select(function (x) {
                                 return new Object({

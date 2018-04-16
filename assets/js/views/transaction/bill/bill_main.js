@@ -127,41 +127,41 @@ $(function () {
         btnDeleteFun: function (f, d) {
         },
         btnPreviewFun: function (f, d) {
-            $.bPopup({
-                url: mvcPatch('Bill/displayPrint'),
-                title: 'พิมพ์บิลเลขที่ ' + d.DocID,
-                closable: true,
-                size: BootstrapDialog.SIZE_WIDE,
-                btnCancel: false,
-                onshow: function (k) {
-                    k.getModal().data({
-                        print: PrintStatus.Preview,
-                        data: d.key,
-                        fun: function (_f) {
+            $.reqData({
+                url: mvcPatch('Bill/checkPrintTemp'),
+                data: {key: d.key},
+                loanding: false,
+                callback: function (vdata) {
+                    var _btn = new Array();
+                    if (parseInt(vdata) === 0) {
+                        _btn.push({
+                            id: 'btn-print',
+                            icon: 'glyphicon glyphicon-print',
+                            label: '&nbsp;Print',
+                            cssClass: BootstrapDialog.TYPE_SUCCESS,
+                            action: function (k) {
+                                //javascript code
+                            }
+                        });
+                    }
+                    $.bPopup({
+                        url: mvcPatch('Bill/displayPrint'),
+                        title: 'พิมพ์บิลเลขที่ ' + d.DocID,
+                        closable: true,
+                        size: BootstrapDialog.SIZE_WIDE,
+                        btnCancel: false,
+                        onshow: function (k) {
+                            k.getModal().data({
+                                print: _btn.length > 0 ? PrintStatus.Print : PrintStatus.Preview,
+                                data: d.key,
+                                fun: function (_f) {
 
-                        }
+                                }
+                            });
+                        },
+                        buttons: _btn
                     });
-                },
-                buttons: [
-//                    {
-//                        id: 'btn-print',
-//                        icon: 'glyphicon glyphicon-print',
-//                        label: '&nbsp;Print',
-//                        cssClass: BootstrapDialog.TYPE_SUCCESS,
-//                        action: function (k) {
-//                            //javascript code
-//                        }
-//                    },
-//                    {
-//                        id: 'btn-preview',
-//                        icon: 'fa fa-search',
-//                        label: '&nbsp;Priview',
-//                        cssClass: BootstrapDialog.TYPE_SUCCESS,
-//                        action: function (k) {
-//                            //javascript code
-//                        }
-//                    }
-                ]
+                }
             });
         }
     });

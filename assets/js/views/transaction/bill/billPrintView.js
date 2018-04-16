@@ -157,32 +157,27 @@ $(function () {
                         report.render();
                         viewer.report = report;
 
-                        var obj = new Object({
-                            BillHDKey: form_showBill_C.data('data'),
-                            ReportView: viewer.report.saveDocumentToJsonString()
+                        form_showBill_C.find('#btn-print').on({
+                            click: function () {
+                                viewer.report.print();
+                                var obj = new Object({
+                                    BillHDKey: form_showBill_C.data('data'),
+                                    ReportView: viewer.report.saveDocumentToJsonString()
 //                                ReportView: stream.toArray()
-                        });
-                        $.reqData({
-                            url: mvcPatch('Bill/printTemp'),
-                            data: {data: JSON.stringify(obj)},
-                            loanding: false,
-                            callback: function (vdata) {
-                                if (vdata.success) {
-//                                        $.ReportViewerOnly({
-//                                            report_path: mvcPatch('Bill/printTempLoad'),
-//                                            report_data: {key: form_showBill_C.data('data')}
-//                                        });
-
-                                    form_showBill_C.find('#btn-print').on({
-                                        click: function () {
-                                            viewer.report.print();
+                                });
+                                $.reqData({
+                                    url: mvcPatch('Bill/printTemp'),
+                                    data: {data: JSON.stringify(obj)},
+                                    loanding: false,
+                                    callback: function (vdata) {
+                                        if (vdata.success) {
+                                        } else {
+                                            $.bAlert({
+                                                message: vdata.message
+                                            });
                                         }
-                                    });
-                                } else {
-                                    $.bAlert({
-                                        message: vdata.message
-                                    });
-                                }
+                                    }
+                                });
                             }
                         });
                     }

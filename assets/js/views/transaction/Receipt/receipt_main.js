@@ -1,6 +1,7 @@
 $(function () {
     var form_receipt = $('#form_receipt');
     var form_receiptlist = $('#form_receiptlist');
+    var form_sumbit = $('#form_sumbit');
 
     form_receipt.find('#divSDate').datetimepicker({
         format: 'DD/MM/YYYY',
@@ -69,10 +70,23 @@ $(function () {
 //            }
 //        ],
         btnNewFun: function (f) {
+            form_sumbit.SetDataPost({
+                data: {
+                    txtkey: Guid,
+                    txtdisplay: 'ออกใบเสร็จใหม่'
+                }
+            }).prop('action', mvcPatch('Receipt/editPage')).submit();
         },
         btnEditFun: function (f, d) {
+            form_sumbit.SetDataPost({
+                data: {
+                    txtkey: d.key,
+                    txtdisplay: d.DocID
+                }
+            }).prop('action', mvcPatch('Receipt/editPage')).submit();
         },
         btnDeleteFun: function (f, d) {
+
         },
         btnPreviewFun: function (f, d) {
         }

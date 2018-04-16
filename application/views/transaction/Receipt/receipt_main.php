@@ -2,7 +2,7 @@
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1>รายการใบเสร็จ</h1><h4><small>จัดการรายการใบเสร็จ</small></h4>
+            <h1>รายการชำระ</h1><h4><small>จัดการรายการชำระที่ออกเป็นใบเสร็จ</small></h4>
         </div>
     </div>
 </div>

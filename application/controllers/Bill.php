@@ -387,5 +387,15 @@ class Bill extends PCenter {
                         ->firstOrNull()->ReportView;
         echo $qry;
     }
+    
+    public function checkPrintTemp() {
+        $_key = $_POST['key'];
+        $qry = Linq::from($this->db
+                                ->where('BillHDKey', $_key)
+                                ->from('TRNBillHDPrint')
+                                ->get()->result())
+                        ->count();
+        echo $qry;
+    }
 
 }
