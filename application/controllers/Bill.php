@@ -42,7 +42,9 @@ class Bill extends PCenter {
                         . 'c.Customer,'
                         . 'b.Vat,'
                         . 'b.VatStatus,'
-                        . 'b.Discount')
+                        . 'b.Discount,'
+                        . 'b.Amounts,'
+                        . 'b.Remain')
                 ->where('b.DocDate >=', $_data->SDate)
                 ->where('b.DocDate <=', $_data->EDate)
                 ->from('TRNBillHD b')
@@ -80,7 +82,8 @@ class Bill extends PCenter {
                         'TotalPrice' => $pTotal,
                         'Vat' => $x->Vat,
                         'Discount' => $x->Discount,
-                        'NetPrice' => $nTotal
+                        'NetPrice' => $nTotal,
+                        '_Edit' => floatval($x->Amounts) === floatval($x->Remain) ? true : false
                     ];
                 })
                 ->toArray();
@@ -387,14 +390,14 @@ class Bill extends PCenter {
                         ->firstOrNull()->ReportView;
         echo $qry;
     }
-    
+
     public function checkPrintTemp() {
         $_key = $_POST['key'];
         $qry = Linq::from($this->db
-                                ->where('BillHDKey', $_key)
-                                ->from('TRNBillHDPrint')
-                                ->get()->result())
-                        ->count();
+                        ->where('BillHDKey', $_key)
+                        ->from('TRNBillHDPrint')
+                        ->get()->result())
+                ->count();
         echo $qry;
     }
 

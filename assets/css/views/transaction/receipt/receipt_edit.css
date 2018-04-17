@@ -16,6 +16,12 @@
   width: 70px !important;
   text-align: right;
 }
+#form_billlist #tblform_billlist thead tr th:nth-child(4) {
+  max-width: 70px !important;
+  min-width: 70px !important;
+  width: 70px !important;
+  text-align: right;
+}
 #form_billlist #tblform_billlist tbody tr[role=row] td:first-child {
   max-width: 150px !important;
   min-width: 150px !important;
@@ -33,6 +39,14 @@
   text-align: center;
 }
 #form_billlist #tblform_billlist tbody tr[role=row] td:nth-child(3) {
+  min-width: 70px !important;
+  max-width: 70px !important;
+  width: 70px !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  text-align: right;
+}
+#form_billlist #tblform_billlist tbody tr[role=row] td:nth-child(4) {
   min-width: 70px !important;
   max-width: 70px !important;
   width: 70px !important;

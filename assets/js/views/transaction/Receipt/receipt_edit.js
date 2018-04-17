@@ -4,9 +4,10 @@ $(function () {
     var form_otherlist = form_receiptedit.find('#form_otherlist');
 
     if ($('#txtkey').val() !== Guid) {
-
+        form_receiptedit.find('.cheque-type').css({'display': 'none'});
     } else {
         setDataCust(Guid, function () {});
+        form_receiptedit.find('.cheque-type').css({'display': 'none'});
     }
 
     form_receiptedit.find('#cmdCust').selectpicker({
@@ -14,6 +15,7 @@ $(function () {
         change: function () {
 //            form_billlist.data('data', vdata);
 //                    form_receiptedit.find('#cmdVatStatus').change();
+            form_billlist.data('data', new Array()).find('.xref').click();
             setDataCustBranch(function (s) {
                 form_receiptedit.formValidation('revalidateField', s);
             })
@@ -36,6 +38,17 @@ $(function () {
             }
         });
     }
+
+    form_receiptedit.find('#cmdPayType').selectpicker({
+    }).on({
+        change: function () {
+            if (parseInt($(this).val()) === 1) {
+                form_receiptedit.find('.cheque-type').css({'display': 'none'});
+            } else {
+                form_receiptedit.find('.cheque-type').css({'display': 'block'});
+            }
+        }
+    });
 
     form_receiptedit.find('#cmdCustBranch').selectpicker({
     }).on({
@@ -60,7 +73,7 @@ $(function () {
             }
         });
     }
-    
+
     form_receiptedit.find('#divDate').datetimepicker({
         format: 'DD/MM/YYYY',
         locale: 'th',
@@ -68,10 +81,44 @@ $(function () {
     }).on('dp.change', function (ds) {
 //        form_receiptedit.formValidation('revalidateField', form_billnew.find('#txtDocDate'));
 //        form_billnew.find('#divDueDate').data("DateTimePicker").minDate(ds.date);
-        setDueData();
+//        setDueData();
     });
 
-    form_billlist.setMainPage({
+    form_receiptedit.find('#divChequeDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        locale: 'th',
+        defaultDate: new Date()
+    }).on('dp.change', function (ds) {
+//        form_receiptedit.formValidation('revalidateField', form_billnew.find('#txtDocDate'));
+//        form_billnew.find('#divDueDate').data("DateTimePicker").minDate(ds.date);
+//        setDueData();
+    });
+
+    function SumAmounts() {
+        var TBill = $.ToLinq(form_billlist.data('data'))
+                .Select(function (x) {
+                    return x.InputAmounts;
+                }).Sum();
+        var TOther = $.ToLinq(form_otherlist.data('data'))
+                .Select(function (x) {
+                    return x.InputAmounts;
+                }).Sum();
+        var _sum = TBill + TOther;
+        form_receiptedit.find('#txtPriceTotal').data('data', _sum).val(addCommas(_sum, 2));
+    }
+
+    form_billlist.on('focusout', '.txtInputAmounts', function () {
+        var _key = $(this).data('key');
+        var _v = ChkNumber($(this).val()).toFixed(2);
+        var _thisD = $.ToLinq(form_billlist.data('data'))
+                .Where(x => x.key === _key)
+                .First();
+        _thisD.InputAmounts = parseFloat(_thisD.Amounts) < parseFloat(_v) ? parseFloat(_thisD.Amounts) : parseFloat(_v);
+        $(this).val(_thisD.InputAmounts);
+        SumAmounts();
+    });
+
+    form_billlist.data('data', new Array()).setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
@@ -80,37 +127,119 @@ $(function () {
         headerString: '',
 //        UrlDataJson: mvcPatch('controllers/action'),
         DataJson: function () {
-            return new Array()
+            return form_billlist.data('data');
         },
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumnsOrder: [],
-//    AfterLoadData: function (f, d, t) { },
+        AfterLoadData: function (f, d, t) {
+            SumAmounts();
+        },
         DataColumns: [
             {data: 'DocID', header: 'เลขที่บิล', orderable: false},
             {data: 'DocDate', header: 'วันที่บิล', orderable: false},
-            {data: 'Amounts', header: 'จำนวนเงิน', orderable: false},
+            {data: 'Amounts', header: 'จำนวนเงินชำระได้', orderable: false},
+            {data: 'InputAmounts', header: 'จำนวนเงินที่ชำระ', orderable: false},
         ],
-//        DataColumnsDefs: [
-//            {
-//                render: function (row, type, val2, meta) {
-//                    return '<i class="' + val2.Icon + '"></i>';
-//                },
-//                orderable: true,
-//                targets: 3
-//            }
-//        ],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    return PHP_JSON_To_ShowDate(val2.DocDate);
+                },
+                orderable: false,
+                targets: 1
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    return addCommas(val2.Amounts, 2);
+                },
+                orderable: false,
+                targets: 2
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    return '<input type="text" class="form-control text-right txtInputAmounts" id="t' + val2.key + '" name="t' + val2.key + '" data-key="' + val2.key + '" data-max="' + val2.Amounts + '" placeholder="จำนวนที่ชำระ" value="' + val2.InputAmounts + '">';
+                },
+                orderable: false,
+                targets: 3
+            }
+        ],
         btnNewFun: function (f) {
+            $.bPopup({
+                url: mvcPatch('Receipt/newBill'),
+                title: 'เลือกบิล',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        key: form_receiptedit.find('#cmdCust').val(),
+                        data: $.ToLinq(f.data('data')).Select(function (x) {
+                            return x.key
+                        }).ToArray(),
+                        fun: function (_f) {
+                            $.each(_f.find('#cmdNewBill').find('option:checked'), function (k, v) {
+                                f.data('data').push({
+                                    key: $(v).val(),
+                                    DocID: $(v).data('docid'),
+                                    DocDate: $(v).data('docdate'),
+                                    Amounts: $(v).data('amounts'),
+                                    InputAmounts: $(v).data('amounts')
+                                });
+                            });
+                            f.find('.xref').click();
+                            _f.find('#btn-close').click();
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         },
         btnEditFun: function (f, d) {
         },
         btnDeleteFun: function (f, d) {
+            var _d = $.ToLinq(d)
+                    .Select(function (x) {
+                        return x.key;
+                    });
+            var _u = $.ToLinq(f.data('data'))
+                    .Where(x => !_d.Contains(x.key))
+                    .ToArray();
+            f.data('data', _u);
+            f.find('.xref').click();
         },
         btnPreviewFun: function (f, d) {
         }
     });
 
-    form_otherlist.setMainPage({
+    form_otherlist.on('focusout', '.txtDetail_other', function () {
+        var _key = $(this).data('key');
+        var _thisD = $.ToLinq(form_otherlist.data('data'))
+                .Where(x => x.key === _key)
+                .First();
+        _thisD.Detail = $(this).val();
+    });
+
+    form_otherlist.on('focusout', '.txtInputAmounts_other', function () {
+        var _key = $(this).data('key');
+        var _v = ChkNumber($(this).val()).toFixed(2);
+        var _thisD = $.ToLinq(form_otherlist.data('data'))
+                .Where(x => x.key === _key)
+                .First();
+        _thisD.InputAmounts = parseFloat(_v);
+        $(this).val(_thisD.InputAmounts);
+        SumAmounts();
+    });
+
+    form_otherlist.data('data', new Array()).setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
@@ -119,31 +248,59 @@ $(function () {
         headerString: '',
 //        UrlDataJson: mvcPatch('controllers/action'),
         DataJson: function () {
-            return new Array()
+            return form_otherlist.data('data');
         },
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumnsOrder: [],
-//    AfterLoadData: function (f, d, t) { },
+        AfterLoadData: function (f, d, t) {
+            SumAmounts();
+        },
         DataColumns: [
             {data: 'Seq', header: '#', orderable: false},
             {data: 'Detail', header: 'รายละเอียด', orderable: false},
-            {data: 'Amounts', header: 'จำนวนเงิน', orderable: false},
+            {data: 'InputAmounts', header: 'จำนวนเงินที่ชำระ', orderable: false},
         ],
-//        DataColumnsDefs: [
-//            {
-//                render: function (row, type, val2, meta) {
-//                    return '<i class="' + val2.Icon + '"></i>';
-//                },
-//                orderable: true,
-//                targets: 3
-//            }
-//        ],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    return '<input type="text" class="form-control text-left txtDetail_other" id="td' + val2.key + '" name="td' + val2.key + '" data-key="' + val2.key + '" placeholder="รายละเอียด" value="' + val2.Detail + '">';
+                },
+                orderable: false,
+                targets: 1
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    return '<input type="text" class="form-control text-right txtInputAmounts_other" id="tt' + val2.key + '" name="tt' + val2.key + '" data-key="' + val2.key + '" placeholder="จำนวนที่ชำระ" value="' + val2.InputAmounts + '">';
+                },
+                orderable: false,
+                targets: 2
+            }
+        ],
         btnNewFun: function (f) {
+            f.data('data').push({
+                key: newGuid(),
+                Seq: f.data('data').length + 1,
+                Detail: '',
+                InputAmounts: 0
+            });
+            f.find('.xref').click();
         },
         btnEditFun: function (f, d) {
         },
         btnDeleteFun: function (f, d) {
+            var _d = $.ToLinq(d)
+                    .Select(function (x) {
+                        return x.key;
+                    });
+            var _u = $.ToLinq(f.data('data'))
+                    .Where(x => !_d.Contains(x.key))
+                    .ToArray();
+            $.each(_u, function (k, v) {
+                v.Seq = k + 1;
+            });
+            f.data('data', _u);
+            f.find('.xref').click();
         },
         btnPreviewFun: function (f, d) {
         }

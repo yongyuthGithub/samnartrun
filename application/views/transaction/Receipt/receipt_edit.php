@@ -114,6 +114,31 @@
                 <div class="row">    
                     <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
                         <div class="form-group" style="margin-bottom: 0px;">
+                            <label for="cmdDocIDType" style="line-height: 34px;">รูปแบบการสร้างรหัสใบเสร็จ :</label>                           
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <select id="cmdDocIDType" name="cmdDocIDType" class="form-control selectpicker show-menu-arrow"
+                                data-width="100%"
+                                data-show-Tick="true"
+                                data-tick-Icon="fa fa-check"
+                                data-size="5"
+                                data-header="false"
+                                data-live-Search="true"
+                                data-live-Search-Placeholder="key word"
+                                data-multiple-Separator=",&nbsp;&nbsp;"
+                                data-actions-Box="false"
+                                data-selectAll-Text="Select All"
+                                data-deselectAll-Text="Deselect All"
+                                data-selected-Text-Format="count > 3">
+                            <option data-icon="fa fa-hashtag" value="0">&nbsp;&nbsp;สร้างอัตโนมัติ</option>
+                            <!--                            <option data-icon="fa fa-btc" value="2">&nbsp;&nbsp;ชำระโดยเช็ค</option>-->
+                        </select>
+                    </div>
+                </div>
+                <div class="row">    
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group" style="margin-bottom: 0px;">
                             <label for="cmdPayType" style="line-height: 34px;">รูปแบบการชำระ :</label>                           
                         </div>
                     </div>
@@ -136,14 +161,14 @@
                         </select>
                     </div>
                 </div>
-                <div class="row">    
+                <div class="row cheque-type">  
                     <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
                         <div class="form-group" style="margin-bottom: 0px;">
-                            <label for="cmdDocIDType" style="line-height: 34px;">รูปแบบการสร้างรหัสใบเสร็จ :</label>                           
+                            <label for="cmdBank" style="line-height: 34px;">ธนาคาร :</label>                           
                         </div>
                     </div>
                     <div class="col-xs-8 col-sm-4 col-md-3">
-                        <select id="cmdDocIDType" name="cmdDocIDType" class="form-control selectpicker show-menu-arrow"
+                        <select id="cmdBank" name="cmdBank" class="form-control selectpicker show-menu-arrow"
                                 data-width="100%"
                                 data-show-Tick="true"
                                 data-tick-Icon="fa fa-check"
@@ -156,9 +181,65 @@
                                 data-selectAll-Text="Select All"
                                 data-deselectAll-Text="Deselect All"
                                 data-selected-Text-Format="count > 3">
-                            <option data-icon="fa fa-hashtag" value="0">&nbsp;&nbsp;สร้างอัตโนมัติ</option>
-                            <!--                            <option data-icon="fa fa-btc" value="2">&nbsp;&nbsp;ชำระโดยเช็ค</option>-->
+                            <!--                            <option data-icon="fa fa-btc" value="0">&nbsp;&nbsp;ไม่ระบุ</option>
+                                                        <option data-icon="fa fa-btc" value="1">&nbsp;&nbsp;ชำระโดยเงินสด</option>
+                                                        <option data-icon="fa fa-btc" value="2">&nbsp;&nbsp;ชำระโดยเช็ค</option>-->
                         </select>
+                    </div>
+                </div>
+                <div class="row cheque-type">  
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <label for="cmdBankBranch" style="line-height: 34px;">สาขาธนาคาร :</label>                           
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <select id="cmdBankBranch" name="cmdBankBranch" class="form-control selectpicker show-menu-arrow"
+                                data-width="100%"
+                                data-show-Tick="true"
+                                data-tick-Icon="fa fa-check"
+                                data-size="5"
+                                data-header="false"
+                                data-live-Search="true"
+                                data-live-Search-Placeholder="key word"
+                                data-multiple-Separator=",&nbsp;&nbsp;"
+                                data-actions-Box="false"
+                                data-selectAll-Text="Select All"
+                                data-deselectAll-Text="Deselect All"
+                                data-selected-Text-Format="count > 3">
+                            <!--                            <option data-icon="fa fa-btc" value="0">&nbsp;&nbsp;ไม่ระบุ</option>
+                                                        <option data-icon="fa fa-btc" value="1">&nbsp;&nbsp;ชำระโดยเงินสด</option>
+                                                        <option data-icon="fa fa-btc" value="2">&nbsp;&nbsp;ชำระโดยเช็ค</option>-->
+                        </select>
+                    </div>
+                </div>
+                <div class="row cheque-type">
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <label for="txtChequeNumber" style="line-height: 34px;">หมายเลขเช็ค :</label>                           
+                        </div>                        
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <input type="text" class="form-control" id="txtChequeNumber" name="txtChequeNumber" placeholder="หมายเลขเช็ค">
+                        </div>
+                    </div>
+                </div>
+                <div class="row cheque-type">
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <label for="txtChequeDate" style="line-height: 34px;">วันที่เช็ค :</label>                           
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <div class="form-group">
+                            <div class="input-group date" id="divChequeDate">
+                                <input type='text' class="form-control text-center" id="txtChequeDate" name="txtChequeDate" placeholder="วันที่เช็ค" onkeydown="return false;" />
+                                <span class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
