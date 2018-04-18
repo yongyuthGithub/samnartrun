@@ -25,6 +25,14 @@ class Receipt extends PCenter {
         $this->load->view('transaction/Receipt/receiptbill_edit');
     }
 
+    public function newBank() {
+        $this->load->view('transaction/Receipt/receiptbbank_new');
+    }
+    
+    public function newBankBranch() {
+        $this->load->view('transaction/Receipt/receiptbankbranch_new');
+    }
+
     public function findCustomer() {
         $qryCust = $this->db->select('RowKey,'
                         . 'CusCode,'
@@ -100,6 +108,154 @@ class Receipt extends PCenter {
                 })
                 ->toArray();
         echo json_encode($arData);
+    }
+
+    public function findBank() {
+        $query = $this->db->select('RowKey, '
+                        . 'Bank,'
+                        . 'IsDefault')
+                ->from('MSTBank')
+                ->order_by('Bank', 'ASC')
+                ->get();
+        echo json_encode($query->result());
+    }
+
+    public function editBank() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+
+        if ($_data->RowKey === PCenter::GUID_EMPTY()) {
+            $queryChk = $this->db->where('Bank', $_data->Bank)->from('MSTBank')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                if ($_data->IsDefault) {
+                    $this->db->set('IsDefault', false)
+                            ->update('MSTBank');
+                }
+
+                $_data->RowKey = PCenter::GUID();
+                $_data->RowStatus = true;
+                $_data->CreateBy = $this->USER_LOGIN()->RowKey;
+                $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->insert('MSTBank', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                    $vReturn->key = $_data->RowKey;
+                }
+            }
+        } else {
+            $queryChk = $this->db->where('Bank', $_data->Bank)->where('RowKey !=', $_data->RowKey)->from('MSTBank')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                if ($_data->IsDefault) {
+                    $this->db->set('IsDefault', false)
+                            ->update('MSTBank');
+                }
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->where('RowKey', $_data->RowKey)->update('MSTBank', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                    $vReturn->key = $_data->RowKey;
+                }
+            }
+        }
+
+        echo json_encode($vReturn);
+    }
+
+    public function findBankBranch() {
+        $_key = $_POST['key'];
+        $query = $this->db->select('RowKey, '
+                        . 'Branch,'
+                        . 'IsDefault')
+                ->from('MSTBankBranch')
+                ->where('BankKey', $_key)
+                ->order_by('Branch', 'ASC')
+                ->get();
+        echo json_encode($query->result());
+    }
+    
+    public function editBankBranch() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+
+        if ($_data->RowKey === PCenter::GUID_EMPTY()) {
+            $queryChk = $this->db->where('Branch', $_data->Branch)->where('BankKey', $_data->BankKey)->from('MSTBankBranch')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                if ($_data->IsDefault) {
+                    $this->db->set('IsDefault', false)
+                            ->where('BankKey', $_data->BankKey)
+                            ->update('MSTBankBranch');
+                }
+
+                $_data->RowKey = PCenter::GUID();
+                $_data->RowStatus = true;
+                $_data->CreateBy = $this->USER_LOGIN()->RowKey;
+                $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->insert('MSTBankBranch', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                    $vReturn->key = $_data->RowKey;
+                }
+            }
+        } else {
+            $queryChk = $this->db->where('Branch', $_data->Branch)->where('RowKey !=', $_data->RowKey)->where('BankKey', $_data->BankKey)->from('MSTBankBranch')->count_all_results();
+            if ($queryChk > 0) {
+                $vReturn->success = false;
+                $vReturn->message = 'This information is already in the system.';
+            } else {
+                if ($_data->IsDefault) {
+                    $this->db->set('IsDefault', false)
+                            ->where('BankKey', $_data->BankKey)
+                            ->update('MSTBankBranch');
+                }
+                $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->where('RowKey', $_data->RowKey)->update('MSTBankBranch', $_data);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $vReturn->success = false;
+                    $vReturn->message = $this->db->_error_message();
+                } else {
+                    $this->db->trans_commit();
+                    $vReturn->success = true;
+                    $vReturn->key = $_data->RowKey;
+                }
+            }
+        }
+
+        echo json_encode($vReturn);
     }
 
 }

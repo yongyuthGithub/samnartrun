@@ -8,6 +8,9 @@ $(function () {
     } else {
         setDataCust(Guid, function () {});
         form_receiptedit.find('.cheque-type').css({'display': 'none'});
+        setBank(function () {
+            setBankBranch(function () {});
+        });
     }
 
     form_receiptedit.find('#cmdCust').selectpicker({
@@ -67,6 +70,167 @@ $(function () {
                 var _html = '';
                 $.each(vdata, function (k, v) {
                     _html += '<option data-icon="fa fa-building" value="' + v.RowKey + '" data-duedate="' + v.DueDate + '">&nbsp;&nbsp;' + v.Branch + ' ' + v.Address + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh');
+                fun(_sel);
+            }
+        });
+    }
+
+    form_receiptedit.find('#cmdBank').selectpicker({
+    }).on({
+        change: function () {
+            setBankBranch(function () {});
+        },
+        'loaded.bs.select': function (e) {
+            $('#btn-BankNew').on({
+                click: function () {
+                    $.bPopup({
+                        url: mvcPatch('Receipt/newBank'),
+                        title: 'เพิ่มธนาคาร',
+                        closable: false,
+                        size: BootstrapDialog.SIZE_NORMAL,
+                        onshow: function (k) {
+                            k.getModal().data({
+                                data: new Object({key: Guid}),
+                                fun: function (_f) {
+                                    var obj = new Object();
+                                    obj.RowKey = Guid;
+                                    obj.Bank = _f.find('#txtBank').val();
+                                    obj.IsDefault = _f.find('#swDF').is(':checked');
+                                    $.bConfirm({
+                                        buttonOK: function (k) {
+                                            k.close();
+                                            $.reqData({
+                                                url: mvcPatch('Receipt/editBank'),
+                                                data: {data: JSON.stringify(obj)},
+                                                loanding: false,
+                                                callback: function (vdata) {
+                                                    if (vdata.success) {
+                                                        _f.find('#btn-close').click();
+                                                        setBank(function (_t) {
+                                                            _t.val(vdata.key).selectpicker('render').change();
+                                                            setBankBranch(function () {});
+                                                        });
+                                                    } else {
+                                                        $.bAlert({
+                                                            message: vdata.message
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        },
+                        buttons: [
+                            {
+                                id: 'btn-ok',
+                                icon: 'fa fa-check',
+                                label: '&nbsp;ตกลง',
+                                action: function (k) {
+
+                                }
+                            }
+                        ]
+                    });
+                }
+            })
+        }
+    });
+
+    function setBank(fun) {
+        $.reqData({
+            url: mvcPatch('Receipt/findBank'),
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_receiptedit.find('#cmdBank').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    var _s = v.IsDefault === '1' ? 'selected' : '';
+                    _html += '<option data-icon="fa fa-building" value="' + v.RowKey + '" ' + _s + '>&nbsp;&nbsp;' + v.Bank + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh');
+                fun(_sel);
+            }
+        });
+    }
+
+    form_receiptedit.find('#cmdBankBranch').selectpicker({
+    }).on({
+        change: function () {
+//            setDueData();
+        },
+        'loaded.bs.select': function (e) {
+            $('#btn-BankBranchNew').on({
+                click: function () {
+                    $.bPopup({
+                        url: mvcPatch('Receipt/newBankBranch'),
+                        title: 'เพิ่มสาขาธนาคาร',
+                        closable: false,
+                        size: BootstrapDialog.SIZE_NORMAL,
+                        onshow: function (k) {
+                            k.getModal().data({
+                                data: new Object({key: Guid}),
+                                fun: function (_f) {
+                                    var obj = new Object();
+                                    obj.RowKey = Guid;
+                                    obj.BankKey = form_receiptedit.find('#cmdBank').val();
+                                    obj.Branch = _f.find('#txtBankBranch').val();
+                                    obj.IsDefault = _f.find('#swDF').is(':checked');
+                                    $.bConfirm({
+                                        buttonOK: function (k) {
+                                            k.close();
+                                            $.reqData({
+                                                url: mvcPatch('Receipt/editBankBranch'),
+                                                data: {data: JSON.stringify(obj)},
+                                                loanding: false,
+                                                callback: function (vdata) {
+                                                    if (vdata.success) {
+                                                        _f.find('#btn-close').click();
+                                                        setBankBranch(function (_t) {
+                                                            _t.val(vdata.key).selectpicker('render').change();
+                                                        });
+                                                    } else {
+                                                        $.bAlert({
+                                                            message: vdata.message
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        },
+                        buttons: [
+                            {
+                                id: 'btn-ok',
+                                icon: 'fa fa-check',
+                                label: '&nbsp;ตกลง',
+                                action: function (k) {
+
+                                }
+                            }
+                        ]
+                    });
+                }
+            })
+        }
+    });
+
+    function setBankBranch(fun) {
+        $.reqData({
+            url: mvcPatch('Receipt/findBankBranch'),
+            data: {key: form_receiptedit.find('#cmdBank').val()},
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_receiptedit.find('#cmdBankBranch').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    var _s = v.IsDefault === '1' ? 'selected' : '';
+                    _html += '<option data-icon="fa fa-building" value="' + v.RowKey + '" ' + _s + '>&nbsp;&nbsp;' + v.Branch + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh');
                 fun(_sel);
