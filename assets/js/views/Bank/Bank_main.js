@@ -32,7 +32,7 @@ $(function () {
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Bank/edit'),
-                title: 'เพิ่มลูกค้า',
+                title: 'เพิ่มธนาคาร',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -81,8 +81,8 @@ $(function () {
 
         btnEditFun: function (f, d) {
             $.bPopup({
-                url: mvcPatch('Customer/edit'),
-                title: 'แก้ไขข้อมูลลูกค้า',
+                url: mvcPatch('Bank/edit'),
+                title: 'แก้ไขข้อมูลธนาคาร',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -97,7 +97,7 @@ $(function () {
                                 buttonOK: function (k) {
                                     k.close();
                                     $.reqData({
-                                        url: mvcPatch('Customer/editCustomer'),
+                                        url: mvcPatch('Bank/editBank'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -162,7 +162,7 @@ $(function () {
                     txtkey: d.key,
                     txtdisplay: d.Customer
                 }
-            }).prop('action', mvcPatch('Customer/branchindex')).submit();
+            }).prop('action', mvcPatch('Bank/branchindex')).submit();
         }
     });
 });
