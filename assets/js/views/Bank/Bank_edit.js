@@ -12,8 +12,8 @@ var _formdata = form_Bankedit_C.data('data');
     if (_formdata.key === Guid) {
 //        setTitle(Guid);
     } else {
-        form_Bankedit.find('#txtCusCode').val(_formdata.CusCode);
-        form_Bankedit.find('#txtUser').val(_formdata.Customer);
+        form_Bankedit.find('#txtBank').val(_formdata.Bank);
+        form_Bankedit.find('#swDF').val(_formdata.IsDefault);
     }
 
 
