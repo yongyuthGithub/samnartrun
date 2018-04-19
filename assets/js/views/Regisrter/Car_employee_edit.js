@@ -96,19 +96,11 @@ $(function () {
             form_CarEmpedit.find('#btn-ok')
         ],
         fields: {
-            txtSDate1: {
+            txtCmdcaremployee: {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* กรุณาระบุวันที่เริ่มขับรถ'
-                    }
-                }
-            },
-            txtcmdCaremployee: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* กรุณาระบุคนขับรถ'
+                        message: '* กรุณาระบุชื่อคนขับรถ'
                     }
                 }
             },
@@ -117,6 +109,14 @@ $(function () {
                 validators: {
                     notEmpty: {
                         message: '* กรุณาระบุเลขทะเบียนรถ'
+                    }
+                }
+            },
+            txtSDate11: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุวันที่เริ่มทำงาน'
                     }
                 }
             },
