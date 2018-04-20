@@ -18,8 +18,8 @@ $(function () {
         UrlLoandingclose: true,
         DataColumns: [
             {data: 'Bank', header: 'ธนาคาร'},
-            {data: 'IsDefault', header: 'ค่าเริ่มต้น'} 
-            
+            {data: 'IsDefault', header: 'ค่าเริ่มต้น'}
+
         ],
         DataColumnsDefs: [{
                 render: function (row, type, val2, meta) {
@@ -41,8 +41,8 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = Guid;
-                            obj.Bank=_f.find('#txtBank').val();
-                           obj.IsDefault =  _f.find('#swDF').is(':checked')
+                            obj.Bank = _f.find('#txtBank').val();
+                            obj.IsDefault = _f.find('#swDF').is(':checked')
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -91,8 +91,8 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = d.key;
-                            obj.CusCode=_f.find('#txtCusCode').val();
-                            obj.Customer = _f.find('#txtUser').val();                             
+                            obj.Bank = _f.find('#txtBank').val();
+                            obj.IsDefault = _f.find('#swDF').is(':checked')
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();

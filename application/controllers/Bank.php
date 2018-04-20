@@ -39,7 +39,10 @@ class Bank extends PCenter {
                 'Bank' => $row->Bank,
                 'IsDefault' => $row->IsDefault,
                 '_Delete' => $this->db
-                        
+                        ->where('bb.BankKey', $row->RowKey)
+                        ->from('TRNReceiptPayCheque r')
+                        ->from('MSTBankBranch bb', 'r.BankBranchKey=bb.RowKey')
+                        ->count_all_results() > 0 ? false : true
             );
             array_push($_array, $_ar);
         }
@@ -76,6 +79,11 @@ class Bank extends PCenter {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
+                if ($_data->IsDefault) {
+                    $this->db->set('IsDefault', false)
+                            ->update('MSTBank');
+                }
+
                 $_data->RowKey = PCenter::GUID();
                 $_data->RowStatus = true;
                 $_data->CreateBy = $this->USER_LOGIN()->RowKey;
@@ -90,6 +98,7 @@ class Bank extends PCenter {
                 } else {
                     $this->db->trans_commit();
                     $vReturn->success = true;
+                    $vReturn->key = $_data->RowKey;
                 }
             }
         } else {
@@ -98,6 +107,10 @@ class Bank extends PCenter {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
+                if ($_data->IsDefault) {
+                    $this->db->set('IsDefault', false)
+                            ->update('MSTBank');
+                }
                 $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('MSTBank', $_data);
@@ -108,6 +121,7 @@ class Bank extends PCenter {
                 } else {
                     $this->db->trans_commit();
                     $vReturn->success = true;
+                    $vReturn->key = $_data->RowKey;
                 }
             }
         }
