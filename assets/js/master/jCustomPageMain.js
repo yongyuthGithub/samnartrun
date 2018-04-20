@@ -599,9 +599,10 @@
             //});
 
             $(this).on('success.field.fv err.field.fv err.form.fv success.form.fv', function (e) {
-                _thisF.find('[data-fv-result="INVALID"]').removeAttr('style');
+//                _thisF.find('[data-fv-result="INVALID"]').removeAttr('style');
                 $.each(setting.btnActive, function (key, val) {
-                    if (_thisF.find('[data-fv-result="INVALID"]').length > 0) {
+//                    if (_thisF.find('[data-fv-result="INVALID"]').length > 0) {
+                    if (!_thisF.data('formValidation').isValid()) {
                         $(val).prop('disabled', true).addClass('disabled');
                     } else {
                         $(val).prop('disabled', false).removeClass('disabled');
@@ -898,6 +899,7 @@
             fields: {},
             //message: new Object(),
             btnactive: [],
+            excluded: [':disabled']
 //            positionY: 'top',
 //            positionX: 'right',
 //            type: 'error'
@@ -911,7 +913,7 @@
             _this.formValidation({
                 framework: 'bootstrap',
                 //excluded: [':disabled', ':hidden', ':not(:visible)'],
-                excluded: [':disabled'],
+                excluded: setting.excluded,
                 //autoFocus:true,
                 err: {
 //                    container: _this.find('#messages')
@@ -927,9 +929,12 @@
                 },
                 fields: setting.fields,
             }).on('err.form.fv', function (e) {
-                setting.funerror(e)
+                setting.funerror(e);
             }).on('success.form.fv', function (e) {
-                setting.funsuccess(e)
+                setting.funsuccess(e);
+//                $.each(setting.btnactive, function (k, v) {
+//                    v.removeClass('disabled').removeAttr('disabled');
+//                });
             }).on('err.field.fv', function (e, data) {
 //                var _mk = _this.find('.help-block[data-fv-for="' + data.field + '"]');
 //                _this.find('#btn-error').attr('data-message', 'Error :' + _mk.text()).click();

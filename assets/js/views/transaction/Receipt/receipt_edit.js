@@ -21,7 +21,7 @@ $(function () {
             form_billlist.data('data', new Array()).find('.xref').click();
             setDataCustBranch(function (s) {
                 form_receiptedit.formValidation('revalidateField', s);
-            })
+            });
         }
     });
 
@@ -47,8 +47,10 @@ $(function () {
         change: function () {
             if (parseInt($(this).val()) === 1) {
                 form_receiptedit.find('.cheque-type').css({'display': 'none'});
+                deCheque();
             } else {
                 form_receiptedit.find('.cheque-type').css({'display': 'block'});
+                enCheque();
             }
         }
     });
@@ -269,6 +271,7 @@ $(function () {
                 }).Sum();
         var _sum = TBill + TOther;
         form_receiptedit.find('#txtPriceTotal').data('data', _sum).val(addCommas(_sum, 2));
+//        form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#txtPriceTotal'));
     }
 
     form_billlist.on('focusout', '.txtInputAmounts', function () {
@@ -298,6 +301,7 @@ $(function () {
         DataColumnsOrder: [],
         AfterLoadData: function (f, d, t) {
             SumAmounts();
+//            form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#txtPriceTotal'));
         },
         DataColumns: [
             {data: 'DocID', header: 'เลขที่บิล', orderable: false},
@@ -419,6 +423,7 @@ $(function () {
         DataColumnsOrder: [],
         AfterLoadData: function (f, d, t) {
             SumAmounts();
+//            form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#txtPriceTotal'));
         },
         DataColumns: [
             {data: 'Seq', header: '#', orderable: false},
@@ -467,6 +472,150 @@ $(function () {
             f.find('.xref').click();
         },
         btnPreviewFun: function (f, d) {
+        }
+    });
+
+    form_receiptedit.find('#btn-print').on({
+        click: function () {
+            form_receiptedit.submit();
+        }
+    });
+
+//    var _vdncmdBank = {
+//        icon: false,
+//        validators: {
+//            notEmpty: {
+//                message: '* เลือกธนาคาร'
+//            }
+//        }
+//    };
+//    var _vdncmdBankBranch = {
+//        icon: false,
+//        validators: {
+//            notEmpty: {
+//                message: '* เลือกสาขาธนาคาร'
+//            }
+//        }
+//    };
+//    var _vdntxtChequeNumber = {
+//        icon: false,
+//        validators: {
+//            notEmpty: {
+//                message: '* ระบุหมายเลขเช็ค'
+//            }
+//        }
+//    };
+//    var _vdntxtChequeDate = {
+//        icon: false,
+//        validators: {
+//            notEmpty: {
+//                message: '* ระบุวันที่เช็ค'
+//            }
+//        }
+//    };
+
+    function enCheque() {
+//        form_receiptedit
+//                .formValidation('addField', 'cmdBank', _vdncmdBank)
+//                .formValidation('addField', 'cmdBankBranch', _vdncmdBankBranch)
+//                .formValidation('addField', 'txtChequeNumber', _vdntxtChequeNumber)
+//                .formValidation('addField', 'txtChequeDate', _vdntxtChequeDate);
+        
+//        form_receiptedit.find('#cmdBank').attr('name', 'cmdBank');
+//        form_receiptedit.find('#cmdBankBranch').attr('name', 'cmdBankBranch');
+//        form_receiptedit.find('#txtChequeNumber').attr('name', 'txtChequeNumber');
+//        form_receiptedit.find('#txtChequeDate').attr('name', 'txtChequeDate');
+//        form_receiptedit.find('#cmdBank,#cmdBankBranch,#txtChequeNumber,#txtChequeDate').show();
+        form_receiptedit.find('#btn-print').removeClass('disabled').removeAttr('disabled');
+        form_receiptedit.data('formValidation').resetForm();
+
+    }
+    function deCheque() {
+//        form_receiptedit
+//                .formValidation('removeField', 'cmdBank')
+//                .formValidation('removeField', 'cmdBankBranch')
+//                .formValidation('removeField', 'txtChequeNumber')
+//                .formValidation('removeField', 'txtChequeDate');
+        
+//        form_receiptedit.find('#cmdBank').attr('name', 'cmdBank_d');
+//        form_receiptedit.find('#cmdBankBranch').attr('name', 'cmdBankBranch_d');
+//        form_receiptedit.find('#txtChequeNumber').attr('name', 'txtChequeNumber_d');
+//        form_receiptedit.find('#txtChequeDate').attr('name', 'txtChequeDate_d');
+//        form_receiptedit.find('#cmdBank,#cmdBankBranch,#txtChequeNumber,#txtChequeDate').hide();
+        form_receiptedit.find('#btn-print').removeClass('disabled').removeAttr('disabled');
+        form_receiptedit.data('formValidation').resetForm();
+    }
+    form_receiptedit.myValidation({
+        funsuccess: function () {
+            if (parseFloat(form_receiptedit.find('#txtPriceTotal').data('data')) === 0) {
+                $.bAlert({
+                    message: 'จำนวนที่ออกใบเสร็จต้องมากกว่า 0'
+                });
+            } else {
+
+            }
+        },
+        btnactive: [
+            form_receiptedit.find('#btn-print')
+        ],
+        excluded: [':hidden', ':not(:visible)'],
+        fields: {
+            cmdCust: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* เลือกรายชื่อลูกค้าเพื่อทำการออกใบเสร็จ'
+                    }
+                }
+            },
+            cmdCustBranch: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* เลือกที่อยู่ลูกค้าเพื่อใช้ในการออกใบเสร็จ'
+                    }
+                }
+            },
+            txtDocDate: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* ระบุวันที่ออกใบเสร็จ'
+                    }
+                }
+            },
+            cmdBank: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* เลือกธนาคาร'
+                    }
+                }
+            },
+            cmdBankBranch: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* เลือกสาขาธนาคาร'
+                    }
+                }
+            },
+            txtChequeNumber: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* ระบุหมายเลขเช็ค'
+                    }
+                }
+            },
+            txtChequeDate: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* ระบุวันที่เช็ค'
+                    }
+                }
+            },
         }
     });
 });

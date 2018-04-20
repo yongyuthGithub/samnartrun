@@ -17,7 +17,7 @@
         </div>
     </div>
 </div>
-<div id="form_receiptedit">
+<form id="form_receiptedit">
     <div class="col-12">   
         <div class="panel panel-default">
             <div class="panel-body">
@@ -245,5 +245,5 @@
             </div>
         </div>
     </div>
-</div>
+</form>>
 <input type="hidden" id="txtkey" value="<?php echo $_POST['txtkey']; ?>" />
