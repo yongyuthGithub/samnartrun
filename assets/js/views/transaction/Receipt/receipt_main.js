@@ -25,18 +25,18 @@ $(function () {
 
     setFind();
     function setFind() {
-//        $.reqData({
-//            url: mvcPatch('Bill/findbill'),
-//            data: {vdata: JSON.stringify({
-//                    SDate: setDateJson(form_receipt.find('#txtSDate').val()),
-//                    EDate: setDateJson(form_receipt.find('#txtEDate').val())
-//                })
-//            },
-//            loanding: false,
-//            callback: function (vdata) {
-//                form_bilelist.data('data', vdata).find('.xref').click();
-//            }
-//        });
+        $.reqData({
+            url: mvcPatch('Receipt/findReceipt'),
+            data: {vdata: JSON.stringify({
+                    SDate: setDateJson(form_receipt.find('#txtSDate').val()),
+                    EDate: setDateJson(form_receipt.find('#txtEDate').val())
+                })
+            },
+            loanding: false,
+            callback: function (vdata) {
+                form_receiptlist.data('data', vdata).find('.xref').click();
+            }
+        });
     }
 
     form_receiptlist.data('data', new Array()).setMainPage({
@@ -44,7 +44,13 @@ $(function () {
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
-        btnPreview: false,
+        btnEditText: 'แก้ไข',
+        btnNewText: 'เพิ่ม',
+        btnDeleteText: 'ลบ',
+        btnPreview: true,
+        btnPreviewText: 'Preview',
+        btnPreviewIcon: 'fa fa-search',
+        btnPreviewStyle: 'btn-success',
         headerString: '',
 //        UrlDataJson: mvcPatch('controllers/action'),
         DataJson: function () {
@@ -56,19 +62,27 @@ $(function () {
         DataColumns: [
             {data: 'DocID', header: 'เลขที่ใบเสร็จ'},
             {data: 'DocDate', header: 'วันที่ใบเสร็จ'},
-            {data: 'PayType', header: 'ประเภทการชำระ'},
+            {data: 'Customer', header: 'ลูกค้า'},
+            {data: 'PayType', header: 'ชำระโดย'},
             {data: 'Amounts', header: 'จำนวนเงินที่ชำระ'},
 //            {data: 'Url', header: 'Url'}
         ],
-//        DataColumnsDefs: [
-//            {
-//                render: function (row, type, val2, meta) {
-//                    return '<i class="' + val2.Icon + '"></i>';
-//                },
-//                orderable: true,
-//                targets: 3
-//            }
-//        ],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    return PHP_JSON_To_ShowDate(val2.DocDate);
+                },
+                orderable: true,
+                targets: 1
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    return addCommas(parseFloat(val2.Amounts), 2);
+                },
+                orderable: true,
+                targets: 4
+            }
+        ],
         btnNewFun: function (f) {
             form_sumbit.SetDataPost({
                 data: {

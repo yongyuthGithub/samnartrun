@@ -599,6 +599,7 @@
             //});
 
             $(this).on('success.field.fv err.field.fv err.form.fv success.form.fv', function (e) {
+//            $(this).on('err.form.fv success.form.fv', function (e) {
 //                _thisF.find('[data-fv-result="INVALID"]').removeAttr('style');
                 $.each(setting.btnActive, function (key, val) {
 //                    if (_thisF.find('[data-fv-result="INVALID"]').length > 0) {
@@ -914,6 +915,7 @@
                 framework: 'bootstrap',
                 //excluded: [':disabled', ':hidden', ':not(:visible)'],
                 excluded: setting.excluded,
+                live: 'enabled',
                 //autoFocus:true,
                 err: {
 //                    container: _this.find('#messages')

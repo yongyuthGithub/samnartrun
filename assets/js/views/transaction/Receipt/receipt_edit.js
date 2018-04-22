@@ -4,6 +4,7 @@ $(function () {
     var form_otherlist = form_receiptedit.find('#form_otherlist');
 
     if ($('#txtkey').val() !== Guid) {
+        form_receiptedit.find('.rDocIDType').css({'display': 'none'});
         form_receiptedit.find('.cheque-type').css({'display': 'none'});
     } else {
         setDataCust(Guid, function () {});
@@ -520,7 +521,7 @@ $(function () {
 //                .formValidation('addField', 'cmdBankBranch', _vdncmdBankBranch)
 //                .formValidation('addField', 'txtChequeNumber', _vdntxtChequeNumber)
 //                .formValidation('addField', 'txtChequeDate', _vdntxtChequeDate);
-        
+
 //        form_receiptedit.find('#cmdBank').attr('name', 'cmdBank');
 //        form_receiptedit.find('#cmdBankBranch').attr('name', 'cmdBankBranch');
 //        form_receiptedit.find('#txtChequeNumber').attr('name', 'txtChequeNumber');
@@ -536,7 +537,7 @@ $(function () {
 //                .formValidation('removeField', 'cmdBankBranch')
 //                .formValidation('removeField', 'txtChequeNumber')
 //                .formValidation('removeField', 'txtChequeDate');
-        
+
 //        form_receiptedit.find('#cmdBank').attr('name', 'cmdBank_d');
 //        form_receiptedit.find('#cmdBankBranch').attr('name', 'cmdBankBranch_d');
 //        form_receiptedit.find('#txtChequeNumber').attr('name', 'txtChequeNumber_d');
@@ -552,13 +553,90 @@ $(function () {
                     message: 'จำนวนที่ออกใบเสร็จต้องมากกว่า 0'
                 });
             } else {
+                var obj = new Object();
+                obj.RowKey = $('#txtkey').val();
+                obj.DocDate = setDateJson(form_receiptedit.find('#txtDocDate').val());
+                obj.CustomerBranchKey = form_receiptedit.find('#cmdCustBranch').val();
+                obj.PayType = parseInt($('#cmdPayType').val());
+                obj.TRNReceiptBill = new Array();
+                $.each(form_billlist.data('data'), function (k, v) {
+                    obj.TRNReceiptBill.push({
+                        BillKey: v.key,
+                        Amounts: v.InputAmounts
+                    });
+                });
+                obj.TRNReceiptOther = new Array();
+                $.each(form_otherlist.data('data'), function (k, v) {
+                    obj.TRNReceiptOther.push({
+                        Detail: v.Detail,
+                        Amounts: v.InputAmounts
+                    });
+                });
+                obj.TRNReceiptPayCheque = new Array();
+                if (obj.PayType === 2) {
+                    obj.TRNReceiptPayCheque.push({
+                        BankBranchKey: form_receiptedit.find('#cmdBankBranch').val(),
+                        ChequeNumber: form_receiptedit.find('#txtChequeNumber').val(),
+                        ChequeDate: setDateJson(form_receiptedit.find('#txtChequeDate').val())
+                    });
+                }
+                $.bConfirm({
+                    buttonOK: function (k) {
+                        k.close();
+                        $.reqData({
+                            url: mvcPatch('Receipt/editReceipt'),
+                            data: {
+                                data: JSON.stringify(obj),
+                                type: form_receiptedit.find('#cmdDocIDType').val()
+                            },
+                            loanding: false,
+                            callback: function (vdata) {
+                                if (vdata.success) {
+//                                    $.bPopup({
+//                                        url: mvcPatch('Bill/displayPrint'),
+//                                        title: 'พิมพ์บิล',
+//                                        closable: false,
+//                                        size: BootstrapDialog.SIZE_WIDE,
+//                                        onshow: function (k) {
+//                                            k.getModal().data({
+//                                                print: PrintStatus.Print,
+//                                                data: vdata.key,
+//                                                fun: function (_f) {
+//
+//                                                }
+//                                            });
+//                                        },
+//                                        onhidden: function (k) {
+//                                            form_sumbit.prop('action', mvcPatch('Bill/index')).submit();
+//                                        },
+//                                        buttons: [
+//                                            {
+//                                                id: 'btn-print',
+//                                                icon: 'glyphicon glyphicon-print',
+//                                                label: '&nbsp;Print',
+//                                                cssClass: BootstrapDialog.TYPE_SUCCESS,
+//                                                action: function (k) {
+//                                                    //javascript code
+//                                                }
+//                                            }
+//                                        ]
+//                                    });
 
+                                } else {
+                                    $.bAlert({
+                                        message: vdata.message
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
             }
         },
         btnactive: [
             form_receiptedit.find('#btn-print')
         ],
-        excluded: [':hidden', ':not(:visible)'],
+        excluded: [':disabled', ':hidden', ':not(:visible)'],
         fields: {
             cmdCust: {
                 icon: false,

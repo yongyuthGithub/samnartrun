@@ -28,7 +28,7 @@ class Receipt extends PCenter {
     public function newBank() {
         $this->load->view('transaction/Receipt/receiptbbank_new');
     }
-    
+
     public function newBankBranch() {
         $this->load->view('transaction/Receipt/receiptbankbranch_new');
     }
@@ -66,7 +66,7 @@ class Receipt extends PCenter {
                                 ->from('TRNBillHD b')
                                 ->join('MSTCustomerBranch cb', 'b.CustomerBranchKey=cb.RowKey')
                                 ->where('cb.CompanyKey', $_key)
-                                ->where('b.Amounts=b.Remain')
+                                ->where('b.Remain>0')
                                 ->where_not_in('b.RowKey', $_data)
                                 ->get()->result())
                         ->select(function($x) {
@@ -193,7 +193,7 @@ class Receipt extends PCenter {
                 ->get();
         echo json_encode($query->result());
     }
-    
+
     public function editBankBranch() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
@@ -255,6 +255,156 @@ class Receipt extends PCenter {
             }
         }
 
+        echo json_encode($vReturn);
+    }
+
+    public function findReceipt() {
+        $_data = json_decode($_POST['vdata']);
+        $qryMenu = $this->db->select('b.RowKey as key,'
+                        . 'b.DocID,'
+                        . 'b.Seq,'
+                        . 'b.DocDate,'
+                        . 'c.CusCode,'
+                        . 'c.Customer,'
+                        . 'b.PayType')
+                ->where('b.DocDate >=', $_data->SDate)
+                ->where('b.DocDate <=', $_data->EDate)
+                ->from('TRNReceiptHD b')
+                ->join('MSTCustomerBranch cb', 'b.CustomerBranchKey=cb.RowKey', 'left')
+                ->join('MSTCustomer c', 'cb.CompanyKey=c.RowKey', 'left')
+                ->get();
+        $qShow = Linq::from($qryMenu->result())
+                        ->select(function($x) {
+                            $tBill = Linq::from($this->db->select('Amounts')
+                                            ->where('ReceiptHDKey', $x->key)
+                                            ->from('TRNReceiptBill')->get()->result())
+                                    ->select(function($k) {
+                                        return $k->Amounts;
+                                    })->sum();
+                            $tOther = Linq::from($this->db->select('Amounts')
+                                            ->where('ReceiptHDKey', $x->key)
+                                            ->from('TRNReceiptOther')->get()->result())
+                                    ->select(function($k) {
+                                        return $k->Amounts;
+                                    })->sum();
+                            return [
+                                'key' => $x->key,
+                                'DocID' => (int) $x->Seq > 0 ? $x->DocID . '-' . $x->Seq : $x->DocID,
+                                'DocDate' => $x->DocDate,
+                                'CusCode' => $x->CusCode,
+                                'Customer' => $x->Customer,
+                                'PayType' => (int) $x->PayType === 1 ? 'เงินสด' : 'เครดิต',
+                                'Amounts' => $tBill + $tOther,
+                            ];
+                        })->toArray();
+        echo json_encode($qShow);
+    }
+
+    public function editReceipt() {
+        $_data = json_decode($_POST['data']);
+        $_pfold = $_POST['type'];
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+        if ($_data->RowKey === PCenter::GUID_EMPTY()) {
+            $_data->RowKey = PCenter::GUID();
+            if ($_pfold === PCenter::GUID_EMPTY()) {
+                $_data->DocID = $this->createDocID(PCenter::genInvoice());
+                $_data->Seq = 0;
+            } else {
+                $docOld = $this->db->select('DocID,Seq')
+                                ->from('TRNReceiptHD')
+                                ->where('RowKey', $_pfold)
+                                ->get()->row();
+                $_data->DocID = $docOld->DocID;
+                $_data->Seq = (int) $docOld->Seq + 1;
+            }
+            $_data->CreateBy = $this->USER_LOGIN()->RowKey;
+            $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+            $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+            $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+            $this->db->insert('TRNReceiptHD', $_data);
+
+            foreach ($_data->TRNReceiptBill as $_row) {
+                $_row->RowKey = PCenter::GUID();
+                $_row->ReceiptHDKey = $_data->RowKey;
+                $this->db->insert('TRNReceiptBill', $_row);
+
+                $this->db->set('Remain', 'Remain-' . $_row->Amounts, FALSE);
+                $this->db->where('RowKey', $_row->BillKey);
+                $this->db->update('TRNBillHD');
+            }
+
+            foreach ($_data->TRNReceiptOther as $_row) {
+                $_row->RowKey = PCenter::GUID();
+                $_row->ReceiptHDKey = $_data->RowKey;
+                $this->db->insert('TRNReceiptOther', $_row);
+            }
+
+            foreach ($_data->TRNReceiptPayCheque as $_row) {
+                $_row->RowKey = PCenter::GUID();
+                $_row->ReceiptHDKey = $_data->RowKey;
+                $this->db->insert('TRNReceiptPayCheque', $_row);
+            }
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $vReturn->success = false;
+                $vReturn->message = $this->db->_error_message();
+            } else {
+                $this->db->trans_commit();
+                $vReturn->success = true;
+            }
+        } else {
+            $_data->UpdateBy = PCenter::GUID_EMPTY();
+            $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+            $this->db->where('RowKey', $_data->RowKey)->update('TRNReceiptHD', $_data);
+
+            $_old = $this->db->from('TRNReceiptBill')
+                    ->where('ReceiptHDKey', $_data->RowKey)
+                    ->get();
+            foreach ($_old->result() as $_row) {
+                $this->db->set('Remain', 'Remain+' . $_row->Amounts, FALSE);
+                $this->db->where('RowKey', $_row->BillKey);
+                $this->db->update('TRNBillHD');
+            }
+
+            $this->db->where('ReceiptHDKey', $_data->RowKey);
+            $this->db->delete('TRNReceiptBill');
+            foreach ($_data->TRNReceiptBill as $_row) {
+                $_row->RowKey = PCenter::GUID();
+                $_row->ReceiptHDKey = $_data->RowKey;
+                $this->db->insert('TRNReceiptBill', $_row);
+
+                $this->db->set('Remain', 'Remain-' . $_row->Amounts, FALSE);
+                $this->db->where('RowKey', $_row->BillKey);
+                $this->db->update('TRNBillHD');
+            }
+
+            $this->db->where('ReceiptHDKey', $_data->RowKey);
+            $this->db->delete('TRNReceiptOther');
+            foreach ($_data->TRNReceiptOther as $_row) {
+                $_row->RowKey = PCenter::GUID();
+                $_row->ReceiptHDKey = $_data->RowKey;
+                $this->db->insert('TRNReceiptOther', $_row);
+            }
+
+            $this->db->where('ReceiptHDKey', $_data->RowKey);
+            $this->db->delete('TRNReceiptPayCheque');
+            foreach ($_data->TRNReceiptPayCheque as $_row) {
+                $_row->RowKey = PCenter::GUID();
+                $_row->ReceiptHDKey = $_data->RowKey;
+                $this->db->insert('TRNReceiptPayCheque', $_row);
+            }
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $vReturn->success = false;
+                $vReturn->message = $this->db->_error_message();
+            } else {
+                $this->db->trans_commit();
+                $vReturn->success = true;
+                $vReturn->key = $_data->RowKey;
+            }
+        }
         echo json_encode($vReturn);
     }
 

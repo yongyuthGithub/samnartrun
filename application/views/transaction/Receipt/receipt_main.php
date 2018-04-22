@@ -1,3 +1,4 @@
+<?php echo css_asset('views/transaction/receipt/receipt_main.css'); ?>
 <?php echo js_asset('views/transaction/Receipt/receipt_main.js'); ?>
 <div class="col-12">   
     <div class="panel panel-default">

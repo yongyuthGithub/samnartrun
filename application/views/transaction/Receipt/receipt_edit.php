@@ -111,7 +111,7 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row">    
+                <div class="row rDocIDType">    
                     <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
                         <div class="form-group" style="margin-bottom: 0px;">
                             <label for="cmdDocIDType" style="line-height: 34px;">รูปแบบการสร้างรหัสใบเสร็จ :</label>                           
@@ -131,7 +131,7 @@
                                 data-selectAll-Text="Select All"
                                 data-deselectAll-Text="Deselect All"
                                 data-selected-Text-Format="count > 3">
-                            <option data-icon="fa fa-hashtag" value="0">&nbsp;&nbsp;สร้างอัตโนมัติ</option>
+                            <option data-icon="fa fa-hashtag" value="00000000-0000-0000-0000-000000000000">&nbsp;&nbsp;สร้างอัตโนมัติ</option>
                             <!--                            <option data-icon="fa fa-btc" value="2">&nbsp;&nbsp;ชำระโดยเช็ค</option>-->
                         </select>
                     </div>
