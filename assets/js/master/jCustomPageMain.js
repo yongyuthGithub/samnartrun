@@ -601,12 +601,17 @@
             $(this).on('success.field.fv err.field.fv err.form.fv success.form.fv', function (e) {
 //            $(this).on('err.form.fv success.form.fv', function (e) {
 //                _thisF.find('[data-fv-result="INVALID"]').removeAttr('style');
+//                alert(_thisF.data('formValidation').isValid());
                 $.each(setting.btnActive, function (key, val) {
 //                    if (_thisF.find('[data-fv-result="INVALID"]').length > 0) {
-                    if (!_thisF.data('formValidation').isValid()) {
-                        $(val).prop('disabled', true).addClass('disabled');
-                    } else {
+                    if (_thisF.data('formValidation').isValid() === null) {
                         $(val).prop('disabled', false).removeClass('disabled');
+//                        $(val).prop('disabled', true).addClass('disabled');
+                    } else if (_thisF.data('formValidation').isValid()) {
+                        $(val).prop('disabled', false).removeClass('disabled');
+                    } else {
+                        $(val).prop('disabled', true).addClass('disabled');
+//                        $(val).prop('disabled', false).removeClass('disabled');
                     }
                 });
             });

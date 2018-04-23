@@ -48,11 +48,12 @@ $(function () {
         change: function () {
             if (parseInt($(this).val()) === 1) {
                 form_receiptedit.find('.cheque-type').css({'display': 'none'});
-                deCheque();
+//                deCheque();
             } else {
                 form_receiptedit.find('.cheque-type').css({'display': 'block'});
-                enCheque();
+//                enCheque();
             }
+            UpdateStatus();
         }
     });
 
@@ -83,7 +84,9 @@ $(function () {
     form_receiptedit.find('#cmdBank').selectpicker({
     }).on({
         change: function () {
-            setBankBranch(function () {});
+            setBankBranch(function (s) {
+                s.selectpicker('render').change();
+            });
         },
         'loaded.bs.select': function (e) {
             $('#btn-BankNew').on({
@@ -113,7 +116,9 @@ $(function () {
                                                         _f.find('#btn-close').click();
                                                         setBank(function (_t) {
                                                             _t.val(vdata.key).selectpicker('render').change();
-                                                            setBankBranch(function () {});
+                                                            setBankBranch(function (_b) {
+                                                                _b.selectpicker('render').change();
+                                                            });
                                                         });
                                                     } else {
                                                         $.bAlert({
@@ -515,23 +520,29 @@ $(function () {
 //        }
 //    };
 
-    function enCheque() {
-//        form_receiptedit
-//                .formValidation('addField', 'cmdBank', _vdncmdBank)
-//                .formValidation('addField', 'cmdBankBranch', _vdncmdBankBranch)
-//                .formValidation('addField', 'txtChequeNumber', _vdntxtChequeNumber)
-//                .formValidation('addField', 'txtChequeDate', _vdntxtChequeDate);
-
-//        form_receiptedit.find('#cmdBank').attr('name', 'cmdBank');
-//        form_receiptedit.find('#cmdBankBranch').attr('name', 'cmdBankBranch');
-//        form_receiptedit.find('#txtChequeNumber').attr('name', 'txtChequeNumber');
-//        form_receiptedit.find('#txtChequeDate').attr('name', 'txtChequeDate');
-//        form_receiptedit.find('#cmdBank,#cmdBankBranch,#txtChequeNumber,#txtChequeDate').show();
-        form_receiptedit.find('#btn-print').removeClass('disabled').removeAttr('disabled');
-        form_receiptedit.data('formValidation').resetForm();
-
-    }
-    function deCheque() {
+//    function enCheque() {
+////        form_receiptedit
+////                .formValidation('addField', 'cmdBank', _vdncmdBank)
+////                .formValidation('addField', 'cmdBankBranch', _vdncmdBankBranch)
+////                .formValidation('addField', 'txtChequeNumber', _vdntxtChequeNumber)
+////                .formValidation('addField', 'txtChequeDate', _vdntxtChequeDate);
+//
+////        form_receiptedit.find('#cmdBank').attr('name', 'cmdBank');
+////        form_receiptedit.find('#cmdBankBranch').attr('name', 'cmdBankBranch');
+////        form_receiptedit.find('#txtChequeNumber').attr('name', 'txtChequeNumber');
+////        form_receiptedit.find('#txtChequeDate').attr('name', 'txtChequeDate');
+////        form_receiptedit.find('#cmdBank,#cmdBankBranch,#txtChequeNumber,#txtChequeDate').show();
+////        form_receiptedit.find('#btn-print').removeClass('disabled').removeAttr('disabled');
+////        form_receiptedit.data('formValidation').resetForm();
+////        form_receiptedit.data('formValidation').validate();
+//        form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#cmdCust'));
+//        form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#cmdCustBranch'));
+//        form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#cmdBank'));
+//        form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#cmdBankBranch'));
+//        form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#txtChequeNumber'));
+//        form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#txtChequeDate'));
+//    }
+    function UpdateStatus() {
 //        form_receiptedit
 //                .formValidation('removeField', 'cmdBank')
 //                .formValidation('removeField', 'cmdBankBranch')
@@ -543,8 +554,15 @@ $(function () {
 //        form_receiptedit.find('#txtChequeNumber').attr('name', 'txtChequeNumber_d');
 //        form_receiptedit.find('#txtChequeDate').attr('name', 'txtChequeDate_d');
 //        form_receiptedit.find('#cmdBank,#cmdBankBranch,#txtChequeNumber,#txtChequeDate').hide();
-        form_receiptedit.find('#btn-print').removeClass('disabled').removeAttr('disabled');
-        form_receiptedit.data('formValidation').resetForm();
+//        form_receiptedit.find('#btn-print').removeClass('disabled').removeAttr('disabled');
+//        form_receiptedit.data('formValidation').resetForm();
+//        form_receiptedit.data('formValidation').validate();
+        form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#cmdCust'));
+        form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#cmdCustBranch'));
+        form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#cmdBank'));
+        form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#cmdBankBranch'));
+        form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#txtChequeNumber'));
+        form_receiptedit.formValidation('revalidateField', form_receiptedit.find('#txtChequeDate'));
     }
     form_receiptedit.myValidation({
         funsuccess: function () {
