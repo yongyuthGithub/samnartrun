@@ -342,7 +342,7 @@ form_CarEmpedit1.setMainPage({
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('register/carempedit'),
-                title: 'เพิ่มพนักงานขับรถ',
+                title: 'เพิ่มข้อมูลคนขับรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {
@@ -394,7 +394,7 @@ form_CarEmpedit1.setMainPage({
         btnEditFun: function (f, d) {
             $.bPopup({
                 url: mvcPatch('register/carempedit'),
-                title: 'แก้ไขพนักงานขับรถ',
+                title: 'แก้ไขข้อมูลคนขับรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
                 onshow: function (k) {

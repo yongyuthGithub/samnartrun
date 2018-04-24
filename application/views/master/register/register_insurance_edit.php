@@ -70,7 +70,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <label for="txtUser">วันเริ่มประกัน:</label>
                                         <div class="input-group date" id="txtSDate">
-                                            <input type='text' class="form-control text-center" id="txtUser5" name="txtUser5" placeholder="วันที่เริ่มงาน" onkeydown="return false;" />
+                                            <input type='text' class="form-control text-center" id="txtUser5" name="txtUser5" placeholder="วันเริ่มประกัน" onkeydown="return false;" />
                                             <span class="input-group-addon">
                                                 <span class="fa fa-calendar"></span>
                                             </span>
@@ -82,7 +82,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <label for="txtUser1">วันที่หมดอายุ:</label>
                                         <div class="input-group date" id="txtSDate1">
-                                            <input type='text' class="form-control text-center" id="txtUser11" name="txtUser11" placeholder="วันที่เริ่มงาน" onkeydown="return false;" />
+                                            <input type='text' class="form-control text-center" id="txtUser11" name="txtUser11" placeholder="วันที่หมดอายุ" onkeydown="return false;" />
                                             <span class="input-group-addon">
                                                 <span class="fa fa-calendar"></span>
                                             </span>
