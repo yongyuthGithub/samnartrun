@@ -223,7 +223,7 @@ class Bank extends PCenter {
         $vReturn = (object) [];
         $this->db->trans_begin();
 
-        $this->db->where_in('RowKey', $_data)->delete('MSTCustomer');
+        $this->db->where_in('RowKey', $_data)->delete('MSTBank');
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -241,7 +241,7 @@ class Bank extends PCenter {
         $vReturn = (object) [];
         $this->db->trans_begin();
 
-        $this->db->where_in('RowKey', $_data)->delete('MSTCustomerBranch');
+        $this->db->where_in('RowKey', $_data)->delete('MSTBank');
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
