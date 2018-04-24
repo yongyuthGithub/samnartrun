@@ -184,7 +184,7 @@ class Register extends PCenter {
     }
 
     public function typeedit() {
-        $this->load->view('master/Register/register_insurance_edit');
+        $this->load->view('master/register/register_insurance_edit');
     }
 
     public function findeditRegister() {

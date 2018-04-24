@@ -81,6 +81,25 @@ $(function () {
         });
     }
 
+    setReceiptOld();
+    function setReceiptOld() {
+        $.reqData({
+            url: mvcPatch('Receipt/findReceiptOld'),
+//            data: {data: JSON.stringify(obj)},
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_receiptedit.find('#cmdDocIDType').empty();
+                var _html = '<option data-icon="fa fa-hashtag" value="' + Guid + '">&nbsp;&nbsp;สร้างอัตโนมัติ</option>';
+                $.each(vdata, function (k, v) {
+                    var _doc = parseInt(v.Seq) > 0 ? v.DocID + '-' + v.Seq : v.DocID;
+                    _html += '<option data-icon="fa fa-hashtag" value="' + v.RowKey + '">&nbsp;&nbsp;' + _doc + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh');
+            }
+        });
+
+    }
+
     form_receiptedit.find('#cmdBank').selectpicker({
     }).on({
         change: function () {
@@ -680,38 +699,38 @@ $(function () {
                     }
                 }
             },
-            cmdBank: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* เลือกธนาคาร'
-                    }
-                }
-            },
-            cmdBankBranch: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* เลือกสาขาธนาคาร'
-                    }
-                }
-            },
-            txtChequeNumber: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* ระบุหมายเลขเช็ค'
-                    }
-                }
-            },
-            txtChequeDate: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* ระบุวันที่เช็ค'
-                    }
-                }
-            },
+//            cmdBank: {
+//                icon: false,
+//                validators: {
+//                    notEmpty: {
+//                        message: '* เลือกธนาคาร'
+//                    }
+//                }
+//            },
+//            cmdBankBranch: {
+//                icon: false,
+//                validators: {
+//                    notEmpty: {
+//                        message: '* เลือกสาขาธนาคาร'
+//                    }
+//                }
+//            },
+//            txtChequeNumber: {
+//                icon: false,
+//                validators: {
+//                    notEmpty: {
+//                        message: '* ระบุหมายเลขเช็ค'
+//                    }
+//                }
+//            },
+//            txtChequeDate: {
+//                icon: false,
+//                validators: {
+//                    notEmpty: {
+//                        message: '* ระบุวันที่เช็ค'
+//                    }
+//                }
+//            },
         }
     });
 });

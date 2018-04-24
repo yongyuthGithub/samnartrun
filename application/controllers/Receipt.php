@@ -110,6 +110,34 @@ class Receipt extends PCenter {
         echo json_encode($arData);
     }
 
+    public function findReceiptOld() {
+        $query = $this->db->select('RowKey, '
+                        . 'DocID,'
+                        . 'Seq,'
+                        . 'DocDate')
+                ->from('TRNReceiptHD')
+                ->order_by('DocDate', 'desc')
+                ->get();
+        $vShow = Linq::from($query->result())
+                ->groupBy(function($x) {
+                    $key = $x->DocID;
+                    return $key;
+                })
+                ->select(function($x) {
+                    $rowOne = $this->db->select('RowKey,'
+                                    . 'DocID,'
+                                    . 'Seq,'
+                                    . 'DocDate')
+                            ->where('DocID', $x->key())
+                            ->from('TRNReceiptHD')
+                            ->order_by('Seq', 'Desc')
+                            ->get()->row();
+                    return $rowOne;
+                })
+                ->toArray();
+        echo json_encode($vShow);
+    }
+
     public function findBank() {
         $query = $this->db->select('RowKey, '
                         . 'Bank,'
@@ -299,6 +327,21 @@ class Receipt extends PCenter {
                         })->toArray();
         echo json_encode($qShow);
     }
+    
+//    public function findReceipt(){
+//        $_key = $_POST['key'];
+//        $qry = $this->db->select('b.DocID,'
+//                        . 'b.Seq,'
+//                        . 'b.DocDate,'
+//                        . 'c.CusCode,'
+//                        . 'c.Customer,'
+//                        . 'b.PayType')
+//                ->where('b.RowKey >=', $_key)
+//                ->from('TRNReceiptHD b')
+//                ->join('MSTCustomerBranch cb', 'b.CustomerBranchKey=cb.RowKey', 'left')
+//                ->get()->row();
+//        $qry->
+//    }
 
     public function editReceipt() {
         $_data = json_decode($_POST['data']);
