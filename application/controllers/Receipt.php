@@ -327,21 +327,63 @@ class Receipt extends PCenter {
                         })->toArray();
         echo json_encode($qShow);
     }
-    
-//    public function findReceipt(){
-//        $_key = $_POST['key'];
-//        $qry = $this->db->select('b.DocID,'
-//                        . 'b.Seq,'
-//                        . 'b.DocDate,'
-//                        . 'c.CusCode,'
-//                        . 'c.Customer,'
-//                        . 'b.PayType')
-//                ->where('b.RowKey >=', $_key)
-//                ->from('TRNReceiptHD b')
-//                ->join('MSTCustomerBranch cb', 'b.CustomerBranchKey=cb.RowKey', 'left')
-//                ->get()->row();
-//        $qry->
-//    }
+
+    public function findReceiptOne() {
+        $_key = $_POST['key'];
+        $qry = $this->db->select('b.DocID,'
+                                . 'cb.CompanyKey,'
+                                . 'b.CustomerBranchKey,'
+                                . 'b.DocDate,'
+                                . 'b.PayType')
+                        ->where('b.RowKey >=', $_key)
+                        ->from('TRNReceiptHD b')
+                        ->join('MSTCustomerBranch cb', 'b.CustomerBranchKey=cb.RowKey', 'left')
+                        ->get()->row();
+        $qry->BillList = Linq::from($this->db->select('r.BillKey as key,'
+                                . 'b.Remain,'
+                                . 'b.DocDate,'
+                                . 'b.DocID,'
+                                . 'r.Amounts')
+                        ->from('TRNReceiptBill r')
+                        ->where('r.ReceiptHDKey', $_key)
+                        ->join('TRNBillHD b', 'r.BillKey=b.RowKey')
+                        ->get()->result())
+                ->select(function($x) {
+                    return [
+                        'key' => $x->key,
+                        'DocDate' => $x->DocDate,
+                        'DocID' => $x->DocID,
+                        'Amounts' => $x->Amounts + $x->Remain,
+                        'InputAmounts' => $x->Amounts
+                    ];
+                })
+                ->toArray();
+        $qry->Other = array();
+        $r = 1;
+        foreach ($this->db->select('RowKey as key,'
+                        . 'Detail,'
+                        . 'Amounts')
+                ->from('TRNReceiptOther')
+                ->where('ReceiptHDKey', $_key)
+                ->get()->result() as $row) {
+            array_push($qry->Other, [
+                'key' => $row->key,
+                'Seq' => $r,
+                'Detail' => $row->Detail,
+                'Amounts' => $row->Amounts
+            ]);
+            $r++;
+        }
+        $qry->cheque = $this->db->select('c.ChequeNumber,'
+                                . 'c.ChequeDate,'
+                                . 'b.BankKey,'
+                                . 'c.BankBranchKey')
+                        ->from('TRNReceiptPayCheque c')
+                        ->join('MSTBankBranch b', 'c.BankBranchKey=b.RowKey')
+                        ->where('c.ReceiptHDKey', $_key)
+                        ->get()->result();
+        echo json_encode($qry);
+    }
 
     public function editReceipt() {
         $_data = json_decode($_POST['data']);

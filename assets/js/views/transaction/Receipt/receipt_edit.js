@@ -6,6 +6,15 @@ $(function () {
     if ($('#txtkey').val() !== Guid) {
         form_receiptedit.find('.rDocIDType').css({'display': 'none'});
         form_receiptedit.find('.cheque-type').css({'display': 'none'});
+        
+        $.reqData({
+            url: mvcPatch('Receipt/findReceiptOne'),
+            data: {key: $('#txtkey').val()},
+            loanding: false,
+            callback: function (vdata) {
+                
+            }
+        });
     } else {
         setDataCust(Guid, function () {});
         form_receiptedit.find('.cheque-type').css({'display': 'none'});
