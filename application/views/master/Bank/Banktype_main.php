@@ -16,7 +16,7 @@ and open the template in the editor.
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body"> 
-            <div id="form_Bank"></div>
+            <div id="form_Bank1"></div>
         </div>
     </div>
 </div>

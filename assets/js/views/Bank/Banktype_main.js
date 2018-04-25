@@ -1,5 +1,5 @@
 $(function () {
-    var form_Bank = $('#form_Bank');
+    var form_Bank = $('#form_Bank1');
     var form_sumbit = $('#form_sumbit');
 
     form_Bank.setMainPage({
@@ -35,7 +35,7 @@ $(function () {
 //        ],
         btnNewFun: function (f) {
             $.bPopup({
-                url: mvcPatch('Fule/branchEdit'),
+                url: mvcPatch('Bank/typeedit'),
                 title: 'เพิ่มสาขา',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
