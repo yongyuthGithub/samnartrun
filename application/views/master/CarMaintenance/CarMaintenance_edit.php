@@ -39,7 +39,7 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <label for="txtDetail">รายละเอียด:</label>
                                         <div class="input-group">
-                                            <div class="input-group-addon"><i class="fa fa fa-money" style="min-width: 20px;"></i></div>
+                                            <div class="input-group-addon"><i class="fa fa-align-justify" style="min-width: 20px;"></i></div>
                                             <input type="text" class="form-control" id="txtDetail" name="txtDetail" placeholder="รายละเอียด">
                                         </div>
                                     </div>
