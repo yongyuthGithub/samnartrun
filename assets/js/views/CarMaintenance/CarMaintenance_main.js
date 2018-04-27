@@ -24,12 +24,12 @@ form_Carmtn.setMainPage({
             {data: 'CarNumber', header: 'ทะเบียนรถ'},
             {data: 'BeginDate', header: 'วันที่ลงรายละเอียด'},
             {data: 'Detail', header: 'รายละเอียด'},
-            {data: 'CostVaule', header: 'ยอดเงิน'},
+            {data: 'CostValue', header: 'ยอดเงิน'},
         ],
         DataColumnsDefs: [
             {
                 render: function (row, type, val2, meta) {
-                    var _val = PHP_JSON_To_ShowDate(val2.BeginDate);
+                    var _val = PHP_JSON_To_ShowDate(val2.ListDate);
                     return _val;
                 },
                 orderable: true,

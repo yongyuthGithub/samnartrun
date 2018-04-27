@@ -16,7 +16,7 @@ $(function () {
         form_Carmtnedit.find('#txtSDate1').val(PHP_JSON_To_ShowDate(_formdata.ListDate));
 
         
-        setctn(function (_b) {
+        setmtn(function (_b) {
             _b.val(_formdata.CarKey).selectpicker('render');
         });
         //********************
