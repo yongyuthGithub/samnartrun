@@ -1,7 +1,7 @@
 $(function () {
     var form_Carmtn = $('#form_Carmtn');
 
-//---------------------------------------CarEmp---------------------------------------------------
+//---------------------------------------CarMtn---------------------------------------------------
 form_Carmtn.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
@@ -34,20 +34,13 @@ form_Carmtn.setMainPage({
                 },
                 orderable: true,
                 targets: 1
-            },
-             {
-                render: function (row, type, val2, meta) {
-                    var _val = val2.Title + ' ' + val2.FName +' '+ val2.LName;
-                    return _val;
-                },
-                orderable: true,
-                targets: 2
-            },
+            }
+            
             
         ],
         btnNewFun: function (f) {
             $.bPopup({
-                url: mvcPatch('CarMaintenance/editcarmtn'),
+                url: mvcPatch('CarMaintenance/edit'),
                 title: 'เพิ่มรายละเอียดค่าใช้จ่ายรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
@@ -60,7 +53,7 @@ form_Carmtn.setMainPage({
                                 CarKey: $('#txtcmdCarnumber').val(),
                                 Detail: $('#txtDetail').val(),
                                 ListDate: PHP_DateTimeShow_To_JSON(_f.find('#txtSDate')),
-                                CostVaule: _f.find('#txtCash').val()
+                                CostValue: _f.find('#txtCash').val()
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {
@@ -99,7 +92,7 @@ form_Carmtn.setMainPage({
         },
         btnEditFun: function (f, d) {
             $.bPopup({
-                url: mvcPatch('CarMaintenance/editcarmtn'),
+                url: mvcPatch('CarMaintenance/edit'),
                 title: 'แก้ไขรายละเอียดค่าใช้จ่ายรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
@@ -112,7 +105,7 @@ form_Carmtn.setMainPage({
                                 CarKey: $('#txtcmdCarnumber').val(),
                                 Detail: $('#txtDetail').val(),
                                 ListDate: PHP_DateTimeShow_To_JSON(_f.find('#txtSDate')),
-                                CostVaule: _f.find('#txtCash').val()
+                                CostValue: _f.find('#txtCash').val()
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {
@@ -162,7 +155,7 @@ form_Carmtn.setMainPage({
                                 return x.key;
                             }).ToArray();
                     $.reqData({
-                        url: mvcPatch('CarMaintenance/removecaremp'),
+                        url: mvcPatch('CarMaintenance/removecarmtn'),
                         data: {data: JSON.stringify(vdata)},
                         callback: function (vdata) {
                             if (vdata.success) {

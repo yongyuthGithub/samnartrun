@@ -19,20 +19,14 @@ class CarMaintenance extends PCenter {
     }
 
     public function findcarmtn() {
-        $query = $this->db->select('CM.RowKey as key, '
-                        . 'CM.CarKey, '
+        $query = $this->db->select('MN.RowKey as key, '
+                        . 'MN.CarKey, '
+                        . 'MN.Detail,'
                         . 'C.CarNumber,'
-                        . 'T.Title,'
-                        . 'EM.FName,'
-                        . 'EM.LName,'
-                        . 'CM.EmpKey, '
-                        . 'CM.BeginDate,'
-                        . 'CM.SkillLabor,')
-                ->from('TRNCarEmployee CM')
-                ->join('MSTCar C', 'CM.CarKey=C.RowKey', 'left')
-//                ->join('MSTDistrict D','SD.DistrictKey=D.RowKey','left')
-                ->join('MSTEmployee EM', 'CM.EmpKey=EM.RowKey', 'left')
-                ->join('MSTTitle T', 'EM.TitleKey=T.RowKey', 'left')
+                        . 'MN.ListDate,'
+                        . 'MN.CostValue,')
+                ->from('TRNMaintenance MN')
+                ->join('MSTCar C', 'MN.CarKey=C.RowKey', 'left')
                 ->get();
         echo json_encode($query->result());
     }
@@ -74,9 +68,9 @@ class CarMaintenance extends PCenter {
             } else {
                 $update = (object) [];
                 $update->CarKey = $_data->CarKey;
-                $update->EmpKey = $_data->EmpKey;
-                $update->BeginDate = $_data->BeginDate;
-                $update->SkillLabor = $_data->SkillLabor;
+                $update->Detail = $_data->Detail;
+                $update->ListDate = $_data->ListDate;
+                $update->CostValue = $_data->CostValue;
                 $update->UpdateBy = PCenter::GUID_EMPTY();
                 $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('TRNMaintenance', $update);

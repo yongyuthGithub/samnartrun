@@ -5,7 +5,7 @@ $(function () {
     var _formdata = form_Carmtnedit_C.data('data');
     if (_formdata.key === Guid) {
        
-        setempcar(function (_b) {
+        setmtn(function (_b) {
             _b.val(Guid).selectpicker('render');
         });
     } else {
@@ -16,7 +16,7 @@ $(function () {
         form_Carmtnedit.find('#txtSDate1').val(PHP_JSON_To_ShowDate(_formdata.ListDate));
 
         
-        setempcar(function (_b) {
+        setctn(function (_b) {
             _b.val(_formdata.CarKey).selectpicker('render');
         });
         //********************
@@ -34,7 +34,7 @@ $(function () {
         }
     });
 
-    function setempcar(v) {
+    function setmtn(v) {
         $.reqData({
             url: mvcPatch('Car/findCar'),
             loanding: false,
