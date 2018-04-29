@@ -189,7 +189,7 @@ $(function () {
             viewer_id: 'display-prevuew',
             report_path: mvcPatch('Bill/printTempLoad'),
             report_data: {key: form_showBill_C.data('data')},
-            report_watermark: 'เอกสารตัวอย่าง.',
+            report_watermark: 'เอกสารพิมพ์แล้ว.',
             fun: function (report, variables, viewer) {
 //                $('#btn-preview').on({
 //                    click:function(){

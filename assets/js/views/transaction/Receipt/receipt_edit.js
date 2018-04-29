@@ -2,17 +2,47 @@ $(function () {
     var form_receiptedit = $('#form_receiptedit');
     var form_billlist = form_receiptedit.find('#form_billlist');
     var form_otherlist = form_receiptedit.find('#form_otherlist');
+    var form_sumbit = $('#form_sumbit');
 
     if ($('#txtkey').val() !== Guid) {
         form_receiptedit.find('.rDocIDType').css({'display': 'none'});
         form_receiptedit.find('.cheque-type').css({'display': 'none'});
-        
+
         $.reqData({
             url: mvcPatch('Receipt/findReceiptOne'),
             data: {key: $('#txtkey').val()},
             loanding: false,
             callback: function (vdata) {
-                
+                setDataCust(vdata.CompanyKey, function (b) {
+                    b.val(vdata.CustomerBranchKey).selectpicker('render');
+                });
+                form_receiptedit.find('#txtDocDate').val(PHP_JSON_To_ShowDate(vdata.DocDate));
+                form_billlist.data('data', vdata.BillList).find('.xref').click();
+                form_otherlist.data('data', vdata.Other).find('.xref').click();
+                form_receiptedit.find('#cmdPayType').val(vdata.PayType).selectpicker('render');
+                if (parseInt(vdata.PayType) === 2) {
+                    form_receiptedit.find('.cheque-type').css({'display': 'block'});
+                    if (vdata.cheque.length > 0) {
+                        var _one = $.ToLinq(vdata.cheque).First();
+                        setBank(function (c) {
+                            c.val(_one.BankKey).selectpicker('render');
+                            setBankBranch(function (bc) {
+                                bc.val(_one.BankBranchKey).selectpicker('render');
+                            });
+                        });
+                        form_receiptedit.find('#txtChequeNumber').val(_one.ChequeNumber);
+                        form_receiptedit.find('#txtChequeDate').val(PHP_JSON_To_ShowDate(_one.ChequeDate));
+                    } else {
+                        setBank(function () {
+                            setBankBranch(function () {});
+                        });
+                    }
+                } else {
+                    form_receiptedit.find('.cheque-type').css({'display': 'none'});
+                    setBank(function () {
+                        setBankBranch(function () {});
+                    });
+                }
             }
         });
     } else {
@@ -619,7 +649,8 @@ $(function () {
                     });
                 });
                 obj.TRNReceiptPayCheque = new Array();
-                if (obj.PayType === 2) {
+//                if (obj.PayType === 2) {
+                if ($.trim(form_receiptedit.find('#txtChequeNumber').val()).length > 0) {
                     obj.TRNReceiptPayCheque.push({
                         BankBranchKey: form_receiptedit.find('#cmdBankBranch').val(),
                         ChequeNumber: form_receiptedit.find('#txtChequeNumber').val(),
@@ -638,35 +669,35 @@ $(function () {
                             loanding: false,
                             callback: function (vdata) {
                                 if (vdata.success) {
-//                                    $.bPopup({
-//                                        url: mvcPatch('Bill/displayPrint'),
-//                                        title: 'พิมพ์บิล',
-//                                        closable: false,
-//                                        size: BootstrapDialog.SIZE_WIDE,
-//                                        onshow: function (k) {
-//                                            k.getModal().data({
-//                                                print: PrintStatus.Print,
-//                                                data: vdata.key,
-//                                                fun: function (_f) {
-//
-//                                                }
-//                                            });
-//                                        },
-//                                        onhidden: function (k) {
-//                                            form_sumbit.prop('action', mvcPatch('Bill/index')).submit();
-//                                        },
-//                                        buttons: [
-//                                            {
-//                                                id: 'btn-print',
-//                                                icon: 'glyphicon glyphicon-print',
-//                                                label: '&nbsp;Print',
-//                                                cssClass: BootstrapDialog.TYPE_SUCCESS,
-//                                                action: function (k) {
-//                                                    //javascript code
-//                                                }
-//                                            }
-//                                        ]
-//                                    });
+                                    $.bPopup({
+                                        url: mvcPatch('Receipt/displayPrint'),
+                                        title: 'พิมพ์ใบเสร็จ',
+                                        closable: false,
+                                        size: BootstrapDialog.SIZE_WIDE,
+                                        onshow: function (k) {
+                                            k.getModal().data({
+                                                print: PrintStatus.Print,
+                                                data: vdata.key,
+                                                fun: function (_f) {
+
+                                                }
+                                            });
+                                        },
+                                        onhidden: function (k) {
+//                                            form_sumbit.prop('action', mvcPatch('Receipt/index')).submit();
+                                        },
+                                        buttons: [
+                                            {
+                                                id: 'btn-print',
+                                                icon: 'glyphicon glyphicon-print',
+                                                label: '&nbsp;Print',
+                                                cssClass: BootstrapDialog.TYPE_SUCCESS,
+                                                action: function (k) {
+                                                    //javascript code
+                                                }
+                                            }
+                                        ]
+                                    });
 
                                 } else {
                                     $.bAlert({

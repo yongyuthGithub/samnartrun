@@ -33,6 +33,14 @@ class Receipt extends PCenter {
         $this->load->view('transaction/Receipt/receiptbankbranch_new');
     }
 
+    public function displayPrint() {
+        $this->load->view('transaction/Receipt/receiptPrintView');
+    }
+
+    public function loadReceiptReport() {
+        $this->load->view('transaction/Receipt/reports/RReceipt.mrt');
+    }
+
     public function findCustomer() {
         $qryCust = $this->db->select('RowKey,'
                         . 'CusCode,'
@@ -74,8 +82,11 @@ class Receipt extends PCenter {
                         })->toArray();
         $qryBillInReceipt = Linq::from($this->db->select('rb.BillKey as RowKey')
                                 ->from('TRNReceiptBill rb')
+                                ->join('TRNBillHD b', 'rb.BillKey=b.RowKey')
+                                ->join('MSTCustomerBranch cb', 'b.CustomerBranchKey=cb.RowKey')
                                 ->where_not_in('rb.BillKey', $_data)
                                 ->where('rb.ReceiptHDKey', $receiptkey)
+                                ->where('cb.CompanyKey', $_key)
                                 ->get()->result())
                         ->select(function($x) {
                             return $x->RowKey;
@@ -102,8 +113,8 @@ class Receipt extends PCenter {
                         'key' => $x->key,
                         'DocDate' => $x->DocDate,
                         'DocID' => $x->DocID,
-                        'Amounts' => $x->Remain + $oldAmounts,
-                        'InputAmounts' => $x->Remain + $oldAmounts,
+                        'Amounts' => floatval($x->Remain) + floatval($oldAmounts),
+                        'InputAmounts' => floatval($x->Remain) + floatval($oldAmounts)
                     ];
                 })
                 ->toArray();
@@ -353,8 +364,8 @@ class Receipt extends PCenter {
                         'key' => $x->key,
                         'DocDate' => $x->DocDate,
                         'DocID' => $x->DocID,
-                        'Amounts' => $x->Amounts + $x->Remain,
-                        'InputAmounts' => $x->Amounts
+                        'Amounts' => floatval($x->Amounts + $x->Remain),
+                        'InputAmounts' => floatval($x->Amounts)
                     ];
                 })
                 ->toArray();
@@ -370,7 +381,7 @@ class Receipt extends PCenter {
                 'key' => $row->key,
                 'Seq' => $r,
                 'Detail' => $row->Detail,
-                'Amounts' => $row->Amounts
+                'InputAmounts' => floatval($row->Amounts)
             ]);
             $r++;
         }
@@ -411,13 +422,15 @@ class Receipt extends PCenter {
             $this->db->insert('TRNReceiptHD', $_data);
 
             foreach ($_data->TRNReceiptBill as $_row) {
-                $_row->RowKey = PCenter::GUID();
-                $_row->ReceiptHDKey = $_data->RowKey;
-                $this->db->insert('TRNReceiptBill', $_row);
+                if ($_row->Amounts > 0) {
+                    $_row->RowKey = PCenter::GUID();
+                    $_row->ReceiptHDKey = $_data->RowKey;
+                    $this->db->insert('TRNReceiptBill', $_row);
 
-                $this->db->set('Remain', 'Remain-' . $_row->Amounts, FALSE);
-                $this->db->where('RowKey', $_row->BillKey);
-                $this->db->update('TRNBillHD');
+                    $this->db->set('Remain', 'Remain-' . $_row->Amounts, FALSE);
+                    $this->db->where('RowKey', $_row->BillKey);
+                    $this->db->update('TRNBillHD');
+                }
             }
 
             foreach ($_data->TRNReceiptOther as $_row) {
@@ -456,13 +469,15 @@ class Receipt extends PCenter {
             $this->db->where('ReceiptHDKey', $_data->RowKey);
             $this->db->delete('TRNReceiptBill');
             foreach ($_data->TRNReceiptBill as $_row) {
-                $_row->RowKey = PCenter::GUID();
-                $_row->ReceiptHDKey = $_data->RowKey;
-                $this->db->insert('TRNReceiptBill', $_row);
+                if ($_row->Amounts > 0) {
+                    $_row->RowKey = PCenter::GUID();
+                    $_row->ReceiptHDKey = $_data->RowKey;
+                    $this->db->insert('TRNReceiptBill', $_row);
 
-                $this->db->set('Remain', 'Remain-' . $_row->Amounts, FALSE);
-                $this->db->where('RowKey', $_row->BillKey);
-                $this->db->update('TRNBillHD');
+                    $this->db->set('Remain', 'Remain-' . $_row->Amounts, FALSE);
+                    $this->db->where('RowKey', $_row->BillKey);
+                    $this->db->update('TRNBillHD');
+                }
             }
 
             $this->db->where('ReceiptHDKey', $_data->RowKey);
@@ -493,4 +508,117 @@ class Receipt extends PCenter {
         echo json_encode($vReturn);
     }
 
+    public function findReceiptWithReport() {
+        $_key = $_POST['key'];
+        $qry = $this->db->select('b.DocDate,'
+                                . 'b.DocID,'
+                                . 'b.CustomerBranchKey,'
+                                . 'b.PayType')
+                        ->from('TRNReceiptHD b')
+                        ->where('b.RowKey', $_key)
+                        ->get()->row();
+        $qry->Company = $this->MyCompayDetail();
+        $qry->Customer = $this->GetCustomerByBranch($qry->CustomerBranchKey);
+        $qry->Bill = Linq::from($this->db->select('1 as ListType,'
+                                        . '"true" as ListCheck,'
+                                        . '"ค่าขนส่ง" as Detail,'
+                                        . '0 as PriceItem,'
+                                        . 'Amounts as PriceTotal')
+                                ->from('TRNReceiptBill')
+                                ->where('ReceiptHDKey', $_key)
+                                ->get()->result())
+                        ->select(function($x) {
+                            return [
+                                'ListType' => floatval($x->ListType),
+                                'ListCheck' => true,
+                                'Detail' => $x->Detail,
+                                'PriceItem' => floatval($x->PriceItem),
+                                'PriceTotal' => floatval($x->PriceTotal)
+                            ];
+                        })->toArray();
+        if (Linq::from($qry->Bill)->count() === 0) {
+            $qry->Bill = [
+                (object) [
+                    'ListType' => 1,
+                    'ListCheck' => false,
+                    'Detail' => "ค่าขนส่ง",
+                    'PriceItem' => 0,
+                    'PriceTotal' => 0
+                ]
+            ];
+        }
+        $qry->Other = Linq::from($this->db->select('2 as ListType,'
+                                        . '"true" as ListCheck,'
+                                        . 'Detail,'
+                                        . '0 as PriceItem,'
+                                        . 'Amounts as PriceTotal')
+                                ->from('TRNReceiptOther')
+                                ->where('ReceiptHDKey', $_key)
+                                ->get()->result())
+                        ->select(function($x) {
+                            return[
+                                'ListType' => floatval($x->ListType),
+                                'ListCheck' => true,
+                                'Detail' => $x->Detail,
+                                'PriceItem' => floatval($x->PriceItem),
+                                'PriceTotal' => floatval($x->PriceTotal)
+                            ];
+                        })->toArray();
+        if (Linq::from($qry->Other)->count() === 0) {
+            $qry->Other = [
+                (object) [
+                    'ListType' => 2,
+                    'ListCheck' => false,
+                    'Detail' => "อื่นๆ",
+                    'PriceItem' => 0,
+                    'PriceTotal' => 0
+                ]
+            ];
+        }
+        echo json_encode($qry);
+    }
+
+    public function printTemp() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+        $_data->RowKey = PCenter::GUID();
+        $_data->CreateBy = $this->USER_LOGIN()->RowKey;
+        $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+        $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+        $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+        $this->db->insert('TRNReceiptHDPrint', $_data);
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
+        }
+        $vReturn->ReportView = $_data->ReportView;
+        echo json_encode($vReturn);
+    }
+
+    public function printTempLoad() {
+        $_key = $_POST['key'];
+        $qry = Linq::from($this->db->select('ReportView')
+                                ->where('ReceiptHDKey', $_key)
+                                ->from('TRNReceiptHDPrint')
+                                ->order_by('UpdateDate', 'desc')
+                                ->get()->result())
+                        ->firstOrNull()->ReportView;
+        echo $qry;
+    }
+
+    public function checkPrintTemp() {
+        $_key = $_POST['key'];
+        $qry = Linq::from($this->db
+                        ->where('ReceiptHDKey', $_key)
+                        ->from('TRNReceiptHDPrint')
+                        ->get()->result())
+                ->count();
+        echo $qry;
+    }
 }
