@@ -36,6 +36,17 @@ $(function () {
 
                         variables.getByName('DocDate').valueObject = PHP_JSON_To_ShowDate(vdata.DocDate);
                         variables.getByName('DocID').valueObject = vdata.DocID;
+                        variables.getByName('PayType').valueObject = vdata.PayType;
+
+                        if (parseInt(vdata.PayType) === 2) {
+                            if (vdata.Cheq.length > 0) {
+                                var _row = $.ToLinq(vdata.Cheq).First();
+                                variables.getByName('ChqBank').valueObject = _row.Bank;
+                                variables.getByName('ChqBankBranch').valueObject = _row.Branch;
+                                variables.getByName('ChqNumber').valueObject = _row.ChequeNumber;
+                                variables.getByName('ChqDate').valueObject = PHP_JSON_To_ShowDate(_row.ChequeDate);
+                            }
+                        }
 
                         var _billTotal = $.ToLinq(vdata.Bill)
                                 .Sum(x => x.PriceTotal);
@@ -95,6 +106,19 @@ $(function () {
             }
         });
     } else if (_printstatus === PrintStatus.Preview) {
-
+        $.ReportViewerOnly({
+            viewer_id: 'display-prevuew',
+            report_path: mvcPatch('Receipt/printTempLoad'),
+            report_data: {key: form_showReceipt_C.data('data')},
+            report_watermark: 'เอกสารพิมพ์แล้ว.',
+            fun: function (report, variables, viewer) {
+//                $('#btn-preview').on({
+//                    click:function(){
+//                        viewer.report.render();
+//                        viewer.report.print();
+//                    }
+//                });
+            }
+        });
     }
 });

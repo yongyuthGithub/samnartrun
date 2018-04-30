@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2018.1.6.0",
-  "ReportGuid": "76cbb75a0d9742acb46eb7ba614de856",
+  "ReportGuid": "3d5e0d6039634b958c2cc0de19700187",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportCreated": "/Date(1522261189000+0700)/",
-  "ReportChanged": "/Date(1525081272817+0700)/",
+  "ReportChanged": "/Date(1525109671992+0700)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Inches",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -123,7 +123,7 @@
       "20": {
         "Name": "PayType",
         "Alias": "PayType",
-        "Type": "System.String"
+        "Type": "System.Int32"
       },
       "21": {
         "Name": "TxtTotal",
@@ -139,6 +139,26 @@
         "Name": "NetTotal",
         "Alias": "NetTotal",
         "Type": "System.Decimal"
+      },
+      "24": {
+        "Name": "ChqBank",
+        "Alias": "ChqBank",
+        "Type": "System.String"
+      },
+      "25": {
+        "Name": "ChqBankBranch",
+        "Alias": "ChqBankBranch",
+        "Type": "System.String"
+      },
+      "26": {
+        "Name": "ChqNumber",
+        "Alias": "ChqNumber",
+        "Type": "System.String"
+      },
+      "27": {
+        "Name": "ChqDate",
+        "Alias": "ChqDate",
+        "Type": "System.String"
       }
     },
     "DataSources": {
@@ -309,7 +329,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
-          "ClientRectangle": "0,9.51,7.1,0.3",
+          "ClientRectangle": "0,11.47,7.1,0.3",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -584,7 +604,7 @@
                 "Value": "{TB.ListCheck}"
               },
               "ContourColor": "Transparent",
-              "CheckStyleForTrue": "CheckRectangle",
+              "CheckStyleForTrue": "CrossRectangle",
               "CheckStyleForFalse": "NoneRectangle"
             }
           },
@@ -594,7 +614,7 @@
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
           "PrintOn": "OnlyLastPage",
-          "ClientRectangle": "0,5.5,7.1,1.6",
+          "ClientRectangle": "0,5.5,7.1,2.2",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -653,7 +673,7 @@
               "Name": "Text11",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "4.2,0.6,2.8,0.4",
+              "ClientRectangle": "4.2,0.4,2.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -674,7 +694,7 @@
               "Guid": "6ae28275f87147ac9df01f0e0cb8a700",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "4.2,1,2.8,0.4",
+              "ClientRectangle": "4.2,0.8,2.8,0.4",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -690,6 +710,124 @@
               "Type": "Expression"
             },
             "4": {
+              "Ident": "StiText",
+              "Name": "Text13",
+              "Guid": "586bf9aa7f13417898eba1f2f17f8e1e",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.1,1,0.8,0.3",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "การชำระเงิน"
+              },
+              "Font": "Cordia New;14.25;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "5": {
+              "Ident": "StiCheckBox",
+              "Name": "CheckBox2",
+              "Guid": "915cb93325c44e0d8dc904779e1bc97d",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "1,1,0.3,0.2",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Brush": "solid:",
+              "Border": ";;;;;;;solid:Black",
+              "TextBrush": "solid:Black",
+              "Checked": {
+                "Value": "{IIF(PayType==1,true,false)}"
+              },
+              "ContourColor": "Transparent",
+              "CheckStyleForTrue": "CrossRectangle",
+              "CheckStyleForFalse": "NoneRectangle"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text14",
+              "Guid": "a463e17e68974df6bae1aa1a6e218d01",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "1.3,1,2.7,0.3",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "เงินสด"
+              },
+              "Font": "Cordia New;14.25;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiCheckBox",
+              "Name": "CheckBox3",
+              "Guid": "e3092d07912245b086e29e6482e26dae",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "1,1.3,0.3,0.2",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Brush": "solid:",
+              "Border": ";;;;;;;solid:Black",
+              "TextBrush": "solid:Black",
+              "Checked": {
+                "Value": "{IIF(PayType==2,true,false)}"
+              },
+              "ContourColor": "Transparent",
+              "CheckStyleForTrue": "CrossRectangle",
+              "CheckStyleForFalse": "NoneRectangle"
+            },
+            "8": {
+              "Ident": "StiText",
+              "Name": "Text15",
+              "Guid": "2291836fe3c54d0ca6251b0d584cf31c",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "1.3,1.3,5.7,0.5",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "เช็คธนาคาร ...............{ChqBank}............... สาขา ...............{ChqBankBranch}...............\r\nเลขที่ ...............{ChqNumber}............... ลงวันที่ ..............{ChqDate}..............."
+              },
+              "Font": "Cordia New;14.25;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "9": {
+              "Ident": "StiText",
+              "Name": "Text17",
+              "Guid": "b070b1b9f90d40609393a0f754c46a3f",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0,1.9,7.1,0.3",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "*** โปรดจ่ายเช็คในนาม \"บริษัท พราว ทรานสปอร์ต จำกัด\" ***"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Cordia New;14.25;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "10": {
               "Ident": "StiHorizontalLinePrimitive",
               "Name": "HorizontalLinePrimitive5",
               "MinSize": "0,0",
@@ -701,7 +839,7 @@
               "StartCap": ";;;",
               "EndCap": ";;;"
             },
-            "5": {
+            "11": {
               "Ident": "StiEndPointPrimitive",
               "Name": "EndPointPrimitive2",
               "MinSize": "0,0",
@@ -712,7 +850,7 @@
               },
               "ReferenceToGuid": "6a827e45f138476aa6dd54ef2640bddf"
             },
-            "6": {
+            "12": {
               "Ident": "StiEndPointPrimitive",
               "Name": "EndPointPrimitive1",
               "MinSize": "0,0",
@@ -723,7 +861,7 @@
               },
               "ReferenceToGuid": "9f748155414e4213a5aadd6c237351bb"
             },
-            "7": {
+            "13": {
               "Ident": "StiEndPointPrimitive",
               "Name": "EndPointPrimitive3",
               "MinSize": "0,0",
@@ -734,7 +872,7 @@
               },
               "ReferenceToGuid": "572a44bcd4a545bfa4444f951c36892d"
             },
-            "8": {
+            "14": {
               "Ident": "StiStartPointPrimitive",
               "Name": "StartPointPrimitive3",
               "MinSize": "0,0",
@@ -745,7 +883,7 @@
               },
               "ReferenceToGuid": "572a44bcd4a545bfa4444f951c36892d"
             },
-            "9": {
+            "15": {
               "Ident": "StiEndPointPrimitive",
               "Name": "EndPointPrimitive4",
               "MinSize": "0,0",
@@ -860,7 +998,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{IIF(Length(TB2.Detail)>0,IIF(TB2.ListType==1,\"บิลออก ณ. วันที่ \"+TB2.Detail,TB2.Detail),\"\")}"
+                "Value": "{IIF(Length(TB2.Detail)>0,IIF(TB2.ListType==1,\"วางบิล ณ. วันที่ \"+TB2.Detail,TB2.Detail),\"\")}"
               },
               "Font": "Cordia New;14.25;;",
               "Border": ";;;;;;;solid:Black",
@@ -939,7 +1077,7 @@
           "MasterComponent": "DataTB"
         }
       },
-      "PageWidth": 6.879999999999999,
+      "PageWidth": 6.88,
       "PageHeight": 11.69,
       "Watermark": {
         "TextBrush": "solid:50,0,0,0"

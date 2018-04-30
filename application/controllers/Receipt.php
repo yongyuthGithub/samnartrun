@@ -532,7 +532,7 @@ class Receipt extends PCenter {
                             return [
                                 'ListType' => floatval($x->ListType),
                                 'ListCheck' => true,
-                                'Detail' =>date_format(date_create($x->DocDate), 'd/m/Y'),
+                                'Detail' => date_format(date_create($x->DocDate), 'd/m/Y'),
                                 'PriceItem' => floatval($x->PriceItem),
                                 'PriceTotal' => floatval($x->PriceTotal)
                             ];
@@ -576,6 +576,15 @@ class Receipt extends PCenter {
                 ]
             ];
         }
+        $qry->Cheq = $this->db->select('c.ChequeNumber,'
+                                . 'c.ChequeDate,'
+                                . 'bb.Branch,'
+                                . 'b.Bank')
+                        ->from('TRNReceiptPayCheque c')
+                        ->join('MSTBankBranch bb', 'c.BankBranchKey=bb.RowKey')
+                        ->join('MSTBank b', 'bb.BankKey=b.RowKey')
+                        ->where('c.ReceiptHDKey', $_key)
+                        ->get()->result();
         echo json_encode($qry);
     }
 

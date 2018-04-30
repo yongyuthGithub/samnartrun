@@ -684,7 +684,7 @@ $(function () {
                                             });
                                         },
                                         onhidden: function (k) {
-//                                            form_sumbit.prop('action', mvcPatch('Receipt/index')).submit();
+                                            form_sumbit.prop('action', mvcPatch('Receipt/index')).submit();
                                         },
                                         buttons: [
                                             {
