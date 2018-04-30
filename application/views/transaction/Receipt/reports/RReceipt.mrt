@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2018.1.6.0",
-  "ReportGuid": "1705b3dce12b4daa84335292d32e72f0",
+  "ReportGuid": "76cbb75a0d9742acb46eb7ba614de856",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportCreated": "/Date(1522261189000+0700)/",
-  "ReportChanged": "/Date(1525034088394+0700)/",
+  "ReportChanged": "/Date(1525081272817+0700)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Inches",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -134,13 +134,40 @@
         "Name": "DocID",
         "Alias": "DocID",
         "Type": "System.String"
+      },
+      "23": {
+        "Name": "NetTotal",
+        "Alias": "NetTotal",
+        "Type": "System.Decimal"
       }
     },
     "DataSources": {
       "0": {
         "Ident": "StiDataTableSource",
-        "Name": "root",
-        "Alias": "root",
+        "Name": "TB",
+        "Alias": "TB",
+        "Columns": {
+          "0": {
+            "Name": "ListType2",
+            "Index": -1,
+            "NameInSource": "ListType2",
+            "Alias": "ListType2",
+            "Type": "System.Int32"
+          },
+          "1": {
+            "Name": "ListCheck",
+            "Index": -1,
+            "NameInSource": "ListCheck",
+            "Alias": "ListCheck",
+            "Type": "System.Boolean"
+          }
+        },
+        "NameInSource": "document.TB"
+      },
+      "1": {
+        "Ident": "StiDataTableSource",
+        "Name": "TB2",
+        "Alias": "TB2",
         "Columns": {
           "0": {
             "Name": "ListType",
@@ -178,15 +205,30 @@
             "Type": "System.Decimal"
           }
         },
-        "NameInSource": "DataTable.root"
+        "NameInSource": "document.TB2"
       }
     },
     "Databases": {
       "0": {
         "Ident": "StiJsonDatabase",
-        "Name": "DataTable",
-        "Alias": "DataTable",
-        "PathData": "C:\\Users\\Yongyuth\\Downloads\\document (2).json"
+        "Name": "document",
+        "Alias": "document",
+        "PathData": "resource://document (4)"
+      }
+    },
+    "Relations": {
+      "0": {
+        "Name": "Name",
+        "ChildColumns": {
+          "0": "ListType"
+        },
+        "ParentColumns": {
+          "0": "ListType2"
+        },
+        "NameInSource": "Relation",
+        "Alias": "Name",
+        "ParentSource": "TB",
+        "ChildSource": "TB2"
       }
     }
   },
@@ -300,7 +342,7 @@
           "Ident": "StiHeaderBand",
           "Name": "Headerroot",
           "PrintOn": "OnlyFirstPage",
-          "ClientRectangle": "0,1.9,7.1,2.4",
+          "ClientRectangle": "0,1.9,7.1,2.5",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -421,7 +463,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "ราค่าต่อเที่ยว"
+                "Value": "ราคาต่อเที่ยว"
               },
               "HorAlignment": "Center",
               "VertAlignment": "Center",
@@ -482,9 +524,9 @@
           "PrintIfEmpty": true
         },
         "3": {
-          "Ident": "StiGroupHeaderBand",
-          "Name": "GroupHeaderBand1",
-          "ClientRectangle": "0,4.7,7.1,0.3",
+          "Ident": "StiDataBand",
+          "Name": "DataTB",
+          "ClientRectangle": "0,4.8,7.1,0.3",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -493,29 +535,45 @@
           "Components": {
             "0": {
               "Ident": "StiText",
-              "Name": "Text11",
+              "Name": "DataTB_ListType",
+              "CanGrow": true,
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.1,0,0.8,0.3",
+              "ClientRectangle": "0.1,0,0.6,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{IIF(root.ListType==1,\"ค่าขนส่ง\",\"อื่นๆ\")}"
+                "Value": "{IIF(TB.ListType2==1,\"ค่าขนส่ง\",\"อื่นๆ\")}"
               },
-              "VertAlignment": "Center",
               "Font": "Cordia New;14;;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Type": "Expression"
             },
             "1": {
+              "Ident": "StiSubReport",
+              "Name": "SubReport1",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "1,0,6.1,0.3",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "SubReportPageGuid": "80c91e318cb941f99870457d36eeb99d"
+            },
+            "2": {
               "Ident": "StiCheckBox",
               "Name": "CheckBox1",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.9,0.04,0.2,0.2",
+              "ClientRectangle": "0.7,0,0.3,0.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -523,100 +581,20 @@
               "Border": ";;;;;;;solid:Black",
               "TextBrush": "solid:Black",
               "Checked": {
-                "Value": "{root.ListCheck}"
+                "Value": "{TB.ListCheck}"
               },
+              "ContourColor": "Transparent",
               "CheckStyleForTrue": "CheckRectangle",
               "CheckStyleForFalse": "NoneRectangle"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text12",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "1.2,0,3.2,0.3",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{root.Detail}"
-              },
-              "VertAlignment": "Center",
-              "Font": "Cordia New;14;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black"
-            },
-            "3": {
-              "Ident": "StiText",
-              "Name": "Text13",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "4.6,0,0.9,0.3",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "HideZeros": true,
-              "Text": {
-                "Value": "{root.PriceItem}"
-              },
-              "HorAlignment": "Right",
-              "VertAlignment": "Center",
-              "Font": "Cordia New;14;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextFormat": {
-                "Ident": "StiNumberFormatService",
-                "NegativePattern": 1,
-                "GroupSeparator": ","
-              }
-            },
-            "4": {
-              "Ident": "StiText",
-              "Name": "Text14",
-              "MinSize": "0,0",
-              "MaxSize": "0,0",
-              "ClientRectangle": "5.7,0,1.3,0.3",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "HideZeros": true,
-              "Text": {
-                "Value": "{root.PriceTotal}"
-              },
-              "HorAlignment": "Right",
-              "VertAlignment": "Center",
-              "Font": "Cordia New;14;;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextFormat": {
-                "Ident": "StiNumberFormatService",
-                "NegativePattern": 1,
-                "GroupSeparator": ","
-              }
             }
           },
-          "Condition": {
-            "Value": "{root.ListType}"
-          }
+          "DataSourceName": "TB"
         },
         "4": {
-          "Ident": "StiDataBand",
-          "Name": "DataBand1",
-          "ClientRectangle": "0,5.4,7.1,0",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "DataSourceName": "root"
-        },
-        "5": {
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
           "PrintOn": "OnlyLastPage",
-          "ClientRectangle": "0,5.8,7.1,0.4",
+          "ClientRectangle": "0,5.5,7.1,1.6",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -655,7 +633,7 @@
               },
               "HideZeros": true,
               "Text": {
-                "Value": "{Sum(root.PriceTotal)}"
+                "Value": "{NetTotal}"
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
@@ -671,6 +649,47 @@
               }
             },
             "2": {
+              "Ident": "StiText",
+              "Name": "Text11",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "4.2,0.6,2.8,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "ลงชื่อ ........................................................  ผู้รับเงิน"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Bottom",
+              "Font": "Cordia New;14.25;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Text12",
+              "Guid": "6ae28275f87147ac9df01f0e0cb8a700",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "4.2,1,2.8,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "(  ........................................................  )"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Bottom",
+              "Font": "Cordia New;14.25;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "4": {
               "Ident": "StiHorizontalLinePrimitive",
               "Name": "HorizontalLinePrimitive5",
               "MinSize": "0,0",
@@ -682,7 +701,7 @@
               "StartCap": ";;;",
               "EndCap": ";;;"
             },
-            "3": {
+            "5": {
               "Ident": "StiEndPointPrimitive",
               "Name": "EndPointPrimitive2",
               "MinSize": "0,0",
@@ -693,7 +712,7 @@
               },
               "ReferenceToGuid": "6a827e45f138476aa6dd54ef2640bddf"
             },
-            "4": {
+            "6": {
               "Ident": "StiEndPointPrimitive",
               "Name": "EndPointPrimitive1",
               "MinSize": "0,0",
@@ -704,7 +723,7 @@
               },
               "ReferenceToGuid": "9f748155414e4213a5aadd6c237351bb"
             },
-            "5": {
+            "7": {
               "Ident": "StiEndPointPrimitive",
               "Name": "EndPointPrimitive3",
               "MinSize": "0,0",
@@ -715,7 +734,7 @@
               },
               "ReferenceToGuid": "572a44bcd4a545bfa4444f951c36892d"
             },
-            "6": {
+            "8": {
               "Ident": "StiStartPointPrimitive",
               "Name": "StartPointPrimitive3",
               "MinSize": "0,0",
@@ -726,7 +745,7 @@
               },
               "ReferenceToGuid": "572a44bcd4a545bfa4444f951c36892d"
             },
-            "7": {
+            "9": {
               "Ident": "StiEndPointPrimitive",
               "Name": "EndPointPrimitive4",
               "MinSize": "0,0",
@@ -740,24 +759,37 @@
           },
           "PrintAtBottom": true
         },
-        "6": {
+        "5": {
           "Ident": "StiRectanglePrimitive",
           "Name": "RectanglePrimitive1",
           "Guid": "9f748155414e4213a5aadd6c237351bb",
           "MinSize": "0,0",
           "MaxSize": "0,0",
-          "ClientRectangle": "0,1.5,7.1,4.34",
+          "ClientRectangle": "0,1.5,7.1,4.04",
           "Interaction": {
             "Ident": "StiInteraction"
           }
         },
-        "7": {
+        "6": {
           "Ident": "StiVerticalLinePrimitive",
           "Name": "VerticalLinePrimitive1",
           "Guid": "6a827e45f138476aa6dd54ef2640bddf",
           "MinSize": "0,0",
           "MaxSize": "0,0",
-          "ClientRectangle": "5.6,3.8,0.01,2.34",
+          "ClientRectangle": "5.6,3.8,0.01,2.04",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "StartCap": ";;;",
+          "EndCap": ";;;"
+        },
+        "7": {
+          "Ident": "StiVerticalLinePrimitive",
+          "Name": "VerticalLinePrimitive2",
+          "Guid": "572a44bcd4a545bfa4444f951c36892d",
+          "MinSize": "0,0",
+          "MaxSize": "0,0",
+          "ClientRectangle": "7.1,5.5,0.01,0.34",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -766,24 +798,11 @@
         },
         "8": {
           "Ident": "StiVerticalLinePrimitive",
-          "Name": "VerticalLinePrimitive2",
-          "Guid": "572a44bcd4a545bfa4444f951c36892d",
-          "MinSize": "0,0",
-          "MaxSize": "0,0",
-          "ClientRectangle": "7.1,5.8,0.01,0.34",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "StartCap": ";;;",
-          "EndCap": ";;;"
-        },
-        "9": {
-          "Ident": "StiVerticalLinePrimitive",
           "Name": "VerticalLinePrimitive3",
           "Guid": "edd533e08fe84bde868536b0df1f1273",
           "MinSize": "0,0",
           "MaxSize": "0,0",
-          "ClientRectangle": "4.5,3.8,0.01,2.04",
+          "ClientRectangle": "4.5,3.8,0.01,1.74",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -803,7 +822,137 @@
         "Top": 0.5,
         "Bottom": 0.69
       },
-      "MirrorMargins": true
+      "MirrorMargins": true,
+      "ReportUnit": {
+        "Ident": "StiInchesUnit"
+      }
+    },
+    "1": {
+      "Ident": "StiPage",
+      "Name": "subReport_1",
+      "Guid": "80c91e318cb941f99870457d36eeb99d",
+      "Interaction": {
+        "Ident": "StiInteraction"
+      },
+      "Border": ";;2;;;;;solid:Black",
+      "Brush": "solid:",
+      "Components": {
+        "0": {
+          "Ident": "StiDataBand",
+          "Name": "DataTB2",
+          "CanShrink": true,
+          "ClientRectangle": "0,0.2,6.1,0.3",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "CanBreak": true,
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "DataTB2_Detail",
+              "CanGrow": true,
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.1,0,3.4,0.3",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{IIF(Length(TB2.Detail)>0,IIF(TB2.ListType==1,\"บิลออก ณ. วันที่ \"+TB2.Detail,TB2.Detail),\"\")}"
+              },
+              "Font": "Cordia New;14.25;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "DataTB2_PriceItem",
+              "CanShrink": true,
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "3.7,0,0.8,0.3",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "HideZeros": true,
+              "Text": {
+                "Value": "{TB2.PriceItem}"
+              },
+              "CanBreak": true,
+              "HorAlignment": "Right",
+              "Font": "Cordia New;14.25;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "GroupSeparator": ","
+              }
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "DataTB2_PriceTotal",
+              "CanShrink": true,
+              "CanGrow": true,
+              "GrowToHeight": true,
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "4.7,0,1.3,0.3",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "HideZeros": true,
+              "Text": {
+                "Value": "{TB2.PriceTotal}"
+              },
+              "CanBreak": true,
+              "HorAlignment": "Right",
+              "Font": "Cordia New;14.25;;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "TextFormat": {
+                "Ident": "StiNumberFormatService",
+                "NegativePattern": 1,
+                "GroupSeparator": ","
+              }
+            }
+          },
+          "DataSourceName": "TB2",
+          "DataRelationName": "Relation",
+          "MasterComponent": "DataTB"
+        }
+      },
+      "PageWidth": 6.879999999999999,
+      "PageHeight": 11.69,
+      "Watermark": {
+        "TextBrush": "solid:50,0,0,0"
+      },
+      "Margins": {
+        "Left": 0.39,
+        "Right": 0.39,
+        "Top": 0.39,
+        "Bottom": 0.39
+      },
+      "ReportUnit": {
+        "Ident": "StiInchesUnit"
+      }
     }
   }
 }

@@ -150,7 +150,11 @@ $(function () {
                             return x.dDocDate;
                         }).OrderBy(x => x);
                         variables.getByName('TxtDate').valueObject = getDateCustom(_Date.First(x => x)) + ' - ' + getDateCustom(_Date.Last(x => x));
-                        report.regData('DataList', 'DataList', JSON.stringify(_d));
+                        
+                        var dataSet1 = new Stimulsoft.System.Data.DataSet('appName1');
+                        dataSet1.readJson(JSON.stringify(_d));
+                        report.regData('DataList', 'DataList', dataSet1);
+                        
                         viewer.onEndProcessData = function (ev) {
 
                         }

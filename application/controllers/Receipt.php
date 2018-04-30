@@ -521,17 +521,18 @@ class Receipt extends PCenter {
         $qry->Customer = $this->GetCustomerByBranch($qry->CustomerBranchKey);
         $qry->Bill = Linq::from($this->db->select('1 as ListType,'
                                         . '"true" as ListCheck,'
-                                        . '"ค่าขนส่ง" as Detail,'
+                                        . 'b.DocDate,'
                                         . '0 as PriceItem,'
-                                        . 'Amounts as PriceTotal')
-                                ->from('TRNReceiptBill')
-                                ->where('ReceiptHDKey', $_key)
+                                        . 'r.Amounts as PriceTotal')
+                                ->from('TRNReceiptBill r')
+                                ->join('TRNBillHD b', 'r.BillKey=b.RowKey')
+                                ->where('r.ReceiptHDKey', $_key)
                                 ->get()->result())
                         ->select(function($x) {
                             return [
                                 'ListType' => floatval($x->ListType),
                                 'ListCheck' => true,
-                                'Detail' => $x->Detail,
+                                'Detail' =>date_format(date_create($x->DocDate), 'd/m/Y'),
                                 'PriceItem' => floatval($x->PriceItem),
                                 'PriceTotal' => floatval($x->PriceTotal)
                             ];
@@ -541,7 +542,7 @@ class Receipt extends PCenter {
                 (object) [
                     'ListType' => 1,
                     'ListCheck' => false,
-                    'Detail' => "ค่าขนส่ง",
+                    'Detail' => "",
                     'PriceItem' => 0,
                     'PriceTotal' => 0
                 ]
@@ -569,7 +570,7 @@ class Receipt extends PCenter {
                 (object) [
                     'ListType' => 2,
                     'ListCheck' => false,
-                    'Detail' => "อื่นๆ",
+                    'Detail' => "",
                     'PriceItem' => 0,
                     'PriceTotal' => 0
                 ]
@@ -621,4 +622,5 @@ class Receipt extends PCenter {
                 ->count();
         echo $qry;
     }
+
 }

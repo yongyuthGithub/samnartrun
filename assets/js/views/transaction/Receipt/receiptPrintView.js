@@ -39,24 +39,34 @@ $(function () {
 
                         var _billTotal = $.ToLinq(vdata.Bill)
                                 .Sum(x => x.PriceTotal);
-                        var _billF = $.ToLinq(vdata.Bill).First();
-                        var _objBill = new Array({
-                            ListType: _billF.ListType,
-                            ListCheck: _billF.ListCheck,
-                            Detail: _billF.Detail,
-                            PriceItem: _billF.PriceItem,
-                            PriceTotal: _billTotal,
-                        });
-
+                        var _billF = $.ToLinq(vdata.Bill).ToArray();
                         var _otherTotal = $.ToLinq(vdata.Other)
                                 .Sum(x => x.PriceTotal);
                         variables.getByName('TxtTotal').valueObject = ArabicNumberToText(_billTotal + _otherTotal);
-                        var _Data = $.merge(_objBill, vdata.Other);
+                        variables.getByName('NetTotal').valueObject = _billTotal + _otherTotal;
+                        var _Data = $.merge(_billF, vdata.Other);
+                        var _tb = new Array(
+                                {
+                                    ListType2: 1,
+                                    ListCheck: $.ToLinq(_Data).Where(x => x.ListType === 1).First().ListCheck
+                                },
+                                {
+                                    ListType2: 2,
+                                    ListCheck: $.ToLinq(_Data).Where(x => x.ListType === 2).First().ListCheck
+                                });
+                        var objD = new Object({
+                            TB: _tb,
+                            TB2: _Data
+                        });
 
-                        report.regData('DataList', 'DataList', JSON.stringify(_Data));
+                        var dataSet = new Stimulsoft.System.Data.DataSet('appName1');
+                        dataSet.readJson(JSON.stringify(objD));
+                        report.regData('document', 'document', dataSet);
+
+                        report.dictionary.synchronize();
                         report.render();
                         viewer.report = report;
-                        
+
                         form_showReceipt_C.find('#btn-print').on({
                             click: function () {
                                 viewer.report.print();
