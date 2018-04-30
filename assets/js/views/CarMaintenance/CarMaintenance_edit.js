@@ -36,13 +36,14 @@ $(function () {
 
     function setmtn(v) {
         $.reqData({
-            url: mvcPatch('Car/findCar'),
+            url: mvcPatch('CarMaintenance/findCar'),
             loanding: false,
             callback: function (vdata) {
                 var _sel = form_Carmtnedit.find('#txtcmdCarnumber').empty();
                 var _html = '';
                 $.each(vdata, function (k, v) {
-                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.key + '" data-display="' + v.key + '">&nbsp;&nbsp;' + v.CarNumber + '</option>';
+                    var cargroup = v.CarGroup === "1" ?'ส่วนหัว' : 'ส่วนหาง' ; 
+                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.key + '" data-display="' + v.key + '">&nbsp;&nbsp;' + v.CarNumber + ' ('+cargroup+') </option>';
                 });
                 _sel.append(_html).selectpicker('refresh');
                 v(_sel);

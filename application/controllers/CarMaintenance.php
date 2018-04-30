@@ -30,6 +30,24 @@ class CarMaintenance extends PCenter {
                 ->get();
         echo json_encode($query->result());
     }
+    public function findCar() {
+        $query = $this->db->select('C.RowKey as key, '
+                        . 'C.CarNumber, '
+                        . 'C.CarGroup')
+                ->from('MSTCar C')
+                ->get();
+        $_array = array();
+        foreach ($query->result() as $row) {
+            $_ar = array(
+                'key' => $row->key,
+                'CarNumber' => $row->CarNumber,
+                'CarGroup' => $row->CarGroup,
+                       
+            );
+            array_push($_array, $_ar);
+        }
+        echo json_encode($_array);
+    }
 
     public function editcarmtn() {
         $_data = json_decode($_POST['data']);
