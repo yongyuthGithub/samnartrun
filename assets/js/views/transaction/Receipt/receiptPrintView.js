@@ -35,7 +35,7 @@ $(function () {
                         variables.getByName('CustBranch').valueObject = vdata.Customer.Branch;
 
                         variables.getByName('DocDate').valueObject = PHP_JSON_To_ShowDate(vdata.DocDate);
-                        variables.getByName('DocID').valueObject = vdata.DocID;
+                        variables.getByName('DocID').valueObject = vdata.DocID.concat(parseInt(vdata.Seq) > 0 ? '-'.concat(vdata.Seq) : '');
                         variables.getByName('PayType').valueObject = vdata.PayType;
 
                         if (parseInt(vdata.PayType) === 2) {
@@ -110,7 +110,10 @@ $(function () {
             viewer_id: 'display-prevuew',
             report_path: mvcPatch('Receipt/printTempLoad'),
             report_data: {key: form_showReceipt_C.data('data')},
-            report_watermark: 'เอกสารพิมพ์แล้ว.',
+            report_watermark: function (detail) {
+                var _n = 'โดย. ' + $.trim(detail.Title) + $.trim(detail.FName) + ' ' + $.trim(detail.LName);
+                return 'เอกสารพิมพ์แล้ว\nณ. วันที่ ' + PHP_JSON_To_ShowDate(detail.UpdateDate) + '\n' + _n;
+            },
             fun: function (report, variables, viewer) {
 //                $('#btn-preview').on({
 //                    click:function(){

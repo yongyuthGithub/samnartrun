@@ -511,7 +511,7 @@ function ChkNumber(v) {
             report_path: '',
             report_data: new Object(),
             viewer_option: options,
-            report_watermark: '',
+            report_watermark: function (detail) {},
             fun: function () {}
         }, option);
 
@@ -530,12 +530,13 @@ function ChkNumber(v) {
             callback: function (vdata) {
 //                if (vdata.success) {
                 var report = new Stimulsoft.Report.StiReport();
-                var _page = vdata.RenderedPages;
-                if ($.trim(setting.report_watermark).length > 0)
-                    $.each(_page, function (k, v) {
-                        v.Watermark.Text = setting.report_watermark;
-                    });
-                report.load(vdata);
+                var _r = JSON.parse(vdata.ReportView);
+                var _page = _r.RenderedPages;
+//                if ($.trim(setting.report_watermark).length > 0)
+                $.each(_page, function (k, v) {
+                    v.Watermark.Text = setting.report_watermark(vdata);
+                });
+                report.load(_r);
 //                report.print();
                 viewer.report = report;
                 setting.fun(report, report.dictionary.variables, viewer);

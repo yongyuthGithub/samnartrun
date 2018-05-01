@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2018.1.6.0",
-  "ReportGuid": "f20df508b33641cab0bdf476f12c77da",
+  "ReportGuid": "12fc26010ebf4c98a9072a21bfcf7993",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportCreated": "/Date(1522261189000+0700)/",
-  "ReportChanged": "/Date(1523558850898+0700)/",
+  "ReportChanged": "/Date(1525148530867+0700)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Inches",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -1079,6 +1079,7 @@
       "PageWidth": 8.5,
       "PageHeight": 11.0,
       "Watermark": {
+        "Font": "Cordia New;72;;",
         "TextBrush": "solid:50,0,0,0"
       },
       "Margins": {

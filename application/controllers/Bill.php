@@ -382,13 +382,15 @@ class Bill extends PCenter {
 
     public function printTempLoad() {
         $_key = $_POST['key'];
-        $qry = Linq::from($this->db->select('ReportView')
-                                ->where('BillHDKey', $_key)
-                                ->from('TRNBillHDPrint')
-                                ->order_by('UpdateDate', 'desc')
-                                ->get()->result())
-                        ->firstOrNull()->ReportView;
-        echo $qry;
+        $qry = Linq::from($this->db->select('r.ReportView,r.UpdateBy,r.UpdateDate,t.Title,u.FName,u.LName')
+                        ->where('r.BillHDKey', $_key)
+                        ->from('TRNBillHDPrint r')
+                        ->join('USRAccount u', 'r.UpdateBy=u.RowKey')
+                        ->join('MSTTitle t', 'u.TitleKey=t.RowKey')
+                        ->order_by('r.UpdateDate', 'desc')
+                        ->get()->result())
+                ->firstOrNull();
+        echo json_encode($qry);
     }
 
     public function checkPrintTemp() {

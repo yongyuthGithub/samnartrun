@@ -150,11 +150,11 @@ $(function () {
                             return x.dDocDate;
                         }).OrderBy(x => x);
                         variables.getByName('TxtDate').valueObject = getDateCustom(_Date.First(x => x)) + ' - ' + getDateCustom(_Date.Last(x => x));
-                        
+
                         var dataSet1 = new Stimulsoft.System.Data.DataSet('appName1');
                         dataSet1.readJson(JSON.stringify(_d));
                         report.regData('DataList', 'DataList', dataSet1);
-                        
+
                         viewer.onEndProcessData = function (ev) {
 
                         }
@@ -193,7 +193,10 @@ $(function () {
             viewer_id: 'display-prevuew',
             report_path: mvcPatch('Bill/printTempLoad'),
             report_data: {key: form_showBill_C.data('data')},
-            report_watermark: 'เอกสารพิมพ์แล้ว.',
+            report_watermark: function (detail) {
+                var _n = 'โดย. ' + $.trim(detail.Title) + $.trim(detail.FName) + ' ' + $.trim(detail.LName);
+                return 'เอกสารพิมพ์แล้ว\nณ. วันที่ ' + PHP_JSON_To_ShowDate(detail.UpdateDate) + '\n' + _n;
+            },
             fun: function (report, variables, viewer) {
 //                $('#btn-preview').on({
 //                    click:function(){
@@ -203,7 +206,6 @@ $(function () {
 //                });
             }
         });
-
     }
 
 //

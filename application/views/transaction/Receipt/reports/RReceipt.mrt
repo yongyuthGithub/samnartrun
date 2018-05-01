@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2018.1.6.0",
-  "ReportGuid": "3d5e0d6039634b958c2cc0de19700187",
+  "ReportGuid": "e796a14a06f341e69f1beecbb892050c",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportCreated": "/Date(1522261189000+0700)/",
-  "ReportChanged": "/Date(1525109671992+0700)/",
+  "ReportChanged": "/Date(1525146870302+0700)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Inches",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -614,7 +614,7 @@
           "Ident": "StiFooterBand",
           "Name": "FooterBand1",
           "PrintOn": "OnlyLastPage",
-          "ClientRectangle": "0,5.5,7.1,2.2",
+          "ClientRectangle": "0,5.5,7.1,2.3",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -715,7 +715,7 @@
               "Guid": "586bf9aa7f13417898eba1f2f17f8e1e",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.1,1,0.8,0.3",
+              "ClientRectangle": "0.1,1.1,0.8,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -734,7 +734,7 @@
               "Guid": "915cb93325c44e0d8dc904779e1bc97d",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "1,1,0.3,0.2",
+              "ClientRectangle": "1,1.1,0.3,0.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -754,7 +754,7 @@
               "Guid": "a463e17e68974df6bae1aa1a6e218d01",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "1.3,1,2.7,0.3",
+              "ClientRectangle": "1.3,1.1,2.7,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -773,7 +773,7 @@
               "Guid": "e3092d07912245b086e29e6482e26dae",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "1,1.3,0.3,0.2",
+              "ClientRectangle": "1,1.4,0.3,0.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -793,7 +793,7 @@
               "Guid": "2291836fe3c54d0ca6251b0d584cf31c",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "1.3,1.3,5.7,0.5",
+              "ClientRectangle": "1.3,1.4,5.7,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -812,7 +812,7 @@
               "Guid": "b070b1b9f90d40609393a0f754c46a3f",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0,1.9,7.1,0.3",
+              "ClientRectangle": "0,2,7.1,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -952,6 +952,7 @@
       "PageWidth": 8.5,
       "PageHeight": 11.0,
       "Watermark": {
+        "Font": "Cordia New;72;;",
         "TextBrush": "solid:50,0,0,0"
       },
       "Margins": {
