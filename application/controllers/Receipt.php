@@ -122,11 +122,13 @@ class Receipt extends PCenter {
     }
 
     public function findReceiptOld() {
+        $now = new DateTime();
         $query = $this->db->select('RowKey, '
                         . 'DocID,'
                         . 'Seq,'
                         . 'DocDate')
                 ->from('TRNReceiptHD')
+                ->where('CreateDate>=', PCenter::DATATIME_DB($now->modify("-3 month")))
                 ->order_by('DocDate', 'desc')
                 ->get();
         $vShow = Linq::from($query->result())
