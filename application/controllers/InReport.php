@@ -22,40 +22,95 @@ class InReport extends PCenter {
     public function findInReport() {
         $_data = json_decode($_POST['vdata']);
 
-        $qryMenu = $this->db->select('w.RowKey as key,'
-                                . 'w.DocID,'
+        $inCome = $this->db->select('cf.RowKey as key,'
+                                . 'concat("ใบงาน (",w.DocID,")") as DocID,'
                                 . 'w.DocDate,'
-                                . 'cf.Detial,'
+                                . 'mi.IncomeName as Detial,'
                                 . 'cf.IncomeType,'
                                 . 'Amount,'
+                                . '0 as IsVat'
                         )
                         ->where('w.DocDate >=', $_data->SDate)
                         ->where('w.DocDate <=', $_data->EDate)
                         ->from('TRNWrokSheetHD w')
-//                        ->join('MSTCustomerBranch bf', 'w.CutsomerForm=bf.RowKey', 'left')
                         ->join('TRNIncome cf', 'cf.WorkSheetHDKey=w.RowKey')
-//                        ->join('MSTCustomerBranch bs', 'w.CustomerTo=bs.RowKey', 'left')
-//                        ->join('MSTCustomer cs', 'bs.CompanyKey=cs.RowKey', 'left')
+                        ->join('MSTIncomeName mi', 'cf.IncomeKey=mi.RowKey')
                         ->get()->result();
 
-        $query = $this->db->select('RowKey, DocDate, Detial,IncomeType,Amount, ')
+        $inComeOther = $this->db->select('RowKey, DocDate, Detial,IncomeType,Amount,IsVat ')
                         ->where('DocDate >=', $_data->SDate)
                         ->where('DocDate <=', $_data->EDate)
                         ->from('TRNIncomeOther')->get();
         $_array = array();
-        foreach ($query->result() as $row) {
+        foreach ($inComeOther->result() as $row) {
             $_ar = array(
                 'key' => $row->RowKey,
-                'DocID'=> '',
+                'DocID' => 'บันทึกรายรับ-รายจ่าย อื่นๆ',
                 'DocDate' => $row->DocDate,
                 'Detial' => ($row->Detial),
                 'IncomeType' => intval($row->IncomeType),
                 'Amount' => ($row->Amount),
+                'IsVat' => $row->IsVat
             );
             array_push($_array, $_ar);
         }
-        ;
-        echo json_encode(array_merge($_array, $qryMenu));
+
+        $workSheep = $this->db->select('w.RowKey as key,'
+                                . 'concat("ใบงาน (",w.DocID,")") as DocID,'
+                                . 'w.DocDate,'
+                                . 'concat("(ค่าบริการขนส่ง) ",p.ProductName)as Detial,'
+                                . '1 as IncomeType,'
+                                . 'w.PriceTotal as Amount,'
+                                . '0 as IsVat')
+                        ->where('w.DocDate >=', $_data->SDate)
+                        ->where('w.DocDate <=', $_data->EDate)
+                        ->from('TRNWrokSheetHD w')
+                        ->join('MSTProductName p', 'w.ProductKey=p.RowKey')
+                        ->get()->result();
+
+        $skillLabor = $this->db->select('w.RowKey as key,'
+                                . 'concat("ใบงาน (",w.DocID,")") as DocID,'
+                                . 'w.DocDate,'
+                                . 'concat("(ค่าฝีมือ) ",trim(t.Title),p.FName," ",p.LName)as Detial,'
+                                . '0 as IncomeType,'
+                                . 'w.SkillLabor as Amount,'
+                                . '0 as IsVat')
+                        ->where('w.DocDate >=', $_data->SDate)
+                        ->where('w.DocDate <=', $_data->EDate)
+                        ->where('w.SkillLabor>', 0)
+                        ->from('TRNWrokSheetHD w')
+                        ->join('MSTEmployee p', 'w.EmpKey=p.RowKey')
+                        ->join('MSTTitle t', 'p.TitleKey=t.RowKey')
+                        ->get()->result();
+
+        $fule = $this->db->select('w.RowKey as key,'
+                                . 'concat("ใบงาน (",w.DocID,")") as DocID,'
+                                . 'w.DocDate,'
+                                . 'concat("(ค่าน้ำมัน) ",mf.Fuel)as Detial,'
+                                . '0 as IncomeType,'
+                                . 'f.Price as Amount,'
+                                . '1 as IsVat')
+                        ->where('w.DocDate >=', $_data->SDate)
+                        ->where('w.DocDate <=', $_data->EDate)
+                        ->from('TRNWrokSheetHD w')
+                        ->join('TRNFule f', 'w.RowKey=f.WorkSheetHDKey')
+                        ->join('MSTPumpFule ff', 'f.PumpFuleKey=ff.RowKey')
+                        ->join('MSTFuel mf', 'ff.FuleKey=mf.RowKey')
+                        ->get()->result();
+
+        $maintenance = $this->db->select('m.RowKey as key,'
+                                . '"รายการซ่อมบำรุง" as DocID,'
+                                . 'm.ListDate as DocDate,'
+                                . 'concat("(ทะเบียนรถ ",c.CarNumber,") ",m.Detail)as Detial,'
+                                . '0 as IncomeType,'
+                                . 'm.CostValue as Amount,'
+                                . '0 as IsVat')
+                        ->where('m.ListDate >=', $_data->SDate)
+                        ->where('m.ListDate <=', $_data->EDate)
+                        ->from('TRNMaintenance m')
+                        ->join('MSTCar c', 'm.CarKey=c.RowKey')
+                        ->get()->result();
+        echo json_encode(array_merge($_array, $inCome, $workSheep, $skillLabor, $fule, $maintenance));
     }
 
     public function editIncome() {
