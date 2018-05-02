@@ -16,7 +16,7 @@ and open the template in the editor.
 <div id="form_Incometime">
     <div class="col-12">   
         <div class="panel panel-default">
-<!--            <div class="panel-heading">ช่วงระยะเวลาที่แสดงรายการประจำวัน</div>-->
+            <!--            <div class="panel-heading">ช่วงระยะเวลาที่แสดงรายการประจำวัน</div>-->
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6">
@@ -44,11 +44,48 @@ and open the template in the editor.
                 </div>
                 <hr>
                 <div id="form_InReport"></div>
+                <hr>
+                <div class="row">  
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <label for="txtRevenue" class="text-right" style="line-height: 34px;">รายรับ :</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <input type="text" class="form-control text-right" id="txtRevenue" name="txtRevenue" placeholder="รายรับ" disabled value="0.00">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">  
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <label for="txtExpenditure" class="text-right" style="line-height: 34px;">รายจ่าย :</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <input type="text" class="form-control text-right" id="txtExpenditure" name="txtExpenditure" placeholder="รายจ่าย" disabled value="0.00">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">  
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <label for="txtTotal" class="text-right" style="line-height: 34px;">ยอดสุทธิ :</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <input type="text" class="form-control text-right" id="txtTotal" name="txtTotal" placeholder="ยอดสุทธิ" disabled value="0.00">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
- 
+
 <!--<div class="panel-footer">
     ......
 </div>-->

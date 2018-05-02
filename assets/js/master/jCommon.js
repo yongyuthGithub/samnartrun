@@ -288,6 +288,16 @@ function jsonToJavaDate(v) {//---จาก JSON --> javascript datetime
 function ShowDateToJavaDate(v) {//---จาก ShowDate --> javascript datetime
     return setDateJson(v).toJSON();
 }
+
+function ParseJsonDate(dateString) {//---จาก jsondate to javascriptdate
+    var milli = dateString.replace(/\/Date\((-?\d+)\)\//, '$1');
+    var date = new Date(parseInt(milli));
+    return date;
+}
+
+function ToJsonDate(date) {//---จาก javascriptdate to jsondate
+    return '\/Date(' + date.getTime() + ')\/';
+}
 //-------------------------------------------------------------
 //-------------PHP DateTime
 Date.prototype.addDays = function (num) {

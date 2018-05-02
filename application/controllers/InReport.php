@@ -19,6 +19,14 @@ class InReport extends PCenter {
         $this->load->view('transaction/InReport/InReport_edit');
     }
 
+    public function displayPrint() {
+        $this->load->view('transaction/InReport/InReportPrintView');
+    }
+
+    public function loadInReportReport() {
+        $this->load->view('transaction/InReport/reports/RTotalPayout.mrt');
+    }
+
     public function findInReport() {
         $_data = json_decode($_POST['vdata']);
 
@@ -110,7 +118,47 @@ class InReport extends PCenter {
                         ->from('TRNMaintenance m')
                         ->join('MSTCar c', 'm.CarKey=c.RowKey')
                         ->get()->result();
-        echo json_encode(array_merge($_array, $inCome, $workSheep, $skillLabor, $fule, $maintenance));
+
+        $insuranceCar = $this->db->select('i.RowKey as key,'
+                                . '"รายการต่อประกันรถขนส่ง" as DocID,'
+                                . 'i.SDate as DocDate,'
+                                . 'concat("(ทะเบียนรถ ",c.CarNumber,") ",mi.TypeName)as Detial,'
+                                . '0 as IncomeType,'
+                                . 'i.Cash as Amount,'
+                                . '0 as IsVat')
+                        ->where('i.SDate >=', $_data->SDate)
+                        ->where('i.SDate <=', $_data->EDate)
+                        ->from('TRNCarInsurance i')
+                        ->join('MSTInsuranceType mi', 'i.InsuranceTypeKey=mi.RowKey')
+                        ->join('MSTCar c', 'i.CarKey=c.RowKey')
+                        ->get()->result();
+        $vatcar = $this->db->select('i.RowKey as key,'
+                                . '"รายการต่อค่าอื่นๆ ของรถขนส่ง" as DocID,'
+                                . 'i.SDate as DocDate,'
+                                . 'concat("(ทะเบียนรถ ",c.CarNumber,") ",(case when (i.ActType=1) then "ต่อ พรบ." else "ต่อ ภาษี" end))as Detial,'
+                                . '0 as IncomeType,'
+                                . 'i.Cash as Amount,'
+                                . '0 as IsVat')
+                        ->where('i.SDate >=', $_data->SDate)
+                        ->where('i.SDate <=', $_data->EDate)
+                        ->from('TRNCarAct i')
+                        ->join('MSTCar c', 'i.CarKey=c.RowKey')
+                        ->get()->result();
+        $insuranceEmp = $this->db->select('i.RowKey as key,'
+                                . '"รายการต่อประกันพนักงาน" as DocID,'
+                                . 'i.SDate as DocDate,'
+                                . 'concat("(",t.Title,emp.FName," ",emp.LName,") ",mi.TypeName)as Detial,'
+                                . '0 as IncomeType,'
+                                . 'i.Cash as Amount,'
+                                . '0 as IsVat')
+                        ->where('i.SDate >=', $_data->SDate)
+                        ->where('i.SDate <=', $_data->EDate)
+                        ->from('TRNEmployeeInsurance i')
+                        ->join('MSTInsuranceType mi', 'i.InsuranceTypeKey=mi.RowKey')
+                        ->join('MSTEmployee emp', 'i.EmpKey=emp.RowKey')
+                        ->join('MSTTitle t', 'emp.TitleKey=t.RowKey')
+                        ->get()->result();
+        echo json_encode(array_merge($_array, $inCome, $workSheep, $skillLabor, $fule, $maintenance, $insuranceCar, $vatcar, $insuranceEmp));
     }
 
     public function editIncome() {
@@ -191,6 +239,10 @@ class InReport extends PCenter {
     public function branchMain() {
         $data['page'] = 'master/Fule/branch_main';
         $this->load->view('layout/nav', $data);
+    }
+
+    public function findReceiptWithReport() {
+        echo json_encode($this->MyCompayDetail());
     }
 
 }

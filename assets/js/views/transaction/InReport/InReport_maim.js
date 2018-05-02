@@ -66,16 +66,21 @@ $(function () {
             {data: 'Amount', header: 'เงินสุทธิ'},
 //           {data: 'Url', header: 'Url'}
         ],
-
+        AfterLoadData: function (form, data, table) {
+            var _v = $.ToLinq(data)
+                    .Select(function (x) {
+                        return new Object({
+                            IncomeType: parseInt(x.IncomeType),
+                            Amount: parseInt(x.IsVat) === 0 ? parseFloat(x.Amount) : parseFloat(x.Amount) + ((parseFloat(x.Amount) * 7) / 100)
+                        });
+                    });
+            var _revenue = _v.Where(x => x.IncomeType === 1).Sum(x => x.Amount);
+            var _expenditure = _v.Where(x => x.IncomeType === 0).Sum(x => x.Amount);
+            form_Incometime.find('#txtRevenue').val(addCommas(_revenue, 2));
+            form_Incometime.find('#txtExpenditure').val(addCommas(_expenditure, 2));
+            form_Incometime.find('#txtTotal').val(addCommas(_revenue - _expenditure, 2));
+        },
         DataColumnsDefs: [
-//            {
-//                render: function (row, type, val2, meta) {
-//                    var _val = val2.DocID === '' ? parseInt(val2.IncomeType) === 1 ? 'รายรับอื่นๆ' : 'รายจ่ายอื่นๆ' : val2.DocID;
-//                    return _val;
-//                },
-//                orderable: true,
-//                targets: 0
-//            },
             {
                 render: function (row, type, val2, meta) {
                     var _val = parseInt(val2.IncomeType) === 1 ? 'รายรับ' : 'รายจ่าย';
@@ -114,6 +119,23 @@ $(function () {
             }
         ],
         btnNewFun: function (f) {
+            $.bPopup({
+                url: mvcPatch('InReport/displayPrint'),
+                title: 'พิมพ์ข้อมูลรายรับ/รายจ่าย ทั้งหมด',
+                closable: true,
+                btnCancel: false,
+                size: BootstrapDialog.SIZE_WIDE,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: f.data('data'),
+                        fun: function (_f) {
+
+                        }
+                    });
+                },
+                buttons: [
+                ]
+            });
         },
         btnEditFun: function (f, d) {
         },
