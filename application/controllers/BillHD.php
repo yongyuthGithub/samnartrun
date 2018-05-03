@@ -54,6 +54,19 @@ class BillHD extends PCenter {
                 ->join('MSTShippingLocations lB', 'w.ShippingBegin=lB.RowKey', 'left')
                 ->join('MSTShippingLocations lE', 'w.ShippingEnd=lE.RowKey', 'left')
                 ->get();
+        
+//        $qryBill = $this->db->select('b.RowKey as key,'
+//                . 'b.DocDate,'
+//                . 'b.DocID,'
+//                . 'b.Amounts,'
+//                . 'b.Remain,'
+//                . '')
+//                ->where('b.DocDate >=', $_data->SDate)
+//                ->where('b.DocDate <=', $_data->EDate)
+//                ->from('TRNBillHD b')
+//                ->join('MSTCustomerBranch cb','b.CustomerBranchKey=cb.RowKey')
+//                ->join('MSTCustomer c','cb.CompanyKey=c.RowKey')
+//                ->get()->result();
         echo json_encode($qryMenu->result());
     }
 
