@@ -160,7 +160,7 @@ $(function () {
             form_sumbit.SetDataPost({
                 data: {
                     txtkey: d.key,
-                    txtdisplay: d.Customer
+                    txtdisplay: d.Bank
                 }
             }).prop('action', mvcPatch('Bank/branchindex')).submit();
         }

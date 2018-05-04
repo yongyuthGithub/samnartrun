@@ -7,13 +7,13 @@ $(function () {
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
-        btnPreview: true,
+        btnPreview: false,
         btnEditText: 'แก้ไข',
         btnNewText: 'เพิ่ม',
         btnDeleteText: 'ลบ',
         btnPreviewText: 'น้ำมันเชื้อเพลิง',
         headerString: '',
-        UrlDataJson: mvcPatch('Fule/findBrand'),
+       UrlDataJson: mvcPatch('Bank/findBranchBank'),
         UrlDataSend: {key: $('#txtkey').val()},
 //        return new Array()
 //    },
@@ -21,8 +21,8 @@ $(function () {
         UrlLoandingclose: true,
 //    AfterLoadData: function (f, d, t) { },
         DataColumns: [
-            {data: 'PumpBranch', header: 'สาขา'},
-            {data: 'FullAdress', header: 'ที่อยู่'},
+            {data: 'Branch', header: 'สาขา'},
+            {data: 'IsDefault', header: 'คาเรื่มต้น'},
         ],
 //        DataColumnsDefs: [
 //            {
@@ -45,18 +45,15 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({
                                 RowKey: Guid,
-                                PumpKey: $('#txtkey').val(),
-                                PumpBranch: _f.find('#txtbranch').val(),
-                                Address: _f.find('#txtaddress').val(),
-                                SubDistrict: _f.find('#cmdSubDistrict').val(),
-                                ZipCode: _f.find('#txtZipCode').val(),
+                                BankKey:$('#txtkey').val(),
+                                Branch: _f.find('#txtbranch').val(),
                                 IsDefault: _f.find('#swDF').is(':checked')
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {
                                     k2.close();
                                     $.reqData({
-                                        url: mvcPatch('Fule/editBrand'),
+                                        url: mvcPatch('Bank/editBranchBank'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {
@@ -89,7 +86,7 @@ $(function () {
         },
         btnEditFun: function (f, d) {
             $.bPopup({
-                url: mvcPatch('Fule/branchEdit'),
+                url: mvcPatch('Bank/typeedit'),
                 title: 'แก้ไขสาขา',
                 closable: false,
                 size: BootstrapDialog.SIZE_NORMAL,
@@ -167,15 +164,15 @@ $(function () {
                 }
             });
         },
-        btnPreviewFun: function (f, d) {
-            form_sumbit.SetDataPost({
-                data: {
-                    txtkey: $('#txtkey').val(),
-                    txtdisplay: $('.breadcrumb li.active').text(),
-                    txtkey2: d.key,
-                    txtdisplay2: d.PumpBranch
-                }
-            }).prop('action', mvcPatch('fule/branchDetailMain')).submit();
-        }
+//        btnPreviewFun: function (f, d) {
+//            form_sumbit.SetDataPost({
+//                data: {
+//                    txtkey: $('#txtkey').val(),
+//                    txtdisplay: $('.breadcrumb li.active').text(),
+//                    txtkey2: d.key,
+//                    txtdisplay2: d.PumpBranch
+//                }
+//            }).prop('action', mvcPatch('fule/branchDetailMain')).submit();
+//        }
     });
 });

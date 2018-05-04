@@ -13,6 +13,16 @@ and open the template in the editor.
         </div>
     </div>
 </div>
+<div class="col-12">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ol class="breadcrumb">
+                <li><a href="<?php echo base_url('Bank/index') ?>">หน้าหลัก</a></li>
+                <li class="active"><?php echo $_POST['txtdisplay']; ?></li>
+            </ol>
+        </div>
+    </div>
+</div>
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body"> 
@@ -20,6 +30,7 @@ and open the template in the editor.
         </div>
     </div>
 </div>
+<input type="hidden" id="txtkey" value="<?php echo $_POST['txtkey']; ?>" />
 <!--<div class="panel-footer">
     ......
 </div>-->
