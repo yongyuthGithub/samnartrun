@@ -1,4 +1,4 @@
-<?php echo css_asset('views/transaction/record/record_main.css'); ?>
+<?php echo css_asset('views/billhd/billhd_main.css'); ?>
 <?php echo js_asset('views/BillHD/BillHD_main.js'); ?>
 <div class="col-12">   
     <div class="panel panel-default">
@@ -37,6 +37,43 @@
                 </div>
                 <hr>
                 <div id="form_recordlist1"></div>
+                <hr>
+                <div class="row">  
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <label for="txtAmounts" class="text-right" style="line-height: 34px;">ยอดเงินที่ต้องชำระรวม :</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <input type="text" class="form-control text-right" id="txtAmounts" name="txtAmounts" placeholder="ยอดเงินที่ต้องชำระรวม" disabled value="0.00">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">  
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <label for="txtRemain" class="text-right" style="line-height: 34px;">ยอดเงินที่ชำระแล้ว :</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <input type="text" class="form-control text-right" id="txtRemain" name="txtRemain" placeholder="ยอดเงินที่ชำระแล้ว" disabled value="0.00">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">  
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <label for="txtBalance" class="text-right" style="line-height: 34px;">ยอดคงเหลือ :</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <input type="text" class="form-control text-right" id="txtBalance" name="txtBalance" placeholder="ยอดคงเหลือ" disabled value="0.00">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

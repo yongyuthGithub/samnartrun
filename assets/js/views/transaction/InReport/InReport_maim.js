@@ -112,7 +112,8 @@ $(function () {
             },
             {
                 render: function (row, type, val2, meta) {
-                    return parseInt(val2.IsVat) === 1 ? addCommas(parseFloat(val2.Amount) + ((parseFloat(val2.Amount) * 7) / 100), 2) : addCommas(parseFloat(val2.Amount), 2);
+                    var _c = parseInt(val2.IncomeType) === 1 ? 'text-success' : 'text-danger';
+                    return  '<span class="' + _c + '">' + (parseInt(val2.IsVat) === 1 ? addCommas(parseFloat(val2.Amount) + ((parseFloat(val2.Amount) * 7) / 100), 2) : addCommas(parseFloat(val2.Amount), 2)) + '</span>';
                 },
                 orderable: true,
                 targets: 6

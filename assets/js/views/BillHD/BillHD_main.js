@@ -45,8 +45,6 @@ $(function () {
         $.reqData({
             url: mvcPatch('BillHD/findBillHD'),
             data: {vdata: JSON.stringify({
-//                    SDate: PHP_DateTimeShow_To_JSON(form_record.find('#divSDate')),
-//                    EDate: PHP_DateTimeShow_To_JSON(form_record.find('#divEDate'), true)
                     SDate: setDateJson(form_BillHD.find('#txtSDate').val()),
                     EDate: setDateJson(form_BillHD.find('#txtEDate').val())
                 })
@@ -62,7 +60,7 @@ $(function () {
         btnNew: true,
         btnDeleteAll: false,
         btnDelete: false,
-        btnEdit: true,
+        btnEdit: false,
         btnNewText: 'พิมพ์รายงาน',
         btnPreview: false,
         btnNewIcon: 'glyphicon glyphicon-print',
@@ -79,15 +77,27 @@ $(function () {
 //                EDate: PHP_DateTime_To_JSON(form_record.find('#txtEDate').val())
 //            })
 //        },
-//    AfterLoadData: function (f, d, t) { },
+        AfterLoadData: function (form, data, table) {
+            var _v = $.ToLinq(data)
+                    .Select(function (x) {
+                        return new Object({
+                            Amounts: parseFloat(x.Amounts),
+                            Remain: parseFloat(x.Remain)
+                        });
+                    });
+            var _Amounts = _v.Sum(x => x.Amounts);
+            var _Remain = _v.Sum(x => x.Remain);
+            form_BillHD.find('#txtAmounts').val(addCommas(_Amounts, 2));
+            form_BillHD.find('#txtRemain').val(addCommas(_Remain, 2));
+            form_BillHD.find('#txtBalance').val(addCommas(_Amounts - _Remain, 2));
+        },
         DataColumns: [
             {data: 'DocID', header: 'เลขที่เอกสาร'},
             {data: 'DocDate', header: 'วันที่เอกสาร'},
-            {data: 'Product', header: 'สินค้า'},
-            {data: 'PriceTotal', header: 'ค่าบริการ'},
-            {data: 'CNumberF', header: 'รถขนส่ง'},
-            {data: 'CusCodeF', header: 'บริษัท'},
-            {data: 'CusCodeS', header: 'สถานที่ รับ-ส่ง'}
+            {data: 'Customer', header: 'ลูกค้า'},
+            {data: 'Amounts', header: 'ยอดที่ต้องชำระ'},
+            {data: 'Remain', header: 'ยอดที่ชำระแล้ว'},
+            {data: 'Remain', header: 'ยอดค้างชำระ'}
         ],
         DataColumnsDefs: [
             {
@@ -99,81 +109,74 @@ $(function () {
             },
             {
                 render: function (row, type, val2, meta) {
-                    return addCommas(val2.PriceTotal, 2);
+                    return addCommas(val2.Amounts, 2);
                 },
                 orderable: true,
                 targets: 3
             },
             {
                 render: function (row, type, val2, meta) {
-                    return val2.CNumberF + ' / ' + val2.CNumberS;
+                    return '<span class="text-success">' + addCommas(val2.Remain, 2) + '</span>';
                 },
                 orderable: true,
                 targets: 4
             },
             {
                 render: function (row, type, val2, meta) {
-                    return ($.trim(val2.CusCodeF).length > 0 ? '(' + val2.CusCodeF + ') ' : '') + val2.CustomerF;
+                    return '<span class="text-danger">' + addCommas(parseFloat(val2.Amounts) - parseFloat(val2.Remain), 2) + '</span>';
                 },
                 orderable: true,
                 targets: 5
-            },
-            {
-                render: function (row, type, val2, meta) {
-                    return  val2.LocationNameB + ' -> ' + val2.LocationNameE;
-                },
-                orderable: true,
-                targets: 6
             }
         ],
         btnNewFun: function (f) {
-            $.bPopup({
-                url: mvcPatch('BillHD/edit'),
-                title: 'รายการบิล',
-                closable: false,
-                size: BootstrapDialog.SIZE_NORMAL,
-                onshow: function (k) {
-                    k.getModal().data({
-                        data: new Object({key: Guid}),
-                        fun: function (_f) {
-                            var obj = new Object();
-                            obj.RowKey = Guid;
-                            obj.CusCode = _f.find('#txtCusCode').val();
-                            obj.Customer = _f.find('#txtUser').val();
-                            $.bConfirm({
-                                buttonOK: function (k) {
-                                    k.close();
-                                    $.reqData({
-                                        url: mvcPatch('Customer/editCustomer'),
-                                        data: {data: JSON.stringify(obj)},
-                                        loanding: false,
-                                        callback: function (vdata) {
-                                            if (vdata.success) {
-                                                _f.find('#btn-close').click();
-                                                f.find('.xref').click();
-                                            } else {
-                                                $.bAlert({
-                                                    message: vdata.message
-                                                });
-                                            }
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
-                },
-                buttons: [
-                    {
-                        id: 'btn-ok',
-                        icon: 'fa fa-check',
-                        label: '&nbsp;ตกลง',
-                        action: function (k) {
-
-                        }
-                    }
-                ]
-            });
+//            $.bPopup({
+//                url: mvcPatch('BillHD/edit'),
+//                title: 'รายการบิล',
+//                closable: false,
+//                size: BootstrapDialog.SIZE_NORMAL,
+//                onshow: function (k) {
+//                    k.getModal().data({
+//                        data: new Object({key: Guid}),
+//                        fun: function (_f) {
+//                            var obj = new Object();
+//                            obj.RowKey = Guid;
+//                            obj.CusCode = _f.find('#txtCusCode').val();
+//                            obj.Customer = _f.find('#txtUser').val();
+//                            $.bConfirm({
+//                                buttonOK: function (k) {
+//                                    k.close();
+//                                    $.reqData({
+//                                        url: mvcPatch('Customer/editCustomer'),
+//                                        data: {data: JSON.stringify(obj)},
+//                                        loanding: false,
+//                                        callback: function (vdata) {
+//                                            if (vdata.success) {
+//                                                _f.find('#btn-close').click();
+//                                                f.find('.xref').click();
+//                                            } else {
+//                                                $.bAlert({
+//                                                    message: vdata.message
+//                                                });
+//                                            }
+//                                        }
+//                                    });
+//                                }
+//                            });
+//                        }
+//                    });
+//                },
+//                buttons: [
+//                    {
+//                        id: 'btn-ok',
+//                        icon: 'fa fa-check',
+//                        label: '&nbsp;ตกลง',
+//                        action: function (k) {
+//
+//                        }
+//                    }
+//                ]
+//            });
         },
 
         btnEditFun: function (f, d) {

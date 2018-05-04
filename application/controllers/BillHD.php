@@ -30,44 +30,45 @@ class BillHD extends PCenter {
   
     public function findBillHD() {
         $_data = json_decode($_POST['vdata']);
-        $qryMenu = $this->db->select('w.RowKey as key,'
-                        . 'w.DocID,'
-                        . 'w.DocDate,'
-                        . 'w.Product,'
-                        . 'w.PriceTotal,'
-                        . 'cf.CarNumber as CNumberF,'
-                        . 'cs.CarNumber as CNumberS,'
-                        . 'cufc.CusCode as CusCodeF,'
-                        . 'cufc.Customer as CustomerF,'
-                        . 'lB.LocationName as LocationNameB,'
-                        . 'lE.LocationName as LocationNameE,'
-//                        . 'cusc.Customer as CustomerS,'
-//                        . 'cus.Branch as BranchS')
-                )
-                ->where('w.DocDate >=', $_data->SDate)
-                ->where('w.DocDate <=', $_data->EDate)
-                ->from('TRNWrokSheetHD w')
-                ->join('MSTCar cf', 'w.CarFirstKey=cf.RowKey', 'left')
-                ->join('MSTCar cs', 'w.CarSecondKey=cs.RowKey', 'left')
-//                ->join('MSTCustomerBranch cuf', 'w.CutsomerForm=cuf.RowKey', 'left')
-                ->join('MSTCustomer cufc', 'w.CutsomerKey=cufc.RowKey', 'left')
-                ->join('MSTShippingLocations lB', 'w.ShippingBegin=lB.RowKey', 'left')
-                ->join('MSTShippingLocations lE', 'w.ShippingEnd=lE.RowKey', 'left')
-                ->get();
+//        $qryMenu = $this->db->select('w.RowKey as key,'
+//                        . 'w.DocID,'
+//                        . 'w.DocDate,'
+//                        . 'w.Product,'
+//                        . 'w.PriceTotal,'
+//                        . 'cf.CarNumber as CNumberF,'
+//                        . 'cs.CarNumber as CNumberS,'
+//                        . 'cufc.CusCode as CusCodeF,'
+//                        . 'cufc.Customer as CustomerF,'
+//                        . 'lB.LocationName as LocationNameB,'
+//                        . 'lE.LocationName as LocationNameE,'
+////                        . 'cusc.Customer as CustomerS,'
+////                        . 'cus.Branch as BranchS')
+//                )
+//                ->where('w.DocDate >=', $_data->SDate)
+//                ->where('w.DocDate <=', $_data->EDate)
+//                ->from('TRNWrokSheetHD w')
+//                ->join('MSTCar cf', 'w.CarFirstKey=cf.RowKey', 'left')
+//                ->join('MSTCar cs', 'w.CarSecondKey=cs.RowKey', 'left')
+////                ->join('MSTCustomerBranch cuf', 'w.CutsomerForm=cuf.RowKey', 'left')
+//                ->join('MSTCustomer cufc', 'w.CutsomerKey=cufc.RowKey', 'left')
+//                ->join('MSTShippingLocations lB', 'w.ShippingBegin=lB.RowKey', 'left')
+//                ->join('MSTShippingLocations lE', 'w.ShippingEnd=lE.RowKey', 'left')
+//                ->get();
         
-//        $qryBill = $this->db->select('b.RowKey as key,'
-//                . 'b.DocDate,'
-//                . 'b.DocID,'
-//                . 'b.Amounts,'
-//                . 'b.Remain,'
-//                . '')
-//                ->where('b.DocDate >=', $_data->SDate)
-//                ->where('b.DocDate <=', $_data->EDate)
-//                ->from('TRNBillHD b')
-//                ->join('MSTCustomerBranch cb','b.CustomerBranchKey=cb.RowKey')
-//                ->join('MSTCustomer c','cb.CompanyKey=c.RowKey')
-//                ->get()->result();
-        echo json_encode($qryMenu->result());
+        $qryBill = $this->db->select('b.RowKey as key,'
+                . 'b.DocDate,'
+                . 'b.DocID,'
+                . 'b.Amounts,'
+                . 'b.Remain,'
+                . 'c.CusCode,'
+                . 'c.Customer')
+                ->where('b.DocDate >=', $_data->SDate)
+                ->where('b.DocDate <=', $_data->EDate)
+                ->from('TRNBillHD b')
+                ->join('MSTCustomerBranch cb','b.CustomerBranchKey=cb.RowKey')
+                ->join('MSTCustomer c','cb.CompanyKey=c.RowKey')
+                ->get();
+        echo json_encode($qryBill->result());
     }
 
     public function findBillHDone() {

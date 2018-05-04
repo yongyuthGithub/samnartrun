@@ -10,6 +10,16 @@ const regexpIDCard = /[0-9]{5}[0-9]{7}[0-9]{1}/;
 const empPictureType = ["jpg", "gif", "png"];
 $("[data-header-left='true']").parent().addClass("pmd-navbar-left");
 
+﻿const monthNamesThai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
+    "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+
+﻿const dayNames = ["วันอาทิตย์ที่", "วันจันทร์ที่", "วันอังคารที่", "วันพุทธที่", "วันพฤหัสบดีที่", "วันศุกร์ที่", "วันเสาร์ที่"];
+
+﻿const monthNamesEng = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+
+﻿const dayNamesEng = ['Sunday', 'Monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
 function mvcPatch(v) {
     return $('#hidUrl').val() + v;
 }
@@ -372,6 +382,26 @@ function PHP_DateTime_To_JSON(v) {//---จาก DateTime --> yyyy-MM-dd HH:mm:s
         tSS = '0' + tSS;
     }
     return yyyy + '-' + mm + '-' + dd + ' ' + tHH + ':' + tMM + ':' + tSS;
+}
+
+function PHP_DateTime_To_JSON2(v) {//---จาก DateTime --> yyyy-MM-dd
+    var today = v === undefined ? new Date() : v;
+    try {
+        var vt = today.getDate();
+    } catch (e) {
+        today = new Date();
+    }
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+    return yyyy + '-' + mm + '-' + dd;
 }
 
 function setDateJsonTime(v, t) {//---จาก v="dd/MM/yyyy", t="HH:mm:ss" --> DateTime

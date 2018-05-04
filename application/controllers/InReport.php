@@ -158,7 +158,19 @@ class InReport extends PCenter {
                         ->join('MSTEmployee emp', 'i.EmpKey=emp.RowKey')
                         ->join('MSTTitle t', 'emp.TitleKey=t.RowKey')
                         ->get()->result();
-        echo json_encode(array_merge($_array, $inCome, $workSheep, $skillLabor, $fule, $maintenance, $insuranceCar, $vatcar, $insuranceEmp));
+        $receipother = $this->db->select('i.RowKey as key,'
+                                . 'concat("รายการใบเสร็จ (",h.DocID,")") as DocID,'
+                                . 'h.DocDate,'
+                                . 'i.Detail as Detial,'
+                                . '1 as IncomeType,'
+                                . 'i.Amounts as Amount,'
+                                . '0 as IsVat')
+                        ->where('h.DocDate >=', $_data->SDate)
+                        ->where('h.DocDate <=', $_data->EDate)
+                        ->from('TRNReceiptOther i')
+                        ->join('TRNReceiptHD h', 'i.ReceiptHDKey=h.RowKey')
+                        ->get()->result();
+        echo json_encode(array_merge($_array, $inCome, $workSheep, $skillLabor, $fule, $maintenance, $insuranceCar, $vatcar, $insuranceEmp, $receipother));
     }
 
     public function editIncome() {
