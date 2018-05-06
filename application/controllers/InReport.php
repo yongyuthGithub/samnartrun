@@ -63,18 +63,18 @@ class InReport extends PCenter {
             array_push($_array, $_ar);
         }
 
-        $workSheep = $this->db->select('w.RowKey as key,'
-                                . 'concat("ใบงาน (",w.DocID,")") as DocID,'
-                                . 'w.DocDate,'
-                                . 'concat("(ค่าบริการขนส่ง) ",p.ProductName)as Detial,'
-                                . '1 as IncomeType,'
-                                . 'w.PriceTotal as Amount,'
-                                . '0 as IsVat')
-                        ->where('w.DocDate >=', $_data->SDate)
-                        ->where('w.DocDate <=', $_data->EDate)
-                        ->from('TRNWrokSheetHD w')
-                        ->join('MSTProductName p', 'w.ProductKey=p.RowKey')
-                        ->get()->result();
+//        $workSheep = $this->db->select('w.RowKey as key,'
+//                                . 'concat("ใบงาน (",w.DocID,")") as DocID,'
+//                                . 'w.DocDate,'
+//                                . 'concat("(ค่าบริการขนส่ง) ",p.ProductName)as Detial,'
+//                                . '1 as IncomeType,'
+//                                . 'w.PriceTotal as Amount,'
+//                                . '0 as IsVat')
+//                        ->where('w.DocDate >=', $_data->SDate)
+//                        ->where('w.DocDate <=', $_data->EDate)
+//                        ->from('TRNWrokSheetHD w')
+//                        ->join('MSTProductName p', 'w.ProductKey=p.RowKey')
+//                        ->get()->result();
 
         $skillLabor = $this->db->select('w.RowKey as key,'
                                 . 'concat("ใบงาน (",w.DocID,")") as DocID,'
@@ -169,6 +169,20 @@ class InReport extends PCenter {
                         ->where('h.DocDate <=', $_data->EDate)
                         ->from('TRNReceiptOther i')
                         ->join('TRNReceiptHD h', 'i.ReceiptHDKey=h.RowKey')
+                        ->get()->result();
+
+        $workSheep = $this->db->select('i.RowKey as key,'
+                                . 'concat("ค่าบริการขนส่ง (",h.DocID,")") as DocID,'
+                                . 'h.DocDate,'
+                                . 'concat("บิลเลขที่ ",b.DocID) as Detial,'
+                                . '1 as IncomeType,'
+                                . 'i.Amounts as Amount,'
+                                . '0 as IsVat')
+                        ->where('h.DocDate >=', $_data->SDate)
+                        ->where('h.DocDate <=', $_data->EDate)
+                        ->from('TRNReceiptBill i')
+                        ->join('TRNReceiptHD h', 'i.ReceiptHDKey=h.RowKey')
+                        ->join('TRNBillHD b', 'i.BillKey=b.RowKey')
                         ->get()->result();
         echo json_encode(array_merge($_array, $inCome, $workSheep, $skillLabor, $fule, $maintenance, $insuranceCar, $vatcar, $insuranceEmp, $receipother));
     }
