@@ -3,7 +3,7 @@
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1>รายการวางบิล</h1><h4><small>จัดการรายการวางบิล</small></h4>
+            <h1>รายการวางบิล</h1><h4><small>รายงานรายการวางบิล</small></h4>
         </div>
     </div>
 </div>
