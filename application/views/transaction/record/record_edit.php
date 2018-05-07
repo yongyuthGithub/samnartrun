@@ -348,17 +348,17 @@
             <div class="row">
                 <div class="col-xs-12">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#IncomeIn">รายรับอื่นๆ</a></li>
-                        <li><a data-toggle="tab" href="#IncomeOut">รายการจ่ายอื่นๆ</a></li>
+                        <li style="display: none;"><a data-toggle="tab" href="#IncomeIn">รายรับอื่นๆ</a></li>
+                        <li class="active"><a data-toggle="tab" href="#IncomeOut">รายการจ่ายอื่นๆ</a></li>
                         <li><a data-toggle="tab" href="#Fule">รายการเติมน้ำมัน</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div id="IncomeIn" class="tab-pane fade in active" style="padding-top: 20px;">
+                        <div id="IncomeIn" class="tab-pane fade in" style="padding-top: 20px;">
                             <div id="form_incomein">
 
                             </div>
                         </div>
-                        <div id="IncomeOut" class="tab-pane fade in" style="padding-top: 20px;">
+                        <div id="IncomeOut" class="tab-pane fade in active" style="padding-top: 20px;">
                             <div id="form_incomeout">
 
                             </div>
