@@ -57,7 +57,7 @@ $(function () {
     }
 
     form_recordlist1.data('data', new Array()).setMainPage({
-        btnNew: true,
+        btnNew: false,
         btnDeleteAll: false,
         btnDelete: false,
         btnEdit: false,

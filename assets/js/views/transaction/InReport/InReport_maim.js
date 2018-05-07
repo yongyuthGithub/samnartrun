@@ -42,7 +42,7 @@ $(function () {
     }
 
     form_InReport.data('data', new Array()).setMainPage({
-        btnNew: true,
+        btnNew: false,
         btnNewText: 'พิมพ์รายงาน',
         btnNewIcon: 'glyphicon glyphicon-print',
         btnNewStyle: 'btn-success',
