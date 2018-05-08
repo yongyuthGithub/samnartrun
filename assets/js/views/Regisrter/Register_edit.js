@@ -54,18 +54,32 @@ $(function () {
                 });
             });
         });
+        setBank(function (_b) {
+            _b.val(Guid).selectpicker('render');
+            setBankBranch(function (_bc) {
+                _bc.val(Guid).selectpicker('render');
+            })
+        });
         //********************
     } else {
         form_Registeredit.find('#txtUser1').val(_formdata.IDCard);
         form_Registeredit.find('#txtUser2').val(_formdata.FName);
+        form_Registeredit.find('#txtNickName').val(_formdata.NickName);
         form_Registeredit.find('#txtUser3').val(_formdata.Address);
         form_Registeredit.find('#cmdSubDistrict').val(_formdata.SubDistrict);
         form_Registeredit.find('#txtSDate').val(_formdata.SDate);
+        try {
+            form_Registeredit.find('#txtEDate').val(PHP_JSON_To_ShowDate(_formdata.EDate));
+        } catch (e) {
+        }
         form_Registeredit.find('#txtUser6').val(_formdata.LName);
         form_Registeredit.find('#txtUser7').val(_formdata.Tel);
         form_Registeredit.find('#txtUser1').val(_formdata.IDCard);
         form_Registeredit.find('#txtZipCode').val(_formdata.ZipCode);
         form_Registeredit.find('#txtUser5').val(PHP_JSON_To_ShowDate(_formdata.SDate));
+
+        form_Registeredit.find('#txtAccountCode').val(_formdata.AccountCode);
+        form_Registeredit.find('#txtAccountName').val(_formdata.AccountName);
 
         $.each(_formdata.TRNEmployeeFiles, function (k, v) {
             var _image = form_Registeredit.find('.tab-image[data-type="' + v.FileType + '"]');
@@ -92,6 +106,13 @@ $(function () {
                 });
             });
         });
+
+        setBank(function (_b) {
+            _b.val(_formdata.BankKey).selectpicker('render');
+            setBankBranch(function (_bc) {
+                _bc.val(_formdata.BankBranchKey).selectpicker('render');
+            })
+        });
         //********************
 
         form_Registeredit.find('.showinadd').remove();
@@ -102,6 +123,18 @@ $(function () {
     form_Registeredit.find('#txtSDate').dateTime().on('dp.change', function (e) {
         form_Registeredit.formValidation('revalidateField', form_Registeredit.find('#txtUser5'));
     });
+
+    form_Registeredit.find('#divEDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+//            maxDate: new Date(),
+//            defaultDate: new Date(),
+        showTodayButton: true,
+        locale: 'th',
+        showClear: true
+    }).on('dp.change', function (ds) {
+
+    });
+
     form_Registeredit.find('#divEDate_Card').dateTime().on('dp.change', function (e) {
 //        form_Registeredit.formValidation('revalidateField', form_Registeredit.find('#txtUser01'));
     });
@@ -202,6 +235,52 @@ $(function () {
                 var _html = '';
                 $.each(vdata, function (k, v) {
                     _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.SubDistrict + '"  data-zipcode="' + v.ZipCode + '">&nbsp;&nbsp;' + v.SubDistrict + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh')
+                v(_sel);
+            }
+        });
+    }
+
+    form_Registeredit.find('#cmdBank').selectpicker().on({
+        change: function () {
+            setBankBranch(function (_bc) {
+//                _bc.val(Guid).selectpicker('render');
+                form_Registeredit.formValidation('revalidateField', form_Registeredit.find('#cmdBankBranch'));
+            });
+        }
+    });
+    function setBank(v) {
+        $.reqData({
+            url: mvcPatch('MySystem/findBank'),
+//            data: {key: form_mysystem.find('#cmdDistrict').val()},
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_Registeredit.find('#cmdBank').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    _html += '<option data-icon="fa fa-bank" value="' + v.RowKey + '" data-display="' + v.Bank + '">&nbsp;&nbsp;' + v.Bank + '</option>';
+                });
+                _sel.append(_html).selectpicker('refresh')
+                v(_sel);
+            }
+        });
+    }
+
+    form_Registeredit.find('#cmdBankBranch').selectpicker().on({
+        change: function () {
+        }
+    });
+    function setBankBranch(v) {
+        $.reqData({
+            url: mvcPatch('MySystem/findBankBranch'),
+            data: {key: form_Registeredit.find('#cmdBank').val()},
+            loanding: false,
+            callback: function (vdata) {
+                var _sel = form_Registeredit.find('#cmdBankBranch').empty();
+                var _html = '';
+                $.each(vdata, function (k, v) {
+                    _html += '<option data-icon="fa fa-bank" value="' + v.RowKey + '" data-display="' + v.Branch + '">&nbsp;&nbsp;' + v.Branch + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh')
                 v(_sel);

@@ -22,6 +22,7 @@ $(function () {
             {data: 'IDCard', header: 'รหัสบัตรประชาชน'},
             {data: 'FName', header: 'ชื่อ-นามสกุล'},
             {data: 'SDate', header: 'วันที่เริ่มงาน'},
+            {data: 'EDate', header: 'วันที่พ้นสภาพ'},
         ],
         DataColumnsDefs: [
             {
@@ -39,6 +40,14 @@ $(function () {
                 },
                 orderable: true,
                 targets: 2
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    var _val = val2.EDate !== null ? '<span class="text-danger">' + PHP_JSON_To_ShowDate(val2.EDate) + '</span>' : '-';
+                    return _val;
+                },
+                orderable: true,
+                targets: 3
             }
         ],
         btnNewFun: function (f) {
@@ -57,11 +66,24 @@ $(function () {
                             obj.TitleKey = _f.find('#cmdTitle').val();
                             obj.FName = _f.find('#txtUser2').val();
                             obj.LName = _f.find('#txtUser6').val();
+                            obj.NickName = _f.find('#txtNickName').val();
                             obj.Address = _f.find('#txtUser3').val();
                             obj.SubDistrict = _f.find('#cmdSubDistrict').val();
                             obj.ZipCode = _f.find('#txtZipCode').val();
                             obj.Tel = _f.find('#txtUser7').val();
                             obj.SDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate'));
+                            if ($.trim(_f.find('#txtEDate').val()).length > 0) {
+                                obj.EDate = PHP_DateTimeShow_To_JSON(_f.find('#divEDate'));
+                            } else {
+                                obj.EDate = null;
+                            }
+                            obj.AccountCode = _f.find('#txtAccountCode').val();
+                            obj.AccountName = _f.find('#txtAccountName').val();
+                            if (_f.find('#cmdBankBranch').val() !== null) {
+                                obj.BankBranchKey = _f.find('#cmdBankBranch').val();
+                            } else {
+                                obj.BankBranchKey = null;
+                            }
 
                             var _imagedata = $.ToLinq(_f.find('.tab-image'))
                                     .Select(function (x) {
@@ -163,11 +185,24 @@ $(function () {
                             obj.TitleKey = _f.find('#cmdTitle').val();
                             obj.FName = _f.find('#txtUser2').val();
                             obj.LName = _f.find('#txtUser6').val();
+                            obj.NickName = _f.find('#txtNickName').val();
                             obj.Address = _f.find('#txtUser3').val();
                             obj.SubDistrict = _f.find('#cmdSubDistrict').val();
                             obj.ZipCode = _f.find('#txtZipCode').val();
                             obj.Tel = _f.find('#txtUser7').val();
                             obj.SDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate'));
+                            if ($.trim(_f.find('#txtEDate').val()).length > 0) {
+                                obj.EDate = PHP_DateTimeShow_To_JSON(_f.find('#divEDate'));
+                            } else {
+                                obj.EDate = null;
+                            }
+                            obj.AccountCode = _f.find('#txtAccountCode').val();
+                            obj.AccountName = _f.find('#txtAccountName').val();
+                            if (_f.find('#cmdBankBranch').val() !== null) {
+                                obj.BankBranchKey = _f.find('#cmdBankBranch').val();
+                            } else {
+                                obj.BankBranchKey = null;
+                            }
 
                             var _imagedata = $.ToLinq(_f.find('.tab-image'))
                                     .Select(function (x) {
@@ -296,7 +331,7 @@ $(function () {
 
 
 //---------------------------------------CarEmp---------------------------------------------------
-form_CarEmpedit1.setMainPage({
+    form_CarEmpedit1.setMainPage({
         btnNew: true,
         btnDeleteAll: true,
         btnDelete: true,
@@ -329,15 +364,14 @@ form_CarEmpedit1.setMainPage({
                 orderable: true,
                 targets: 1
             },
-             {
+            {
                 render: function (row, type, val2, meta) {
-                    var _val = val2.Title + ' ' + val2.FName +' '+ val2.LName;
+                    var _val = val2.Title + ' ' + val2.FName + ' ' + val2.LName;
                     return _val;
                 },
                 orderable: true,
                 targets: 2
             },
-            
         ],
         btnNewFun: function (f) {
             $.bPopup({

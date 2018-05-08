@@ -44,19 +44,28 @@ and open the template in the editor.
                                 </div>
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <label for="txtUser">ชื่อ:</label>
+                                        <label for="txtUser2">ชื่อ:</label>
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-address-book" style="min-width: 20px;"></i></div>
                                             <input type="text" class="form-control" id="txtUser2" name="txtUser2" placeholder="ชื่อ">
                                         </div>
                                     </div>
-                                </div>
+                                </div>                                
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <label for="txtUser">นามสกุล:</label>
+                                        <label for="txtUser6">นามสกุล:</label>
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-address-book-o" style="min-width: 20px;"></i></div>
                                             <input type="text" class="form-control" id="txtUser6" name="txtUser6" placeholder="นามสกุล">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label for="txtNickName">ชื่อเล่น:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-address-book" style="min-width: 20px;"></i></div>
+                                            <input type="text" class="form-control" id="txtNickName" name="txtNickName" placeholder="ชื่อเล่น">
                                         </div>
                                     </div>
                                 </div>
@@ -69,11 +78,6 @@ and open the template in the editor.
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-md-6"> 
-                            <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <label for="cmdProvince">จังหวัด :</label>
@@ -130,7 +134,11 @@ and open the template in the editor.
                                                 data-selected-Text-Format="count > 3">
                                         </select>
                                     </div>
-                                </div>   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6"> 
+                            <div class="row">            
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <label for="txtZipCode">รหัสไปรษณีย์:</label>
@@ -139,7 +147,7 @@ and open the template in the editor.
                                             <input type="text" class="form-control" id="txtZipCode" name="txtZipCode" placeholder="รหัสไปษณี">
                                         </div>
                                     </div>
-                                </div>                
+                                </div>                                       
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <label for="txtUser">เบอร์โทร:</label>
@@ -154,6 +162,74 @@ and open the template in the editor.
                                         <label for="txtUser">วันที่เริ่มงาน:</label>
                                         <div class="input-group date" id="txtSDate">
                                             <input type='text' class="form-control text-center" id="txtUser5" name="txtUser5" placeholder="วันที่เริ่มงาน" onkeydown="return false;" />
+                                            <span class="input-group-addon">
+                                                <span class="fa fa-calendar"></span>
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label for="txtAccountCode">หมายเลขบัญชี:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-barcode" style="min-width: 20px;"></i></div>
+                                            <input type="text" class="form-control" id="txtAccountCode" name="txtAccountCode" placeholder="หมายเลขบัญชี">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label for="txtAccountName">ชื่อบัญชี:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-address-card" style="min-width: 20px;"></i></div>
+                                            <input type="text" class="form-control" id="txtAccountName" name="txtAccountName" placeholder="ชื่อบัญชี">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="cmdBank">ธนาคาร :</label>
+                                        <select id="cmdBank" name="cmdBank" class="form-control selectpicker show-menu-arrow"
+                                                data-width="100%"
+                                                data-show-Tick="true"
+                                                data-tick-Icon="fa fa-check"
+                                                data-size="5"
+                                                data-header="false"
+                                                data-live-Search="true"
+                                                data-live-Search-Placeholder="key word"
+                                                data-multiple-Separator=",&nbsp;&nbsp;"
+                                                data-actions-Box="false"
+                                                data-selectAll-Text="Select All"
+                                                data-deselectAll-Text="Deselect All"
+                                                data-selected-Text-Format="count > 3">
+                                        </select>
+                                    </div>
+                                </div>   
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="cmdBankBranch">สาขา :</label>
+                                        <select id="cmdBankBranch" name="cmdBankBranch" class="form-control selectpicker show-menu-arrow"
+                                                data-width="100%"
+                                                data-show-Tick="true"
+                                                data-tick-Icon="fa fa-check"
+                                                data-size="5"
+                                                data-header="false"
+                                                data-live-Search="true"
+                                                data-live-Search-Placeholder="key word"
+                                                data-multiple-Separator=",&nbsp;&nbsp;"
+                                                data-actions-Box="false"
+                                                data-selectAll-Text="Select All"
+                                                data-deselectAll-Text="Deselect All"
+                                                data-selected-Text-Format="count > 3">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label for="txtEDate">วันที่พ้นสภาพ:</label>
+                                        <div class="input-group date" id="divEDate">
+                                            <input type='text' class="form-control text-center" id="txtEDate" name="txtEDate" placeholder="วันที่พ้นสภาพ" onkeydown="return false;" />
                                             <span class="input-group-addon">
                                                 <span class="fa fa-calendar"></span>
                                             </span>

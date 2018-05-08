@@ -28,18 +28,25 @@ class Register extends PCenter {
                         . 'E.TitleKey,'
                         . 'E.FName, '
                         . 'E.LName,'
+                        . 'E.NickName,'
                         . 'E.SDate,'
+                        . 'E.EDate,'
                         . 'E.Address,'
                         . 'E.Tel,'
                         . 'T.Title,'
                         . 'E.SubDistrict as SubDistrictKey,'
                         . 'D.RowKey as DistrictKey,'
                         . 'D.ProvinceKey,'
-                        . 'E.ZipCode')
+                        . 'E.ZipCode,'
+                        . 'E.AccountCode,'
+                        . 'E.AccountName,'
+                        . 'E.BankBranchKey,'
+                        . 'b.BankKey')
                 ->from('MSTEmployee E')
                 ->join('MSTTitle T', 'E.TitleKey=T.RowKey', 'left')
                 ->join('MSTSubDistrict SD', 'E.SubDistrict=SD.RowKey', 'left')
                 ->join('MSTDistrict D', 'SD.DistrictKey=D.RowKey', 'left')
+                ->join('MSTBankBranch b', 'E.BankBranchKey=b.RowKey', 'left')
                 ->get();
         $_array = array();
         foreach ($query->result() as $row) {
@@ -51,12 +58,18 @@ class Register extends PCenter {
                 'FName' => $row->FName,
                 'LName' => $row->LName,
                 'SDate' => $row->SDate,
+                'EDate' => $row->EDate,
                 'Address' => $row->Address,
                 'Tel' => $row->Tel,
                 'SubDistrictKey' => $row->SubDistrictKey,
                 'DistrictKey' => $row->DistrictKey,
                 'ProvinceKey' => $row->ProvinceKey,
                 'ZipCode' => $row->ZipCode,
+                'NickName' => $row->NickName,
+                'AccountCode' => $row->AccountCode,
+                'AccountName' => $row->AccountName,
+                'BankBranchKey' => $row->BankBranchKey,
+                'BankKey' => $row->BankKey,
                 'TRNEmployeeFiles' => $this->db
                         ->select('RowKey, EDate, FileType,')
                         ->where('EmpKey', $row->key)

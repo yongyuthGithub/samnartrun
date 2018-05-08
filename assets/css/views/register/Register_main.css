@@ -17,6 +17,12 @@
   text-align: center;
 }
 #form_Register #tblform_Register thead tr th:nth-child(4) {
+  max-width: 100px !important;
+  min-width: 100px !important;
+  width: 100px !important;
+  text-align: center;
+}
+#form_Register #tblform_Register thead tr th:nth-child(5) {
   max-width: 120px !important;
   min-width: 120px !important;
   width: 120px !important;
@@ -47,6 +53,14 @@
   text-align: center;
 }
 #form_Register #tblform_Register tbody tr[role=row] td:nth-child(4) {
+  min-width: 100px !important;
+  max-width: 100px !important;
+  width: 100px !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  text-align: center;
+}
+#form_Register #tblform_Register tbody tr[role=row] td:nth-child(5) {
   min-width: 120px !important;
   max-width: 120px !important;
   width: 120px !important;
