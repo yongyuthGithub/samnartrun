@@ -96,18 +96,15 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({
                                 RowKey: d.key,
-                                PumpKey: $('#txtkey').val(),
-                                PumpBranch: _f.find('#txtbranch').val(),
-                                Address: _f.find('#txtaddress').val(),
-                                SubDistrict: _f.find('#cmdSubDistrict').val(),
-                                ZipCode: _f.find('#txtZipCode').val(),
+                                BankKey:$('#txtkey').val(),
+                                Branch: _f.find('#txtbranch').val(),
                                 IsDefault: _f.find('#swDF').is(':checked')
                             });
                             $.bConfirm({
                                 buttonOK: function (k2) {
                                     k2.close();
                                     $.reqData({
-                                        url: mvcPatch('Fule/editBrand'),
+                                        url: mvcPatch('Bank/editBranchBank'),
                                         data: {data: JSON.stringify(obj)},
                                         loanding: false,
                                         callback: function (vdata) {

@@ -14,8 +14,8 @@ $(function () {
             });
         });
     } else {
-        form_Banktype.find('#txtbranch').val(_formdata.PumpBranch);
-        form_Banktype.find('#txtaddress').val(_formdata.Address);
+        form_Banktype.find('#txtbranch').val(_formdata.Branch);
+        form_Banktype.find('#txtaddress').val(_formdata.IsDefault);
         form_Banktype.find('#txtZipCode').val(_formdata.ZipCode);
         form_Banktype.find('#swDF').prop('checked', parseInt(_formdata.IsDefault) === 1 ? true : false);
         //***Edit By Yongyuth
