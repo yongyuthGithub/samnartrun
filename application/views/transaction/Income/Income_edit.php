@@ -22,9 +22,9 @@ and open the template in the editor.
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <label for="txtUser">วันที่เริ่มงาน :</label>
+                    <label for="txtUser">วันที่ :</label>
                     <div class="input-group date" id="txtSDate">
-                        <input type='text' class="form-control text-center" id="txtUser5" name="txtUser5" placeholder="วันที่เริ่มงาน" onkeydown="return false;" />
+                        <input type='text' class="form-control text-center" id="txtUser5" name="txtUser5" placeholder="วันที่" onkeydown="return false;" />
                         <span class="input-group-addon">
                             <span class="fa fa-calendar"></span>
                         </span>
@@ -37,7 +37,7 @@ and open the template in the editor.
                     <label for="txtUser">รายละเอียด :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-address-book" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control" id="txtUser2" name="txtUser2" placeholder="ชื่อ">
+                        <input type="text" class="form-control" id="txtUser2" name="txtUser2" placeholder="รายละเอียด">
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@ and open the template in the editor.
                     <label for="txtUser">จำนวนเงิน :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-address-book" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control" id="txtUser3" name="txtUser3" placeholder="ชื่อ">
+                        <input type="text" class="form-control" id="txtUser3" name="txtUser3" placeholder="จำวนวเงิน">
                     </div>
                 </div>
             </div>
