@@ -671,8 +671,10 @@ function ChkNumber(v) {
             accept: 'image/png,image/gif,image/jpeg',
             custom_html: '',
             custom_this_image: '',
+            class: '',
             multiple: false,
-            empty: false
+            empty: false,
+            fun: function () {}
         }, option);
 
         var _multiple = setting.multiple ? 'multiple' : '';
@@ -694,7 +696,7 @@ function ChkNumber(v) {
                     var _thisimage;
                     if ($.trim(setting.custom_html).length > 0) {
                         var _id = 'img' + (new Date()).valueOf();
-                        var _newtab = '<div class="col-xs-12" id="' + _id + '">' + setting.custom_html + '</div>';
+                        var _newtab = '<div class="col-xs-12 ' + setting.class + '" id="' + _id + '">' + setting.custom_html + '</div>';
                         _thisimage = _this.append(_newtab).find('#' + _id).find(setting.custom_this_image);
                     } else {
                         _thisimage = _this;
@@ -710,6 +712,7 @@ function ChkNumber(v) {
                                     var dataURL = reader.result;
                                     _thisimage.prop("src", dataURL);
                                     _thisimage.data('data', _thisfile[k]);
+                                    setting.fun(_thisimage);
                                 };
                                 reader.readAsDataURL(_thisfile[k]);
                             } else {

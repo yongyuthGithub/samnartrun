@@ -81,6 +81,69 @@ $(function () {
         });
     }
 
+    form_Caredit.on('click', '.btnAdd', function () {
+        var _html = '';
+        _html += '<div class="divImage row">';
+        _html += '<img class="img-responsive imageShow" />';
+        _html += '<div class="btn-controll">';
+        _html += '<div class="btn-back">';
+        _html += '<i class="fa fa-plus btn-addimage btnimage btnEdit" style="margin-right: 5px;"></i>';
+        _html += '<i class="fa fa-remove btn-deleteimage btnimage" style="margin-right: 5px;"></i>';
+        _html += '<i class="fa fa-search btn-viewimage btnimage"></i>';
+        _html += '</div>';
+        _html += '</div>';
+        _html += '</div>';
+        $('.showF').findFile({
+            custom_html: _html,
+            custom_this_image: '.imageShow',
+            class: 'xfile',
+            fun: function (t) {
+               t.attr({
+                    'data-key': Guid,
+                });
+            }
+//                multiple:true,
+//                empty:true
+        });
+    });
+
+    form_Caredit.on('click', '.btnEdit', function () {
+        $(this).parents('.divImage').find('.imageShow').findFile({
+            fun: function (t) {
+                t.attr({
+                    'data-key': Guid,
+                });
+            }
+//                custom_html: '<img class="xcard img-responsive" />',
+//                custom_this_image: '.xcard',
+//                multiple:true,
+//                empty:true
+        });
+    });
+
+    form_Caredit.on('click', '.btn-viewimage', function () {
+        var _this = $(this).parents('.divImage').find('.imageShow');
+        if (!checkUndefined(_this.attr('src'))) {
+            $.bPopup({
+                url: mvcPatch('Popup/index'),
+                title: 'Show Picture',
+                closable: true,
+                btnCancel: false,
+                size: BootstrapDialog.SIZE_WIDE,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: _this.attr('src')
+                    });
+                },
+                buttons: [
+                ]
+            });
+        }
+    });
+
+    form_Caredit.on('click', '.btn-deleteimage', function () {
+        $(this).parents('.xfile').remove();
+    });
 
     form_Caredit_C.find('#btn-ok').on({
         click: function () {

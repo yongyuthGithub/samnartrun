@@ -103,6 +103,7 @@ class Car extends PCenter {
                 } else {
                     $this->db->trans_commit();
                     $vReturn->success = true;
+                    $vReturn->key = $_data->RowKey;
                 }
             }
         } else {
@@ -121,6 +122,10 @@ class Car extends PCenter {
                 $update->UpdateBy = PCenter::GUID_EMPTY();
                 $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('MSTCar', $update);
+
+                $this->db->where('CarKey', $_data->RowKey)
+                        ->where_not_in('RowKey', $_data->ImageList)
+                        ->delete('TRNCarFiles');
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;
@@ -128,6 +133,7 @@ class Car extends PCenter {
                 } else {
                     $this->db->trans_commit();
                     $vReturn->success = true;
+                    $vReturn->key = $_data->RowKey;
                 }
             }
         }
@@ -203,6 +209,7 @@ class Car extends PCenter {
                 } else {
                     $this->db->trans_commit();
                     $vReturn->success = true;
+                    $vReturn->key = $_data->RowKey;
                 }
             }
         } else {
@@ -221,6 +228,10 @@ class Car extends PCenter {
                 $update->UpdateBy = PCenter::GUID_EMPTY();
                 $update->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->where('RowKey', $_data->RowKey)->update('MSTCar', $update);
+
+                $this->db->where('CarKey', $_data->RowKey)
+                        ->where_not_in('RowKey', $_data->ImageList)
+                        ->delete('TRNCarFiles');
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;
@@ -228,6 +239,7 @@ class Car extends PCenter {
                 } else {
                     $this->db->trans_commit();
                     $vReturn->success = true;
+                    $vReturn->key = $_data->RowKey;
                 }
             }
         }
@@ -438,6 +450,51 @@ class Car extends PCenter {
             $vReturn->success = true;
         }
         echo json_encode($vReturn);
+    }
+
+    public function addImage() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+        if ($_data->RowKey === PCenter::GUID_EMPTY()) {
+            $_data->RowKey = PCenter::GUID();
+            $_data->CreateBy = $this->USER_LOGIN()->RowKey;
+            $_data->CreateDate = PCenter::DATATIME_DB(new DateTime());
+            $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+            $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+            $this->db->insert('TRNCarFiles', $_data);
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $vReturn->success = false;
+                $vReturn->message = $this->db->_error_message();
+            } else {
+                $this->db->trans_commit();
+                $vReturn->success = true;
+            }
+        } else {
+            $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+            $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+            $this->db->where('RowKey', $_data->RowKey)->update('TRNCarFiles', $_data);
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $vReturn->success = false;
+                $vReturn->message = $this->db->_error_message();
+            } else {
+                $this->db->trans_commit();
+                $vReturn->success = true;
+            }
+        }
+        echo json_encode($vReturn);
+    }
+
+    public function findImage() {
+        $key = $_POST['key'];
+        $query = $this->db->select('ImageBase64')
+                ->from('TRNCarFiles')
+                ->where('RowKey', $key)
+                ->get();
+        echo json_encode($query->row());
     }
 
 }

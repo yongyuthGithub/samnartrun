@@ -45,7 +45,7 @@ $(function () {
                 url: mvcPatch('Car/edit'),
                 title: 'เพิ่มข้อมูลรถ',
                 closable: false,
-                size: BootstrapDialog.SIZE_NORMAL,
+                size: BootstrapDialog.SIZE_WIDE,
                 onshow: function (k) {
                     k.getModal().data({
                         data: new Object({key: Guid}),
@@ -57,6 +57,10 @@ $(function () {
                             obj.ProvinceKey = _f.find('#cmdProvince').val();
                             obj.CarType = 1;
                             obj.CarGroup = 1;
+                            obj.ImageList = $.ToLinq(_f.find('.showF').find('.imageShow'))
+                                    .Select(function (x) {
+                                        return $(x).data('key');
+                                    }).ToArray();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -97,7 +101,7 @@ $(function () {
                 url: mvcPatch('Car/edit'),
                 title: 'แก้ไขข้อมูลรถ',
                 closable: false,
-                size: BootstrapDialog.SIZE_NORMAL,
+                size: BootstrapDialog.SIZE_WIDE,
                 onshow: function (k) {
                     k.getModal().data({
                         data: d,
@@ -109,6 +113,10 @@ $(function () {
                             obj.ProvinceKey = _f.find('#cmdProvince').val();
                             obj.CarType = 1;
                             obj.CarGroup = 1;
+                            obj.ImageList = $.ToLinq(_f.find('.showF').find('.imageShow'))
+                                    .Select(function (x) {
+                                        return $(x).data('key');
+                                    }).ToArray();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -226,7 +234,7 @@ $(function () {
                 url: mvcPatch('Car/edit1'),
                 title: 'เพิ่มข้อมูลรถ',
                 closable: false,
-                size: BootstrapDialog.SIZE_NORMAL,
+                size: BootstrapDialog.SIZE_WIDE,
                 onshow: function (k) {
                     k.getModal().data({
                         data: new Object({key: Guid}),
@@ -238,6 +246,10 @@ $(function () {
                             obj.ProvinceKey = _f.find('#cmdProvince').val();
                             obj.CarType = parseInt(_f.find('#txtCarType').val());
                             obj.CarGroup = 2;
+                            obj.ImageList = $.ToLinq(_f.find('.showF').find('.imageShow'))
+                                    .Select(function (x) {
+                                        return $(x).data('key');
+                                    }).ToArray();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -247,8 +259,52 @@ $(function () {
                                         loanding: false,
                                         callback: function (vdata) {
                                             if (vdata.success) {
-                                                _f.find('#btn-close').click();
-                                                f.find('.xref').click();
+                                                var _image = _f.find('.showF').find('.imageShow');
+                                                var _imageIndex = 1;
+
+                                                _uploadImage();
+                                                function _uploadImage() {
+                                                    if (_imageIndex <= _image.length) {
+                                                        var obj2 = new Object();
+                                                        var _timage = $(_image[_imageIndex - 1]);
+                                                        if (_timage.data('key') === Guid) {
+                                                            obj2 = new Object({
+                                                                RowKey: Guid,
+                                                                CarKey: vdata.key,
+                                                                Seq: _imageIndex,
+                                                                FileType: 1,
+                                                                ImageBase64: _timage.attr('src')
+                                                            });
+                                                        } else {
+                                                            obj2 = new Object({
+                                                                RowKey: _timage.data('key'),
+                                                                CarKey: vdata.key,
+                                                                Seq: _imageIndex
+                                                            });
+                                                        }
+                                                        $.reqData({
+                                                            url: mvcPatch('Car/addImage'),
+                                                            data: {data: JSON.stringify(obj2)},
+                                                            loanding: false,
+                                                            callback: function (vdata2) {
+                                                                if (vdata2.success) {
+                                                                    _imageIndex++;
+                                                                    _uploadImage();
+                                                                } else {
+                                                                    $.bAlert({
+                                                                        message: vdata2.message
+                                                                    });
+                                                                }
+                                                            }});
+                                                    } else {
+                                                        _close();
+                                                    }
+                                                }
+
+                                                function _close() {
+                                                    _f.find('#btn-close').click();
+                                                    f.find('.xref').click();
+                                                }
                                             } else {
                                                 $.bAlert({
                                                     message: vdata.message
@@ -278,7 +334,7 @@ $(function () {
                 url: mvcPatch('Car/edit1'),
                 title: 'แก้ไขข้อมูลรถ',
                 closable: false,
-                size: BootstrapDialog.SIZE_NORMAL,
+                size: BootstrapDialog.SIZE_WIDE,
                 onshow: function (k) {
                     k.getModal().data({
                         data: d,
@@ -290,6 +346,10 @@ $(function () {
                             obj.ProvinceKey = _f.find('#cmdProvince').val();
                             obj.CarType = parseInt(_f.find('#txtCarType').val());
                             obj.CarGroup = 2;
+                            obj.ImageList = $.ToLinq(_f.find('.showF').find('.imageShow'))
+                                    .Select(function (x) {
+                                        return $(x).data('key');
+                                    }).ToArray();
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -299,8 +359,52 @@ $(function () {
                                         loanding: false,
                                         callback: function (vdata) {
                                             if (vdata.success) {
-                                                _f.find('#btn-close').click();
-                                                f.find('.xref').click();
+                                                var _image = _f.find('.showF').find('.imageShow');
+                                                var _imageIndex = 1;
+
+                                                _uploadImage();
+                                                function _uploadImage() {
+                                                    if (_imageIndex <= _image.length) {
+                                                        var obj2 = new Object();
+                                                        var _timage = $(_image[_imageIndex - 1]);
+                                                        if (_timage.data('key') === Guid) {
+                                                            obj2 = new Object({
+                                                                RowKey: Guid,
+                                                                CarKey: vdata.key,
+                                                                Seq: _imageIndex,
+                                                                FileType: 1,
+                                                                ImageBase64: _timage.attr('src')
+                                                            });
+                                                        } else {
+                                                            obj2 = new Object({
+                                                                RowKey: _timage.data('key'),
+                                                                CarKey: vdata.key,
+                                                                Seq: _imageIndex
+                                                            });
+                                                        }
+                                                        $.reqData({
+                                                            url: mvcPatch('Car/addImage'),
+                                                            data: {data: JSON.stringify(obj2)},
+                                                            loanding: false,
+                                                            callback: function (vdata2) {
+                                                                if (vdata2.success) {
+                                                                    _imageIndex++;
+                                                                    _uploadImage();
+                                                                } else {
+                                                                    $.bAlert({
+                                                                        message: vdata2.message
+                                                                    });
+                                                                }
+                                                            }});
+                                                    } else {
+                                                        _close();
+                                                    }
+                                                }
+
+                                                function _close() {
+                                                    _f.find('#btn-close').click();
+                                                    f.find('.xref').click();
+                                                }
                                             } else {
                                                 $.bAlert({
                                                     message: vdata.message

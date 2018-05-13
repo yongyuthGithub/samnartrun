@@ -56,4 +56,7 @@
 .divImage .btn-controll .btn-back .btnimage:hover {
   opacity: 1;
 }
+.showF > div {
+  padding-bottom: 10px;
+}
 /*# sourceMappingURL=Register_edit.css.map */
