@@ -693,20 +693,21 @@ function ChkNumber(v) {
                 var _message = '';
                 var _thisfile = ev.target.files;
                 $.each(_thisfile, function (k, v) {
-                    var _thisimage;
-                    if ($.trim(setting.custom_html).length > 0) {
-                        var _id = 'img' + (new Date()).valueOf();
-                        var _newtab = '<div class="col-xs-12 ' + setting.class + '" id="' + _id + '">' + setting.custom_html + '</div>';
-                        _thisimage = _this.append(_newtab).find('#' + _id).find(setting.custom_this_image);
-                    } else {
-                        _thisimage = _this;
-                    }
+
                     try {
                         var _type = $.ToLinq(setting.accept.split(','))
                                 .Where(x => $.trim(x).toLowerCase() === $.trim(_thisfile[k].type).toLowerCase())
                                 .ToArray();
                         if (_type.length > 0) {
-                            if (_thisfile[k].size <= ((1024 * 1024) * 4)) {
+                            if (_thisfile[k].size <= ((1024 * 900) * 1)) {
+                                var _thisimage;
+                                if ($.trim(setting.custom_html).length > 0) {
+                                    var _id = 'img' + (new Date()).valueOf();
+                                    var _newtab = '<div class="col-xs-12 ' + setting.class + '" id="' + _id + '">' + setting.custom_html + '</div>';
+                                    _thisimage = _this.append(_newtab).find('#' + _id).find(setting.custom_this_image);
+                                } else {
+                                    _thisimage = _this;
+                                }
                                 var reader = new FileReader();
                                 reader.onload = function () {
                                     var dataURL = reader.result;
@@ -716,13 +717,16 @@ function ChkNumber(v) {
                                 };
                                 reader.readAsDataURL(_thisfile[k]);
                             } else {
-                                _message += '<li>' + _thisfile[k].name + ' -> File size exceeds 4 mb.</li>';
+                                _message += '<li>' + _thisfile[k].name + ' -> File size exceeds 900 KB.</li>';
+//                                _thisimage.find('#'+_id).remove();
                             }
                         } else {
                             _message += '<li>' + _thisfile[k].name + ' -> No file type defined.</li>';
+//                            _thisimage.find('#'+_id).remove();
                         }
                     } catch (e) {
                         _message += '<li>' + _thisfile[k].name + ' -> ' + e.message + '</li>';
+//                        _thisimage.find('#'+_id).remove();
                     }
                 });
 

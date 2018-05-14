@@ -2,6 +2,8 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 require __DIR__ . '/../core/PCenter.php';
+ini_set('mysql.connect_timeout', 300);
+ini_set('default_connect_timeout', 300);
 
 class Car extends PCenter {
 
@@ -68,7 +70,12 @@ class Car extends PCenter {
                 '_Delete' => $this->db
                         ->where('CarFirstKey', $row->key)
                         ->or_where('CarSecondKey', $row->key)
-                        ->from('TRNWrokSheetHD')->count_all_results() > 0 ? false : true
+                        ->from('TRNWrokSheetHD')->count_all_results() > 0 ? false : true,
+                'ImageList' => $this->db->select('RowKey')
+                        ->where('CarKey', $row->key)
+                        ->from('TRNCarFiles')
+                        ->order_by('Seq', 'asc')
+                        ->get()->result()
             );
             array_push($_array, $_ar);
         }
@@ -174,7 +181,12 @@ class Car extends PCenter {
                 '_Delete' => $this->db
                         ->where('CarFirstKey', $row->key)
                         ->or_where('CarSecondKey', $row->key)
-                        ->from('TRNWrokSheetHD')->count_all_results() > 0 ? false : true
+                        ->from('TRNWrokSheetHD')->count_all_results() > 0 ? false : true,
+                'ImageList' => $this->db->select('RowKey')
+                        ->where('CarKey', $row->key)
+                        ->from('TRNCarFiles')
+                        ->order_by('Seq', 'asc')
+                        ->get()->result()
             );
             array_push($_array, $_ar);
         }

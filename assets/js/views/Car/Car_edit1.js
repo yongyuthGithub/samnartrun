@@ -25,6 +25,34 @@ $(function () {
         setProvice(function (_b) {
             _b.val(_formdata.ProvinceKey).selectpicker('render');
         });
+
+        var _sF = form_Caredit1.find('.showF');
+        $.each(_formdata.ImageList, function (k, v) {
+            var _id = 'img' + (new Date()).valueOf();
+            var _html = '<div class="col-xs-12 xfile" id="' + _id + '">';
+            _html += '<div class="divImage row">';
+            _html += '<img class="img-responsive imageShow" data-key="' + v.RowKey + '" />';
+            _html += '<div class="btn-controll">';
+            _html += '<div class="btn-back">';
+            _html += '<i class="fa fa-plus btn-addimage btnimage btnEdit" style="margin-right: 5px;"></i>';
+            _html += '<i class="fa fa-remove btn-deleteimage btnimage" style="margin-right: 5px;"></i>';
+            _html += '<i class="fa fa-search btn-viewimage btnimage"></i>';
+            _html += '</div>';
+            _html += '</div>';
+            _html += '</div>';
+            _html += '</div>';
+            _sF.append(_html).find('#' + _id).each(function (kk, vv) {
+                var _t = $(vv).find('.imageShow');
+                $.reqData({
+                    url: mvcPatch('Car/findImage'),
+                    loanding: false,
+                    data: {key: _t.data('key')},
+                    callback: function (vdata) {
+                        _t.prop('src', vdata.ImageBase64);
+                    }
+                });
+            });
+        });
         //********************
     }
 
