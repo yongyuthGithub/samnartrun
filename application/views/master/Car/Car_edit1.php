@@ -97,8 +97,9 @@ and open the template in the editor.
                             data-selectAll-Text="Select All"
                             data-deselectAll-Text="Deselect All"
                             data-selected-Text-Format="count > 3">
-                        <option data-icon="fa fa-clone" value="1">&nbsp;&nbsp;2 เพลา</option>
-                        <option data-icon="fa fa-clone" value="2">&nbsp;&nbsp;3 เพลา</option>
+                        <option data-icon="fa fa-clone" value="1">&nbsp;&nbsp;พื้นเรียบ 2 เพลา</option>
+                        <option data-icon="fa fa-clone" value="2">&nbsp;&nbsp;พื้นเรียบ 3 เพลา</option>
+                        <option data-icon="fa fa-clone" value="3">&nbsp;&nbsp;โรเบท 3 เพลา</option>
                     </select>
                 </div>
             </div>

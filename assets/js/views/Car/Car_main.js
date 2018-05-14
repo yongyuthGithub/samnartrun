@@ -311,7 +311,7 @@ $(function () {
 //            },
             {
                 render: function (row, type, val2, meta) {
-                    return parseInt(val2.CarType) === 1 ? '2 เพลา' : '3 เพลา';
+                    return parseInt(val2.CarType) === 1 ? 'พื้นเรียบ 2 เพลา' : parseInt(val2.CarType) === 2 ? 'พื้นเรียบ 3 เพลา' : 'โรเบท 3 เพลา';
                 },
                 orderable: true,
                 targets: 3
