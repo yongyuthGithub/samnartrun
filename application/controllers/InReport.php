@@ -3,6 +3,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 require __DIR__ . '/../core/PCenter.php';
 
+use Fusonic\Linq\Linq;
+
 class InReport extends PCenter {
 
     public function __construct() {
@@ -184,7 +186,18 @@ class InReport extends PCenter {
                         ->join('TRNReceiptHD h', 'i.ReceiptHDKey=h.RowKey')
                         ->join('TRNBillHD b', 'i.BillKey=b.RowKey')
                         ->get()->result();
-        echo json_encode(array_merge($_array, $inCome, $workSheep, $skillLabor, $fule, $maintenance, $insuranceCar, $vatcar, $insuranceEmp, $receipother));
+        $_arrayT = array_merge($_array, $inCome, $workSheep, $skillLabor, $fule, $maintenance, $insuranceCar, $vatcar, $insuranceEmp, $receipother);
+//        if ($_data->TaxType === 1) {
+//            json_encode(Linq::from(json_decode(json_encode($_arrayT)))->where(function($x) {
+//                        return $x->IsVat === '0';
+//                    }));
+//        } else if ($_data->TaxType === 2) {
+//            json_encode(Linq::from(json_decode(json_encode($_arrayT)))->where(function($x) {
+//                        return $x->IsVat === '1';
+//                    }));
+//        } else {
+        echo json_encode($_arrayT);
+//        }
     }
 
     public function editIncome() {

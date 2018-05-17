@@ -13,6 +13,11 @@ class MySystem extends PCenter {
         $data['page'] = 'setting/mySystem/mysystem_main';
         $this->load->view('layout/nav', $data);
     }
+    
+    public function myAlert() {
+        $data['page'] = 'setting/mySystem/myalert_main';
+        $this->load->view('layout/nav', $data);
+    }
 
     public function findMySystem() {
         $qryMenu = $this->db

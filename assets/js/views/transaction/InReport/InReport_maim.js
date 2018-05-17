@@ -21,6 +21,13 @@ $(function () {
         form_Incometime.find('#divSDate').data("DateTimePicker").maxDate(ds.date);
         setFind();
     });
+
+    form_Incometime.find('#cmdVatType').selectpicker({
+    }).on({
+        'hidden.bs.select': function () {
+            setFind();
+        }
+    });
     setFind();
     function setFind() {
 //        var _edate = new Date(form_record.find('#divEDate').data("DateTimePicker").date()).setHours(23, 59, 59, 0);
@@ -31,12 +38,24 @@ $(function () {
 //                    SDate: PHP_DateTimeShow_To_JSON(form_record.find('#divSDate')),
 //                    EDate: PHP_DateTimeShow_To_JSON(form_record.find('#divEDate'), true)
                     SDate: setDateJson(form_Incometime.find('#txtSDate').val()),
-                    EDate: setDateJson(form_Incometime.find('#txtEDate').val())
+                    EDate: setDateJson(form_Incometime.find('#txtEDate').val()),
+//                    TaxType: parseInt(form_Incometime.find('#cmdVatType').val())
                 })
             },
             loanding: false,
             callback: function (vdata) {
-                form_InReport.data('data', vdata).find('.xref').click();
+                var _t = parseInt(form_Incometime.find('#cmdVatType').val());
+                if (_t === 1) {
+                    form_InReport.data('data', $.ToLinq(vdata).Where(function (x) {
+                        return parseInt(x.IsVat) === 0;
+                    }).ToArray()).find('.xref').click();
+                } else if (_t === 2) {
+                    form_InReport.data('data', $.ToLinq(vdata).Where(function (x) {
+                        return parseInt(x.IsVat) === 1;
+                    }).ToArray()).find('.xref').click();
+                } else {
+                    form_InReport.data('data', vdata).find('.xref').click();
+                }
             }
         });
     }

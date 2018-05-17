@@ -19,7 +19,29 @@ and open the template in the editor.
             <!--            <div class="panel-heading">ช่วงระยะเวลาที่แสดงรายการประจำวัน</div>-->
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6">
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                        <div class="form-group">
+                            <label for="cmdVatType">ประเภทภาษี :</label>
+                            <select id="cmdVatType" name="cmdVatType" class="form-control selectpicker show-menu-arrow"
+                                    data-width="100%"
+                                    data-show-Tick="true"
+                                    data-tick-Icon="fa fa-check"
+                                    data-size="5"
+                                    data-header="false"
+                                    data-live-Search="false"
+                                    data-live-Search-Placeholder="key word"
+                                    data-multiple-Separator=",&nbsp;&nbsp;"
+                                    data-actions-Box="true"
+                                    data-selectAll-Text="Select All"
+                                    data-deselectAll-Text="Deselect All"
+                                    data-selected-Text-Format="count > 3">
+                                <option data-icon="fa fa-sliders" value="0">&nbsp;&nbsp;ทั้งหมด</option>
+                                <option data-icon="fa fa-sliders" value="1">&nbsp;&nbsp;รายการที่ไม่คิดภาษี</option>
+                                <option data-icon="fa fa-sliders" value="2">&nbsp;&nbsp;รายการที่คิดภาษี</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-3 col-md-offset-3">
                         <div class="form-group">
                             <label for="txtSDate">ตั้งแต่วันที่ :</label>
                             <div class="input-group date" id="divSDate">
