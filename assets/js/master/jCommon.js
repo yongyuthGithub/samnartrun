@@ -76,6 +76,11 @@ function addCommas(nStr, point) {
     return x1 + x2;
 }
 
+function precisionRound(number, precision) {
+  var factor = Math.pow(10, precision);
+  return Math.round(number * factor) / factor;
+}
+
 var ImageStatus = {
     Old: 0,
     New: 1,

@@ -91,6 +91,7 @@ $(function () {
             {
                 render: function (row, type, val2, meta) {
                     return parseInt(val2.IsVat) === 1 ? addCommas((parseFloat(val2.Amount) * 7) / 100, 2) : '-';
+//                    return parseInt(val2.IsVat) === 1 ? fToFixed((parseFloat(val2.Amount) * 7) / 100, 2) : '-';
                 },
                 orderable: true,
                 targets: 5

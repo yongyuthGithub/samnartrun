@@ -195,27 +195,27 @@ $(function () {
                                         })).ToArray()
                             });
 //                            alert(JSON.stringify(obj));
-                            $.bConfirm({
-                                buttonOK: function (k2) {
-                                    k2.close();
-                                    $.reqData({
-                                        url: mvcPatch('Record/editRecord'),
-                                        data: {data: JSON.stringify(obj)},
-                                        loanding: false,
-                                        callback: function (vdata) {
-                                            if (vdata.success) {
-                                                _f.find('#btn-close').click();
-                                                setFind();
+//                            $.bConfirm({
+//                                buttonOK: function (k2) {
+//                            k2.close();
+                            $.reqData({
+                                url: mvcPatch('Record/editRecord'),
+                                data: {data: JSON.stringify(obj)},
+                                loanding: false,
+                                callback: function (vdata) {
+                                    if (vdata.success) {
+                                        _f.find('#btn-close').click();
+                                        setFind();
 //                                                f.find('.xref').click();
-                                            } else {
-                                                $.bAlert({
-                                                    message: vdata.message
-                                                });
-                                            }
-                                        }
-                                    });
+                                    } else {
+                                        $.bAlert({
+                                            message: vdata.message
+                                        });
+                                    }
                                 }
                             });
+//                                }
+//                            });
                         }
                     });
                 },
@@ -292,27 +292,27 @@ $(function () {
                                         })).ToArray()
                             });
 //                            alert(JSON.stringify(obj));
-                            $.bConfirm({
-                                buttonOK: function (k2) {
-                                    k2.close();
-                                    $.reqData({
-                                        url: mvcPatch('Record/editRecord'),
-                                        data: {data: JSON.stringify(obj)},
-                                        loanding: false,
-                                        callback: function (vdata) {
-                                            if (vdata.success) {
-                                                _f.find('#btn-close').click();
-                                                setFind();
+//                            $.bConfirm({
+//                                buttonOK: function (k2) {
+//                                    k2.close();
+                            $.reqData({
+                                url: mvcPatch('Record/editRecord'),
+                                data: {data: JSON.stringify(obj)},
+                                loanding: false,
+                                callback: function (vdata) {
+                                    if (vdata.success) {
+                                        _f.find('#btn-close').click();
+                                        setFind();
 //                                                f.find('.xref').click();
-                                            } else {
-                                                $.bAlert({
-                                                    message: vdata.message
-                                                });
-                                            }
-                                        }
-                                    });
+                                    } else {
+                                        $.bAlert({
+                                            message: vdata.message
+                                        });
+                                    }
                                 }
                             });
+//                                }
+//                            });
                         }
                     });
                 },
