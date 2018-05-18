@@ -76,10 +76,10 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-8">
                     <div class="form-group">
-                        <label for="txtRefer">อ้างอิง :</label>
+                        <label for="txtRefer">เลขที่บิล :</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="fa fa-hashtag" style="min-width: 20px;"></i></div>
-                            <input type="text" class="form-control" id="txtRefer" name="txtRefer" placeholder="เอกสารอ้างอิง">
+                            <input type="text" class="form-control" id="txtRefer" name="txtRefer" placeholder="เลขที่บิล">
                         </div>
                     </div>
                 </div>
