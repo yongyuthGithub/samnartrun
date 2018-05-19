@@ -47,7 +47,7 @@ class InReport extends PCenter {
                         ->join('MSTIncomeName mi', 'cf.IncomeKey=mi.RowKey')
                         ->get()->result();
 
-        $inComeOther = $this->db->select('RowKey, DocDate, Detial,IncomeType,Amount,IsVat ')
+        $inComeOther = $this->db->select('RowKey, DocDate, Detial,IncomeType,Amount,IsVat,DocID ')
                         ->where('DocDate >=', $_data->SDate)
                         ->where('DocDate <=', $_data->EDate)
                         ->from('TRNIncomeOther')->get();
@@ -57,7 +57,7 @@ class InReport extends PCenter {
                 'key' => $row->RowKey,
                 'DocID' => 'บันทึกรายรับ-รายจ่าย อื่นๆ',
                 'DocDate' => $row->DocDate,
-                'Detial' => ($row->Detial),
+                'Detial' => 'บิลเลขที่ '.$row->DocID . ' => ' . $row->Detial,
                 'IncomeType' => intval($row->IncomeType),
                 'Amount' => ($row->Amount),
                 'IsVat' => $row->IsVat
@@ -96,7 +96,7 @@ class InReport extends PCenter {
         $fule = $this->db->select('w.RowKey as key,'
                                 . 'concat("ใบงาน (",w.DocID,")") as DocID,'
                                 . 'w.DocDate,'
-                                . 'concat("(ค่าน้ำมัน) ",mf.Fuel)as Detial,'
+                                . 'concat("บิลเลขที่ ",f.Refer," => (ค่าน้ำมัน) ",mf.Fuel)as Detial,'
                                 . '0 as IncomeType,'
                                 . 'f.Price as Amount,'
                                 . '1 as IsVat')

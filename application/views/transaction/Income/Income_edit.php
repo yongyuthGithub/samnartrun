@@ -34,9 +34,18 @@ and open the template in the editor.
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
+                    <label for="txtDocID">เลขที่บิล :</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-barcode" style="min-width: 20px;"></i></div>
+                        <input type="text" class="form-control" id="txtDocID" name="txtDocID" placeholder="เลขที่บิล">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
                     <label for="txtUser">รายละเอียด :</label>
                     <div class="input-group">
-                        <div class="input-group-addon"><i class="fa fa-address-book" style="min-width: 20px;"></i></div>
+                        <div class="input-group-addon"><i class="fa fa-bars" style="min-width: 20px;"></i></div>
                         <input type="text" class="form-control" id="txtUser2" name="txtUser2" placeholder="รายละเอียด">
                     </div>
                 </div>
@@ -66,8 +75,8 @@ and open the template in the editor.
                 <div class="form-group">
                     <label for="txtUser">จำนวนเงิน :</label>
                     <div class="input-group">
-                        <div class="input-group-addon"><i class="fa fa-address-book" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control" id="txtUser3" name="txtUser3" placeholder="จำวนวเงิน">
+                        <div class="input-group-addon"><i class="fa fa-btc" style="min-width: 20px;"></i></div>
+                        <input type="text" class="form-control text-right" id="txtUser3" name="txtUser3" placeholder="จำวนวเงิน">
                     </div>
                 </div>
             </div>

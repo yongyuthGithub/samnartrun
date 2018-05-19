@@ -60,10 +60,12 @@ $(function () {
         UrlLoanding: true,
         UrlLoandingclose: true,
         DataColumns: [
+            {data: 'DocID', header: 'เลขที่บิล'},
             {data: 'Detial', header: 'รายละเอียด'},
             {data: 'IncomeType', header: 'ประเภท'},
             {data: 'DocDate', header: 'วันที่'},
             {data: 'Amount', header: 'จำนวนเงิน'},
+            {data: 'Amount', header: 'ภาษี'},
 //           {data: 'Url', header: 'Url'}
         ],
 
@@ -74,7 +76,7 @@ $(function () {
                     return _val;
                 },
                 orderable: true,
-                targets: 2
+                targets: 3
             },
             {
                 render: function (row, type, val2, meta) {
@@ -82,10 +84,24 @@ $(function () {
                     return _val;
                 },
                 orderable: true,
-                targets: 1
+                targets: 2
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    var _val = addCommas(val2.Amount, 2);
+                    return _val;
+                },
+                orderable: true,
+                targets: 4
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    var _val = val2.IsVat === '1' ? addCommas(((val2.Amount * 7) / 100), 2) : '-';
+                    return _val;
+                },
+                orderable: true,
+                targets: 5
             }
-
-
         ],
         btnNewFun: function (f) {
             $.bPopup({
@@ -100,30 +116,32 @@ $(function () {
                             var obj = new Object();
                             obj.RowKey = Guid;
                             obj.DocDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate'));
+                            obj.DocID = _f.find('#txtDocID').val();
                             obj.Detial = _f.find('#txtUser2').val();
                             obj.IncomeType = _f.find('#cmdTitle').val();
                             obj.Amount = _f.find('#txtUser3').val();
                             obj.IsVat = _f.find('#swDF').is(':checked');
-                            $.bConfirm({
-                                buttonOK: function (k) {
-                                    k.close();
-                                    $.reqData({
-                                        url: mvcPatch('Income/editIncome'),
-                                        data: {data: JSON.stringify(obj)},
-                                        loanding: false,
-                                        callback: function (vdata) {
-                                            if (vdata.success) {
-                                                _f.find('#btn-close').click();
-                                                setFind();
-                                            } else {
-                                                $.bAlert({
-                                                    message: vdata.message
-                                                });
-                                            }
-                                        }
-                                    });
+//                            $.bConfirm({
+//                                buttonOK: function (k) {
+//                                    k.close();
+                            $.reqData({
+                                url: mvcPatch('Income/editIncome'),
+                                data: {data: JSON.stringify(obj)},
+                                loanding: false,
+                                callback: function (vdata) {
+                                    if (vdata.success) {
+                                        k.close();
+                                        setFind();
+//                                        _f.find('#btn-close').click();
+                                    } else {
+                                        $.bAlert({
+                                            message: vdata.message
+                                        });
+                                    }
                                 }
                             });
+//                                }
+//                            });
                         }
                     });
                 },
@@ -152,30 +170,32 @@ $(function () {
                             var obj = new Object();
                             obj.RowKey = d.key;
                             obj.DocDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate'));
+                            obj.DocID = _f.find('#txtDocID').val();
                             obj.Detial = _f.find('#txtUser2').val();
                             obj.IncomeType = _f.find('#cmdTitle').val();
                             obj.Amount = _f.find('#txtUser3').val();
                             obj.IsVat = _f.find('#swDF').is(':checked');
-                            $.bConfirm({
-                                buttonOK: function (k) {
-                                    k.close();
-                                    $.reqData({
-                                        url: mvcPatch('Income/editIncome'),
-                                        data: {data: JSON.stringify(obj)},
-                                        loanding: false,
-                                        callback: function (vdata) {
-                                            if (vdata.success) {
-                                                _f.find('#btn-close').click();
-                                                setFind();
-                                            } else {
-                                                $.bAlert({
-                                                    message: vdata.message
-                                                });
-                                            }
-                                        }
-                                    });
+//                            $.bConfirm({
+//                                buttonOK: function (k) {
+//                            k.close();
+                            $.reqData({
+                                url: mvcPatch('Income/editIncome'),
+                                data: {data: JSON.stringify(obj)},
+                                loanding: false,
+                                callback: function (vdata) {
+                                    if (vdata.success) {
+                                        setFind();
+                                        k.close();
+//                                        _f.find('#btn-close').click();
+                                    } else {
+                                        $.bAlert({
+                                            message: vdata.message
+                                        });
+                                    }
                                 }
                             });
+//                                }
+//                            });
                         }
                     });
                 },
@@ -208,7 +228,8 @@ $(function () {
                         data: {data: JSON.stringify(vdata)},
                         callback: function (vdata) {
                             if (vdata.success) {
-                                f.find('.xref').click();
+                                setFind();
+//                                f.find('.xref').click();
                             } else {
                                 $.bAlert({
                                     message: vdata.message

@@ -13,6 +13,7 @@ $(function () {
 //        setTitle(Guid);
     } else {
         form_Incomeedit.find('#txtUser5').val(PHP_JSON_To_ShowDate(_formdata.DocDate));
+        form_Incomeedit.find('#txtDocID').val(_formdata.DocID);
         form_Incomeedit.find('#txtUser2').val(_formdata.Detial);
         form_Incomeedit.find('#cmdTitle').val(_formdata.IncomeType).selectpicker('render');
         form_Incomeedit.find('#txtUser3').val(_formdata.Amount);
@@ -49,11 +50,19 @@ $(function () {
             form_Incomeedit_C.find('#btn-ok')
         ],
         fields: {
-            txtUser: {
+            txtUser5: {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify User Name.'
+                        message: '* ระบุวันที่เอกสาร'
+                    }
+                }
+            },
+            txtDocID: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* ระบุเลขที่บิล'
                     }
                 }
             },
@@ -61,31 +70,15 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify Title.'
+                        message: '* ระบุประเภทรายการ'
                     }
                 }
             },
-            txtFirstName: {
+            txtUser3: {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* Please specify First Name.'
-                    }
-                }
-            },
-            txtLastName: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* Please specify Last Name.'
-                    }
-                }
-            },
-            txtPassword: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* Please specify Password.'
+                        message: '* ระบุจำนวนเงิน'
                     }
                 }
             }

@@ -1032,30 +1032,30 @@ $(function () {
                     }
                 }
             },
-            txtMileageF: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* ระบุเลขไมล์ต้นทาง'
-                    },
-                    regexp: {//***Custom Patter
-                        regexp: regexpDecimal,
-                        message: '* ระบุเป็นจำนวนตัวเลขเท่านั้น.'
-                    }
-                }
-            },
-            txtMileageS: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* ระบุเลขไมล์ปลายทาง'
-                    },
-                    regexp: {//***Custom Patter
-                        regexp: regexpDecimal,
-                        message: '* ระบุเป็นจำนวนตัวเลขเท่านั้น.'
-                    }
-                }
-            },
+//            txtMileageF: {
+//                icon: false,
+//                validators: {
+//                    notEmpty: {
+//                        message: '* ระบุเลขไมล์ต้นทาง'
+//                    },
+//                    regexp: {//***Custom Patter
+//                        regexp: regexpDecimal,
+//                        message: '* ระบุเป็นจำนวนตัวเลขเท่านั้น.'
+//                    }
+//                }
+//            },
+//            txtMileageS: {
+//                icon: false,
+//                validators: {
+//                    notEmpty: {
+//                        message: '* ระบุเลขไมล์ปลายทาง'
+//                    },
+//                    regexp: {//***Custom Patter
+//                        regexp: regexpDecimal,
+//                        message: '* ระบุเป็นจำนวนตัวเลขเท่านั้น.'
+//                    }
+//                }
+//            },
             cmdProduct: {
                 icon: false,
                 validators: {

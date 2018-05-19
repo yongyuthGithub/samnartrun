@@ -19,7 +19,7 @@ class InReportFule extends PCenter {
 
         $fule = $this->db->select('w.RowKey as key,'
                                 . 'concat(c.CarNumber," ",p.Province) as CarNumber,'
-                                . 'concat("(",w.DocID,") ",pp.ProductName) as DocID,'
+                                . 'concat("บิลเลขที่ ",f.Refer," => (",w.DocID,") ",pp.ProductName) as DocID,'
                                 . 'concat(sb.LocationName," ถึง ",se.LocationName) as ShippingLocations,'
                                 . 'w.DocDate,'
                                 . 'concat("(ค่าน้ำมัน) ",mf.Fuel)as Detial,'

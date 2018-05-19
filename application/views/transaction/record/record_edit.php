@@ -196,7 +196,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-5">
+                <div class="col-xs-12 col-sm-6 col-md-8">
                     <div class="form-group">
                         <label for="cmdShippingBegin">สถานที่รับสินค้า :</label>
                         <select id="cmdShippingBegin" name="cmdShippingBegin" class="form-control selectpicker show-menu-arrow"
@@ -224,7 +224,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-5 col-sm-6 col-sm-offset-6 col-md-3 col-md-offset-0">
+                <div class="col-xs-5 col-sm-6 col-sm-offset-6 col-md-3 col-md-offset-0" style="display:none;">
                     <div class="form-group">
                         <label for="txtMileageF">เลขไมล์ต้นทาง :</label>
                         <div class="input-group">
@@ -235,7 +235,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-5">
+                <div class="col-xs-12 col-sm-6 col-md-8">
                     <div class="form-group">
                         <label for="cmdShippingEnd">สถานที่ส่งสินค้า :</label>
                         <select id="cmdShippingEnd" name="cmdShippingEnd" class="form-control selectpicker show-menu-arrow"
@@ -263,7 +263,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-5 col-sm-6 col-sm-offset-6 col-md-3 col-md-offset-0">
+                <div class="col-xs-5 col-sm-6 col-sm-offset-6 col-md-3 col-md-offset-0" style="display:none;">
                     <div class="form-group">
                         <label for="txtMileageS">เลขไมล์ปลายทาง :</label>
                         <div class="input-group">
