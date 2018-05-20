@@ -53,7 +53,7 @@ $(function () {
         btnNewFun: function (f) {
             $.bPopup({
                 url: mvcPatch('Register/edit'),
-                title: 'New Register',
+                title: 'เพิ่มพนักงานขับรถ',
                 closable: false,
                 size: BootstrapDialog.SIZE_WIDE,
                 onshow: function (k) {
