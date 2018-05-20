@@ -3,7 +3,7 @@
 <div class="col-12">   
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1>ข้อมูลชื้อเพลิงภายในปั้ม <?php echo $_POST['txtdisplay']; ?></h1><h4><small>ข้อมูลชื้อเพลิงภายในปั้ม <?php echo $_POST['txtdisplay']; ?> สาขา <?php echo $_POST['txtdisplay2']; ?></small></h4>
+            <h1>ข้อมูลเชื้อเพลิงภายในปั้ม <?php echo $_POST['txtdisplay']; ?></h1><h4><small>ข้อมูลเชื้อเพลิงภายในปั้ม <?php echo $_POST['txtdisplay']; ?> สาขา <?php echo $_POST['txtdisplay2']; ?></small></h4>
         </div>
     </div>
 </div>
