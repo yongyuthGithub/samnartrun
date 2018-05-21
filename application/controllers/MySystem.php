@@ -13,7 +13,7 @@ class MySystem extends PCenter {
         $data['page'] = 'setting/mySystem/mysystem_main';
         $this->load->view('layout/nav', $data);
     }
-    
+
     public function myAlert() {
         $data['page'] = 'setting/mySystem/myalert_main';
         $this->load->view('layout/nav', $data);
@@ -103,6 +103,18 @@ class MySystem extends PCenter {
                 ->where('BankKey', $key)
                 ->from('MSTBankBranch')
                 ->order_by('Branch', 'asc')
+                ->get();
+        echo json_encode($qryMenu->result());
+    }
+
+    public function findMyAlert() {
+        $qryMenu = $this->db
+                ->select('RowKey as key,'
+                        . 'Detail,'
+                        . 'AlertBeforeDay,'
+                        . 'RowStatus')
+                ->from('SYSAlert')
+                ->order_by('Detail', 'asc')
                 ->get();
         echo json_encode($qryMenu->result());
     }
