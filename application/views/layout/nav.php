@@ -189,7 +189,7 @@
                 });
             })
         </script>
-        <div id="btn-alert"><i class="fa fa-bell" style="font-size: 200%;color:#fff;"></i></div>
+        <div id="btn-alert" rel="tooltip" data-html="true" ><i class="fa fa-bell" style="font-size: 200%;color:#fff;"></i></div>
         <form id="form_sumbit" style="display: none;" method="post"></form>
         <input type="hidden" id="hidUrl" value="<?php echo base_url(); ?>"/>
     </body>

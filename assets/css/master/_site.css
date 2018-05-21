@@ -118,7 +118,7 @@ textarea{
 .navbar-brand{
     padding: 0px 0px 0px 0px!important;
     position: relative;
-/*    width: 105px;*/
+    /*    width: 105px;*/
 }
 .navbar-brand > img{
     max-height: 60px;
@@ -126,9 +126,52 @@ textarea{
     position: fixed;
     top:10px;
     left: 10px;
-/*    bottom: 0px;
-    right: 0px;*/
+    /*    bottom: 0px;
+        right: 0px;*/
     background-color: #fff;
     box-shadow: 0px 0px 10px 0px #888888;
     /*border-radius: 5px;*/
+}
+
+.tooltip{
+    /*bottom: 0px!important;*/
+}
+.tooltip-inner {
+    margin-right: 20px;
+    min-width: 250px;
+    max-width: 100%; 
+    box-sizing: border-box;
+}
+.use-alert{
+    background-color:transparent;
+    border-width: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+.use-alert li{
+    background-color:transparent;
+    /*border-width: 0px;*/
+    text-align: left;
+    /*white-space: nowrap;*/
+    border-width: 0px 0px 1px 0px;
+    border-radius: 0px!important;
+}
+.use-alert li:last-child{
+    border-width: 0px;
+}
+
+.use-alert li a:link{
+    color:#fff;
+}
+.use-alert li a:visited{
+    color:#fff;
+}
+.use-alert li a:active{
+    color:#fff;
+}
+
+.use-alert li a:hover{
+    color:#009926;
+    
 }
