@@ -107,10 +107,15 @@ textarea{
 
 #btn-alert{
     position: fixed;bottom: 20px;right: 20px;padding: 10px;background-color:#b30000;cursor: pointer;border-radius: 50px;box-shadow: 0px 0px 10px 0px #888888;
-    opacity: 0.5;
+    /*opacity: 0.5;*/
+    -webkit-animation: amalert 1s infinite; /* Safari 4+ */
+    -moz-animation:    amalert 1s infinite; /* Fx 5+ */
+    -o-animation:      amalert 1s infinite; /* Opera 12+ */
+    animation:         amalert 1s infinite; /* IE 10+, Fx 29+ */
 }
-#btn-alert:hover{
-    opacity: 1;
+#btn-alert:hover{   
+    animation-play-state: paused; 
+    opacity: 1!important;
 }
 .btn.dropdown-toggle{
     z-index: 0!important;
@@ -163,4 +168,10 @@ textarea{
 
 .use-alert li:hover{
     color:#009926;
+}
+
+@keyframes amalert {
+    0%   { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
 }
