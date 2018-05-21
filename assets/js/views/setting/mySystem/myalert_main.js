@@ -2,7 +2,42 @@ $(function () {
     var form_alertlist = $('#form_alertlist');
     var form_submenu = $('#form_submenu');
 
-form_alertlist.setMainPage({
+    form_alertlist.on('focusout', '.txtDis', function () {
+        var _key = $(this).data('key');
+        var _v = ChkNumber($(this).val()).toFixed(0);
+        $(this).val(_v);
+
+        var obj = new Object({
+            RowKey: _key,
+            AlertBeforeDay: _v
+        });
+        $.reqData({
+            url: mvcPatch('MySystem/editMyAlert'),
+            data: {data: JSON.stringify(obj)},
+            loanding: false,
+            callback: function (vdata) {
+
+            }
+        });
+    });
+
+    form_alertlist.on('click', '.swDF', function () {
+        var _this = $(this);
+        var obj = new Object({
+            RowKey: _this.data('key'),
+            RowStatus: _this.is(':checked') ? 1 : 0
+        });
+        $.reqData({
+            url: mvcPatch('MySystem/editMyAlert'),
+            data: {data: JSON.stringify(obj)},
+            loanding: false,
+            callback: function (vdata) {
+
+            }
+        });
+    });
+
+    form_alertlist.setMainPage({
         btnNew: false,
         btnDeleteAll: false,
         btnDelete: false,
@@ -43,16 +78,16 @@ form_alertlist.setMainPage({
             }
         ],
         btnNewFun: function (f) {
-            
+
         },
         btnEditFun: function (f, d) {
-            
+
         },
         btnDeleteFun: function (f, d) {
-            
+
         },
         btnPreviewFun: function (f, d) {
-            
+
         }
     });
 });
