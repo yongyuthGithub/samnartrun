@@ -161,17 +161,6 @@ textarea{
     border-width: 0px;
 }
 
-.use-alert li a:link{
-    color:#fff;
-}
-.use-alert li a:visited{
-    color:#fff;
-}
-.use-alert li a:active{
-    color:#fff;
-}
-
-.use-alert li a:hover{
+.use-alert li:hover{
     color:#009926;
-    
 }

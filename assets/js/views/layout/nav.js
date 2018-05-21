@@ -38,11 +38,11 @@ $(function () {
 
     function genHtml() {
         var _tooltipDisplay = '<ul class="list-group use-alert">';
-        _tooltipDisplay += '<li class="list-group-item"><a href="#"><i class="fa fa-credit-card" style="min-width:20px;"></i>บัตรประชาชนของนายกกกก กกกกก จะหมดอายุในวันที่ 02/10/2018</a></li>';
-        _tooltipDisplay += '<li class="list-group-item"><a href="#"><i class="fa fa-medkit" style="min-width:20px;"></i>ประกันชีวิตของนายกกกก กกกกก จะหมดอายุในวันที่ 02/10/2018</a></li>';
-        _tooltipDisplay += '<li class="list-group-item"><a href="#"><i class="fa fa-truck" style="min-width:20px;"></i>ประกันของรถขนส่งทะเบียน ก1-111 จะหมดอายุในวันที่ 02/10/2018</a></li>';
-        _tooltipDisplay += '<li class="list-group-item"><a href="#"><i class="fa fa-file-text-o" style="min-width:20px;"></i>พ.ร.บ. ของรถขนส่งทะเบียน ก1-111 จะหมดอายุในวันที่ 02/10/2018</a></li>';
-        _tooltipDisplay += '<li class="list-group-item"><a href="#"><i class="fa fa-credit-card" style="min-width:20px;"></i>ใบขับขี่ของนายกกกก กกกกก จะหมดอายุในวันที่ 02/10/2018</a></li>';
+        _tooltipDisplay += '<li class="list-group-item"><i class="fa fa-credit-card" style="min-width:20px;"></i>บัตรประชาชนของนายกกกก กกกกก จะหมดอายุในวันที่ 02/10/2018</li>';
+        _tooltipDisplay += '<li class="list-group-item"><i class="fa fa-medkit" style="min-width:20px;"></i>ประกันชีวิตของนายกกกก กกกกก จะหมดอายุในวันที่ 02/10/2018</li>';
+        _tooltipDisplay += '<li class="list-group-item"><i class="fa fa-truck" style="min-width:20px;"></i>ประกันของรถขนส่งทะเบียน ก1-111 จะหมดอายุในวันที่ 02/10/2018</li>';
+        _tooltipDisplay += '<li class="list-group-item"><i class="fa fa-file-text-o" style="min-width:20px;"></i>พ.ร.บ. ของรถขนส่งทะเบียน ก1-111 จะหมดอายุในวันที่ 02/10/2018</li>';
+        _tooltipDisplay += '<li class="list-group-item"><i class="fa fa-credit-card" style="min-width:20px;"></i>ใบขับขี่ของนายกกกก กกกกก จะหมดอายุในวันที่ 02/10/2018</li>';
         _tooltipDisplay += '</ul>';
         return _tooltipDisplay;
     }
