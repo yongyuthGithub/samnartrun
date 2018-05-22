@@ -291,6 +291,7 @@ class Car extends PCenter {
                 ->join('MSTInsuranceType IT', 'T.InsuranceTypeKey=IT.RowKey', 'left')
                 ->join('MSTInsurance I', 'IT.InsuranceKey=I.RowKey', 'left')
                 ->where('T.CarKey', $key)
+                ->where('T.RowStatus', true)
                 ->get();
         echo json_encode($query->result());
     }
@@ -355,6 +356,25 @@ class Car extends PCenter {
         echo json_encode($vReturn);
     }
 
+    public function disabledinsurancecar() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+        $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+        $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+        $this->db->where('RowKey', $_data->RowKey)->update('TRNCarInsurance', $_data);
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
+        }
+        echo json_encode($vReturn);
+    }
+
     public function removeinsurancecar() {
         $_data = json_decode($_POST['data']);
         $vReturn = (object) [];
@@ -383,6 +403,7 @@ class Car extends PCenter {
                         . 'T.Cash ,')
                 ->from('TRNCarAct T')
                 ->where('T.CarKey', $key)
+                ->where('T.RowStatus', true)
                 ->get();
         echo json_encode($query->result());
     }
@@ -442,6 +463,25 @@ class Car extends PCenter {
                     $vReturn->success = true;
                 }
             }
+        }
+        echo json_encode($vReturn);
+    }
+
+    public function disabledactcar() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+        $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+        $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+        $this->db->where('RowKey', $_data->RowKey)->update('TRNCarAct', $_data);
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
         }
         echo json_encode($vReturn);
     }

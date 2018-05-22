@@ -146,7 +146,7 @@ $(function () {
                                 return x.key;
                             }).ToArray();
                     $.reqData({
-                        url: mvcPatch('Fule/removeBrand'),
+                        url: mvcPatch('Bank/removeAccount1'),
                         data: {data: JSON.stringify(vdata)},
                         callback: function (vdata) {
                             if (vdata.success) {

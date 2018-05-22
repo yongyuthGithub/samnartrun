@@ -40,14 +40,14 @@ $(function () {
             form_Titleedit_C.find('#btn-ok')
         ],
         fields: {
-            txtTitle: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* กรุณาใส่ คำนำหน้า.'
-                    }
-                }
-            }
+//            txtTitle: {
+//                icon: false,
+//                validators: {
+//                    notEmpty: {
+//                        message: '* กรุณาใส่ คำนำหน้า.'
+//                    }
+//                }
+//            }
         }
     });
 });

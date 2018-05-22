@@ -9,7 +9,8 @@ $(function () {
         btnEditText: 'แก้ไข',
         btnNewText: 'เพิ่ม',
         btnDeleteText: 'ลบ',
-        btnPreview: false,
+        btnPreviewText: 'ต่ออายุ',
+        btnPreview: true,
         headerString: '',
         UrlDataJson: mvcPatch('Register/findeditRegister'),
         UrlDataSend: {key: $('#txtkey').val()},
@@ -117,10 +118,10 @@ $(function () {
                 onshow: function (k) {
                     k.getModal().data({
                         data: d,
+                        uplv: false,
                         fun: function (_f) {
                             var obj = new Object({});
-                            obj.RowKey = Guid;
-
+                            obj.RowKey = d.key;
                             obj.EmpKey = $('#txtkey').val();
                             obj.InsuranceTypeKey = _f.find('#cmdInsurancetype').val();
                             obj.Cash = _f.find('#txtUser3').val();
@@ -162,7 +163,7 @@ $(function () {
                     }
                 ]
             });
-            
+
         },
         btnDeleteFun: function (f, d) {
             $.bConfirm({
@@ -191,6 +192,74 @@ $(function () {
             });
         },
         btnPreviewFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('Register/typeedit'),
+                title: 'ต่ออายุประกัน',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        uplv: true,
+                        fun: function (_f) {
+                            var obj = new Object({});
+                            obj.RowKey = Guid;
+                            obj.EmpKey = $('#txtkey').val();
+                            obj.InsuranceTypeKey = _f.find('#cmdInsurancetype').val();
+                            obj.Cash = _f.find('#txtUser3').val();
+                            obj.EDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate1'));
+                            obj.SDate = PHP_DateTimeShow_To_JSON(_f.find('#txtSDate'));
+                            $.bConfirm({
+                                buttonOK: function (k2) {
+                                    k2.close();
+                                    var _objD = new Object({
+                                        RowKey: d.key,
+                                        RowStatus: false
+                                    });
+                                    $.reqData({
+                                        url: mvcPatch('Register/disabledRegister'),
+                                        data: {data: JSON.stringify(_objD)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                $.reqData({
+                                                    url: mvcPatch('Register/editeditRegister'),
+                                                    data: {data: JSON.stringify(obj)},
+                                                    loanding: false,
+                                                    callback: function (vdata) {
+                                                        if (vdata.success) {
+                                                            f.find('.xref').click();
+                                                            k.close();
+                                                        } else {
+                                                            $.bAlert({
+                                                                message: vdata.message
+                                                            });
+                                                        }
+                                                    }
+                                                });
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         }
     });
 });

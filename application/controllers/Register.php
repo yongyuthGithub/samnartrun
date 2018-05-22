@@ -214,6 +214,7 @@ class Register extends PCenter {
                 ->join('MSTInsuranceType IT', 'E.InsuranceTypeKey=IT.RowKey', 'left')
                 ->join('MSTInsurance I', 'IT.InsuranceKey=I.RowKey', 'left')
                 ->where('E.EmpKey', $key)
+                ->where('E.RowStatus', true)
                 ->get();
         echo json_encode($query->result());
     }
@@ -274,6 +275,25 @@ class Register extends PCenter {
                     $vReturn->success = true;
                 }
             }
+        }
+        echo json_encode($vReturn);
+    }
+
+    public function disabledRegister() {
+        $_data = json_decode($_POST['data']);
+        $vReturn = (object) [];
+
+        $this->db->trans_begin();
+        $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
+        $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+        $this->db->where('RowKey', $_data->RowKey)->update('TRNEmployeeInsurance', $_data);
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            $vReturn->success = false;
+            $vReturn->message = $this->db->_error_message();
+        } else {
+            $this->db->trans_commit();
+            $vReturn->success = true;
         }
         echo json_encode($vReturn);
     }

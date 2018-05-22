@@ -17,7 +17,7 @@ $(function () {
 
         form_RegistereditInsurance.find('#txtUser3').val(_formdata.Cash);
         form_RegistereditInsurance.find('#txtUser5').val(PHP_JSON_To_ShowDate(_formdata.SDate));
-        form_RegistereditInsurance.find('#txtUser11').val(PHP_JSON_To_ShowDate(_formdata.SDate));
+        form_RegistereditInsurance.find('#txtUser11').val(PHP_JSON_To_ShowDate(_formdata.EDate));
 
         //***Edit By Yongyuth
         setInsurance(function (_p) {
@@ -28,7 +28,13 @@ $(function () {
             });
         });
         //********************
-
+        if (form_RegistereditInsurance_C.data('uplv')) {
+            form_RegistereditInsurance.find('#txtUser5').val(PHP_JSON_To_ShowDate(_formdata.EDate));
+            form_RegistereditInsurance.find('#txtUser11').val('');
+            form_RegistereditInsurance.find('#cmdInsurance').prop('disabled', true);
+            form_RegistereditInsurance.find('#cmdInsurancetype').prop('disabled', true);
+            form_RegistereditInsurance.find('#txtUser5').prop('disabled', true);
+        }
     }
 
     form_RegistereditInsurance.find('#txtSDate').dateTime().on('dp.change', function (e) {
@@ -95,7 +101,7 @@ $(function () {
                 $.each(vdata, function (k, v) {
                     _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.TypeName + '">&nbsp;&nbsp;' + v.TypeName + '</option>';
                 });
-                
+
                 _sel.append(_html).selectpicker('refresh');
                 v(_sel);
             }
@@ -118,44 +124,36 @@ $(function () {
             form_RegistereditInsurance_C.find('#btn-ok')
         ],
         fields: {
-            txtUser1: {
+//            txtUser1: {
+//                icon: false,
+//                validators: {
+//                    notEmpty: {
+//                        message: '* กรุณาระบุรหัสบัตรประชาชน'
+//                    },
+//                    stringLength: {
+//                        max: 13,
+//                        min: 13,
+//                        message: '* กรุณาระบุจำนวนตัวเลย 13 หลักเท่านั้น'
+//                    },
+//                    regexp: {
+//                        regexp: regexpIDCard,
+//                        message: '* กรุณาระบุรูปแบบบัตรประชาชนเท่านั้น'
+//                    }
+//                }
+//            },
+            cmdInsurance: {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* กรุณาระบุรหัสบัตรประชาชน'
-                    },
-                    stringLength: {
-                        max: 13,
-                        min: 13,
-                        message: '* กรุณาระบุจำนวนตัวเลย 13 หลักเท่านั้น'
-                    },
-                    regexp: {
-                        regexp: regexpIDCard,
-                        message: '* กรุณาระบุรูปแบบบัตรประชาชนเท่านั้น'
+                        message: '* กรุณาระบุบริษัทประกัน'
                     }
                 }
             },
-            cmdTitle: {
+            cmdInsurancetype: {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* กรุณาระบุคำนาม'
-                    }
-                }
-            },
-            txtUser6: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* กรุณาระบุชื่อ'
-                    }
-                }
-            },
-            txtUser2: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* กรุณาระบุนามสกุล'
+                        message: '* กรุณาระบุประเภทประกัน'
                     }
                 }
             },
@@ -163,47 +161,11 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* กรุณาระบุที่อยู่'
-                    }
-                }
-            },
-            cmdProvince: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* กรุณาระบุจังหวัด'
-                    }
-                }
-            },
-            cmdDistrict: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* กรุณาระบุอำเภอ'
-                    }
-                }
-            },
-            cmdSubDistrict: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* กรุณาระบุตำบล'
-                    }
-                }
-            },
-            txtZipCode: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* กรุณาระบุรหัสไปรษณีย์'
-                    }
-                }
-            },
-            txtUser7: {
-                icon: false,
-                validators: {
-                    notEmpty: {
-                        message: '* กรุณาระบุเบอร์โทรศัพท์'
+                        message: '* กรุณาระบุจำนวนเงิน'
+                    },
+                    regexp: {
+                        regexp: regexpDecimal,
+                        message: '* กรุณาระบุรูปแบบตัวเลขเท่านั้น'
                     }
                 }
             },
@@ -211,13 +173,18 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* กรุณาระบุวันที่เริ่มงาน'
+                        message: '* กรุณาระบุวันที่เริ่มประกัน'
                     }
                 }
             },
-
+            txtUser11: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุวันที่หมดอายุประกัน'
+                    }
+                }
+            }
         }
-
-
     });
 });

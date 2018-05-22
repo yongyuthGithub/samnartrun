@@ -36,24 +36,47 @@ $(function () {
         }
     });
 
+    genHtml();
     function genHtml() {
-        var _tooltipDisplay = '<ul class="list-group use-alert">';
-        _tooltipDisplay += '<li class="list-group-item"><i class="fa fa-credit-card" style="min-width:20px;"></i>บัตรประชาชนของนายกกกก กกกกก จะหมดอายุในวันที่ 02/10/2018</li>';
-        _tooltipDisplay += '<li class="list-group-item"><i class="fa fa-medkit" style="min-width:20px;"></i>ประกันชีวิตของนายกกกก กกกกก จะหมดอายุในวันที่ 02/10/2018</li>';
-        _tooltipDisplay += '<li class="list-group-item"><i class="fa fa-truck" style="min-width:20px;"></i>ประกันของรถขนส่งทะเบียน ก1-111 จะหมดอายุในวันที่ 02/10/2018</li>';
-        _tooltipDisplay += '<li class="list-group-item"><i class="fa fa-file-text-o" style="min-width:20px;"></i>พ.ร.บ. ของรถขนส่งทะเบียน ก1-111 จะหมดอายุในวันที่ 02/10/2018</li>';
-        _tooltipDisplay += '<li class="list-group-item"><i class="fa fa-credit-card" style="min-width:20px;"></i>ใบขับขี่ของนายกกกก กกกกก จะหมดอายุในวันที่ 02/10/2018</li>';
-        _tooltipDisplay += '</ul>';
-        return _tooltipDisplay;
-    }
+        $('#myPage').on('click', '.use-alert > li', function () {
+            var _this = $(this);
+            form_sumbit.SetDataPost({
+                data: {
+                    txtkey: _this.data('key'),
+                    txtdisplay: _this.data('display')
+                }
+            }).prop('action', mvcPatch(_this.data('path'))).submit();
+        });
 
-    $('#btn-alert').tooltip({
+        $.reqData({
+            url: mvcPatch('MySystem/findAllMyAlert'),
+            loanding: false,
+            callback: function (vdata) {
+                if (vdata.length > 0) {
+                    var _tooltipDisplay = '<ul class="list-group use-alert">';
+                    $.each(vdata, function (k, v) {
+                        _tooltipDisplay += '<li class="list-group-item" data-key="' + v.RowKey + '" data-path="' + v.Path + '" data-display="' + v.Display + '"><i class="' + v.Type + '" style="min-width:20px;"></i>' + v.Text + ' ' + PHP_JSON_To_ShowDate(v.ExpDate) + '</li>';
+                    });
+                    _tooltipDisplay += '</ul>';
+
+                    $('#btn-alert').tooltip({
 //       selector: "[rel=tooltip]",
-        placement: "top",
-        html: true,
-        container: '#btn-alert'
+                        placement: "top",
+                        html: true,
+                        container: '#btn-alert'
 //        template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
 //       title:_tooltipDisplay
-    }).attr('data-original-title', genHtml());
+                    }).attr('data-original-title', _tooltipDisplay);
+                    $('#btn-alert').css('display', 'block');
+                } else {
+                    $('#btn-alert').css('display', 'none');
+                }
+            }
+        });
+
+
+    }
+
+
 });
 

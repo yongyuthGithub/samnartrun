@@ -32,7 +32,7 @@
                                     <div class="form-group">
                                         <label for="txtSDate">วันที่เริ่มพ.ร.บ:</label>
                                         <div class="input-group date" id="txtSDate">
-                                            <input type='text' class="form-control text-center" id="txtSDate1" name="txtSDate11" placeholder="วันที่หมดอายุพ.ร.บ" onkeydown="return false;" />
+                                            <input type='text' class="form-control text-center" id="txtSDate1" name="txtSDate1" placeholder="วันที่หมดอายุพ.ร.บ" onkeydown="return false;" />
                                             <span class="input-group-addon">
                                                 <span class="fa fa-calendar"></span>
                                             </span>
@@ -43,7 +43,7 @@
                                     <div class="form-group">
                                         <label for="txtEDate">วันที่หมดอายุพ.ร.บ:</label>
                                         <div class="input-group date" id="txtEDate">
-                                            <input type='text' class="form-control text-center" id="txtEDate1" name="txtEDate11" placeholder="วันที่หมดอายุพ.ร.บ" onkeydown="return false;" />
+                                            <input type='text' class="form-control text-center" id="txtEDate1" name="txtEDate1" placeholder="วันที่หมดอายุพ.ร.บ" onkeydown="return false;" />
                                             <span class="input-group-addon">
                                                 <span class="fa fa-calendar"></span>
                                             </span>
@@ -56,7 +56,7 @@
                                         <label for="txtCash">จำนวนเงิน:</label>
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-map-marker" style="min-width: 20px;"></i></div>
-                                            <input type="text" class="form-control" id="txtCash" name="txtCash" placeholder="จำนวนเงิน">
+                                            <input type="text" class="form-control text-right" id="txtCash" name="txtCash" placeholder="จำนวนเงิน">
                                         </div>
                                     </div>
                                 </div>

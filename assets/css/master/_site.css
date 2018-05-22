@@ -105,17 +105,38 @@ textarea{
     padding-top: 0px;
 }
 
+@keyframes amalert {
+    0%   { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@keyframes amalertStop {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 #btn-alert{
     position: fixed;bottom: 20px;right: 20px;padding: 10px;background-color:#b30000;cursor: pointer;border-radius: 50px;box-shadow: 0px 0px 10px 0px #888888;
-    /*opacity: 0.5;*/
+    opacity: 1;
     -webkit-animation: amalert 1s infinite; /* Safari 4+ */
     -moz-animation:    amalert 1s infinite; /* Fx 5+ */
     -o-animation:      amalert 1s infinite; /* Opera 12+ */
     animation:         amalert 1s infinite; /* IE 10+, Fx 29+ */
 }
 #btn-alert:hover{   
-    animation-play-state: paused; 
-    opacity: 1!important;
+
+    -webkit-animation: amalertStop 1s 1; /* Safari 4+ */
+    -moz-animation:    amalertStop 1s 1; /* Fx 5+ */
+    -o-animation:      amalertStop 1s 1; /* Opera 12+ */
+    animation:         amalertStop 1s 1; /* IE 10+, Fx 29+ */
+    /*    -webkit-transform: translateX(50%);
+        -moz-transform: translateX(50%);
+        -ms-transform: translateX(50%);
+        -o-transform: translateX(50%);
+        transform: translateX(50%);*/
 }
 .btn.dropdown-toggle{
     z-index: 0!important;
@@ -143,7 +164,7 @@ textarea{
 }
 .tooltip-inner {
     margin-right: 20px;
-    min-width: 250px;
+    min-width: 300px;
     max-width: 100%; 
     box-sizing: border-box;
 }
@@ -152,6 +173,27 @@ textarea{
     border-width: 0px;
     padding-bottom: 0px;
     margin-bottom: 0px;
+    max-height: 300px;
+    overflow-x: hidden;
+}
+
+.use-alert::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.use-alert::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+/* Handle */
+.use-alert::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+.use-alert::-webkit-scrollbar-thumb:hover {
+    background: #555; 
 }
 
 .use-alert li{
@@ -168,10 +210,4 @@ textarea{
 
 .use-alert li:hover{
     color:#009926;
-}
-
-@keyframes amalert {
-    0%   { opacity: 0; }
-    50% { opacity: 1; }
-    100% { opacity: 0; }
 }

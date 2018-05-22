@@ -29,17 +29,22 @@ $(function () {
 //            });
 //        });
 //        //********************
-
+        if (form_CarActedit_C.data('uplv')) {
+            form_CarActedit.find('#txtSDate1').val(PHP_JSON_To_ShowDate(_formdata.EDate));
+            form_CarActedit.find('#txtEDate1').val('');
+            form_CarActedit.find('#txtSDate1').prop('disabled', true);
+            form_CarActedit.find('#txtcmdCartaxtype').prop('disabled', true);
+        }
     }
 
     form_CarActedit.find('#txtSDate').dateTime().on('dp.change', function (e) {
-//        form_CarActedit.formValidation('revalidateField', form_CarActedit.find('#txtSDate11'));
+        form_CarActedit.formValidation('revalidateField', form_CarActedit.find('#txtSDate1'));
     });
     form_CarActedit.find('#txtEDate').dateTime().on('dp.change', function (e) {
-//        form_CarActedit.formValidation('revalidateField', form_CarActedit.find('#txtEDate11'));
+        form_CarActedit.formValidation('revalidateField', form_CarActedit.find('#txtEDate1'));
     });
 
- form_CarActedit.find('#txtcmdCartaxtype').selectpicker({
+    form_CarActedit.find('#txtcmdCartaxtype').selectpicker({
     }).on({
         change: function () {
             //javascript on change
@@ -114,7 +119,7 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* กรุณาระบุวันที่เริ่มอายุพ.ร.บ'
+                        message: '* กรุณาระบุวันที่เริ่มอายุพ.ร.บ/ภาษี'
                     }
                 }
             },
@@ -122,11 +127,11 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* กรุณาระบุวันที่หมดอายุพ.ร.บ'
+                        message: '* กรุณาระบุวันที่หมดอายุพ.ร.บ/ภาษี'
                     }
                 }
             },
-             txtcmdCartaxtype: {
+            txtcmdCartaxtype: {
                 icon: false,
                 validators: {
                     notEmpty: {
@@ -139,6 +144,10 @@ $(function () {
                 validators: {
                     notEmpty: {
                         message: '* กรุณาระบุจำนวนเงิน'
+                    },
+                    regexp: {
+                        regexp: regexpDecimal,
+                        message: '* กรุณาระบุรูปแบบตัวเลขเท่านั้น'
                     }
                 }
             },

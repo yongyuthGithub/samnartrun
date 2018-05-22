@@ -28,7 +28,13 @@ $(function () {
             });
         });
         //********************
-
+        if (form_CarInsuranceedit_C.data('uplv')) {
+            form_CarInsuranceedit_C.find('#txtSDate1').val(PHP_JSON_To_ShowDate(_formdata.EDate));
+            form_CarInsuranceedit_C.find('#txtEDate1').val('');
+            form_CarInsuranceedit_C.find('#txtSDate1').prop('disabled', true);
+            form_CarInsuranceedit_C.find('#cmdCarInsurance').prop('disabled', true);
+            form_CarInsuranceedit_C.find('#cmdCarInsurancetype').prop('disabled', true);
+        }
     }
 
     form_CarInsuranceedit.find('#txtSDate').dateTime().on('dp.change', function (e) {
@@ -37,7 +43,7 @@ $(function () {
     form_CarInsuranceedit.find('#txtEDate').dateTime().on('dp.change', function (e) {
         form_CarInsuranceedit.formValidation('revalidateField', form_CarInsuranceedit.find('#txtEDate1'));
     });
-   
+
 
 
 
@@ -84,13 +90,13 @@ $(function () {
                 $.each(vdata, function (k, v) {
                     _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="' + v.TypeName + '">&nbsp;&nbsp;' + v.TypeName + '</option>';
                 });
-                
+
                 _sel.append(_html).selectpicker('refresh');
                 v(_sel);
             }
         });
     }
-     form_CarInsuranceedit_C.find('#btn-ok').on({
+    form_CarInsuranceedit_C.find('#btn-ok').on({
         click: function () {
             form_CarInsuranceedit.submit();
         }
@@ -120,15 +126,19 @@ $(function () {
                     }
                 }
             },
-             txtCash: {
+            txtCash: {
                 icon: false,
                 validators: {
                     notEmpty: {
                         message: '* กรุณาระบุจำนวนเงิน'
+                    },
+                    regexp: {
+                        regexp: regexpDecimal,
+                        message: '* กรุณาระบุรูปแบบตัวเลขเท่านั้น'
                     }
                 }
             },
-             txtSDate1: {
+            txtSDate1: {
                 icon: false,
                 validators: {
                     notEmpty: {
@@ -136,7 +146,7 @@ $(function () {
                     }
                 }
             },
-             txtEDate1: {
+            txtEDate1: {
                 icon: false,
                 validators: {
                     notEmpty: {
@@ -144,7 +154,7 @@ $(function () {
                     }
                 }
             }
-            
+
         }
     });
 });

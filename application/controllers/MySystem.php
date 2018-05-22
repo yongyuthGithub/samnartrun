@@ -3,6 +3,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 require __DIR__ . '/../core/PCenter.php';
 
+use Fusonic\Linq\Linq;
+
 class MySystem extends PCenter {
 
     public function __construct() {
@@ -136,6 +138,204 @@ class MySystem extends PCenter {
             $vReturn->success = true;
         }
         echo json_encode($vReturn);
+    }
+
+    public function findAllMyAlert() {
+        $_array = array();
+
+        $TypeUse = $this->db->select('RowKey,AlertBeforeDay')
+                        ->from('SYSAlert')
+                        ->where('RowStatus', true)
+                        ->get()->result();
+
+        foreach ($TypeUse as $_row) {
+            if ($_row->RowKey === '53c63d23-573e-11e8-9d29-000c29e41047') {
+                $ExpIDCard = $this->db->select('e.RowKey,'
+                                        . 'concat("บัตรประชาชนของ ",t.Title,e.FName," ",e.LName," จะหมดอายุในวันที่")as Text,'
+                                        . 'ef.EDate as ExpDate,'
+                                        . '"fa fa-credit-card" as Type,'
+                                        . '"Register/index" as Path,'
+                                        . '"" as Display')
+                                ->from('TRNEmployeeFiles ef')
+                                ->join('MSTEmployee e', 'ef.EmpKey=e.RowKey')
+                                ->join('MSTTitle t', 'e.TitleKey=t.RowKey')
+                                ->where('ef.EDate <=', 'CURDATE() + INTERVAL ' . (int) $_row->AlertBeforeDay . ' DAY', false)
+                                ->where('ef.EDate >=', 'CURDATE()', false)
+                                ->where('e.EDate', NULL)
+                                ->where('ef.FileType', 1)
+                                ->get()->result();
+                $_array = array_merge($_array, $ExpIDCard);
+                $ExpIDCardOver = $this->db->select('e.RowKey,'
+                                        . 'concat("บัตรประชาชนของ ",t.Title,e.FName," ",e.LName," หมดอายุแล้วตั้งแต่วันที่")as Text,'
+                                        . 'ef.EDate as ExpDate,'
+                                        . '"fa fa-credit-card" as Type,'
+                                        . '"Register/index" as Path,'
+                                        . '"" as Display')
+                                ->from('TRNEmployeeFiles ef')
+                                ->join('MSTEmployee e', 'ef.EmpKey=e.RowKey')
+                                ->join('MSTTitle t', 'e.TitleKey=t.RowKey')
+                                ->where('ef.EDate <', 'CURDATE()', false)
+                                ->where('e.EDate', NULL)
+                                ->where('ef.FileType', 1)
+                                ->get()->result();
+                $_array = array_merge($_array, $ExpIDCardOver);
+            } else if ($_row->RowKey === '09a32e00-573e-11e8-9d29-000c29e41047') {
+                $ExpIDDrive = $this->db->select('ef.RowKey,'
+                                        . 'concat("ใบขับขี่ของ ",t.Title,e.FName," ",e.LName," จะหมดอายุในวันที่")as Text,'
+                                        . 'ef.EDate as ExpDate,'
+                                        . '"fa fa-credit-card" as Type,'
+                                        . '"Register/index" as Path,'
+                                        . '"" as Display')
+                                ->from('TRNEmployeeFiles ef')
+                                ->join('MSTEmployee e', 'ef.EmpKey=e.RowKey')
+                                ->join('MSTTitle t', 'e.TitleKey=t.RowKey')
+                                ->where('ef.EDate <=', 'CURDATE() + INTERVAL ' . (int) $_row->AlertBeforeDay . ' DAY', false)
+                                ->where('ef.EDate >=', 'CURDATE()', false)
+                                ->where('e.EDate', NULL)
+                                ->where('ef.FileType', 3)
+                                ->get()->result();
+                $_array = array_merge($_array, $ExpIDDrive);
+                $ExpIDCardDriveOver = $this->db->select('ef.RowKey,'
+                                        . 'concat("ใบขับขี่ของ ",t.Title,e.FName," ",e.LName," หมดอายุแล้วตั้งแต่วันที่")as Text,'
+                                        . 'ef.EDate as ExpDate,'
+                                        . '"fa fa-credit-card" as Type,'
+                                        . '"Register/index" as Path,'
+                                        . '"" as Display')
+                                ->from('TRNEmployeeFiles ef')
+                                ->join('MSTEmployee e', 'ef.EmpKey=e.RowKey')
+                                ->join('MSTTitle t', 'e.TitleKey=t.RowKey')
+                                ->where('ef.EDate <', 'CURDATE()', false)
+                                ->where('e.EDate', NULL)
+                                ->where('ef.FileType', 3)
+                                ->get()->result();
+                $_array = array_merge($_array, $ExpIDCardDriveOver);
+            } else if ($_row->RowKey === '23a13de2-573e-11e8-9d29-000c29e41047') {
+                $ExpInsurance = $this->db->select('e.RowKey,'
+                                        . 'concat(tt.TypeName,"ของ ",t.Title,e.FName," ",e.LName," จะหมดอายุในวันที่")as Text,'
+                                        . 'ef.EDate as ExpDate,'
+                                        . '"fa fa-medkit" as Type,'
+                                        . '"Register/register_insurance_Main" as Path,'
+                                        . 'concat(t.Title,e.FName," ",e.LName) as Display')
+                                ->from('TRNEmployeeInsurance ef')
+                                ->join('MSTEmployee e', 'ef.EmpKey=e.RowKey')
+                                ->join('MSTTitle t', 'e.TitleKey=t.RowKey')
+                                ->join('MSTInsuranceType tt', 'ef.InsuranceTypeKey=tt.RowKey')
+                                ->where('ef.EDate <=', 'CURDATE() + INTERVAL ' . (int) $_row->AlertBeforeDay . ' DAY', false)
+                                ->where('ef.EDate >=', 'CURDATE()', false)
+                                ->where('e.EDate', NULL)
+                                ->where('ef.RowStatus', true)
+                                ->get()->result();
+                $_array = array_merge($_array, $ExpInsurance);
+                $ExpInsuranceOver = $this->db->select('e.RowKey,'
+                                        . 'concat(tt.TypeName,"ของ ",t.Title,e.FName," ",e.LName," หมดอายุแล้วตั้งแต่วันที่")as Text,'
+                                        . 'ef.EDate as ExpDate,'
+                                        . '"fa fa-medkit" as Type,'
+                                        . '"Register/register_insurance_Main" as Path,'
+                                        . 'concat(t.Title,e.FName," ",e.LName) as Display')
+                                ->from('TRNEmployeeInsurance ef')
+                                ->join('MSTEmployee e', 'ef.EmpKey=e.RowKey')
+                                ->join('MSTTitle t', 'e.TitleKey=t.RowKey')
+                                ->join('MSTInsuranceType tt', 'ef.InsuranceTypeKey=tt.RowKey')
+                                ->where('ef.EDate <', 'CURDATE()', false)
+                                ->where('e.EDate', NULL)
+                                ->where('ef.RowStatus', true)
+                                ->get()->result();
+                $_array = array_merge($_array, $ExpInsuranceOver);
+            } else if ($_row->RowKey === '30e0c8e2-573e-11e8-9d29-000c29e41047') {
+                $ExpInsuranceCar = $this->db->select('c.RowKey,'
+                                        . 'concat(t.TypeName," ของรถทะเบียน ",c.CarNumber," จะหมดอายุในวันที่")as Text,'
+                                        . 'cl.EDate as ExpDate,'
+                                        . '"fa fa-truck" as Type,'
+                                        . '"Car/Carinsurance" as Path,'
+                                        . 'c.CarNumber as Display')
+                                ->from('TRNCarInsurance cl')
+                                ->join('MSTCar c', 'cl.CarKey=c.RowKey')
+                                ->join('MSTInsuranceType t', 'cl.InsuranceTypeKey=t.RowKey')
+                                ->where('cl.EDate <=', 'CURDATE() + INTERVAL ' . (int) $_row->AlertBeforeDay . ' DAY', false)
+                                ->where('cl.EDate >=', 'CURDATE()', false)
+                                ->where('cl.RowStatus', true)
+                                ->where('c.RowStatus', true)
+                                ->get()->result();
+                $_array = array_merge($_array, $ExpInsuranceCar);
+                $ExpInsuranceCarOver = $this->db->select('c.RowKey,'
+                                        . 'concat(t.TypeName," ของรถทะเบียน ",c.CarNumber," หมดอายุแล้วตั้งแต่วันที่")as Text,'
+                                        . 'cl.EDate as ExpDate,'
+                                        . '"fa fa-truck" as Type,'
+                                        . '"Car/Carinsurance" as Path,'
+                                        . 'c.CarNumber as Display')
+                                ->from('TRNCarInsurance cl')
+                                ->join('MSTCar c', 'cl.CarKey=c.RowKey')
+                                ->join('MSTInsuranceType t', 'cl.InsuranceTypeKey=t.RowKey')
+                                ->where('cl.EDate <', 'CURDATE()', false)
+                                ->where('cl.RowStatus', true)
+                                ->where('c.RowStatus', true)
+                                ->get()->result();
+                $_array = array_merge($_array, $ExpInsuranceCarOver);
+            } else if ($_row->RowKey === '45d88572-573e-11e8-9d29-000c29e41047') {
+                $ExpInsuranceCarAct = $this->db->select('c.RowKey,'
+                                        . 'concat("พรบ.ของรถทะเบียน ",c.CarNumber," จะหมดอายุในวันที่")as Text,'
+                                        . 'cl.EDate as ExpDate,'
+                                        . '"fa fa-file-text-o" as Type,'
+                                        . '"Car/Carinsurance" as Path,'
+                                        . 'c.CarNumber as Display')
+                                ->from('TRNCarAct cl')
+                                ->join('MSTCar c', 'cl.CarKey=c.RowKey')
+                                ->where('cl.EDate <=', 'CURDATE() + INTERVAL ' . (int) $_row->AlertBeforeDay . ' DAY', false)
+                                ->where('cl.EDate >=', 'CURDATE()', false)
+                                ->where('cl.ActType', 1)
+                                ->where('cl.RowStatus', true)
+                                ->where('c.RowStatus', true)
+                                ->get()->result();
+                $_array = array_merge($_array, $ExpInsuranceCarAct);
+                $ExpInsuranceCarActOver = $this->db->select('c.RowKey,'
+                                        . 'concat("พรบ.ของรถทะเบียน ",c.CarNumber," หมดอายุแล้วตั้งแต่วันที่")as Text,'
+                                        . 'cl.EDate as ExpDate,'
+                                        . '"fa fa-file-text-o" as Type,'
+                                        . '"Car/Carinsurance" as Path,'
+                                        . 'c.CarNumber as Display')
+                                ->from('TRNCarAct cl')
+                                ->join('MSTCar c', 'cl.CarKey=c.RowKey')
+                                ->where('cl.EDate <', 'CURDATE()', false)
+                                ->where('cl.ActType', 1)
+                                ->where('cl.RowStatus', true)
+                                ->where('c.RowStatus', true)
+                                ->get()->result();
+                $_array = array_merge($_array, $ExpInsuranceCarActOver);
+                $ExpInsuranceCarAct2 = $this->db->select('c.RowKey,'
+                                        . 'concat("ภาษีของรถทะเบียน ",c.CarNumber," จะหมดอายุในวันที่")as Text,'
+                                        . 'cl.EDate as ExpDate,'
+                                        . '"fa fa-file-text-o" as Type,'
+                                        . '"Car/Carinsurance" as Path,'
+                                        . 'c.CarNumber as Display')
+                                ->from('TRNCarAct cl')
+                                ->join('MSTCar c', 'cl.CarKey=c.RowKey')
+                                ->where('cl.EDate <=', 'CURDATE() + INTERVAL ' . (int) $_row->AlertBeforeDay . ' DAY', false)
+                                ->where('cl.EDate >=', 'CURDATE()', false)
+                                ->where('cl.ActType', 2)
+                                ->where('cl.RowStatus', true)
+                                ->where('c.RowStatus', true)
+                                ->get()->result();
+                $_array = array_merge($_array, $ExpInsuranceCarAct2);
+                $ExpInsuranceCarActOver2 = $this->db->select('c.RowKey,'
+                                        . 'concat("ภาษีของรถทะเบียน ",c.CarNumber," หมดอายุแล้วตั้งแต่วันที่")as Text,'
+                                        . 'cl.EDate as ExpDate,'
+                                        . '"fa fa-file-text-o" as Type,'
+                                        . '"Car/Carinsurance" as Path,'
+                                        . 'c.CarNumber as Display')
+                                ->from('TRNCarAct cl')
+                                ->join('MSTCar c', 'cl.CarKey=c.RowKey')
+                                ->where('cl.EDate <', 'CURDATE()', false)
+                                ->where('cl.ActType', 2)
+                                ->where('cl.RowStatus', true)
+                                ->where('c.RowStatus', true)
+                                ->get()->result();
+                $_array = array_merge($_array, $ExpInsuranceCarActOver2);
+            }
+        }
+
+        echo json_encode(Linq::from($_array)->orderByDescending(function($x) {
+                    return $x->ExpDate;
+                })->toArray());
     }
 
 }

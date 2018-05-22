@@ -7,10 +7,11 @@ $(function () {
         btnDeleteAll: true,
         btnDelete: true,
         btnEdit: true,
-        btnPreview: false,
         btnEditText: 'แก้ไข',
         btnNewText: 'เพิ่ม',
         btnDeleteText: 'ลบ',
+        btnPreviewText: 'ต่ออายุ',
+        btnPreview: true,
         headerString: '',
         UrlDataJson: mvcPatch('Car/findinsurancecar'),
         UrlDataSend: {key: $('#txtkey').val()},
@@ -116,6 +117,7 @@ $(function () {
                 onshow: function (k) {
                     k.getModal().data({
                         data: d,
+                        uplv: false,
                         fun: function (_f) {
                             var obj = new Object({
                                 RowKey: d.key,
@@ -189,6 +191,75 @@ $(function () {
             });
         },
         btnPreviewFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('car/carinsuranceedit'),
+                title: 'ต่ออายุประกันของรถ/ประกันสินค้า',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        uplv: true,
+                        fun: function (_f) {
+                            var obj = new Object({
+                                RowKey: Guid,
+                                CarKey: $('#txtkey').val(),
+                                InsuranceTypeKey: _f.find('#cmdCarInsurancetype').val(),
+                                SDate: PHP_DateTimeShow_To_JSON(_f.find('#txtSDate')),
+                                EDate: PHP_DateTimeShow_To_JSON(_f.find('#txtEDate')),
+                                Cash: _f.find('#txtCash').val()
+                            });
+                            $.bConfirm({
+                                buttonOK: function (k2) {
+                                    k2.close();
+                                    var _objD = new Object({
+                                        RowKey: d.key,
+                                        RowStatus: false
+                                    });
+                                    $.reqData({
+                                        url: mvcPatch('car/disabledinsurancecar'),
+                                        data: {data: JSON.stringify(_objD)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                $.reqData({
+                                                    url: mvcPatch('car/editinsurancecar'),
+                                                    data: {data: JSON.stringify(obj)},
+                                                    loanding: false,
+                                                    callback: function (vdata) {
+                                                        if (vdata.success) {
+                                                            f.find('.xref').click();
+                                                            k.close();
+                                                        } else {
+                                                            $.bAlert({
+                                                                message: vdata.message
+                                                            });
+                                                        }
+                                                    }
+                                                });
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         }
     });
 //            .......................................ACT.........................................................
@@ -200,7 +271,8 @@ $(function () {
         btnEditText: 'แก้ไข',
         btnNewText: 'เพิ่ม',
         btnDeleteText: 'ลบ',
-        btnPreview: false,
+        btnPreviewText: 'ต่ออายุ',
+        btnPreview: true,
         headerString: '',
         UrlDataJson: mvcPatch('Car/findactcar'),
         UrlDataSend: {key: $('#txtkey').val()},
@@ -303,6 +375,7 @@ $(function () {
                 onshow: function (k) {
                     k.getModal().data({
                         data: d,
+                        uplv: false,
                         fun: function (_f) {
                             var obj = new Object({
                                 RowKey: d.key,
@@ -376,6 +449,75 @@ $(function () {
             });
         },
         btnPreviewFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('car/caractedit'),
+                title: 'ต่ออายุพ.ร.บ/ภาษี ของรถ',
+                closable: false,
+                size: BootstrapDialog.SIZE_NORMAL,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        uplv: true,
+                        fun: function (_f) {
+                            var obj = new Object({
+                                RowKey: Guid,
+                                CarKey: $('#txtkey').val(),
+                                ActType: parseInt(_f.find('#txtcmdCartaxtype').val()),
+                                SDate: PHP_DateTimeShow_To_JSON(_f.find('#txtSDate')),
+                                EDate: PHP_DateTimeShow_To_JSON(_f.find('#txtEDate')),
+                                Cash: _f.find('#txtCash').val()
+                            });
+                            $.bConfirm({
+                                buttonOK: function (k2) {
+                                    k2.close();
+                                    var _objD = new Object({
+                                        RowKey: d.key,
+                                        RowStatus: false
+                                    });
+                                    $.reqData({
+                                        url: mvcPatch('car/disabledactcar'),
+                                        data: {data: JSON.stringify(_objD)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                $.reqData({
+                                                    url: mvcPatch('car/editactcar'),
+                                                    data: {data: JSON.stringify(obj)},
+                                                    loanding: false,
+                                                    callback: function (vdata) {
+                                                        if (vdata.success) {
+                                                            f.find('.xref').click();
+                                                            k.close();
+                                                        } else {
+                                                            $.bAlert({
+                                                                message: vdata.message
+                                                            });
+                                                        }
+                                                    }
+                                                });
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
         }
     });
 });

@@ -1,4 +1,4 @@
-<?php // echo css_asset('views/Car/Car_Insurance_main.css') ?>
+<?php echo css_asset('views/car/car_insurance_main.css') ?>
 <?php echo js_asset('views/Car/Car_Insurance_main.js') ?>
 <div class="col-12">   
     <div class="panel panel-default">
