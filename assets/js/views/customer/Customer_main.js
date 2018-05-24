@@ -18,8 +18,8 @@ $(function () {
         UrlLoandingclose: true,
         DataColumns: [
             {data: 'CusCode', header: 'รหัสลูกค้า'},
-            {data: 'Customer', header: 'ชื่อลูกค้า'} 
-            
+            {data: 'Customer', header: 'ชื่อลูกค้า'}
+
         ],
 //        DataColumnsDefs: [{
 //                render: function (row, type, val2, meta) {
@@ -41,28 +41,28 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = Guid;
-                            obj.CusCode=_f.find('#txtCusCode').val();
+                            obj.CusCode = _f.find('#txtCusCode').val();
                             obj.Customer = _f.find('#txtUser').val();
-                            $.bConfirm({
-                                buttonOK: function (k) {
-                                    k.close();
-                                    $.reqData({
-                                        url: mvcPatch('Customer/editCustomer'),
-                                        data: {data: JSON.stringify(obj)},
-                                        loanding: false,
-                                        callback: function (vdata) {
-                                            if (vdata.success) {
-                                                _f.find('#btn-close').click();
-                                                f.find('.xref').click();
-                                            } else {
-                                                $.bAlert({
-                                                    message: vdata.message
-                                                });
-                                            }
-                                        }
-                                    });
+//                            $.bConfirm({
+//                                buttonOK: function (k) {
+                            k.close();
+                            $.reqData({
+                                url: mvcPatch('Customer/editCustomer'),
+                                data: {data: JSON.stringify(obj)},
+                                loanding: false,
+                                callback: function (vdata) {
+                                    if (vdata.success) {
+                                        _f.find('#btn-close').click();
+                                        f.find('.xref').click();
+                                    } else {
+                                        $.bAlert({
+                                            message: vdata.message
+                                        });
+                                    }
                                 }
                             });
+//                                }
+//                            });
                         }
                     });
                 },
@@ -91,28 +91,28 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object();
                             obj.RowKey = d.key;
-                            obj.CusCode=_f.find('#txtCusCode').val();
-                            obj.Customer = _f.find('#txtUser').val();                             
-                            $.bConfirm({
-                                buttonOK: function (k) {
-                                    k.close();
-                                    $.reqData({
-                                        url: mvcPatch('Customer/editCustomer'),
-                                        data: {data: JSON.stringify(obj)},
-                                        loanding: false,
-                                        callback: function (vdata) {
-                                            if (vdata.success) {
-                                                _f.find('#btn-close').click();
-                                                f.find('.xref').click();
-                                            } else {
-                                                $.bAlert({
-                                                    message: vdata.message
-                                                });
-                                            }
-                                        }
-                                    });
+                            obj.CusCode = _f.find('#txtCusCode').val();
+                            obj.Customer = _f.find('#txtUser').val();
+//                            $.bConfirm({
+//                                buttonOK: function (k) {
+                            k.close();
+                            $.reqData({
+                                url: mvcPatch('Customer/editCustomer'),
+                                data: {data: JSON.stringify(obj)},
+                                loanding: false,
+                                callback: function (vdata) {
+                                    if (vdata.success) {
+                                        _f.find('#btn-close').click();
+                                        f.find('.xref').click();
+                                    } else {
+                                        $.bAlert({
+                                            message: vdata.message
+                                        });
+                                    }
                                 }
                             });
+//                                }
+//                            });
                         }
                     });
                 },

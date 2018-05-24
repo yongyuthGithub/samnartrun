@@ -58,26 +58,26 @@ $(function () {
                             obj.IsDefault = _f.find('#swDF').is(':checked');
                             obj.BillDay = parseFloat(_f.find('#txtBillDay').val());
                             obj.DueDate = parseFloat(_f.find('#txtDueDate').val());
-                            $.bConfirm({
-                                buttonOK: function (k2) {
-                                    k2.close();
-                                    $.reqData({
-                                        url: mvcPatch('Customer/editCustomertype'),
-                                        data: {data: JSON.stringify(obj)},
-                                        loanding: false,
-                                        callback: function (vdata) {
-                                            if (vdata.success) {
-                                                f.find('.xref').click();
-                                                k.close();
-                                            } else {
-                                                $.bAlert({
-                                                    message: vdata.message
-                                                });
-                                            }
-                                        }
-                                    });
+//                            $.bConfirm({
+//                                buttonOK: function (k2) {
+//                                    k2.close();
+                            $.reqData({
+                                url: mvcPatch('Customer/editCustomertype'),
+                                data: {data: JSON.stringify(obj)},
+                                loanding: false,
+                                callback: function (vdata) {
+                                    if (vdata.success) {
+                                        f.find('.xref').click();
+                                        k.close();
+                                    } else {
+                                        $.bAlert({
+                                            message: vdata.message
+                                        });
+                                    }
                                 }
                             });
+//                                }
+//                            });
                         }
                     });
                 },
@@ -117,26 +117,26 @@ $(function () {
                                 BillDay: parseFloat(_f.find('#txtBillDay').val()),
                                 DueDate: parseFloat(_f.find('#txtDueDate').val())
                             });
-                            $.bConfirm({
-                                buttonOK: function (k2) {
-                                    k2.close();
-                                    $.reqData({
-                                        url: mvcPatch('Customer/editCustomertype'),
-                                        data: {data: JSON.stringify(obj)},
-                                        loanding: false,
-                                        callback: function (vdata) {
-                                            if (vdata.success) {
-                                                f.find('.xref').click();
-                                                k.close();
-                                            } else {
-                                                $.bAlert({
-                                                    message: vdata.message
-                                                });
-                                            }
-                                        }
-                                    });
+//                            $.bConfirm({
+//                                buttonOK: function (k2) {
+//                                    k2.close();
+                            $.reqData({
+                                url: mvcPatch('Customer/editCustomertype'),
+                                data: {data: JSON.stringify(obj)},
+                                loanding: false,
+                                callback: function (vdata) {
+                                    if (vdata.success) {
+                                        f.find('.xref').click();
+                                        k.close();
+                                    } else {
+                                        $.bAlert({
+                                            message: vdata.message
+                                        });
+                                    }
                                 }
                             });
+//                                }
+//                            });
                         }
                     });
                 },

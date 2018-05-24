@@ -42,7 +42,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-3 col-md-3">
+                    <div class="col-xs-12 col-sm-5 col-md-3">
                         <div class="form-group">
                             <label for="cmdCustBranch">สาขา :</label>
                             <select id="cmdCustBranch" name="cmdCustBranch" class="form-control selectpicker show-menu-arrow"
@@ -61,7 +61,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-3 col-md-3">
+                    <div class="col-xs-12 col-sm-5 col-sm-3 col-md-offset-3 ">
                         <div class="form-group">
                             <label for="txtDocDate">วันที่ออกบิล :</label>
                             <div class="input-group date" id="divDate">
@@ -72,11 +72,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-2 col-md-2 col-md-offset-1" style="height: 74px;line-height: 74px;">
+<!--                    <div class="col-xs-12 col-sm-2 col-md-2 col-md-offset-1" style="height: 74px;line-height: 74px;">
                         <div class="form-group" style="padding-top: 4px;">
                             <button type="button" id="btn-print" class="btn btn-success form-control"><i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp;ออกบิล</button>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <hr>
                 <div id="form_bilelist"></div>
@@ -198,6 +198,14 @@
                             <option data-icon="fa fa-btc" value="1">&nbsp;&nbsp;ชำระโดยเงินสด</option>
                             <option data-icon="fa fa-btc" value="2">&nbsp;&nbsp;ชำระโดยเช็ค</option>
                         </select>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">  
+                    <div class="col-xs-8 col-xs-offset-4 col-sm-4 col-sm-offset-8 col-md-3 col-md-offset-9">
+                        <div class="form-group" style="padding-top: 4px;">
+                            <button type="button" id="btn-print" class="btn btn-success form-control"><i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp;ออกบิล</button>
+                        </div>
                     </div>
                 </div>
             </div>
