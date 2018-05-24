@@ -91,7 +91,7 @@
                     <label for="txtZipCode">รหัสไปรษณีย์ :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class=" fa fa-address-card-o" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control" id="txtZipCode" name="txtZipCode" placeholder="รหัสไปรษณีย์">
+                        <input type="text" class="form-control" id="txtZipCode" name="txtZipCode" placeholder="รหัสไปรษณีย์" value="-">
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
                     <label for="txtIDCard">เลขประจำผู้เสียภาษี :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class=" fa fa-address-card-o" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control" id="txtIDCard" name="txtIDCard" placeholder="เลขประจำผู้เสียภาษี">
+                        <input type="text" class="form-control" id="txtIDCard" name="txtIDCard" placeholder="เลขประจำผู้เสียภาษี" value="-">
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@
                     <label for="txtFax">แฟกซ์ :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-phone-square" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control" id="txtFax" name="txtFax" placeholder="แฟกซ์">
+                        <input type="text" class="form-control" id="txtFax" name="txtFax" placeholder="แฟกซ์" value="-">
                     </div>
                 </div>
             </div>
@@ -118,7 +118,7 @@
                     <label for="txtTel">เบอร์โทร :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class=" fa fa-phone-square" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control" id="txtTel" name="txtTel" placeholder="เบอร์โทร">
+                        <input type="text" class="form-control" id="txtTel" name="txtTel" placeholder="เบอร์โทร" value="-">
                     </div>
                 </div>
             </div>   
@@ -127,7 +127,7 @@
                     <label for="txtBillDay">ระยะเวลาวางบิล(นับตั้งแต่วันที่บันทึกใบงานวันแรก) :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-newspaper-o" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control text-right" id="txtBillDay" name="txtBillDay" placeholder="ระยะเวลาวางบิล">
+                        <input type="text" class="form-control text-right" id="txtBillDay" name="txtBillDay" placeholder="ระยะเวลาวางบิล" value="0">
                     </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@
                     <label for="txtDueDate">ระยะเวลาครบกำหนดวางบิล(นับตั้งแต่วันที่วางบิล) :</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-money" style="min-width: 20px;"></i></div>
-                        <input type="text" class="form-control text-right" id="txtDueDate" name="txtDueDate" placeholder="ระยะเวลาครบกำหนดวางบิล">
+                        <input type="text" class="form-control text-right" id="txtDueDate" name="txtDueDate" placeholder="ระยะเวลาครบกำหนดวางบิล" value="0">
                     </div>
                 </div>
             </div>   

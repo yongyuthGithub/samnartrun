@@ -3,6 +3,7 @@ $(function () {
     var form_receiptlist = $('#form_receiptlist');
     var form_sumbit = $('#form_sumbit');
 
+    var _sD = new Date().setDate(1);
     form_receipt.find('#divSDate').datetimepicker({
         format: 'DD/MM/YYYY',
         maxDate: new Date(),
@@ -11,7 +12,7 @@ $(function () {
     }).on('dp.change', function (ds) {
         form_receipt.find('#divEDate').data("DateTimePicker").minDate(ds.date);
         setFind();
-    });
+    }).find('#txtSDate').val(getDateCustom(_sD));
 
     form_receipt.find('#divEDate').datetimepicker({
         format: 'DD/MM/YYYY',

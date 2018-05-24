@@ -18,6 +18,8 @@ $(function () {
         });
     } else {
         form_recordfuleedit.find('#txtMile').val(_formdata.Smile);
+        form_recordfuleedit.find('#txtItem').val(_formdata.Item);
+        form_recordfuleedit.find('#txtItemPrice').val(_formdata.ItemPrice);
         form_recordfuleedit.find('#txtAmount').val(_formdata.Price);
         form_recordfuleedit.find('#txtRefer').val(_formdata.Refer);
         setFule(function (f) {
@@ -59,37 +61,37 @@ $(function () {
                                     obj.RowKey = Guid;
                                     obj.Pump = _f.find('#txtUser').val();
                                     obj.PumpType = _f.find('#cmdTitle').val();
-                                    
-                                    $.bConfirm({
-                                        buttonOK: function (k) {
-                                            k.close();
-                                            $.reqData({
-                                                url: mvcPatch('Fule/editPump'),
-                                                data: {data: JSON.stringify(obj)},
-                                                loanding: false,
-                                                callback: function (vdata) {
-                                                    if (vdata.success) {
-                                                        _f.find('#btn-close').click();
-                                                        setFule(function (f) {
-                                                            f.val(vdata.key).selectpicker('render');
-                                                            setFuleBranch(function (fb) {
-                                                                if (fb.find('option').length === 0)
-                                                                    fb.val(Guid).selectpicker('render');
-                                                                setFuleType(function (ft) {
-                                                                    if (ft.find('option').length === 0)
-                                                                        ft.val(Guid).selectpicker('render');
-                                                                });
-                                                            });
+
+//                                    $.bConfirm({
+//                                        buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('Fule/editPump'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                setFule(function (f) {
+                                                    f.val(vdata.key).selectpicker('render');
+                                                    setFuleBranch(function (fb) {
+                                                        if (fb.find('option').length === 0)
+                                                            fb.val(Guid).selectpicker('render');
+                                                        setFuleType(function (ft) {
+                                                            if (ft.find('option').length === 0)
+                                                                ft.val(Guid).selectpicker('render');
                                                         });
-                                                    } else {
-                                                        $.bAlert({
-                                                            message: vdata.message
-                                                        });
-                                                    }
-                                                }
-                                            });
+                                                    });
+                                                });
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
                                         }
                                     });
+//                                        }
+//                                    });
                                 }
                             });
                         },
@@ -158,32 +160,32 @@ $(function () {
                                         ZipCode: _f.find('#txtZipCode').val(),
                                         IsDefault: _f.find('#swDF').is(':checked')
                                     });
-                                    $.bConfirm({
-                                        buttonOK: function (k2) {
-                                            k2.close();
-                                            $.reqData({
-                                                url: mvcPatch('Fule/editBrand'),
-                                                data: {data: JSON.stringify(obj)},
-                                                loanding: false,
-                                                callback: function (vdata) {
-                                                    if (vdata.success) {
-                                                        _f.find('#btn-close').click();
-                                                        setFuleBranch(function (fb) {
-                                                            fb.val(vdata.key).selectpicker('render');
-                                                            setFuleType(function (ft) {
-                                                                if (ft.find('option').length === 0)
-                                                                    ft.val(Guid).selectpicker('render');
-                                                            });
-                                                        });
-                                                    } else {
-                                                        $.bAlert({
-                                                            message: vdata.message
-                                                        });
-                                                    }
-                                                }
-                                            });
+//                                    $.bConfirm({
+//                                        buttonOK: function (k2) {
+//                                    k2.close();
+                                    $.reqData({
+                                        url: mvcPatch('Fule/editBrand'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                setFuleBranch(function (fb) {
+                                                    fb.val(vdata.key).selectpicker('render');
+                                                    setFuleType(function (ft) {
+                                                        if (ft.find('option').length === 0)
+                                                            ft.val(Guid).selectpicker('render');
+                                                    });
+                                                });
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
                                         }
                                     });
+//                                        }
+//                                    });
                                 }
                             });
                         },
@@ -249,27 +251,27 @@ $(function () {
                                                     IsDefault: false
                                                 });
                                             }).ToArray();
-                                    $.bConfirm({
-                                        buttonOK: function (k) {
-                                            k.close();
-                                            $.reqData({
-                                                url: mvcPatch('Fule/editFuelList'),
-                                                data: {data: JSON.stringify(obj)},
-                                                loanding: false,
-                                                callback: function (vdata) {
-                                                    if (vdata.success) {
-                                                        _f.find('#btn-close').click();
-                                                        setFuleType(function (ft) {
-                                                        });
-                                                    } else {
-                                                        $.bAlert({
-                                                            message: vdata.message
-                                                        });
-                                                    }
-                                                }
-                                            });
+//                                    $.bConfirm({
+//                                        buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('Fule/editFuelList'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                setFuleType(function (ft) {
+                                                });
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
                                         }
                                     });
+//                                        }
+//                                    });
                                 }
                             });
                         },
@@ -366,11 +368,35 @@ $(function () {
                     }
                 }
             },
-            txtAmount: {
+//            txtAmount: {
+//                icon: false,
+//                validators: {
+//                    notEmpty: {
+//                        message: '* กรุณาระบุจำนวนเงินที่ชำระ'
+//                    },
+//                    regexp: {//***Custom Patter
+//                        regexp: regexpDecimal,
+//                        message: '* กรุณาระบุที่เป็นตัวเลขเท่านั้น'
+//                    }
+//                }
+//            }
+            txtItem: {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* กรุณาระบุจำนวนเงินที่ชำระ'
+                        message: '* กรุณาระบุจำนวนลิตร'
+                    },
+                    regexp: {//***Custom Patter
+                        regexp: regexpDecimal,
+                        message: '* กรุณาระบุที่เป็นตัวเลขเท่านั้น'
+                    }
+                }
+            },
+            txtItemPrice: {
+                icon: false,
+                validators: {
+                    notEmpty: {
+                        message: '* กรุณาระบุราคา/ลิตร'
                     },
                     regexp: {//***Custom Patter
                         regexp: regexpDecimal,

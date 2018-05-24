@@ -2,15 +2,16 @@ $(function () {
     var form_InReport = $('#form_InReport');
     var form_Incometime = $('#form_Incometime');
 
+    var _sD = new Date().setDate(1);
     form_Incometime.find('#divSDate').datetimepicker({
         format: 'DD/MM/YYYY',
         maxDate: new Date(),
-        defaultDate: new Date(),
+//        defaultDate: new Date(),
         locale: 'th',
     }).on('dp.change', function (ds) {
         form_Incometime.find('#divEDate').data("DateTimePicker").minDate(ds.date);
         setFind();
-    });
+    }).find('#txtSDate').val(getDateCustom(_sD));
 
     form_Incometime.find('#divEDate').datetimepicker({
         format: 'DD/MM/YYYY',
@@ -80,7 +81,7 @@ $(function () {
             {data: 'Detial', header: 'รายละเอียด'},
             {data: 'IncomeType', header: 'ประเภท'},
             {data: 'DocDate', header: 'วันที่'},
-            {data: 'Amount', header: 'จำนวนเงิน'},
+            {data: 'Amount', header: 'จำนวนที่บันทึก'},
             {data: 'Amount', header: 'ภาษี'},
             {data: 'Amount', header: 'เงินสุทธิ'},
 //           {data: 'Url', header: 'Url'}
@@ -90,11 +91,15 @@ $(function () {
                     .Select(function (x) {
                         return new Object({
                             IncomeType: parseInt(x.IncomeType),
-                            Amount: parseInt(x.IsVat) === 0 ? parseFloat(x.Amount) : parseFloat(x.Amount) + ((parseFloat(x.Amount) * 7) / 100)
+//                            Amount: parseInt(x.IsVat) === 0 ? parseFloat(x.Amount) : parseFloat(x.Amount) + ((parseFloat(x.Amount) * 7) / 100)
+                            Amount: parseFloat(x.Amount),
+                            Vat: parseInt(x.IsVat) === 0 ? 0 : parseFloat(x.Amount) - ((parseFloat(x.Amount) * 100) / 107)
                         });
                     });
             var _revenue = _v.Where(x => x.IncomeType === 1).Sum(x => x.Amount);
             var _expenditure = _v.Where(x => x.IncomeType === 0).Sum(x => x.Amount);
+            var _vat = _v.Sum(x => x.Vat);
+            form_Incometime.find('#txtVat').val(addCommas(_vat, 2));
             form_Incometime.find('#txtRevenue').val(addCommas(_revenue, 2));
             form_Incometime.find('#txtExpenditure').val(addCommas(_expenditure, 2));
             form_Incometime.find('#txtTotal').val(addCommas(_revenue - _expenditure, 2));
@@ -124,7 +129,8 @@ $(function () {
             },
             {
                 render: function (row, type, val2, meta) {
-                    return parseInt(val2.IsVat) === 1 ? addCommas((parseFloat(val2.Amount) * 7) / 100, 2) : '-';
+                    return parseInt(val2.IsVat) === 1 ? addCommas(parseFloat(val2.Amount) - ((parseFloat(val2.Amount) * 100) / 107), 2) : '-';
+//                    return parseInt(val2.IsVat) === 1 ? addCommas((parseFloat(val2.Amount) * 7) / 100, 2) : '-';
                 },
                 orderable: true,
                 targets: 5
@@ -132,7 +138,8 @@ $(function () {
             {
                 render: function (row, type, val2, meta) {
                     var _c = parseInt(val2.IncomeType) === 1 ? 'text-success' : 'text-danger';
-                    return  '<span class="' + _c + '">' + (parseInt(val2.IsVat) === 1 ? addCommas(parseFloat(val2.Amount) + ((parseFloat(val2.Amount) * 7) / 100), 2) : addCommas(parseFloat(val2.Amount), 2)) + '</span>';
+                    return  '<span class="' + _c + '">' + addCommas(val2.Amount, 2) + '</span>';
+//                    return  '<span class="' + _c + '">' + (parseInt(val2.IsVat) === 1 ? addCommas(parseFloat(val2.Amount) + ((parseFloat(val2.Amount) * 7) / 100), 2) : addCommas(parseFloat(val2.Amount), 2)) + '</span>';
                 },
                 orderable: true,
                 targets: 6

@@ -42,6 +42,18 @@
                 <div class="row">  
                     <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
                         <div class="form-group" style="margin-bottom: 0px;">
+                            <label for="txtVat" class="text-right" style="line-height: 34px;">ภาษี :</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-4 col-md-3">
+                        <div class="form-group" style="margin-bottom: 0px;">
+                            <input type="text" class="form-control text-right" id="txtVat" name="txtVat" placeholder="ภาษี" disabled value="0.00">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">  
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                        <div class="form-group" style="margin-bottom: 0px;">
                             <label for="txtTotal" class="text-right" style="line-height: 34px;">ค่าน้ำมันรวม :</label>
                         </div>
                     </div>

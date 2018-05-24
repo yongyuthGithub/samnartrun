@@ -2,6 +2,7 @@ $(function () {
     var form_Income = $('#form_Income');
     var form_Incometime = $('#form_Incometime');
 
+    var _sD = new Date().setDate(1);
     form_Incometime.find('#divSDate').datetimepicker({
         format: 'DD/MM/YYYY',
         maxDate: new Date(),
@@ -10,7 +11,7 @@ $(function () {
     }).on('dp.change', function (ds) {
         form_Incometime.find('#divEDate').data("DateTimePicker").minDate(ds.date);
         setFind();
-    });
+    }).find('#txtSDate').val(getDateCustom(_sD));
 
     form_Incometime.find('#divEDate').datetimepicker({
         format: 'DD/MM/YYYY',

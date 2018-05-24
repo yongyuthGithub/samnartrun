@@ -3,15 +3,16 @@ $(function () {
     var form_bilelist = $('#form_bilelist');
     var form_sumbit = $('#form_sumbit');
 
+    var _sD = new Date().setDate(1);
     form_bill.find('#divSDate').datetimepicker({
         format: 'DD/MM/YYYY',
         maxDate: new Date(),
-        defaultDate: new Date(),
+//        defaultDate: new Date(),
         locale: 'th',
     }).on('dp.change', function (ds) {
         form_bill.find('#divEDate').data("DateTimePicker").minDate(ds.date);
         setFind();
-    });
+    }).find('#txtSDate').val(getDateCustom(_sD));
 
     form_bill.find('#divEDate').datetimepicker({
         format: 'DD/MM/YYYY',

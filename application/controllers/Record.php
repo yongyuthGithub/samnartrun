@@ -119,7 +119,7 @@ class Record extends PCenter {
         $qryMenu = $this->db->select('w.RowKey,'
                                 . 'w.DocID,'
                                 . 'w.DocDate,'
-                                . 'w.DocDate,'
+//                                . 'w.DocDate,'
                                 . 'w.Product,'
                                 . 'w.ProductKey,'
                                 . 'w.PriceTotal,'
@@ -154,6 +154,8 @@ class Record extends PCenter {
                         ->where('i.WorkSheetHDKey', $qryMenu->RowKey)
                         ->get()->result();
         $qryMenu->TRNFule = $this->db->select('f.RowKey as key,'
+                                . 'f.Item,'
+                                . 'f.ItemPrice,'
                                 . 'f.Price,'
                                 . 'f.Smile,'
                                 . 'f.Refer,'

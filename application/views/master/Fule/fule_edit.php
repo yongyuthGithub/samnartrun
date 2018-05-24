@@ -36,8 +36,8 @@ and open the template in the editor.
                             data-selectAll-Text="Select All"
                             data-deselectAll-Text="Deselect All"
                             data-selected-Text-Format="count > 3">
-                        <option data-icon="fa fa-clone" value="1">&nbsp;&nbsp;ปั้มใน</option>
                         <option data-icon="fa fa-clone" value="2">&nbsp;&nbsp;ปั้มนอก</option>
+                        <option data-icon="fa fa-clone" value="1">&nbsp;&nbsp;ปั้มใน</option>
                     </select>
                 </div>
             </div>

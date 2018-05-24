@@ -10,16 +10,16 @@ $(function () {
 //
 //        form_record.find('#divSDate').data("DateTimePicker").maxDate(e.date);
 //    });
-
+    var _sD = new Date().setDate(1);
     form_BillHD.find('#divSDate').datetimepicker({
         format: 'DD/MM/YYYY',
         maxDate: new Date(),
-        defaultDate: new Date(),
+//        defaultDate: new Date(),
         locale: 'th',
     }).on('dp.change', function (ds) {
         form_BillHD.find('#divEDate').data("DateTimePicker").minDate(ds.date);
         setFind();
-    });
+    }).find('#txtSDate').val(getDateCustom(_sD));
 
     form_BillHD.find('#divEDate').datetimepicker({
         format: 'DD/MM/YYYY',

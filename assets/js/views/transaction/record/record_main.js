@@ -10,16 +10,16 @@ $(function () {
 //
 //        form_record.find('#divSDate').data("DateTimePicker").maxDate(e.date);
 //    });
-
+    var _sD = new Date().setDate(1);
     form_record.find('#divSDate').datetimepicker({
         format: 'DD/MM/YYYY',
         maxDate: new Date(),
-        defaultDate: new Date(),
+//        defaultDate: new Date(),
         locale: 'th',
     }).on('dp.change', function (ds) {
         form_record.find('#divEDate').data("DateTimePicker").minDate(ds.date);
         setFind();
-    });
+    }).find('#txtSDate').val(getDateCustom(_sD));
 
     form_record.find('#divEDate').datetimepicker({
         format: 'DD/MM/YYYY',
@@ -171,6 +171,8 @@ $(function () {
                                             return new Object({
                                                 RowKey: x.key,
                                                 PumpFuleKey: x.FuleKey,
+                                                Item: x.Item,
+                                                ItemPrice: x.ItemPrice,
                                                 Price: x.Price,
                                                 Smile: x.Smile,
                                                 Refer: x.Refer
@@ -270,6 +272,8 @@ $(function () {
                                             return new Object({
                                                 RowKey: x.key,
                                                 PumpFuleKey: x.FuleKey,
+                                                Item: x.Item,
+                                                ItemPrice: x.ItemPrice,
                                                 Price: x.Price,
                                                 Smile: x.Smile,
                                                 Refer: x.Refer

@@ -64,6 +64,8 @@ $(function () {
                         .Select(function (x) {
                             return new Object({
                                 key: x.key,
+                                Item: parseFloat(x.Item).toFixed(2),
+                                ItemPrice: parseFloat(x.ItemPrice).toFixed(2),
                                 Price: parseFloat(x.Price).toFixed(2),
                                 Smile: parseFloat(x.Smile).toFixed(2),
                                 FuleKey: x.FuleKey,
@@ -298,32 +300,32 @@ $(function () {
                                     obj.RowKey = Guid;
                                     obj.LocationName = _f.find('#txtLocationName').val();
                                     obj.Contact = _f.find('#txtContact').val();
-                                    $.bConfirm({
-                                        buttonOK: function (k) {
-                                            k.close();
-                                            $.reqData({
-                                                url: mvcPatch('Shipping/editShipping'),
-                                                data: {data: JSON.stringify(obj)},
-                                                loanding: false,
-                                                callback: function (vdata) {
-                                                    if (vdata.success) {
-                                                        _f.find('#btn-close').click();
-                                                        setShippingBegin(function (_t) {
-                                                            _t.val(vdata.RowKey).selectpicker('render').change();
-                                                        });
-                                                        var _e = form_recordedit.find('#cmdShippingEnd').val();
-                                                        setShippingEnd(function (_t) {
-                                                            _t.val(_e).selectpicker('render').change();
-                                                        });
-                                                    } else {
-                                                        $.bAlert({
-                                                            message: vdata.message
-                                                        });
-                                                    }
-                                                }
-                                            });
+//                                    $.bConfirm({
+//                                        buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('Shipping/editShipping'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                setShippingBegin(function (_t) {
+                                                    _t.val(vdata.RowKey).selectpicker('render').change();
+                                                });
+                                                var _e = form_recordedit.find('#cmdShippingEnd').val();
+                                                setShippingEnd(function (_t) {
+                                                    _t.val(_e).selectpicker('render').change();
+                                                });
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
                                         }
                                     });
+//                                        }
+//                                    });
                                 }
                             });
                         },
@@ -383,32 +385,32 @@ $(function () {
                                     obj.RowKey = Guid;
                                     obj.LocationName = _f.find('#txtLocationName').val();
                                     obj.Contact = _f.find('#txtContact').val();
-                                    $.bConfirm({
-                                        buttonOK: function (k) {
-                                            k.close();
-                                            $.reqData({
-                                                url: mvcPatch('Shipping/editShipping'),
-                                                data: {data: JSON.stringify(obj)},
-                                                loanding: false,
-                                                callback: function (vdata) {
-                                                    if (vdata.success) {
-                                                        _f.find('#btn-close').click();
-                                                        setShippingEnd(function (_t) {
-                                                            _t.val(vdata.RowKey).selectpicker('render').change();
-                                                        });
-                                                        var _b = form_recordedit.find('#cmdShippingBegin').val();
-                                                        setShippingBegin(function (_t) {
-                                                            _t.val(_b).selectpicker('render').change();
-                                                        });
-                                                    } else {
-                                                        $.bAlert({
-                                                            message: vdata.message
-                                                        });
-                                                    }
-                                                }
-                                            });
+//                                    $.bConfirm({
+//                                        buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('Shipping/editShipping'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                setShippingEnd(function (_t) {
+                                                    _t.val(vdata.RowKey).selectpicker('render').change();
+                                                });
+                                                var _b = form_recordedit.find('#cmdShippingBegin').val();
+                                                setShippingBegin(function (_t) {
+                                                    _t.val(_b).selectpicker('render').change();
+                                                });
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
                                         }
                                     });
+//                                        }
+//                                    });
                                 }
                             });
                         },
@@ -464,28 +466,28 @@ $(function () {
                                     var obj = new Object();
                                     obj.RowKey = Guid;
                                     obj.ProductName = _f.find('#txtProductName').val();
-                                    $.bConfirm({
-                                        buttonOK: function (k) {
-                                            k.close();
-                                            $.reqData({
-                                                url: mvcPatch('Product/editProduct'),
-                                                data: {data: JSON.stringify(obj)},
-                                                loanding: false,
-                                                callback: function (vdata) {
-                                                    if (vdata.success) {
-                                                        _f.find('#btn-close').click();
-                                                        setProduct(function (_t) {
-                                                            _t.val(vdata.key).selectpicker('render').change();
-                                                        });
-                                                    } else {
-                                                        $.bAlert({
-                                                            message: vdata.message
-                                                        });
-                                                    }
-                                                }
-                                            });
+//                                    $.bConfirm({
+//                                        buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('Product/editProduct'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                setProduct(function (_t) {
+                                                    _t.val(vdata.key).selectpicker('render').change();
+                                                });
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
                                         }
                                     });
+//                                        }
+//                                    });
                                 }
                             });
                         },
@@ -848,7 +850,10 @@ $(function () {
                         fun: function (_f) {
                             var obj = new Object({
                                 key: newGuid(),
-                                Price: _f.find('#txtAmount').val(),
+                                Item: _f.find('#txtItem').val(),
+                                ItemPrice: _f.find('#txtItemPrice').val(),
+//                                Price: _f.find('#txtAmount').val(),
+                                Price: parseFloat(_f.find('#txtItemPrice').val()) * parseFloat(_f.find('#txtItem').val()),
                                 Smile: _f.find('#txtMile').val(),
                                 FuelDisplay: _f.find('#cmdFuleType option:selected').data('display'),
                                 FuleKey: _f.find('#cmdFuleType').val(),
@@ -889,7 +894,10 @@ $(function () {
                             var _update = $.ToLinq(f.data('data'))
                                     .Where(x => x.key === d.key)
                                     .First();
-                            _update.Price = _f.find('#txtAmount').val();
+                            _update.Item = _f.find('#txtItem').val();
+                            _update.ItemPrice = _f.find('#txtItemPrice').val();
+//                                Price: _f.find('#txtAmount').val(),
+                            _update.Price = parseFloat(_f.find('#txtItemPrice').val()) * parseFloat(_f.find('#txtItem').val());
                             _update.Smile = _f.find('#txtMile').val();
                             _update.FuelDisplay = _f.find('#cmdFuleType option:selected').data('display');
                             _update.FuleKey = _f.find('#cmdFuleType').val();
