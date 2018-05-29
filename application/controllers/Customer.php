@@ -92,6 +92,7 @@ class customer extends PCenter {
                 } else {
                     $this->db->trans_commit();
                     $vReturn->success = true;
+                    $vReturn->RowKey = $_data->RowKey;
                 }
             }
         } else {
@@ -110,6 +111,7 @@ class customer extends PCenter {
                 } else {
                     $this->db->trans_commit();
                     $vReturn->success = true;
+                    $vReturn->RowKey = $_data->RowKey;
                 }
             }
         }

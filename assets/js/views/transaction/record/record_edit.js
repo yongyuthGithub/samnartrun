@@ -126,7 +126,7 @@ $(function () {
                 var _html = '';
                 $.each(vdata, function (k, v) {
 //                    var _p = parseInt(v.CarType) === 1 ? '2 เพลา' : '3 เพลา';
-                    _html += '<option data-icon="fa fa-truck" value="' + v.RowKey + '" data-display="' + v.CarNumber + '">&nbsp;&nbsp;' + v.CarNumber + ' -> ' + v.Province + '</option>';
+                    _html += '<option data-icon="fa fa-truck" value="' + v.RowKey + '" data-display="' + v.CarNumber + '">&nbsp;&nbsp;' + v.CarNumber + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
             }
@@ -147,7 +147,7 @@ $(function () {
                 var _html = '';
                 $.each(vdata, function (k, v) {
                     var _p = parseInt(v.CarType) === 1 ? 'พื้นเรียบ 2 เพลา' : parseInt(v.CarType) === 2 ? 'พื้นเรียบ 3 เพลา' : 'โรเบท 3 เพลา';
-                    _html += '<option data-icon="fa fa-truck" value="' + v.RowKey + '" data-display="' + v.CarNumber + '">&nbsp;&nbsp;(' + _p + ') ' + v.CarNumber + ' -> ' + v.Province + '</option>';
+                    _html += '<option data-icon="fa fa-truck" value="' + v.RowKey + '" data-display="' + v.CarNumber + '">&nbsp;&nbsp;(' + _p + ') ' + v.CarNumber + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
             }
@@ -169,7 +169,8 @@ $(function () {
                 var _html = '';
                 $.each(vdata, function (k, v) {
                     var _p = parseInt(v.CarType) === 1 ? '2 เพลา' : '3 เพลา';
-                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="(' + v.IDCard + ') ' + v.Title + v.FName + ' ' + v.LName + '">&nbsp;&nbsp;(' + v.IDCard + ') ' + v.Title + v.FName + ' ' + v.LName + '</option>';
+//                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="(' + v.IDCard + ') ' + v.Title + v.FName + ' ' + v.LName + '">&nbsp;&nbsp;(' + v.IDCard + ') ' + v.Title + v.FName + ' ' + v.LName + '</option>';
+                    _html += '<option data-icon="fa fa-drivers-license-o" value="' + v.RowKey + '" data-display="(' + v.IDCard + ') ' + v.Title + v.FName + ' ' + v.LName + '">&nbsp;&nbsp;' + v.Title + v.FName + ' ' + v.LName + '</option>';
                 });
                 _sel.append(_html).selectpicker('refresh').val(v).selectpicker('render');
             }
@@ -184,6 +185,82 @@ $(function () {
 //                    _b.val(Guid).selectpicker('render');
 //                form_recordedit.formValidation('revalidateField', form_recordedit.find('#cmdBranchF'));
 //            });
+        },
+        'loaded.bs.select': function (e) {
+            $('#btn-customerNew').on({
+                click: function () {
+                    $.bPopup({
+                        url: mvcPatch('Customer/edit'),
+                        title: 'เพิ่มลูกค้า',
+                        closable: false,
+                        size: BootstrapDialog.SIZE_NORMAL,
+                        onshow: function (k) {
+                            k.getModal().data({
+                                data: new Object({key: Guid}),
+                                fun: function (_f) {
+                                    var obj = new Object();
+                                    obj.RowKey = Guid;
+                                    obj.CusCode = _f.find('#txtCusCode').val();
+                                    obj.Customer = _f.find('#txtUser').val();
+//                                    $.bConfirm({
+//                                        buttonOK: function (k) {
+                                    k.close();
+                                    $.reqData({
+                                        url: mvcPatch('Customer/editCustomer'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                setCustomerF(function (_t) {
+                                                    _t.val(vdata.RowKey).selectpicker('render').change();
+                                                });
+
+                                                var obj2 = new Object({});
+                                                obj2.RowKey = Guid;
+                                                obj2.CompanyKey = vdata.RowKey;
+                                                obj2.Branch = 'สำนักงานใหญ่';
+                                                obj2.Address = '-';
+                                                obj2.SubDistrict = Guid;
+                                                obj2.ZipCode = '-';
+                                                obj2.Tel = '-';
+                                                obj2.IDCard = '-';
+                                                obj2.Fax = '-';
+                                                obj2.IsDefault = true;
+                                                obj2.BillDay = parseFloat(0);
+                                                obj2.DueDate = parseFloat(0);
+                                                $.reqData({
+                                                    url: mvcPatch('Customer/editCustomertype'),
+                                                    data: {data: JSON.stringify(obj2)},
+                                                    loanding: false,
+                                                    callback: function (vdata2) {
+                                                    }
+                                                });
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
+                                        }
+                                    });
+//                                        }
+//                                    });
+                                }
+                            });
+                        },
+                        buttons: [
+                            {
+                                id: 'btn-ok',
+                                icon: 'fa fa-check',
+                                label: '&nbsp;ตกลง',
+                                action: function (k) {
+
+                                }
+                            }
+                        ]
+                    });
+                }
+            })
         }
     });
     function setCustomerF(v) {
