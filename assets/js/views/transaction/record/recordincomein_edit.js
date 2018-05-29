@@ -36,28 +36,28 @@ $(function () {
                                     obj.RowKey = Guid;
                                     obj.IncomeName = _f.find('#txtIncomeName').val();
 
-                                    $.bConfirm({
-                                        buttonOK: function (k) {
-                                            k.close();
-                                            $.reqData({
-                                                url: mvcPatch('IncomeName/editIncmeName'),
-                                                data: {data: JSON.stringify(obj)},
-                                                loanding: false,
-                                                callback: function (vdata) {
-                                                    if (vdata.success) {
-                                                        _f.find('#btn-close').click();
-                                                        setIncomeName(function (_t) {
-                                                            _t.val(vdata.key).selectpicker('render').change();
-                                                        });
-                                                    } else {
-                                                        $.bAlert({
-                                                            message: vdata.message
-                                                        });
-                                                    }
-                                                }
-                                            });
+//                                    $.bConfirm({
+//                                        buttonOK: function (k) {
+//                                            k.close();
+                                    $.reqData({
+                                        url: mvcPatch('IncomeName/editIncmeName'),
+                                        data: {data: JSON.stringify(obj)},
+                                        loanding: false,
+                                        callback: function (vdata) {
+                                            if (vdata.success) {
+                                                _f.find('#btn-close').click();
+                                                setIncomeName(function (_t) {
+                                                    _t.val(vdata.key).selectpicker('render').change();
+                                                });
+                                            } else {
+                                                $.bAlert({
+                                                    message: vdata.message
+                                                });
+                                            }
                                         }
                                     });
+//                                        }
+//                                    });
                                 }
                             });
                         },

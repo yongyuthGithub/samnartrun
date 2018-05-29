@@ -258,4 +258,19 @@ $(function () {
             });
         }
     });
+
+    $.reqData({
+        url: mvcPatch('MySystem/findAllMyAlert'),
+        loanding: false,
+        callback: function (vdata) {
+            var _s = $('#show-at').empty();
+            if (vdata.length > 0) {
+                $.each(vdata, function (k, v) {
+                    _s.append((k + 1) + '. ' + v.Text + ' ' + PHP_JSON_To_ShowDate(v.ExpDate));
+                });
+            } else {
+                $('#div-at').css({'display': 'none'});
+            }
+        }
+    });
 });

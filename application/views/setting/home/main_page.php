@@ -27,3 +27,14 @@
         </div>
     </div>
 </div>
+
+<div class="col-xs-12" id="div-at">   
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h3 style="color:#d43f3a;">แจ้งเตือนภายในระบบ</h3>
+            <hr>
+            <div id="show-at" class="col-xs-12">
+            </div>
+        </div>
+    </div>
+</div>
