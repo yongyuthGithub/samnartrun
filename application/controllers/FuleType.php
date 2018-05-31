@@ -20,18 +20,19 @@ class FuleType extends PCenter {
     }
 
     public function findFuelType() {
-        $query = $this->db->select('RowKey, Fuel, FuelType, ')->from('MSTFuel')->get();
+        $query = $this->db->select('RowKey, Fuel, FuelType, IsDefault ')->from('MSTFuel')->get();
         $_array = array();
         foreach ($query->result() as $row) {
             $_ar = array(
                 'key' => $row->RowKey,
                 'Fuel' => $row->Fuel,
                 'FuelType' => intval($row->FuelType),
+                'IsDefault' => $row->IsDefault,
                 '_Delete' => $this->db
-                    ->where('pf.FuleKey', $row->RowKey)
-                    ->from('MSTPumpFule pf')
-                    ->join('TRNFule f','pf.RowKey=f.PumpFuleKey')
-                    ->count_all_results() > 0 ? false : true
+                        ->where('pf.FuleKey', $row->RowKey)
+                        ->from('MSTPumpFule pf')
+                        ->join('TRNFule f', 'pf.RowKey=f.PumpFuleKey')
+                        ->count_all_results() > 0 ? false : true
             );
             array_push($_array, $_ar);
         }
@@ -50,6 +51,10 @@ class FuleType extends PCenter {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
+                if ($_data->IsDefault) {
+                    $this->db->set('IsDefault', false)
+                            ->update('MSTFuel');
+                }
                 $_data->RowKey = PCenter::GUID();
                 $_data->RowStatus = true;
                 $_data->CreateBy = PCenter::GUID_EMPTY();
@@ -72,7 +77,13 @@ class FuleType extends PCenter {
                 $vReturn->success = false;
                 $vReturn->message = 'This information is already in the system.';
             } else {
+                if ($_data->IsDefault) {
+                    $this->db->set('IsDefault', false)
+                            ->update('MSTFuel');
+                }
+
                 $update = (object) [];
+                $update->IsDefault = $_data->IsDefault;
                 $update->Fuel = $_data->Fuel;
                 $update->FuelType = $_data->FuelType;
                 $update->UpdateBy = PCenter::GUID_EMPTY();

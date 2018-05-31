@@ -281,7 +281,7 @@ class Record extends PCenter {
             $queryChk = $this->db->where('DocID', $_data->DocID)->from('TRNWrokSheetHD')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
-                $vReturn->message = 'This information is already in the system.';
+                $vReturn->message = 'ไม่สามารถบันทึกใบงานเลขที่ ' . $_data->DocID . ' เนื่องจากมีการบันทึกใบระบบแล้ว';
             } else {
                 $_data->RowKey = PCenter::GUID();
                 $_data->RowStatus = true;
@@ -326,7 +326,7 @@ class Record extends PCenter {
             $queryChk = $this->db->where('DocID', $_data->DocID)->where('RowKey !=', $_data->RowKey)->from('TRNWrokSheetHD')->count_all_results();
             if ($queryChk > 0) {
                 $vReturn->success = false;
-                $vReturn->message = 'This information is already in the system.';
+                $vReturn->message = 'ไม่สามารถบันทึกใบงานเลขที่ ' . $_data->DocID . ' เนื่องจากมีการบันทึกใบระบบแล้ว';
             } else {
                 $_data->UpdateBy = PCenter::GUID_EMPTY();
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());

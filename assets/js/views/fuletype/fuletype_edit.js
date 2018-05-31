@@ -14,7 +14,7 @@ var _formdata = form_fuleedit_C.data('data');
     } else {
         form_fuleedit.find('#txtUser').val(_formdata.Fuel);
         form_fuleedit.find('#cmdTitle').val(_formdata.FuelType).selectpicker('render');
-        
+        form_fuleedit.find('#swDF').prop('checked', parseInt(_formdata.IsDefault) === 1 ? true : false);
         form_fuleedit.find('.showinadd').remove();
         
 //        setTitle(_formdata.TitleKey);

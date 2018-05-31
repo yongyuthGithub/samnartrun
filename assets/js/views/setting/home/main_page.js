@@ -165,7 +165,7 @@ $(function () {
                         });
                     })
                     .OrderByDescending(x => x.Total)
-                    .ToArray();
+                    .Take(5).ToArray();
             Highcharts.chart('ch3', {
                 chart: {
                     type: 'column'

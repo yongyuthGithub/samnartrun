@@ -928,9 +928,9 @@ $(function () {
                             var obj = new Object({
                                 key: newGuid(),
                                 Item: _f.find('#txtItem').val(),
-                                ItemPrice: _f.find('#txtItemPrice').val(),
+                                ItemPrice: (parseFloat(_f.find('#txtItemPrice').val()) / parseFloat(_f.find('#txtItem').val())).toFixed(2),
 //                                Price: _f.find('#txtAmount').val(),
-                                Price: parseFloat(_f.find('#txtItemPrice').val()) * parseFloat(_f.find('#txtItem').val()),
+                                Price: _f.find('#txtItemPrice').val(),
                                 Smile: _f.find('#txtMile').val(),
                                 FuelDisplay: _f.find('#cmdFuleType option:selected').data('display'),
                                 FuleKey: _f.find('#cmdFuleType').val(),
@@ -972,9 +972,9 @@ $(function () {
                                     .Where(x => x.key === d.key)
                                     .First();
                             _update.Item = _f.find('#txtItem').val();
-                            _update.ItemPrice = _f.find('#txtItemPrice').val();
+                            _update.ItemPrice = (parseFloat(_f.find('#txtItemPrice').val()) / parseFloat(_f.find('#txtItem').val())).toFixed(2);
 //                                Price: _f.find('#txtAmount').val(),
-                            _update.Price = parseFloat(_f.find('#txtItemPrice').val()) * parseFloat(_f.find('#txtItem').val());
+                            _update.Price = _f.find('#txtItemPrice').val();
                             _update.Smile = _f.find('#txtMile').val();
                             _update.FuelDisplay = _f.find('#cmdFuleType option:selected').data('display');
                             _update.FuleKey = _f.find('#cmdFuleType').val();

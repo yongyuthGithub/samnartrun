@@ -198,6 +198,24 @@ class Fule extends PCenter {
                 $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
                 $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
                 $this->db->insert('MSTPumpBranch', $_data);
+
+                $f = $this->db->select('RowKey')
+                        ->where('IsDefault', true)
+                        ->from('MSTFuel')
+                        ->get();
+                foreach ($f->result() as $row) {
+                    $new = (object) [];
+                    $new->RowKey = PCenter::GUID();
+                    $new->FuleKey = $row->RowKey;
+                    $new->PumpBranchKey = $_data->RowKey;
+                    $new->IsDefault = true;
+                    $new->CreateBy = $this->USER_LOGIN()->RowKey;
+                    $new->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                    $new->UpdateBy = $this->USER_LOGIN()->RowKey;
+                    $new->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                    $this->db->insert('MSTPumpFule', $new);
+                }
+
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     $vReturn->success = false;

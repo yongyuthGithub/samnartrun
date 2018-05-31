@@ -1,19 +1,19 @@
 #form_recordlist #tblform_recordlist thead tr th:first-child {
-  max-width: 100px !important;
-  min-width: 100px !important;
-  width: 100px !important;
+  max-width: 70px !important;
+  min-width: 70px !important;
+  width: 70px !important;
   text-align: left;
 }
 #form_recordlist #tblform_recordlist thead tr th:nth-child(2) {
-  max-width: 100px !important;
-  min-width: 100px !important;
-  width: 100px !important;
+  max-width: 70px !important;
+  min-width: 70px !important;
+  width: 70px !important;
   text-align: center;
 }
 #form_recordlist #tblform_recordlist thead tr th:nth-child(3) {
-  max-width: 200px !important;
-  min-width: 200px !important;
-  width: 200px !important;
+  max-width: 80px !important;
+  min-width: 80px !important;
+  width: 80px !important;
   text-align: left;
 }
 #form_recordlist #tblform_recordlist thead tr th:nth-child(4) {
@@ -29,21 +29,21 @@
   text-align: left;
 }
 #form_recordlist #tblform_recordlist thead tr th:nth-child(6) {
-  max-width: 150px !important;
-  min-width: 150px !important;
-  width: 150px !important;
+  max-width: 80px !important;
+  min-width: 80px !important;
+  width: 80px !important;
   text-align: left;
 }
 #form_recordlist #tblform_recordlist thead tr th:nth-child(7) {
-  max-width: 150px !important;
-  min-width: 150px !important;
-  width: 150px !important;
+  max-width: 250px !important;
+  min-width: 250px !important;
+  width: 250px !important;
   text-align: left;
 }
 #form_recordlist #tblform_recordlist thead tr th:nth-child(8) {
-  max-width: 150px !important;
-  min-width: 150px !important;
-  width: 150px !important;
+  max-width: 250px !important;
+  min-width: 250px !important;
+  width: 250px !important;
   text-align: left;
 }
 #form_recordlist #tblform_recordlist thead tr th:nth-child(9) {
@@ -53,25 +53,25 @@
   text-align: right;
 }
 #form_recordlist #tblform_recordlist tbody tr[role=row] td:first-child {
-  max-width: 100px !important;
-  min-width: 100px !important;
+  max-width: 70px !important;
+  min-width: 70px !important;
   text-overflow: ellipsis !important;
-  width: 100px !important;
+  width: 70px !important;
   overflow: hidden;
   text-align: left;
 }
 #form_recordlist #tblform_recordlist tbody tr[role=row] td:nth-child(2) {
-  max-width: 100px !important;
-  min-width: 100px !important;
+  max-width: 70px !important;
+  min-width: 70px !important;
   text-overflow: ellipsis !important;
-  width: 100px !important;
+  width: 70px !important;
   overflow: hidden;
   text-align: center;
 }
 #form_recordlist #tblform_recordlist tbody tr[role=row] td:nth-child(3) {
-  min-width: 200px !important;
-  max-width: 200px !important;
-  width: 200px !important;
+  min-width: 80px !important;
+  max-width: 80px !important;
+  width: 80px !important;
   text-overflow: ellipsis !important;
   overflow: hidden !important;
   text-align: left;
@@ -93,25 +93,25 @@
   text-align: left;
 }
 #form_recordlist #tblform_recordlist tbody tr[role=row] td:nth-child(6) {
-  min-width: 150px !important;
-  max-width: 150px !important;
-  width: 150px !important;
+  min-width: 80px !important;
+  max-width: 80px !important;
+  width: 80px !important;
   text-overflow: ellipsis !important;
   overflow: hidden !important;
   text-align: left;
 }
 #form_recordlist #tblform_recordlist tbody tr[role=row] td:nth-child(7) {
-  min-width: 150px !important;
-  max-width: 150px !important;
-  width: 150px !important;
+  min-width: 250px !important;
+  max-width: 250px !important;
+  width: 250px !important;
   text-overflow: ellipsis !important;
   overflow: hidden !important;
   text-align: left;
 }
 #form_recordlist #tblform_recordlist tbody tr[role=row] td:nth-child(8) {
-  min-width: 150px !important;
-  max-width: 150px !important;
-  width: 150px !important;
+  min-width: 250px !important;
+  max-width: 250px !important;
+  width: 250px !important;
   text-overflow: ellipsis !important;
   overflow: hidden !important;
   text-align: left;

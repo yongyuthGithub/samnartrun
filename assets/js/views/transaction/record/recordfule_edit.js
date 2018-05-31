@@ -19,7 +19,7 @@ $(function () {
     } else {
         form_recordfuleedit.find('#txtMile').val(_formdata.Smile);
         form_recordfuleedit.find('#txtItem').val(_formdata.Item);
-        form_recordfuleedit.find('#txtItemPrice').val(_formdata.ItemPrice);
+        form_recordfuleedit.find('#txtItemPrice').val(_formdata.Price);
         form_recordfuleedit.find('#txtAmount').val(_formdata.Price);
         form_recordfuleedit.find('#txtRefer').val(_formdata.Refer);
         setFule(function (f) {
@@ -39,9 +39,11 @@ $(function () {
             setFuleBranch(function (fb) {
                 if (fb.find('option').length === 0)
                     fb.val(Guid).selectpicker('render');
+                form_recordfuleedit.formValidation('revalidateField', form_recordfuleedit.find('#cmdFuleBranch'));
                 setFuleType(function (ft) {
                     if (ft.find('option').length === 0)
                         ft.val(Guid).selectpicker('render');
+                    form_recordfuleedit.formValidation('revalidateField', form_recordfuleedit.find('#cmdFuleType'));
                 });
             });
         },
@@ -137,6 +139,7 @@ $(function () {
             setFuleType(function (ft) {
                 if (ft.find('option').length === 0)
                     ft.val(Guid).selectpicker('render');
+                form_recordfuleedit.formValidation('revalidateField', form_recordfuleedit.find('#cmdFuleType'));
             });
         },
         'loaded.bs.select': function (e) {
@@ -172,9 +175,11 @@ $(function () {
                                                 _f.find('#btn-close').click();
                                                 setFuleBranch(function (fb) {
                                                     fb.val(vdata.key).selectpicker('render');
+                                                    form_recordfuleedit.formValidation('revalidateField', form_recordfuleedit.find('#cmdFuleBranch'));
                                                     setFuleType(function (ft) {
                                                         if (ft.find('option').length === 0)
                                                             ft.val(Guid).selectpicker('render');
+                                                        form_recordfuleedit.formValidation('revalidateField', form_recordfuleedit.find('#cmdFuleType'));
                                                     });
                                                 });
                                             } else {
@@ -225,7 +230,7 @@ $(function () {
     form_recordfuleedit.find('#cmdFuleType').selectpicker({
     }).on({
         change: function () {
-            //javascript on change
+            form_recordfuleedit.formValidation('revalidateField', form_recordfuleedit.find('#cmdFuleType'));
         },
         'loaded.bs.select': function (e) {
             $('#btn-fuletypenew').on({
@@ -262,6 +267,7 @@ $(function () {
                                             if (vdata.success) {
                                                 _f.find('#btn-close').click();
                                                 setFuleType(function (ft) {
+                                                    form_recordfuleedit.formValidation('revalidateField', form_recordfuleedit.find('#cmdFuleType'));
                                                 });
                                             } else {
                                                 $.bAlert({
@@ -396,7 +402,7 @@ $(function () {
                 icon: false,
                 validators: {
                     notEmpty: {
-                        message: '* กรุณาระบุราคา/ลิตร'
+                        message: '* กรุณาระบุจำนวนเงินรวม'
                     },
                     regexp: {//***Custom Patter
                         regexp: regexpDecimal,

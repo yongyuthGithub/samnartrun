@@ -43,7 +43,7 @@ $(function () {
                             obj.RowKey = Guid;
                             obj.Fuel = _f.find('#txtUser').val();
                             obj.FuelType = _f.find('#cmdTitle').val();
-
+                            obj.IsDefault = _f.find('#swDF').is(':checked');
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
@@ -93,6 +93,7 @@ $(function () {
                             obj.RowKey = d.key;
                             obj.Fuel = _f.find('#txtUser').val();
                             obj.FuelType = _f.find('#cmdTitle').val();
+                            obj.IsDefault = _f.find('#swDF').is(':checked')
                             $.bConfirm({
                                 buttonOK: function (k) {
                                     k.close();
