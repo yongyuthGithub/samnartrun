@@ -147,6 +147,7 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="line-height: 26px;font-size: 140%;"><i class="fa fa-exclamation-circle" style="font-size:100%;min-width: 30px;"></i>About
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
+                                <li><a id="btn-manual" href="#" style="font-size:100%;min-width: 30px;" data-key="<?php echo other_asset_url('files/manual.pdf'); ?>"><i class="fa fa-book" style="font-size:100%;min-width: 30px;"></i>Manual</a></li>
                                 <li><a id="btn-profile" href="#" style="font-size:100%;min-width: 30px;"><i class="fa fa-drivers-license" style="font-size:100%;min-width: 30px;"></i>Profile</a></li>
                                 <li><a id="btn-logout" href="#" style="font-size:100%;min-width: 30px;"><i class="fa fa-user-circle" style="font-size:100%;min-width: 30px;"></i>Logout</a></li>
                             </ul>

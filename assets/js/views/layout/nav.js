@@ -23,6 +23,12 @@ $(function () {
         }
     });
 
+    $('#btn-manual').off().on({
+        click: function () {
+            window.open($(this).data('key'));
+        }
+    });
+
     $('#btn-profile').off().on({
         click: function () {
             $.bPopup({
