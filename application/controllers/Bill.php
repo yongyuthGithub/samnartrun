@@ -73,6 +73,18 @@ class Bill extends PCenter {
 //                    } else if ((int) $x->VatStatus === 2) {
 //                        $nTotal = ($pTotal - $x->Discount) + $x->Vat;
 //                    }
+
+                    $nIVID = '';
+                    $nIV = Linq::from($this->db->select('rh.DocID, rh.DocDate')
+                                    ->where('rb.BillKey', $x->key)
+                                    ->from('TRNReceiptBill rb')
+                                    ->join('TRNReceiptHD rh', 'rb.ReceiptHDKey=rh.RowKey')
+                                    ->get()->result()
+                            )->toArray();
+                    foreach ($nIV as $_row) {
+                        $nIVID=$_row->DocID;
+                    }
+
                     return [
                         'key' => $x->key,
                         'DocID' => $x->DocID,
@@ -83,6 +95,7 @@ class Bill extends PCenter {
                         'Vat' => $x->Vat,
                         'Discount' => $x->Discount,
                         'NetPrice' => $nTotal,
+                        'RCDoc' => $nIVID,
                         '_Edit' => floatval($x->Amounts) === floatval($x->Remain) ? true : false
                     ];
                 })
@@ -276,6 +289,7 @@ class Bill extends PCenter {
             } else {
                 $this->db->trans_commit();
                 $vReturn->success = true;
+                $vReturn->key = $_data->RowKey;
             }
         } else {
             $_data->UpdateBy = PCenter::GUID_EMPTY();

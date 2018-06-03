@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2018.1.6.0",
-  "ReportGuid": "12fc26010ebf4c98a9072a21bfcf7993",
+  "ReportGuid": "abe9828a775842588bca661d745baa5b",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportCreated": "/Date(1522261189000+0700)/",
-  "ReportChanged": "/Date(1525148530867+0700)/",
+  "ReportChanged": "/Date(1528016068651+0700)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Inches",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -144,6 +144,11 @@
         "Name": "NetTotal",
         "Alias": "NetTotal",
         "Type": "System.Decimal"
+      },
+      "25": {
+        "Name": "DocID",
+        "Alias": "DocID",
+        "Type": "System.String"
       }
     },
     "DataSources": {
@@ -411,7 +416,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "ต้นฉบับ / ORIGINAL\r\nวันที่ / DATE {BillDate}"
+                "Value": "ต้นฉบับ / ORIGINAL\r\nเลขที่ / No. {DocID}\r\nวันที่ / DATE {BillDate}"
               },
               "HorAlignment": "Center",
               "VertAlignment": "Bottom",

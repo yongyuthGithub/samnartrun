@@ -70,7 +70,8 @@ $(function () {
             {data: 'TotalPrice', header: 'ราคารวม'},
             {data: 'Discount', header: 'ส่วนลด'},
             {data: 'Vat', header: 'ภาษี'},
-            {data: 'NetPrice', header: 'ราคาสุทธิ'}
+            {data: 'NetPrice', header: 'ราคาสุทธิ'},
+            {data: 'RCDoc', header: 'เลขที่ใบเสร็จ'}
         ],
         DataColumnsDefs: [
             {
@@ -107,6 +108,13 @@ $(function () {
                 },
                 orderable: true,
                 targets: 6
+            },
+            {
+                render: function (row, type, val2, meta) {
+                    return val2.RCDoc === '' ? '-' : val2.RCDoc;
+                },
+                orderable: true,
+                targets: 7
             }
         ],
         btnNewFun: function (f) {

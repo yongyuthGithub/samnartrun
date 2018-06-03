@@ -95,6 +95,7 @@ $(function () {
                         variables.getByName('CustZipCode').valueObject = vdata.Customer.ZipCode;
                         variables.getByName('CustBranch').valueObject = vdata.Customer.Branch;
 
+                        variables.getByName('DocID').valueObject = vdata.DocID;
                         variables.getByName('BillDate').valueObject = PHP_JSON_To_ShowDate(vdata.DocDate);
 
                         try {
