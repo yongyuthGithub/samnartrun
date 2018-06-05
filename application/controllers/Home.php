@@ -184,32 +184,44 @@ class Home extends PCenter {
 
         foreach ($_data as $_row) {
             $inCome = $this->db->select('cf.RowKey as key,'
-                                    . 'concat("ใบงาน (",w.DocID,")") as DocID,'
-                                    . 'w.DocDate,'
-                                    . 'mi.IncomeName as Detial,'
-                                    . 'cf.IncomeType,'
-                                    . 'Amount,'
-                                    . '0 as IsVat'
-                            )
-                            ->where('w.DocDate >=', $_row->sdate)
-                            ->where('w.DocDate <=', $_row->edate)
-                            ->from('TRNWrokSheetHD w')
-                            ->join('TRNIncome cf', 'cf.WorkSheetHDKey=w.RowKey')
-                            ->join('MSTIncomeName mi', 'cf.IncomeKey=mi.RowKey')
-                            ->get()->result();
+                            . 'concat("ใบงาน (",w.DocID,")") as DocID,'
+                            . 'w.DocDate,'
+                            . 'mi.IncomeName as Detial,'
+                            . 'cf.IncomeType,'
+                            . 'Amount,'
+                            . '0 as IsVat'
+                    )
+                    ->where('w.DocDate >=', $_row->sdate)
+                    ->where('w.DocDate <=', $_row->edate)
+                    ->from('TRNWrokSheetHD w')
+                    ->join('TRNIncome cf', 'cf.WorkSheetHDKey=w.RowKey')
+                    ->join('MSTIncomeName mi', 'cf.IncomeKey=mi.RowKey')
+                    ->get();
 
             $inComeOther = $this->db->select('RowKey, DocDate, Detial,IncomeType,Amount,IsVat ')
                             ->where('DocDate >=', $_row->sdate)
                             ->where('DocDate <=', $_row->edate)
                             ->from('TRNIncomeOther')->get();
             $_array = array();
+            foreach ($inCome->result() as $row) {
+                $_ar = array(
+                    'key' => $row->key,
+                    'DocID' => $row->DocID,
+                    'DocDate' => $row->DocDate,
+                    'Detial' => ($row->Detial),
+                    'IncomeType' => intval($row->IncomeType) === 1 ? 1 : 0,
+                    'Amount' => ($row->Amount),
+                    'IsVat' => $row->IsVat
+                );
+                array_push($_array, $_ar);
+            }
             foreach ($inComeOther->result() as $row) {
                 $_ar = array(
                     'key' => $row->RowKey,
                     'DocID' => 'บันทึกรายรับ-รายจ่าย อื่นๆ',
                     'DocDate' => $row->DocDate,
                     'Detial' => ($row->Detial),
-                    'IncomeType' => intval($row->IncomeType),
+                    'IncomeType' => intval($row->IncomeType) === 1 ? 1 : 0,
                     'Amount' => ($row->Amount),
                     'IsVat' => $row->IsVat
                 );
@@ -324,19 +336,19 @@ class Home extends PCenter {
                             ->join('TRNReceiptHD h', 'i.ReceiptHDKey=h.RowKey')
                             ->get()->result();
             $workSheep = $this->db->select('i.RowKey as key,'
-                                . 'concat("ค่าบริการขนส่ง (",h.DocID,")") as DocID,'
-                                . 'h.DocDate,'
-                                . 'concat("บิลเลขที่ ",b.DocID) as Detial,'
-                                . '1 as IncomeType,'
-                                . 'i.Amounts as Amount,'
-                                . '0 as IsVat')
-                        ->where('h.DocDate >=', $_row->sdate)
-                        ->where('h.DocDate <=', $_row->edate)
-                        ->from('TRNReceiptBill i')
-                        ->join('TRNReceiptHD h', 'i.ReceiptHDKey=h.RowKey')
-                        ->join('TRNBillHD b', 'i.BillKey=b.RowKey')
-                        ->get()->result();
-            $_row->Items = array_merge($_array, $inCome, $workSheep, $skillLabor, $fule, $maintenance, $insuranceCar, $vatcar, $insuranceEmp, $receipother);
+                                    . 'concat("ค่าบริการขนส่ง (",h.DocID,")") as DocID,'
+                                    . 'h.DocDate,'
+                                    . 'concat("บิลเลขที่ ",b.DocID) as Detial,'
+                                    . '1 as IncomeType,'
+                                    . 'i.Amounts as Amount,'
+                                    . '0 as IsVat')
+                            ->where('h.DocDate >=', $_row->sdate)
+                            ->where('h.DocDate <=', $_row->edate)
+                            ->from('TRNReceiptBill i')
+                            ->join('TRNReceiptHD h', 'i.ReceiptHDKey=h.RowKey')
+                            ->join('TRNBillHD b', 'i.BillKey=b.RowKey')
+                            ->get()->result();
+            $_row->Items = array_merge($_array, $workSheep, $skillLabor, $fule, $maintenance, $insuranceCar, $vatcar, $insuranceEmp, $receipother);
         }
 
         $_return = (object) [];

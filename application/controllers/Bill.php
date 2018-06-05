@@ -368,6 +368,16 @@ class Bill extends PCenter {
                         ->join('MSTCar c', 'hd.CarFirstKey=c.RowKey', 'left')
                         ->join('MSTProvince pv', 'c.ProvinceKey=pv.RowKey', 'left')
                         ->get()->result();
+        $qry->Remark = $this->db->select('cb.AccountCode,'
+                . 'cb.AccountName,'
+                . 'b.Bank,'
+                . 'bb.Branch')
+                ->from('SYSCompanyBank cb')
+                ->where('cb.SYSCompanyKey', PCenter::GUID_EMPTY())
+                ->where('cb.IsBill',true)
+                ->join('MSTBankBranch bb','cb.BankBranchKey=bb.RowKey')
+                ->join('MSTBank b','bb.BankKey=b.RowKey')
+                ->get()->result();
         echo json_encode($qry);
     }
 

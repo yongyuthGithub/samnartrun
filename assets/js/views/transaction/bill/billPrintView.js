@@ -98,6 +98,15 @@ $(function () {
                         variables.getByName('DocID').valueObject = vdata.DocID;
                         variables.getByName('BillDate').valueObject = PHP_JSON_To_ShowDate(vdata.DocDate);
 
+                        var _remark = '';
+                        $.each(vdata.Remark, function (kk, vv) {
+                            if (kk === 0)
+                                _remark = '\nท่านสามารถชำระได้ทางหมายเลขบัญชีธนาคารดังนี้\n';
+                            _remark += '  - หมายเลขบัญชี ' + vv.AccountCode + ' ชื่อบัญชี ' + vv.AccountName + ' ธนาคาร ' + vv.Bank + '(' + vv.Branch + ')';
+                            if (kk !== (vdata.Remark.length - 1))
+                                _remark += '\n';
+                        });
+                        variables.getByName('remake').valueObject = _remark;
                         try {
                             variables.getByName('BillDueDate').valueObject = PHP_JSON_To_ShowDate(vdata.DueDate);
                         } catch (e) {

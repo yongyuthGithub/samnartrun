@@ -45,20 +45,32 @@ class InReport extends PCenter {
                         ->from('TRNWrokSheetHD w')
                         ->join('TRNIncome cf', 'cf.WorkSheetHDKey=w.RowKey')
                         ->join('MSTIncomeName mi', 'cf.IncomeKey=mi.RowKey')
-                        ->get()->result();
+                        ->get();
 
         $inComeOther = $this->db->select('RowKey, DocDate, Detial,IncomeType,Amount,IsVat,DocID ')
                         ->where('DocDate >=', $_data->SDate)
                         ->where('DocDate <=', $_data->EDate)
                         ->from('TRNIncomeOther')->get();
         $_array = array();
+        foreach ($inCome->result() as $row) {
+                $_ar = array(
+                    'key' => $row->key,
+                    'DocID' => $row->DocID,
+                    'DocDate' => $row->DocDate,
+                    'Detial' => ($row->Detial),
+                    'IncomeType' => intval($row->IncomeType) === 1 ? 1 : 0,
+                    'Amount' => ($row->Amount),
+                    'IsVat' => $row->IsVat
+                );
+                array_push($_array, $_ar);
+            }
         foreach ($inComeOther->result() as $row) {
             $_ar = array(
                 'key' => $row->RowKey,
                 'DocID' => 'บันทึกรายรับ-รายจ่าย อื่นๆ',
                 'DocDate' => $row->DocDate,
                 'Detial' => 'บิลเลขที่ '.$row->DocID . ' => ' . $row->Detial,
-                'IncomeType' => intval($row->IncomeType),
+                'IncomeType' => intval($row->IncomeType) === 1 ? 1 : 0,
                 'Amount' => ($row->Amount),
                 'IsVat' => $row->IsVat
             );
@@ -186,7 +198,7 @@ class InReport extends PCenter {
                         ->join('TRNReceiptHD h', 'i.ReceiptHDKey=h.RowKey')
                         ->join('TRNBillHD b', 'i.BillKey=b.RowKey')
                         ->get()->result();
-        $_arrayT = array_merge($_array, $inCome, $workSheep, $skillLabor, $fule, $maintenance, $insuranceCar, $vatcar, $insuranceEmp, $receipother);
+        $_arrayT = array_merge($_array, $workSheep, $skillLabor, $fule, $maintenance, $insuranceCar, $vatcar, $insuranceEmp, $receipother);
 //        if ($_data->TaxType === 1) {
 //            json_encode(Linq::from(json_decode(json_encode($_arrayT)))->where(function($x) {
 //                        return $x->IsVat === '0';

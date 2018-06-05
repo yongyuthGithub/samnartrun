@@ -1,4 +1,4 @@
-<?php // echo css_asset('views/register/Register_main.css')                    ?>
+<?php echo css_asset('views/setting/mySystem/mysystem_main.css') ?>
 <?php echo js_asset('views/setting/mySystem/mysystem_main.js') ?>
 <div class="col-12">   
     <div class="panel panel-default">
@@ -142,7 +142,7 @@
                         </div>
                         <div class="col-xs-12"><hr/></div>      
                         <div class="col-xs-12">
-                            <div class="row">
+                            <div class="row" style="display: none;">
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="txtAccountCode">หมายเลขบัญชี :</label>
@@ -200,7 +200,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="from_branclist"></div>
                         </div>
+                        <div class="col-xs-12"><hr/></div>   
                         <div class="col-xs-12 text-right">                  
                             <div id="btn-save" class="btn btn-success"><i class="fa fa-check" style="min-width: 20px;text-align: left;"></i>Save</div>
         <!--                    <div id="btn-reset" class="btn btn-primary"><i class="fa fa-refresh" style="min-width: 20px;text-align: left;"></i>Reset</div>-->

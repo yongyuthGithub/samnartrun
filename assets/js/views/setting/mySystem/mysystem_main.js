@@ -1,5 +1,6 @@
 $(function () {
     var form_mysystem = $('#form_mysystem');
+    var from_branclist = $('#from_branclist');
 
     $.reqData({
         url: mvcPatch('MySystem/findMySystem'),
@@ -33,6 +34,9 @@ $(function () {
                         _bc.val(_vdata.BankBranchKey).selectpicker('render');
                     })
                 });
+
+                from_branclist.data('data', _vdata.Bank);
+                from_branclist.find('.xref').click();
             } else {
                 setProvince(function (_p) {
                     _p.val(Guid).selectpicker('render');
@@ -50,7 +54,9 @@ $(function () {
 //                        _bc.val(Guid).selectpicker('render');
                     })
                 });
+                from_branclist.data('data', new Array());
             }
+
         }
     });
 
@@ -179,6 +185,170 @@ $(function () {
         });
     }
 
+    from_branclist.data('data', new Array()).setMainPage({
+        btnNew: true,
+        btnDeleteAll: true,
+        btnDelete: true,
+        btnEdit: true,
+        btnPreview: false,
+        btnEditText: 'แก้ไข',
+        btnNewText: 'เพิ่ม',
+        btnDeleteText: 'ลบ',
+        headerString: '',
+        DataJson: function () {
+            return from_branclist.data('data');
+        },
+        UrlLoanding: true,
+        UrlLoandingclose: true,
+        DataColumns: [
+            {data: 'AccountCode', header: 'เลขที่บัญชี'},
+            {data: 'AccountName', header: 'ชื่อบัญชี'},
+            {data: 'Bank', header: 'ชื่อธนาคาร'},
+            {data: 'Branch', header: 'สาขา'},
+            {data: 'IsBill', header: 'แสดงท้ายบิล'},
+//            {data: 'Icon', header: 'Icon'},
+//            {data: 'Url', header: 'Url'}
+        ],
+        DataColumnsDefs: [
+            {
+                render: function (row, type, val2, meta) {
+                    return parseInt(val2.IsBill) === 1 ? '<i class="fa fa-check text-success"></i>' : '<i class="fa fa-close text-danger"></i>';
+                },
+                orderable: true,
+                targets: 4
+            },
+//            {
+//                render: function (row, type, val2, meta) {
+//                    return numberWithCommas(val2.USRGroupAccount.length) + ' User';
+//                },
+//                orderable: true,
+//                targets: 3
+//            }
+        ],
+        btnNewFun: function (f) {
+            $.bPopup({
+                url: mvcPatch('MySystem/editBank'),
+                title: 'เพิ่มบัญชีธนาคาร',
+                closable: false,
+//                size: BootstrapDialog.SIZE_WIDE,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: new Object({key: Guid}),
+                        fun: function (_f) {
+                            var _obj = new Object();
+                            _obj.key = new Date().valueOf();
+                            _obj.AccountCode = _f.find('#txtAccountCode').val();
+                            _obj.AccountName = _f.find('#txtAccountName').val();
+                            _obj.BankKey = _f.find('#cmdBank').val();
+                            _obj.BankBranchKey = _f.find('#cmdBankBranch').val();
+                            _obj.Bank = _f.find('#cmdBank option[value="' + _obj.BankKey + '"]').data('display');
+                            _obj.Branch = _f.find('#cmdBankBranch option[value="' + _obj.BankBranchKey + '"]').data('display');
+                            _obj.IsBill = _f.find('#swDF').is(':checked') ? 1 : 0;
+                            var _chk = $.ToLinq(f.data('data'))
+                                    .Where(function (x) {
+                                        return x.key !== _obj.key
+                                                && $.trim(x.AccountCode).toLowerCase() === $.trim(_obj.AccountCode).toLowerCase();
+                                    }).ToArray();
+                            if (_chk.length > 0) {
+                                $.bAlert({
+                                    message: 'ไม่สามารถเพิ่มหมายเลขบัญชีนี้ได้ เนื้องจากมีหมายเลขบัญชีนี้อยู่แล้ว'
+                                });
+                            } else {
+                                f.data('data').push(_obj);
+                                f.find('.xref').click();
+                                _f.find('#btn-close').click();
+                            }
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
+        },
+        btnEditFun: function (f, d) {
+            $.bPopup({
+                url: mvcPatch('MySystem/editBank'),
+                title: 'เพิ่มบัญชีธนาคาร',
+                closable: false,
+//                size: BootstrapDialog.SIZE_WIDE,
+                onshow: function (k) {
+                    k.getModal().data({
+                        data: d,
+                        fun: function (_f) {
+                            var _obj = new Object();
+                            _obj.key = d.key;
+                            _obj.AccountCode = _f.find('#txtAccountCode').val();
+                            _obj.AccountName = _f.find('#txtAccountName').val();
+                            _obj.BankKey = _f.find('#cmdBank').val();
+                            _obj.BankBranchKey = _f.find('#cmdBankBranch').val();
+                            _obj.Bank = _f.find('#cmdBank option[value="' + _obj.BankKey + '"]').data('display');
+                            _obj.Branch = _f.find('#cmdBankBranch option[value="' + _obj.BankBranchKey + '"]').data('display');
+                            _obj.IsBill = _f.find('#swDF').is(':checked') ? 1 : 0;
+                            var _chk = $.ToLinq(f.data('data'))
+                                    .Where(function (x) {
+                                        return x.key !== _obj.key
+                                                && $.trim(x.AccountCode).toLowerCase() === $.trim(_obj.AccountCode).toLowerCase();
+                                    }).ToArray();
+                            if (_chk.length > 0) {
+                                $.bAlert({
+                                    message: 'ไม่สามารถเพิ่มหมายเลขบัญชีนี้ได้ เนื้องจากมีหมายเลขบัญชีนี้อยู่แล้ว'
+                                });
+                            } else {
+                                var _upd = $.ToLinq(f.data('data'))
+                                        .Where(function (x) {
+                                            return x.key === _obj.key;
+                                        }).First();
+                                _upd.AccountCode = _obj.AccountCode;
+                                _upd.AccountCode = _obj.AccountCode;
+                                _upd.AccountName = _obj.AccountName;
+                                _upd.BankKey = _obj.BankKey;
+                                _upd.BankBranchKey = _obj.BankBranchKey;
+                                _upd.Bank = _obj.Bank;
+                                _upd.Branch = _obj.Branch;
+                                _upd.IsBill = _obj.IsBill;
+                                f.find('.xref').click();
+                                _f.find('#btn-close').click();
+                            }
+                        }
+                    });
+                },
+                buttons: [
+                    {
+                        id: 'btn-ok',
+                        icon: 'fa fa-check',
+                        label: '&nbsp;Save',
+                        action: function (k) {
+                            //javascript code
+                        }
+                    }
+                ]
+            });
+        },
+        btnDeleteFun: function (f, d) {
+            if (d.length === 0)
+                return false;
+
+            var _up = $.ToLinq(f.data('data'))
+                    .Where(function (x) {
+                        return !$.ToLinq(d).Select(function (k) {
+                            return k.key;
+                        }).Contains(x.key);
+                    }).ToArray();
+            f.data('data', _up);
+            f.find('.xref').click();
+        },
+        btnPreviewFun: function (f, d) {
+        }
+    });
+
     form_mysystem.find('#btn-save').on({
         click: function () {
             form_mysystem.submit();
@@ -198,7 +368,18 @@ $(function () {
                 AccountCode: form_mysystem.find('#txtAccountCode').val(),
                 AccountName: form_mysystem.find('#txtAccountName').val(),
                 BankBranchKey: form_mysystem.find('#cmdBankBranch').val(),
+                BankList: $.ToLinq(from_branclist.data('data'))
+                        .Select(function (x) {
+                            return new Object({
+                                RowKey: newGuid(),
+                                AccountCode: x.AccountCode,
+                                AccountName: x.AccountName,
+                                BankBranchKey: x.BankBranchKey,
+                                IsBill: parseInt(x.IsBill) === 1 ? true : false
+                            });
+                        }).ToArray()
             });
+
             $.bConfirm({
                 buttonOK: function (k) {
                     k.close();

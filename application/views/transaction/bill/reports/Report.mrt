@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2018.1.6.0",
-  "ReportGuid": "abe9828a775842588bca661d745baa5b",
+  "ReportGuid": "16e61d3799fe4cea83a5fb4e3e7ba3a0",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportCreated": "/Date(1522261189000+0700)/",
-  "ReportChanged": "/Date(1528016068651+0700)/",
+  "ReportChanged": "/Date(1528228209247+0700)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Inches",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -148,6 +148,11 @@
       "25": {
         "Name": "DocID",
         "Alias": "DocID",
+        "Type": "System.String"
+      },
+      "26": {
+        "Name": "remake",
+        "Alias": "remake",
         "Type": "System.String"
       }
     },
@@ -696,18 +701,21 @@
               "Guid": "2ba683df82de4b568118e03cef712cab",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "0.1,0.04,4.8,0.7",
+              "ClientRectangle": "0.1,0.04,4.8,0.5",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "จำนวนทั้งสิ้น (ตัวอักษร)\r\n({TxtTotal})"
               },
-              "VertAlignment": "Center",
+              "VertAlignment": "Bottom",
               "Font": "Cordia New;14;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Type": "Expression"
             },
             "1": {
@@ -920,6 +928,29 @@
               "Type": "Expression"
             },
             "11": {
+              "Ident": "StiText",
+              "Name": "Text25",
+              "Guid": "3ab5b61d559b4ecea22ba64358fe9573",
+              "MinSize": "0,0",
+              "MaxSize": "0,0",
+              "ClientRectangle": "0.1,0.5,4.8,0.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{remake}"
+              },
+              "VertAlignment": "Bottom",
+              "Font": "Cordia New;12;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "12": {
               "Ident": "StiHorizontalLinePrimitive",
               "Name": "HorizontalLinePrimitive3",
               "Guid": "bb6bf706725c4d5f973e04a219c57477",
@@ -932,7 +963,7 @@
               "StartCap": ";;;",
               "EndCap": ";;;"
             },
-            "12": {
+            "13": {
               "Ident": "StiHorizontalLinePrimitive",
               "Name": "HorizontalLinePrimitive5",
               "MinSize": "0,0",
@@ -944,7 +975,7 @@
               "StartCap": ";;;",
               "EndCap": ";;;"
             },
-            "13": {
+            "14": {
               "Ident": "StiHorizontalLinePrimitive",
               "Name": "HorizontalLinePrimitive7",
               "Guid": "bfa7aac0e2994415a3569801f02b48eb",
@@ -957,7 +988,7 @@
               "StartCap": ";;;",
               "EndCap": ";;;"
             },
-            "14": {
+            "15": {
               "Ident": "StiHorizontalLinePrimitive",
               "Name": "HorizontalLinePrimitive4",
               "Guid": "404cb0142cc04772a0778aa242e30d1f",
@@ -970,7 +1001,7 @@
               "StartCap": ";;;",
               "EndCap": ";;;"
             },
-            "15": {
+            "16": {
               "Ident": "StiHorizontalLinePrimitive",
               "Name": "HorizontalLinePrimitive8",
               "MinSize": "0,0",
@@ -982,7 +1013,7 @@
               "StartCap": ";;;",
               "EndCap": ";;;"
             },
-            "16": {
+            "17": {
               "Ident": "StiStartPointPrimitive",
               "Name": "StartPointPrimitive3",
               "MinSize": "0,0",
@@ -993,7 +1024,7 @@
               },
               "ReferenceToGuid": "f3ee3f5d6fc44cc3ac9963262918b079"
             },
-            "17": {
+            "18": {
               "Ident": "StiEndPointPrimitive",
               "Name": "EndPointPrimitive3",
               "MinSize": "0,0",
@@ -1004,7 +1035,7 @@
               },
               "ReferenceToGuid": "f3ee3f5d6fc44cc3ac9963262918b079"
             },
-            "18": {
+            "19": {
               "Ident": "StiEndPointPrimitive",
               "Name": "EndPointPrimitive2",
               "MinSize": "0,0",
@@ -1015,7 +1046,7 @@
               },
               "ReferenceToGuid": "6a827e45f138476aa6dd54ef2640bddf"
             },
-            "19": {
+            "20": {
               "Ident": "StiHorizontalLinePrimitive",
               "Name": "HorizontalLinePrimitive9",
               "Guid": "ae01aa2446144f94bd88dd0dd55a46fe",
@@ -1028,7 +1059,7 @@
               "StartCap": ";;;",
               "EndCap": ";;;"
             },
-            "20": {
+            "21": {
               "Ident": "StiEndPointPrimitive",
               "Name": "EndPointPrimitive1",
               "MinSize": "0,0",

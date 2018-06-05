@@ -21,28 +21,48 @@ class MySystem extends PCenter {
         $this->load->view('layout/nav', $data);
     }
 
+    public function editBank() {
+        $this->load->view('setting/mySystem/mysystembank_edit');
+    }
+
     public function findMySystem() {
         $qryMenu = $this->db
-                ->select('c.IDCard,'
-                        . 'c.Customer,'
-                        . 'c.Address,'
-                        . 'c.SubDistrict as SubDistrictKey,'
-                        . 'sd.DistrictKey,'
-                        . 'd.ProvinceKey,'
-                        . 'c.ZipCode,'
-                        . 'c.Tel,'
-                        . 'c.Fax,'
-                        . 'c.AccountCode,'
-                        . 'c.AccountName,'
-                        . 'c.BankBranchKey,'
-                        . 'bb.BankKey')
-                ->from('SYSCompany c')
-                ->join('MSTSubDistrict sd', 'c.SubDistrict=sd.RowKey', 'left')
-                ->join('MSTDistrict d', 'sd.DistrictKey=d.RowKey', 'left')
-                ->join('MSTProvince p', 'd.ProvinceKey=p.RowKey', 'left')
-                ->join('MSTBankBranch bb', 'c.BankBranchKey=bb.RowKey', 'left')
-                ->get();
-        echo json_encode($qryMenu->result());
+                        ->select(',c.RowKey,'
+                                . 'c.IDCard,'
+                                . 'c.Customer,'
+                                . 'c.Address,'
+                                . 'c.SubDistrict as SubDistrictKey,'
+                                . 'sd.DistrictKey,'
+                                . 'd.ProvinceKey,'
+                                . 'c.ZipCode,'
+                                . 'c.Tel,'
+                                . 'c.Fax,'
+                                . 'c.AccountCode,'
+                                . 'c.AccountName,'
+                                . 'c.BankBranchKey,'
+                                . 'bb.BankKey')
+                        ->from('SYSCompany c')
+                        ->join('MSTSubDistrict sd', 'c.SubDistrict=sd.RowKey', 'left')
+                        ->join('MSTDistrict d', 'sd.DistrictKey=d.RowKey', 'left')
+                        ->join('MSTProvince p', 'd.ProvinceKey=p.RowKey', 'left')
+                        ->join('MSTBankBranch bb', 'c.BankBranchKey=bb.RowKey', 'left')
+                        ->get()->result();
+        foreach ($qryMenu as $value) {
+            $value->Bank = $this->db->select('b.RowKey as key,'
+                                    . 'b.AccountCode,'
+                                    . 'b.AccountName,'
+                                    . 'b.BankBranchKey,'
+                                    . 'bb.BankKey,'
+                                    . 'bb.Branch,'
+                                    . 'mb.Bank,'
+                                    . 'b.IsBill')
+                            ->where('b.SYSCompanyKey', $value->RowKey)
+                            ->from('SYSCompanyBank b')
+                            ->join('MSTBankBranch bb', 'b.BankBranchKey=bb.RowKey')
+                            ->join('MSTBank mb', 'bb.BankKey=mb.RowKey')
+                            ->get()->result();
+        }
+        echo json_encode($qryMenu);
     }
 
     public function editMySystem() {
@@ -57,6 +77,18 @@ class MySystem extends PCenter {
             $_data->UpdateBy = $this->USER_LOGIN()->RowKey;
             $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
             $this->db->insert('SYSCompany', $_data);
+
+            $this->db->where('SYSCompanyKey', $_data->RowKey)
+                    ->delete('SYSCompanyBank');
+            foreach ($_data->BankList as $value) {
+                $value->SYSCompanyKey = $_data->RowKey;
+                $value->CreateBy = $this->USER_LOGIN()->RowKey;
+                $value->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                $value->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $value->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->insert('SYSCompanyBank',$value);
+            }
+
             if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
                 $vReturn->success = false;
@@ -66,9 +98,21 @@ class MySystem extends PCenter {
                 $vReturn->success = true;
             }
         } else {
+            $_data->RowKey = PCenter::GUID_EMPTY();
             $_data->UpdateBy = PCenter::GUID_EMPTY();
             $_data->UpdateDate = PCenter::DATATIME_DB(new DateTime());
             $this->db->where('RowKey', PCenter::GUID_EMPTY())->update('SYSCompany', $_data);
+            
+            $this->db->where('SYSCompanyKey', $_data->RowKey)
+                    ->delete('SYSCompanyBank');
+            foreach ($_data->BankList as $value) {
+                $value->SYSCompanyKey = $_data->RowKey;
+                $value->CreateBy = $this->USER_LOGIN()->RowKey;
+                $value->CreateDate = PCenter::DATATIME_DB(new DateTime());
+                $value->UpdateBy = $this->USER_LOGIN()->RowKey;
+                $value->UpdateDate = PCenter::DATATIME_DB(new DateTime());
+                $this->db->insert('SYSCompanyBank',$value);
+            }
             if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
                 $vReturn->success = false;
