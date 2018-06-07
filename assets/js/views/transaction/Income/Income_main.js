@@ -97,7 +97,7 @@ $(function () {
             },
             {
                 render: function (row, type, val2, meta) {
-                    var _val = val2.IsVat === '1' ? addCommas(((val2.Amount * 7) / 100), 2) : '-';
+                    var _val = val2.IsVat === '1' ? addCommas(parseFloat(val2.Amount) - ((parseFloat(val2.Amount) * 100) / 107), 2) : '-';
                     return _val;
                 },
                 orderable: true,
