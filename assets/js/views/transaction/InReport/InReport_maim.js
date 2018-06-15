@@ -29,6 +29,12 @@ $(function () {
             setFind();
         }
     });
+    form_Incometime.find('#cmdIncomeType').selectpicker({
+    }).on({
+        'hidden.bs.select': function () {
+            setFind();
+        }
+    });
     setFind();
     function setFind() {
 //        var _edate = new Date(form_record.find('#divEDate').data("DateTimePicker").date()).setHours(23, 59, 59, 0);
@@ -46,17 +52,37 @@ $(function () {
             loanding: false,
             callback: function (vdata) {
                 var _t = parseInt(form_Incometime.find('#cmdVatType').val());
+                var _i = parseInt(form_Incometime.find('#cmdIncomeType').val());
+                var _data = vdata;
                 if (_t === 1) {
-                    form_InReport.data('data', $.ToLinq(vdata).Where(function (x) {
+//                    form_InReport.data('data', $.ToLinq(vdata).Where(function (x) {
+//                        return parseInt(x.IsVat) === 0;
+//                    }).ToArray()).find('.xref').click();
+                    _data = $.ToLinq(vdata).Where(function (x) {
                         return parseInt(x.IsVat) === 0;
-                    }).ToArray()).find('.xref').click();
+                    }).ToArray();
                 } else if (_t === 2) {
-                    form_InReport.data('data', $.ToLinq(vdata).Where(function (x) {
+//                    form_InReport.data('data', $.ToLinq(vdata).Where(function (x) {
+//                        return parseInt(x.IsVat) === 1;
+//                    }).ToArray()).find('.xref').click();
+                    _data = $.ToLinq(vdata).Where(function (x) {
                         return parseInt(x.IsVat) === 1;
-                    }).ToArray()).find('.xref').click();
-                } else {
-                    form_InReport.data('data', vdata).find('.xref').click();
+                    }).ToArray();
                 }
+//                else {
+//                    form_InReport.data('data', vdata).find('.xref').click();
+//                }
+                if (_i === 1) {
+                    _data = $.ToLinq(_data).Where(function (x) {
+                        return parseInt(x.IncomeType) === 1;
+                    }).ToArray();
+                } else if (_i === 2) {
+                    _data = $.ToLinq(_data).Where(function (x) {
+                        return parseInt(x.IncomeType) === 0;
+                    }).ToArray();
+                }
+
+                form_InReport.data('data', _data).find('.xref').click();
             }
         });
     }

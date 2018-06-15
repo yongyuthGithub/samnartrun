@@ -41,7 +41,29 @@ and open the template in the editor.
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-4 col-md-3 col-md-offset-3">
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                        <div class="form-group">
+                            <label for="cmdIncomeType">รายรับ-จ่าย :</label>
+                            <select id="cmdIncomeType" name="cmdIncomeType" class="form-control selectpicker show-menu-arrow"
+                                    data-width="100%"
+                                    data-show-Tick="true"
+                                    data-tick-Icon="fa fa-check"
+                                    data-size="5"
+                                    data-header="false"
+                                    data-live-Search="false"
+                                    data-live-Search-Placeholder="key word"
+                                    data-multiple-Separator=",&nbsp;&nbsp;"
+                                    data-actions-Box="true"
+                                    data-selectAll-Text="Select All"
+                                    data-deselectAll-Text="Deselect All"
+                                    data-selected-Text-Format="count > 3">
+                                <option data-icon="fa fa-sliders" value="0">&nbsp;&nbsp;ทั้งหมด</option>
+                                <option data-icon="fa fa-sliders" value="1">&nbsp;&nbsp;รายรับ</option>
+                                <option data-icon="fa fa-sliders" value="2">&nbsp;&nbsp;รายจ่าย</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-3">
                         <div class="form-group">
                             <label for="txtSDate">ตั้งแต่วันที่ :</label>
                             <div class="input-group date" id="divSDate">
