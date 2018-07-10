@@ -76,7 +76,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
     'dsn' => '',
-    'hostname' => '202.129.207.194',
+    'hostname' => 'www.proud2005.com',
 //    'hostname' => 'localhost',
     'username' => 'samnartrun_praw',
 //    'username' => 'root',
