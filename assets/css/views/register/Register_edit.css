@@ -29,7 +29,7 @@
   border-radius: 10px;
 }
 .divImage .btn-controll:hover {
-  opacity: .9;
+  opacity: 0.9;
 }
 .divImage .btn-controll .btn-back {
   position: absolute;
@@ -50,7 +50,7 @@
   border: 1px solid #464646;
   color: #464646;
   border-radius: 10px;
-  opacity: .2;
+  opacity: 0.2;
   cursor: pointer;
 }
 .divImage .btn-controll .btn-back .btnimage:hover {
