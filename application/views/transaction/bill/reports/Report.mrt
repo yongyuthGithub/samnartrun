@@ -1,10 +1,10 @@
 {
-  "ReportVersion": "2018.1.6.0",
-  "ReportGuid": "16e61d3799fe4cea83a5fb4e3e7ba3a0",
+  "ReportVersion": "2018.2.3.0",
+  "ReportGuid": "27465dc7e9c5409cae8da42d6def1267",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportCreated": "/Date(1522261189000+0700)/",
-  "ReportChanged": "/Date(1528228209247+0700)/",
+  "ReportChanged": "/Date(1533130892197+0700)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Inches",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",

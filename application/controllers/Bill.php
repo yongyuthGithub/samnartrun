@@ -82,7 +82,7 @@ class Bill extends PCenter {
                                     ->get()->result()
                             )->toArray();
                     foreach ($nIV as $_row) {
-                        $nIVID=$_row->DocID;
+                        $nIVID = $_row->DocID;
                     }
 
                     return [
@@ -367,17 +367,18 @@ class Bill extends PCenter {
                         ->join('MSTShippingLocations le', 'hd.ShippingEnd=le.RowKey', 'left')
                         ->join('MSTCar c', 'hd.CarFirstKey=c.RowKey', 'left')
                         ->join('MSTProvince pv', 'c.ProvinceKey=pv.RowKey', 'left')
+                        ->order_by('hd.DocDate', 'asc')
                         ->get()->result();
         $qry->Remark = $this->db->select('cb.AccountCode,'
-                . 'cb.AccountName,'
-                . 'b.Bank,'
-                . 'bb.Branch')
-                ->from('SYSCompanyBank cb')
-                ->where('cb.SYSCompanyKey', PCenter::GUID_EMPTY())
-                ->where('cb.IsBill',true)
-                ->join('MSTBankBranch bb','cb.BankBranchKey=bb.RowKey')
-                ->join('MSTBank b','bb.BankKey=b.RowKey')
-                ->get()->result();
+                                . 'cb.AccountName,'
+                                . 'b.Bank,'
+                                . 'bb.Branch')
+                        ->from('SYSCompanyBank cb')
+                        ->where('cb.SYSCompanyKey', PCenter::GUID_EMPTY())
+                        ->where('cb.IsBill', true)
+                        ->join('MSTBankBranch bb', 'cb.BankBranchKey=bb.RowKey')
+                        ->join('MSTBank b', 'bb.BankKey=b.RowKey')
+                        ->get()->result();
         echo json_encode($qry);
     }
 
