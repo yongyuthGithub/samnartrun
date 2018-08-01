@@ -113,7 +113,8 @@ class Bill extends PCenter {
                                 . 'b.VatStatus,'
                                 . 'b.Discount,'
                                 . 'b.DueDate,'
-                                . 'b.PayType')
+                                . 'b.PayType,'
+                                . 'b.DisCountType')
                         ->where('b.RowKey', $_key)
                         ->from('TRNBillHD b')
                         ->join('MSTCustomerBranch cb', 'b.CustomerBranchKey=cb.RowKey', 'left')
@@ -343,7 +344,8 @@ class Bill extends PCenter {
                                 . 'b.PrintCount,'
                                 . 'b.CustomerBranchKey,'
                                 . 'b.DueDate,'
-                                . 'b.PayType')
+                                . 'b.PayType,'
+                                . 'b.DisCountType')
                         ->from('TRNBillHD b')
                         ->where('b.RowKey', $_key)
                         ->get()->row();

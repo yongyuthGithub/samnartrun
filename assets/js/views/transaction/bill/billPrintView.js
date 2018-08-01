@@ -97,6 +97,7 @@ $(function () {
 
                         variables.getByName('DocID').valueObject = vdata.DocID;
                         variables.getByName('BillDate').valueObject = PHP_JSON_To_ShowDate(vdata.DocDate);
+                        variables.getByName('DisText').valueObject = parseInt(vdata.DisCountType) === 0 ? 'ส่วนลดรวม' : 'สำรองจ่าย';
 
                         var _remark = '';
                         $.each(vdata.Remark, function (kk, vv) {

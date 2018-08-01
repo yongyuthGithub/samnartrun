@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2018.2.3.0",
-  "ReportGuid": "27465dc7e9c5409cae8da42d6def1267",
+  "ReportGuid": "b59e1341cd1f4eca833bc75d0a8aa51a",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportCreated": "/Date(1522261189000+0700)/",
-  "ReportChanged": "/Date(1533130892197+0700)/",
+  "ReportChanged": "/Date(1533138756805+0700)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Inches",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -153,6 +153,11 @@
       "26": {
         "Name": "remake",
         "Alias": "remake",
+        "Type": "System.String"
+      },
+      "27": {
+        "Name": "DisText",
+        "Alias": "DisText",
         "Type": "System.String"
       }
     },
@@ -724,7 +729,7 @@
               "Guid": "7f306de837c8471cad8ae1b13e9ec4b4",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "5.7,0.04,1.3,0.3",
+              "ClientRectangle": "5.8,0.04,1.2,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -789,13 +794,13 @@
               "Guid": "20b7e0c3e5ad4a6fa92169f51d37e43c",
               "MinSize": "0,0",
               "MaxSize": "0,0",
-              "ClientRectangle": "5.1,0.04,0.6,0.3",
+              "ClientRectangle": "5.1,0.04,0.7,0.3",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "HideZeros": true,
               "Text": {
-                "Value": "{IIF(Sum(root.Discount)==0,0,\"ส่วนลด\")}"
+                "Value": "{IIF(Sum(root.Discount)==0,0,DisText)}"
               },
               "VertAlignment": "Center",
               "Font": "Cordia New;14;Bold;",

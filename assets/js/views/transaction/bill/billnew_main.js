@@ -25,6 +25,7 @@ $(function () {
                 form_bilelist.data('data', vdata.TRNBillLD);
                 form_billnew.find('#cmdVatStatus').val(vdata.VatStatus).selectpicker('render').change();
                 form_billnew.find('#cmdPayType').val(vdata.PayType).selectpicker('render');
+                form_billnew.find('#cmdDisText').val(vdata.DisCountType).selectpicker('render');
 
                 setDataCust(vdata.CompanyKey, function (sel) {
                     sel.val(vdata.CustomerBranchKey).selectpicker('render');
@@ -361,10 +362,11 @@ $(function () {
                     CustomerBranchKey: form_billnew.find('#cmdCustBranch').val(),
                     Vat: parseFloat(form_billnew.find('#txtVatTotal').data('data')),
                     VatStatus: parseInt(form_billnew.find('#cmdVatStatus').val()),
-                    Discount: parseFloat(form_billnew.find('#txtDiscountTotal').val()),
+                    Discount: parseFloat(form_billnew.find('#txtDiscountTotal').data('data')),
                     PrintCount: parseInt(0),
                     DueDate: setDateJson(form_billnew.find('#txtDueDate').val()),
                     PayType: parseInt(form_billnew.find('#cmdPayType').val()),
+                    DisCountType: parseInt(form_billnew.find('#cmdDisText').val()),
                     Amounts: parseFloat(form_billnew.find('#txtNetPrice').data('data')),
                     Remain: parseFloat(form_billnew.find('#txtNetPrice').data('data')),
                     TRNBillLD: $.ToLinq(form_bilelist.data('data'))

@@ -72,11 +72,11 @@
                             </div>
                         </div>
                     </div>
-<!--                    <div class="col-xs-12 col-sm-2 col-md-2 col-md-offset-1" style="height: 74px;line-height: 74px;">
-                        <div class="form-group" style="padding-top: 4px;">
-                            <button type="button" id="btn-print" class="btn btn-success form-control"><i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp;ออกบิล</button>
-                        </div>
-                    </div>-->
+                    <!--                    <div class="col-xs-12 col-sm-2 col-md-2 col-md-offset-1" style="height: 74px;line-height: 74px;">
+                                            <div class="form-group" style="padding-top: 4px;">
+                                                <button type="button" id="btn-print" class="btn btn-success form-control"><i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp;ออกบิล</button>
+                                            </div>
+                                        </div>-->
                 </div>
                 <hr>
                 <div id="form_bilelist"></div>
@@ -94,9 +94,28 @@
                     </div>
                 </div>
                 <div class="row">  
-                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right">
+                    <div class="col-xs-4 col-xs-offset-0 col-sm-4 col-sm-offset-4 col-md-3 col-md-offset-6 text-right" style="padding-bottom: 5px;">
+                        <!--                        <div class="form-group" style="margin-bottom: 0px;">
+                                                    <label for="txtDiscountTotal" class="text-right" style="line-height: 34px;">ส่วนลดรวม :</label>
+                                                </div>-->
                         <div class="form-group" style="margin-bottom: 0px;">
-                            <label for="txtDiscountTotal" class="text-right" style="line-height: 34px;">ส่วนลดรวม :</label>
+                            <select id="cmdDisText" name="cmdDisText" class="form-control selectpicker show-menu-arrow"
+                                    data-width="100%"
+                                    data-show-Tick="true"
+                                    data-tick-Icon="fa fa-check"
+                                    data-size="5"
+                                    data-header="false"
+                                    data-live-Search="false"
+                                    data-live-Search-Placeholder="key word"
+                                    data-multiple-Separator=",&nbsp;&nbsp;"
+                                    data-actions-Box="false"
+                                    data-selectAll-Text="Select All"
+                                    data-deselectAll-Text="Deselect All"
+                                    data-selected-Text-Format="count > 3">
+                                <option data-icon="fa fa-bars" value="0">&nbsp;&nbsp;ส่วนลดรวม :</option>
+                                <option data-icon="fa fa-bars" value="1">&nbsp;&nbsp;สำรองจ่าย :</option>
+                                <!--<option data-icon="fa fa-sliders" value="3">&nbsp;&nbsp;คำนวณภาษีนอก</option>-->
+                            </select>
                         </div>
                     </div>
                     <div class="col-xs-8 col-sm-4 col-md-3">
