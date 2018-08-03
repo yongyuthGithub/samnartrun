@@ -1,10 +1,10 @@
 {
   "ReportVersion": "2018.2.3.0",
-  "ReportGuid": "b59e1341cd1f4eca833bc75d0a8aa51a",
+  "ReportGuid": "795f5f332826421eb27a6b994a5906db",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportCreated": "/Date(1522261189000+0700)/",
-  "ReportChanged": "/Date(1533138756805+0700)/",
+  "ReportChanged": "/Date(1533310062145+0700)/",
   "EngineVersion": "EngineV2",
   "ReportUnit": "Inches",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -21,18 +21,18 @@
   "Dictionary": {
     "Variables": {
       "0": {
-        "Name": "CompanyName",
-        "Alias": "CompanyName",
+        "Name": "BillDate",
+        "Alias": "BillDate",
         "Type": "System.String"
       },
       "1": {
-        "Name": "CompanyAddress",
-        "Alias": "CompanyAddress",
+        "Name": "BillDueDate",
+        "Alias": "BillDueDate",
         "Type": "System.String"
       },
       "2": {
-        "Name": "CompanySubDistrict",
-        "Alias": "CompanySubDistrict",
+        "Name": "CompanyAddress",
+        "Alias": "CompanyAddress",
         "Type": "System.String"
       },
       "3": {
@@ -41,33 +41,33 @@
         "Type": "System.String"
       },
       "4": {
-        "Name": "CompanyProvince",
-        "Alias": "CompanyProvince",
-        "Type": "System.String"
-      },
-      "5": {
-        "Name": "CompanyZipCode",
-        "Alias": "CompanyZipCode",
-        "Type": "System.String"
-      },
-      "6": {
-        "Name": "CompanyTel",
-        "Alias": "CompanyTel",
-        "Type": "System.String"
-      },
-      "7": {
         "Name": "CompanyFax",
         "Alias": "CompanyFax",
         "Type": "System.String"
       },
+      "5": {
+        "Name": "CompanyName",
+        "Alias": "CompanyName",
+        "Type": "System.String"
+      },
+      "6": {
+        "Name": "CompanyProvince",
+        "Alias": "CompanyProvince",
+        "Type": "System.String"
+      },
+      "7": {
+        "Name": "CompanySubDistrict",
+        "Alias": "CompanySubDistrict",
+        "Type": "System.String"
+      },
       "8": {
-        "Name": "CustomerIDCard",
-        "Alias": "CustomerIDCard",
+        "Name": "CompanyTel",
+        "Alias": "CompanyTel",
         "Type": "System.String"
       },
       "9": {
-        "Name": "CustName",
-        "Alias": "CustName",
+        "Name": "CompanyZipCode",
+        "Alias": "CompanyZipCode",
         "Type": "System.String"
       },
       "10": {
@@ -76,8 +76,8 @@
         "Type": "System.String"
       },
       "11": {
-        "Name": "CustSubDistrict",
-        "Alias": "CustSubDistrict",
+        "Name": "CustBranch",
+        "Alias": "CustBranch",
         "Type": "System.String"
       },
       "12": {
@@ -86,78 +86,78 @@
         "Type": "System.String"
       },
       "13": {
-        "Name": "CustProvince",
-        "Alias": "CustProvince",
-        "Type": "System.String"
-      },
-      "14": {
-        "Name": "CustZipCode",
-        "Alias": "CustZipCode",
-        "Type": "System.String"
-      },
-      "15": {
-        "Name": "CustTel",
-        "Alias": "CustTel",
-        "Type": "System.String"
-      },
-      "16": {
         "Name": "CustFax",
         "Alias": "CustFax",
         "Type": "System.String"
       },
-      "17": {
+      "14": {
         "Name": "CustIDCard",
         "Alias": "CustIDCard",
         "Type": "System.String"
       },
+      "15": {
+        "Name": "CustName",
+        "Alias": "CustName",
+        "Type": "System.String"
+      },
+      "16": {
+        "Name": "CustomerIDCard",
+        "Alias": "CustomerIDCard",
+        "Type": "System.String"
+      },
+      "17": {
+        "Name": "CustProvince",
+        "Alias": "CustProvince",
+        "Type": "System.String"
+      },
       "18": {
-        "Name": "BillDate",
-        "Alias": "BillDate",
+        "Name": "CustSubDistrict",
+        "Alias": "CustSubDistrict",
         "Type": "System.String"
       },
       "19": {
-        "Name": "CustBranch",
-        "Alias": "CustBranch",
+        "Name": "CustTel",
+        "Alias": "CustTel",
         "Type": "System.String"
       },
       "20": {
-        "Name": "BillDueDate",
-        "Alias": "BillDueDate",
+        "Name": "CustZipCode",
+        "Alias": "CustZipCode",
         "Type": "System.String"
       },
       "21": {
-        "Name": "PayType",
-        "Alias": "PayType",
+        "Name": "DisText",
+        "Alias": "DisText",
         "Type": "System.String"
       },
       "22": {
-        "Name": "TxtTotal",
-        "Alias": "TxtTotal",
-        "Type": "System.String"
-      },
-      "23": {
-        "Name": "TxtDate",
-        "Alias": "TxtDate",
-        "Type": "System.String"
-      },
-      "24": {
-        "Name": "NetTotal",
-        "Alias": "NetTotal",
-        "Type": "System.Decimal"
-      },
-      "25": {
         "Name": "DocID",
         "Alias": "DocID",
         "Type": "System.String"
       },
-      "26": {
+      "23": {
+        "Name": "NetTotal",
+        "Alias": "NetTotal",
+        "Type": "System.Decimal"
+      },
+      "24": {
+        "Name": "PayType",
+        "Alias": "PayType",
+        "Type": "System.String"
+      },
+      "25": {
         "Name": "remake",
         "Alias": "remake",
         "Type": "System.String"
       },
+      "26": {
+        "Name": "TxtDate",
+        "Alias": "TxtDate",
+        "Type": "System.String"
+      },
       "27": {
-        "Name": "DisText",
-        "Alias": "DisText",
+        "Name": "TxtTotal",
+        "Alias": "TxtTotal",
         "Type": "System.String"
       }
     },
@@ -168,76 +168,83 @@
         "Alias": "root",
         "Columns": {
           "0": {
-            "Name": "DocID",
+            "Name": "_order",
             "Index": -1,
-            "NameInSource": "DocID",
-            "Alias": "DocID",
-            "Type": "System.String"
+            "NameInSource": "_order",
+            "Alias": "_order",
+            "Type": "System.Int32"
           },
           "1": {
-            "Name": "DocDate",
-            "Index": -1,
-            "NameInSource": "DocDate",
-            "Alias": "DocDate",
-            "Type": "System.String"
-          },
-          "2": {
-            "Name": "Product",
-            "Index": -1,
-            "NameInSource": "Product",
-            "Alias": "Product",
-            "Type": "System.String"
-          },
-          "3": {
             "Name": "CarNumber",
             "Index": -1,
             "NameInSource": "CarNumber",
             "Alias": "CarNumber",
             "Type": "System.String"
           },
-          "4": {
-            "Name": "Province",
-            "Index": -1,
-            "NameInSource": "Province",
-            "Alias": "Province",
-            "Type": "System.String"
-          },
-          "5": {
-            "Name": "ShippingBegin",
-            "Index": -1,
-            "NameInSource": "ShippingBegin",
-            "Alias": "ShippingBegin",
-            "Type": "System.String"
-          },
-          "6": {
-            "Name": "ShippingEnd",
-            "Index": -1,
-            "NameInSource": "ShippingEnd",
-            "Alias": "ShippingEnd",
-            "Type": "System.String"
-          },
-          "7": {
-            "Name": "PriceTotal",
-            "Index": -1,
-            "NameInSource": "PriceTotal",
-            "Alias": "PriceTotal",
-            "Type": "System.Decimal"
-          },
-          "8": {
+          "2": {
             "Name": "Discount",
             "Index": -1,
             "NameInSource": "Discount",
             "Alias": "Discount",
             "Type": "System.Decimal"
           },
-          "9": {
+          "3": {
+            "Name": "DocDate",
+            "Index": -1,
+            "NameInSource": "DocDate",
+            "Alias": "DocDate",
+            "Type": "System.String"
+          },
+          "4": {
+            "Name": "DocID",
+            "Index": -1,
+            "NameInSource": "DocID",
+            "Alias": "DocID",
+            "Type": "System.String"
+          },
+          "5": {
+            "Name": "PriceTotal",
+            "Index": -1,
+            "NameInSource": "PriceTotal",
+            "Alias": "PriceTotal",
+            "Type": "System.Decimal"
+          },
+          "6": {
+            "Name": "Product",
+            "Index": -1,
+            "NameInSource": "Product",
+            "Alias": "Product",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "Province",
+            "Index": -1,
+            "NameInSource": "Province",
+            "Alias": "Province",
+            "Type": "System.String"
+          },
+          "8": {
             "Name": "Remark",
             "Index": -1,
             "NameInSource": "Remark",
             "Alias": "Remark",
             "Type": "System.String"
           },
+          "9": {
+            "Name": "ShippingBegin",
+            "Index": -1,
+            "NameInSource": "ShippingBegin",
+            "Alias": "ShippingBegin",
+            "Type": "System.String"
+          },
           "10": {
+            "Name": "ShippingEnd",
+            "Index": -1,
+            "NameInSource": "ShippingEnd",
+            "Alias": "ShippingEnd",
+            "Type": "System.String"
+          },
+          "11": {
             "Name": "Vat",
             "Index": -1,
             "NameInSource": "Vat",
@@ -657,7 +664,11 @@
               "Type": "Expression"
             }
           },
-          "DataSourceName": "root"
+          "DataSourceName": "root",
+          "Sort": {
+            "0": "ASC",
+            "1": "_order"
+          }
         },
         "6": {
           "Ident": "StiGroupFooterBand",

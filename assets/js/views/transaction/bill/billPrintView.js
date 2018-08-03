@@ -63,6 +63,12 @@ $(function () {
 //        }
 //    });
 //    report.reqData('DataList','DataList',JSON.stringify(new Array()));
+    function dateToInt(v) {
+        var _s = v.split('/');
+        _s = _s[2] + _s[1] + _s[0];
+        return parseInt(_s);
+    }
+
     var _printstatus = form_showBill_C.data('print');
     if (_printstatus === PrintStatus.Print) {
         $.ReportViewer({
@@ -137,7 +143,8 @@ $(function () {
                                         ShippingBegin: x.ShippingBegin,
                                         ShippingEnd: x.ShippingEnd,
                                         dDocDate: PHP_JSON_To_DateTime(x.DocDate),
-                                        Remark: x.Remark
+                                        Remark: x.Remark,
+                                        _order:dateToInt(PHP_JSON_To_ShowDate(x.DocDate))
                                     });
                                 }).ToArray();
 //                    if (_VatStatus === 1 || _VatStatus === 2) {
