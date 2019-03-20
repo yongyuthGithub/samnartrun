@@ -65,23 +65,55 @@ and open the template in the editor.
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-3">
                         <div class="form-group">
-                            <label for="txtSDate">ตั้งแต่วันที่ :</label>
-                            <div class="input-group date" id="divSDate">
-                                <input type='text' class="form-control text-center" id="txtSDate" name="txtSDate" placeholder="วันที่เริ่ม" onkeydown="return false;" />
-                                <span class="input-group-addon">
-                                    <span class="fa fa-calendar"></span>
-                                </span>
-                            </div>
+                            <label for="cmdDocType">ประเภทเอกสาร :</label>
+                            <select id="cmdDocType" name="cmdDocType" class="form-control selectpicker show-menu-arrow"
+                                    data-width="100%"
+                                    data-show-Tick="true"
+                                    data-tick-Icon="fa fa-check"
+                                    data-size="5"
+                                    data-header="false"
+                                    data-live-Search="false"
+                                    data-live-Search-Placeholder="key word"
+                                    data-multiple-Separator=",&nbsp;&nbsp;"
+                                    data-actions-Box="true"
+                                    data-selectAll-Text="Select All"
+                                    data-deselectAll-Text="Deselect All"
+                                    data-selected-Text-Format="count > 2" multiple>
+                                <option data-icon="fa fa-sliders" value="0" selected="selected">&nbsp;&nbsp;บันทึกรายรับ-รายจ่าย อื่นๆ</option>
+                                <option data-icon="fa fa-sliders" value="1" selected="selected">&nbsp;&nbsp;ค่าบริการขนส่ง</option>
+                                <option data-icon="fa fa-sliders" value="2" selected="selected">&nbsp;&nbsp;ใบงาน (ค่าฝีมือ)</option>
+                                <option data-icon="fa fa-sliders" value="3" selected="selected">&nbsp;&nbsp;ใบงาน (บิล)</option>
+                                <option data-icon="fa fa-sliders" value="4" selected="selected">&nbsp;&nbsp;รายการซ่อมบำรุง</option>
+                                <option data-icon="fa fa-sliders" value="5" selected="selected">&nbsp;&nbsp;รายการต่อประกันรถขนส่ง</option>
+                                <option data-icon="fa fa-sliders" value="6" selected="selected">&nbsp;&nbsp;รายการต่อค่าอื่นๆ ของรถขนส่ง</option>
+                                <option data-icon="fa fa-sliders" value="7" selected="selected">&nbsp;&nbsp;รายการต่อประกันพนักงาน</option>
+                                <option data-icon="fa fa-sliders" value="8" selected="selected">&nbsp;&nbsp;รายการใบเสร็จ</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-3">
-                        <div class="form-group">
-                            <label for="txtEDate">ถึงวันที่ :</label>
-                            <div class="input-group date" id="divEDate">
-                                <input type='text' class="form-control text-center" id="txtEDate" name="txtEDate" placeholder="วันที่สิ้นสุด" onkeydown="return false;" />
-                                <span class="input-group-addon">
-                                    <span class="fa fa-calendar"></span>
-                                </span>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="txtSDate">ตั้งแต่วันที่ :</label>
+                                    <div class="input-group date" id="divSDate">
+                                        <input type='text' class="form-control text-center" id="txtSDate" name="txtSDate" placeholder="วันที่เริ่ม" onkeydown="return false;" />
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="txtEDate">ถึงวันที่ :</label>
+                                    <div class="input-group date" id="divEDate">
+                                        <input type='text' class="form-control text-center" id="txtEDate" name="txtEDate" placeholder="วันที่สิ้นสุด" onkeydown="return false;" />
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

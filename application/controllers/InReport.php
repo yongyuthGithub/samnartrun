@@ -33,19 +33,19 @@ class InReport extends PCenter {
         $_data = json_decode($_POST['vdata']);
 
         $inCome = $this->db->select('cf.RowKey as key,'
-                                . 'concat("ใบงาน (",w.DocID,")") as DocID,'
-                                . 'w.DocDate,'
-                                . 'mi.IncomeName as Detial,'
-                                . 'cf.IncomeType,'
-                                . 'Amount,'
-                                . '0 as IsVat'
-                        )
-                        ->where('w.DocDate >=', $_data->SDate)
-                        ->where('w.DocDate <=', $_data->EDate)
-                        ->from('TRNWrokSheetHD w')
-                        ->join('TRNIncome cf', 'cf.WorkSheetHDKey=w.RowKey')
-                        ->join('MSTIncomeName mi', 'cf.IncomeKey=mi.RowKey')
-                        ->get();
+                        . 'concat("ใบงาน (",w.DocID,")") as DocID,'
+                        . 'w.DocDate,'
+                        . 'mi.IncomeName as Detial,'
+                        . 'cf.IncomeType,'
+                        . 'Amount,'
+                        . '0 as IsVat'
+                )
+                ->where('w.DocDate >=', $_data->SDate)
+                ->where('w.DocDate <=', $_data->EDate)
+                ->from('TRNWrokSheetHD w')
+                ->join('TRNIncome cf', 'cf.WorkSheetHDKey=w.RowKey')
+                ->join('MSTIncomeName mi', 'cf.IncomeKey=mi.RowKey')
+                ->get();
 
         $inComeOther = $this->db->select('RowKey, DocDate, Detial,IncomeType,Amount,IsVat,DocID ')
                         ->where('DocDate >=', $_data->SDate)
@@ -53,23 +53,23 @@ class InReport extends PCenter {
                         ->from('TRNIncomeOther')->get();
         $_array = array();
         foreach ($inCome->result() as $row) {
-                $_ar = array(
-                    'key' => $row->key,
-                    'DocID' => $row->DocID,
-                    'DocDate' => $row->DocDate,
-                    'Detial' => ($row->Detial),
-                    'IncomeType' => intval($row->IncomeType) === 1 ? 1 : 0,
-                    'Amount' => ($row->Amount),
-                    'IsVat' => $row->IsVat
-                );
-                array_push($_array, $_ar);
-            }
+            $_ar = array(
+                'key' => $row->key,
+                'DocID' => $row->DocID,
+                'DocDate' => $row->DocDate,
+                'Detial' => ($row->Detial),
+                'IncomeType' => intval($row->IncomeType) === 1 ? 1 : 0,
+                'Amount' => ($row->Amount),
+                'IsVat' => $row->IsVat
+            );
+            array_push($_array, $_ar);
+        }
         foreach ($inComeOther->result() as $row) {
             $_ar = array(
                 'key' => $row->RowKey,
                 'DocID' => 'บันทึกรายรับ-รายจ่าย อื่นๆ',
                 'DocDate' => $row->DocDate,
-                'Detial' => 'บิลเลขที่ '.$row->DocID . ' => ' . $row->Detial,
+                'Detial' => 'บิลเลขที่ ' . $row->DocID . ' => ' . $row->Detial,
                 'IncomeType' => intval($row->IncomeType) === 1 ? 1 : 0,
                 'Amount' => ($row->Amount),
                 'IsVat' => $row->IsVat
@@ -198,7 +198,7 @@ class InReport extends PCenter {
                         ->join('TRNReceiptHD h', 'i.ReceiptHDKey=h.RowKey')
                         ->join('TRNBillHD b', 'i.BillKey=b.RowKey')
                         ->get()->result();
-        $_arrayT = array_merge($_array, $workSheep, $skillLabor, $fule, $maintenance, $insuranceCar, $vatcar, $insuranceEmp, $receipother);
+        $_arrayT = array_merge(!in_array("0", $_data->DocType) ? array() : $_array, !in_array("1", $_data->DocType) ? array() : $workSheep, !in_array("2", $_data->DocType) ? array() : $skillLabor, !in_array("3", $_data->DocType) ? array() : $fule, !in_array("4", $_data->DocType) ? array() : $maintenance, !in_array("5", $_data->DocType) ? array() : $insuranceCar, !in_array("6", $_data->DocType) ? array() : $vatcar, !in_array("7", $_data->DocType) ? array() : $insuranceEmp, !in_array("8", $_data->DocType) ? array() : $receipother);
 //        if ($_data->TaxType === 1) {
 //            json_encode(Linq::from(json_decode(json_encode($_arrayT)))->where(function($x) {
 //                        return $x->IsVat === '0';

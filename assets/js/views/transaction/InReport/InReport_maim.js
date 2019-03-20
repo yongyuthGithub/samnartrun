@@ -35,6 +35,12 @@ $(function () {
             setFind();
         }
     });
+    form_Incometime.find('#cmdDocType').selectpicker({
+    }).on({
+        'hidden.bs.select': function () {
+            setFind();
+        }
+    });
     setFind();
     function setFind() {
 //        var _edate = new Date(form_record.find('#divEDate').data("DateTimePicker").date()).setHours(23, 59, 59, 0);
@@ -46,6 +52,7 @@ $(function () {
 //                    EDate: PHP_DateTimeShow_To_JSON(form_record.find('#divEDate'), true)
                     SDate: setDateJson(form_Incometime.find('#txtSDate').val()),
                     EDate: setDateJson(form_Incometime.find('#txtEDate').val()),
+                    DocType:form_Incometime.find('#cmdDocType').val()
 //                    TaxType: parseInt(form_Incometime.find('#cmdVatType').val())
                 })
             },
